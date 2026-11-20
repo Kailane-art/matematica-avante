@@ -565,6 +565,90 @@ if (formLogin) {
 
 } 
 
+// ================================
+// RECUPERAÇÃO DE SENHA
+// ================================
+
+const botaoRecuperarSenha = document.getElementById("botaoRecuperarSenha");
+
+if (botaoRecuperarSenha) {
+
+    botaoRecuperarSenha.addEventListener("click", async function() {
+
+        if (!supabaseClient) {
+
+            mostrarMensagemAutenticacao(
+                "Não foi possível conectar ao sistema."
+            );
+
+            return;
+
+        }
+
+        const email = document
+            .getElementById("emailLogin")
+            .value
+            .trim();
+
+        if (!email) {
+
+            mostrarMensagemAutenticacao(
+                "Digite seu email no campo acima para receber o link de recuperação."
+            );
+
+            document.getElementById("emailLogin").focus();
+
+            return;
+
+        }
+
+        botaoRecuperarSenha.disabled = true;
+
+        mostrarMensagemAutenticacao(
+            "Enviando email de recuperação..."
+        );
+
+        try {
+
+            const { error } = await supabaseClient.auth
+                .resetPasswordForEmail(email, {
+
+                    redirectTo:
+                        "https://kailane-art.github.io/matematica-avante/redefinir-senha.html"
+
+                });
+
+            if (error) {
+
+                throw error;
+
+            }
+
+            mostrarMensagemAutenticacao(
+                "Se esse email estiver cadastrado, você receberá um link para redefinir sua senha. Confira também o spam."
+            );
+
+        } catch (erro) {
+
+            console.error(
+                "Erro na recuperação de senha:",
+                erro
+            );
+
+            mostrarMensagemAutenticacao(
+                "Não foi possível enviar o email. Tente novamente mais tarde."
+            );
+
+        } finally {
+
+            botaoRecuperarSenha.disabled = false;
+
+        }
+
+    });
+
+    }
+
 
 let pontos = 0;
 
