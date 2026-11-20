@@ -193,110 +193,58 @@ if(fundoMenu){
 
 
 // ================================
-// TELA INICIAL + NOME
+// AUTENTICAÇÃO - SUPABASE
 // ================================
 
+const SUPABASE_URL = "https://yeinyqmpofdlpskvqqlz.supabase.co";
 
-const botaoComecar = document.getElementById("comecarAgora");
+const SUPABASE_ANON_KEY = "sb_publishable_0aF8pNMEGN6wgAKrPVy3hw_zS0EQ9hp";
 
-const entradaNome = document.getElementById("entradaNome");
+let supabaseClient = null;
 
-const campoNome = document.getElementById("nomeUsuario");
-
-const botaoSalvar = document.getElementById("salvarNome");
-
-
-
-
-
-if(botaoComecar){
+if (window.supabase && window.supabase.createClient) {
+    supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+}
 
 
-    botaoComecar.addEventListener("click", function(){
+// ================================
+// ABAS DE LOGIN E CADASTRO
+// ================================
+
+const abaLogin = document.getElementById("abaLogin");
+const abaCadastro = document.getElementById("abaCadastro");
+
+const formLogin = document.getElementById("formLogin");
+const formCadastro = document.getElementById("formCadastro");
 
 
-        const nomeSalvo = localStorage.getItem("nomeUsuario");
+if (abaLogin && abaCadastro && formLogin && formCadastro) {
 
+    abaLogin.addEventListener("click", function(){
 
+        formLogin.hidden = false;
+        formCadastro.hidden = true;
 
-        if(nomeSalvo){
-
-
-            window.location.href="inicio.html";
-
-
-        }else{
-
-
-            botaoComecar.style.display="none";
-
-            entradaNome.style.display="block";
-
-
-        }
-
+        abaLogin.classList.add("ativa");
+        abaCadastro.classList.remove("ativa");
 
     });
 
 
-}
+    abaCadastro.addEventListener("click", function(){
 
+        formLogin.hidden = true;
+        formCadastro.hidden = false;
 
-
-
-
-if(botaoSalvar){
-
-
-    botaoSalvar.addEventListener("click", function(){
-
-
-        const nome = campoNome.value.trim();
-
-
-
-        if(tipoSelecionado === ""){
-
-
-            alert("Escolha se você é aluno ou professor.");
-
-
-            return;
-
-
-        }
-
-
-
-        if(nome === ""){
-
-
-            alert("Digite um nome.");
-
-
-            return;
-
-
-        }
-
-
-
-        localStorage.setItem("nomeUsuario", nome);
-
-
-        localStorage.setItem("tipoUsuario", tipoSelecionado);
-
-
-
-        window.location.href="inicio.html";
-
-
+        abaCadastro.classList.add("ativa");
+        abaLogin.classList.remove("ativa");
 
     });
 
-
-}
-// ================================
+}// ================================
 // SISTEMA DE QUESTÕES
 // ================================
 
