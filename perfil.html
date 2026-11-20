@@ -273,7 +273,7 @@ Não possui
 
 🔥 Sequência de estudos:
 
-<span>
+<span id="sequenciaEstudosPerfil">
 0 dias
 </span>
 
@@ -737,6 +737,26 @@ if (
     }
 
 }  
+    // =====================================================
+// SEQUÊNCIA DE ESTUDOS
+// =====================================================
+
+const sequenciaEstudos =
+    calcularSequenciaAtual();
+
+const elementoSequencia =
+    document.getElementById(
+        "sequenciaEstudosPerfil"
+    );
+
+if (elementoSequencia) {
+
+    elementoSequencia.textContent =
+        sequenciaEstudos === 1
+            ? "1 dia"
+            : sequenciaEstudos + " dias";
+
+} 
     // =====================================================
 // EVOLUÇÃO GERAL
 // =====================================================
