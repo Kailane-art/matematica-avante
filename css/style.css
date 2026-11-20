@@ -1107,8 +1107,9 @@ header svg {
         #d4af37,
         #f59e0b,
         #d97706
-    );
-    color: white;
+    ) !important;
+
+    color: white !important;
 }
 
 .configuracoes button.nivel-premium:hover {
@@ -1117,9 +1118,10 @@ header svg {
         #e0bd45,
         #f59e0b,
         #c96b05
-    );
+    ) !important;
+
     transform: translateY(-3px);
-} 
+}
 
 .modo-escuro .card-perfil {
     background: #13294b;
