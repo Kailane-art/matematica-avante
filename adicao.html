@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Adição - Matemática Avante</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body>
+
+    <header>
+
+        <button id="voltarPagina" type="button">
+            <i data-lucide="arrow-left"></i>
+        </button>
+
+        <h1>Adição</h1>
+
+        <button id="modoEscuro" type="button">
+            <i data-lucide="moon"></i>
+        </button>
+
+    </header>
+
+
+    <main class="pagina-basico">
+
+        <!-- INTRODUÇÃO -->
+
+        <section class="basico-introducao">
+
+            <h2>Aprendendo a somar</h2>
+
+            <p>
+                A adição é uma das quatro operações fundamentais
+                da Matemática. Ela é utilizada para juntar
+                quantidades e descobrir o total.
+            </p>
+
+        </section>
+
+
+        <!-- EXPLICAÇÃO -->
+
+        <section class="operacao-card">
+
+            <div class="operacao-titulo">
+
+                <i data-lucide="plus"></i>
+
+                <h2>O que é adição?</h2>
+
+            </div>
+
+            <p>
+                Adicionar significa juntar dois ou mais valores.
+                O símbolo utilizado nessa operação é o sinal de
+                mais (+).
+            </p>
+
+            <div class="exemplo-operacao">
+
+                <span>Exemplo</span>
+
+                <strong>5 + 3 = 8</strong>
+
+                <p>
+                    Começamos com 5 e acrescentamos mais 3.
+                    O resultado dessa soma é 8.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ELEMENTOS DA ADIÇÃO -->
+
+        <section class="operacao-card">
+
+            <div class="operacao-titulo">
+
+                <i data-lucide="book-open"></i>
+
+                <h2>Elementos da adição</h2>
+
+            </div>
+
+            <p>
+                Em uma adição, os números que são somados
+                recebem o nome de parcelas. O resultado
+                é chamado de soma ou total.
+            </p>
+
+            <div class="exemplo-operacao">
+
+                <span>Observe</span>
+
+                <strong>7 + 4 = 11</strong>
+
+                <p>
+                    7 e 4 são as parcelas. O número 11
+                    é o resultado da adição.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- EXERCÍCIOS -->
+
+        <section class="exercicios-basico">
+
+            <div class="titulo-exercicios">
+
+                <i data-lucide="clipboard-list"></i>
+
+                <h2>Hora de praticar!</h2>
+
+            </div>
+
+            <p class="subtitulo-exercicios">
+                Resolva as questões e teste o que aprendeu.
+                Cada acerto vale 10 XP.
+            </p>
+
+
+            <!-- QUESTÃO 1 -->
+
+            <div class="questao" data-numero="1">
+
+                <p>
+                    <strong>1.</strong> Quanto é 8 + 5?
+                </p>
+
+                <div class="alternativas">
+
+                    <button onclick="responderQuestaoAdicao(1, false, this)">
+                        12
+                    </button>
+
+                    <button onclick="responderQuestaoAdicao(1, true, this)">
+                        13
+                    </button>
+
+                    <button onclick="responderQuestaoAdicao(1, false, this)">
+                        14
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTÃO 2 -->
+
+            <div class="questao" data-numero="2">
+
+                <p>
+                    <strong>2.</strong> Quanto é 12 + 7?
+                </p>
+
+                <div class="alternativas">
+
+                    <button onclick="responderQuestaoAdicao(2, false, this)">
+                        18
+                    </button>
+
+                    <button onclick="responderQuestaoAdicao(2, true, this)">
+                        19
+                    </button>
+
+                    <button onclick="responderQuestaoAdicao(2, false, this)">
+                        20
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTÃO 3 -->
+
+            <div class="questao" data-numero="3">
+
+                <p>
+                    <strong>3.</strong> Quanto é 24 + 16?
+                </p>
+
+                <div class="alternativas">
+
+                    <button onclick="responderQuestaoAdicao(3, true, this)">
+                        40
+                    </button>
+
+                    <button onclick="responderQuestaoAdicao(3, false, this)">
+                        38
+                    </button>
+
+                    <button onclick="responderQuestaoAdicao(3, false, this)">
+                        42
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTÃO 4 -->
+
+            <div class="questao" data-numero="4">
+
+                <p>
+                    <strong>4.</strong> Quanto é 35 + 28?
+                </p>
+
+                <div class="alternativas">
+
+                    <button onclick="responderQuestaoAdicao(4, false, this)">
+                        62
+                    </button>
+
+                    <button onclick="responderQuestaoAdicao(4, true, this)">
+                        63
+                    </button>
+
+                    <button onclick="responderQuestaoAdicao(4, false, this)">
+                        64
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTÃO 5 -->
+
+            <div class="questao" data-numero="5">
+
+                <p>
+                    <strong>5.</strong> Quanto é 126 + 47?
+                </p>
+
+                <div class="alternativas">
+
+                    <button onclick="responderQuestaoAdicao(5, false, this)">
+                        163
+                    </button>
+
+                    <button onclick="responderQuestaoAdicao(5, false, this)">
+                        172
+                    </button>
+
+                    <button onclick="responderQuestaoAdicao(5, true, this)">
+                        173
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESULTADO -->
+
+            <div class="resultado-exercicios">
+
+                <h2 id="pontuacao">
+                    Pontuação: 0/5
+                </h2>
+
+                <p id="resultado" aria-live="polite"></p>
+
+                <p>
+                    XP total:
+                    <strong id="xpTotalAdicao">0</strong>
+                </p>
+
+            </div>
+
+
+            <!-- VOLTAR -->
+
+            <button
+                class="botao-proxima-aula"
+                type="button"
+                onclick="window.location.href='aprender-basico.html'"
+            >
+
+                Voltar às operações
+
+                <i data-lucide="arrow-right"></i>
+
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- SCRIPT PRINCIPAL -->
+
+    <script src="js/script.js"></script>
+
+
+    <!-- SCRIPT ESPECÍFICO DA ADIÇÃO -->
+
+    <script>
+
+        const CHAVE_XP_ADICAO = "questoesAdicaoComXP";
+
+        let acertosAdicao = 0;
+
+        let questoesRespondidasAdicao = [];
+
+        let xpGanhoAdicao = 0;
+
+
+        // Carregar questões que já concederam XP.
+
+        function obterQuestoesComXPAdicao() {
+
+            try {
+
+                const dados = JSON.parse(
+                    localStorage.getItem(CHAVE_XP_ADICAO) || "[]"
+                );
+
+                return Array.isArray(dados) ? dados : [];
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao carregar o progresso da adição:",
+                    erro
+                );
+
+                return [];
+
+            }
+
+        }
+
+
+        // Atualizar pontuação.
+
+        function atualizarPontuacaoAdicao() {
+
+            const pontuacao = document.getElementById("pontuacao");
+
+            pontuacao.textContent =
+                "Pontuação: " + acertosAdicao + "/5";
+
+        }
+
+
+        // Atualizar XP exibido.
+
+        function atualizarXPAdicao() {
+
+            document.getElementById("xpTotalAdicao").textContent =
+                obterXP();
+
+        }
+
+
+        // Exibir resultado.
+
+        function mostrarResultadoAdicao(texto) {
+
+            document.getElementById("resultado").textContent = texto;
+
+        }
+
+
+        // Responder questão.
+
+        function responderQuestaoAdicao(numero, correta, botao) {
+
+            if (questoesRespondidasAdicao.includes(numero)) {
+
+                return;
+
+            }
+
+
+            questoesRespondidasAdicao.push(numero);
+
+
+            const questao = document.querySelector(
+                '.questao[data-numero="' + numero + '"]'
+            );
+
+
+            const botoes = questao.querySelectorAll("button");
+
+
+            botoes.forEach(function(item) {
+
+                item.disabled = true;
+
+                item.classList.add("resposta-bloqueada");
+
+            });
+
+
+            if (typeof registrarEstudoHoje === "function") {
+
+                registrarEstudoHoje();
+
+            }
+
+
+            if (correta) {
+
+                acertosAdicao++;
+
+                botao.classList.add("resposta-correta");
+
+
+                const questoesComXP = obterQuestoesComXPAdicao();
+
+                const identificador = String(numero);
+
+
+                if (!questoesComXP.includes(identificador)) {
+
+                    questoesComXP.push(identificador);
+
+                    localStorage.setItem(
+                        CHAVE_XP_ADICAO,
+                        JSON.stringify(questoesComXP)
+                    );
+
+                    adicionarXP(10);
+
+                    xpGanhoAdicao += 10;
+
+                    mostrarResultadoAdicao(
+                        "Resposta correta! Você ganhou 10 XP."
+                    );
+
+                } else {
+
+                    mostrarResultadoAdicao(
+                        "Resposta correta! Você já recebeu XP por esta questão."
+                    );
+
+                }
+
+            } else {
+
+                botao.classList.add("resposta-errada");
+
+                mostrarResultadoAdicao(
+                    "Resposta incorreta. Continue estudando!"
+                );
+
+            }
+
+
+            atualizarPontuacaoAdicao();
+
+            atualizarXPAdicao();
+
+
+            if (questoesRespondidasAdicao.length === 5) {
+
+                if (acertosAdicao === 5) {
+
+                    mostrarResultadoAdicao(
+                        "Parabéns! Você acertou todas as questões!"
+                    );
+
+                } else {
+
+                    mostrarResultadoAdicao(
+                        "Atividade concluída! Você acertou " +
+                        acertosAdicao + " de 5 questões."
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        // Mostrar XP atual ao abrir a página.
+
+        atualizarXPAdicao();
+
+
+        // Atualizar ícones.
+
+        lucide.createIcons();
+
+    </script>
+
+
+</body>
+
+  </html>
+  
