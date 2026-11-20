@@ -1097,7 +1097,29 @@ header svg {
 .configuracoes button:hover {
     background: #294ec5;
     transform: translateY(-3px);
+} 
+
+/* BOTÃO TEMA - RECURSO PREMIUM */
+
+.configuracoes button.nivel-premium {
+    background: linear-gradient(
+        135deg,
+        #d4af37,
+        #f59e0b,
+        #d97706
+    );
+    color: white;
 }
+
+.configuracoes button.nivel-premium:hover {
+    background: linear-gradient(
+        135deg,
+        #e0bd45,
+        #f59e0b,
+        #c96b05
+    );
+    transform: translateY(-3px);
+} 
 
 .modo-escuro .card-perfil {
     background: #13294b;
