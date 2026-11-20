@@ -244,9 +244,326 @@ if (abaLogin && abaCadastro && formLogin && formCadastro) {
 
     });
 
-}// ================================
-// SISTEMA DE QUESTÕES
+}
+
 // ================================
+// CADASTRO E LOGIN - SUPABASE
+// ================================
+
+const mensagemAutenticacao = document.getElementById("mensagemAutenticacao");
+
+const botaoCadastrar = document.getElementById("botaoCadastrar");
+const botaoEntrar = document.getElementById("botaoEntrar");
+
+
+// Exibir mensagens de autenticação
+
+function mostrarMensagemAutenticacao(texto) {
+
+    if (mensagemAutenticacao) {
+
+        mensagemAutenticacao.textContent = texto;
+
+    }
+
+}
+
+
+// Carregar perfil e entrar no sistema
+
+async function carregarPerfilEEntrar(usuario) {
+
+    const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("display_name, tipo_usuario")
+        .eq("id", usuario.id)
+        .single();
+
+    if (error || !data) {
+
+        mostrarMensagemAutenticacao(
+            "Sua conta foi autenticada, mas não foi possível carregar seu perfil. Tente novamente."
+        );
+
+        return false;
+
+    }
+
+    localStorage.setItem("nomeUsuario", data.display_name);
+    localStorage.setItem("tipoUsuario", data.tipo_usuario);
+
+    window.location.href = "inicio.html";
+
+    return true;
+
+}
+
+
+// CADASTRAR CONTA
+
+if (formCadastro) {
+
+    formCadastro.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        if (!supabaseClient) {
+
+            mostrarMensagemAutenticacao(
+                "Não foi possível conectar ao sistema de autenticação."
+            );
+
+            return;
+
+        }
+
+        const nome = document
+            .getElementById("nomeExibicao")
+            .value.trim();
+
+        const username = document
+            .getElementById("usernameCadastro")
+            .value.trim()
+            .toLowerCase();
+
+        const email = document
+            .getElementById("emailCadastro")
+            .value.trim();
+
+        const senha = document
+            .getElementById("senhaCadastro")
+            .value;
+
+        const confirmarSenha = document
+            .getElementById("confirmarSenha")
+            .value;
+
+
+        if (nome.length === 0 || nome.length > 50) {
+
+            mostrarMensagemAutenticacao(
+                "Informe um nome de exibição com até 50 caracteres."
+            );
+
+            return;
+
+        }
+
+        if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+
+            mostrarMensagemAutenticacao(
+                "O nome de usuário deve ter de 3 a 20 caracteres, usando letras, números ou sublinhado."
+            );
+
+            return;
+
+        }
+
+        if (senha.length < 6) {
+
+            mostrarMensagemAutenticacao(
+                "A senha precisa ter pelo menos 6 caracteres."
+            );
+
+            return;
+
+        }
+
+        if (senha !== confirmarSenha) {
+
+            mostrarMensagemAutenticacao(
+                "As senhas não são iguais."
+            );
+
+            return;
+
+        }
+
+
+        botaoCadastrar.disabled = true;
+
+        mostrarMensagemAutenticacao(
+            "Criando sua conta..."
+        );
+
+
+        try {
+
+            const { data, error } = await supabaseClient.auth.signUp({
+
+                email: email,
+
+                password: senha,
+
+                options: {
+
+                    data: {
+                        display_name: nome,
+                        username: username
+                    },
+
+                    emailRedirectTo:
+                        "https://kailane-art.github.io/matematica-avante/index.html"
+
+                }
+
+            });
+
+
+            if (error) {
+
+                const detalhesErro = (
+                    error.message + " " +
+                    (error.details || "") + " " +
+                    (error.hint || "")
+                ).toLowerCase();
+
+                if (
+                    detalhesErro.includes("duplicate key") ||
+                    detalhesErro.includes("profiles_username")
+                ) {
+
+                    throw new Error(
+                        "Esse nome de usuário já está em uso. Escolha outro."
+                    );
+
+                }
+
+                if (detalhesErro.includes("already registered")) {
+
+                    throw new Error(
+                        "Esse email já possui uma conta cadastrada."
+                    );
+
+                }
+
+                throw error;
+
+            }
+
+
+            if (data.session && data.user) {
+
+                mostrarMensagemAutenticacao(
+                    "Conta criada! Entrando no sistema..."
+                );
+
+                await carregarPerfilEEntrar(data.user);
+
+            } else {
+
+                mostrarMensagemAutenticacao(
+                    "Conta criada! Verifique seu email para confirmar o cadastro antes de entrar."
+                );
+
+                formCadastro.reset();
+
+            }
+
+        } catch (erro) {
+
+            console.error("Erro no cadastro:", erro);
+
+            mostrarMensagemAutenticacao(
+                erro.message || "Não foi possível criar sua conta."
+            );
+
+        } finally {
+
+            botaoCadastrar.disabled = false;
+
+        }
+
+    });
+
+}
+
+
+// ENTRAR NA CONTA
+
+if (formLogin) {
+
+    formLogin.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        if (!supabaseClient) {
+
+            mostrarMensagemAutenticacao(
+                "Não foi possível conectar ao sistema de autenticação."
+            );
+
+            return;
+
+        }
+
+        const email = document
+            .getElementById("emailLogin")
+            .value.trim();
+
+        const senha = document
+            .getElementById("senhaLogin")
+            .value;
+
+
+        botaoEntrar.disabled = true;
+
+        mostrarMensagemAutenticacao(
+            "Verificando seus dados..."
+        );
+
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.auth.signInWithPassword({
+
+                    email: email,
+                    password: senha
+
+                });
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            if (!data.user) {
+
+                throw new Error(
+                    "Não foi possível identificar sua conta."
+                );
+
+            }
+
+
+            mostrarMensagemAutenticacao(
+                "Login realizado! Carregando seu perfil..."
+            );
+
+            await carregarPerfilEEntrar(data.user);
+
+
+        } catch (erro) {
+
+            console.error("Erro no login:", erro);
+
+            mostrarMensagemAutenticacao(
+                "Email ou senha incorretos, ou sua conta ainda não foi confirmada."
+            );
+
+        } finally {
+
+            botaoEntrar.disabled = false;
+
+        }
+
+    });
+
+} 
 
 
 let pontos = 0;
