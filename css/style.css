@@ -2683,3 +2683,231 @@ header svg {
     }
 
 }  
+
+/* =====================================================
+   AUTENTICAÇÃO - LOGIN E CADASTRO
+   ===================================================== */
+
+.auth-container {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 470px);
+    margin: 35px auto 0;
+    padding: 28px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 22px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    text-align: left;
+}
+
+.auth-abas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 5px;
+    margin-bottom: 25px;
+    background: #eef3ff;
+    border-radius: 12px;
+}
+
+.auth-abas .auth-aba {
+    padding: 12px;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: #1E3A8A;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: none;
+    transition: 0.25s;
+}
+
+.auth-abas .auth-aba:hover {
+    transform: none;
+    background: #dce7ff;
+}
+
+.auth-abas .auth-aba.ativa {
+    background: #1E3A8A;
+    color: white;
+}
+
+.auth-form h3 {
+    margin-bottom: 8px;
+    color: #1E3A8A;
+    font-size: 25px;
+    text-align: center;
+}
+
+.auth-form > p {
+    margin: 0 auto 22px;
+    color: #666;
+    font-size: 15px;
+    text-align: center;
+}
+
+.auth-form label {
+    display: block;
+    margin: 16px 0 7px;
+    color: #263b63;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 11px;
+    outline: none;
+    background: #f8faff;
+    color: #222;
+    font-family: inherit;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.auth-form input:focus {
+    border-color: #4169E1;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(65, 105, 225, 0.10);
+}
+
+.auth-form input::placeholder {
+    color: #999;
+}
+
+.auth-form small {
+    display: block;
+    margin-top: 7px;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.auth-form button[type="submit"] {
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px;
+    border: none;
+    border-radius: 11px;
+    background: #1E3A8A;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: none;
+    transition: 0.25s;
+}
+
+.auth-form button[type="submit"]:hover {
+    background: #294ec5;
+    transform: translateY(-2px);
+}
+
+.auth-form #botaoRecuperarSenha {
+    display: block;
+    margin: 12px 0 0 auto;
+    padding: 5px 0;
+    border: none;
+    background: transparent;
+    color: #4169E1;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.auth-form #botaoRecuperarSenha:hover {
+    color: #1E3A8A;
+    text-decoration: underline;
+    transform: none;
+}
+
+.auth-aviso {
+    margin: 18px 0 0 !important;
+    padding: 12px;
+    border-radius: 10px;
+    background: #eef3ff;
+    color: #334155 !important;
+    font-size: 13px !important;
+    line-height: 1.5;
+    text-align: left !important;
+}
+
+#mensagemAutenticacao {
+    margin: 18px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.auth-container [hidden] {
+    display: none !important;
+}
+
+/* MODO ESCURO */
+
+.modo-escuro .auth-container {
+    background: #13294b;
+    border-color: #29456f;
+    color: white;
+}
+
+.modo-escuro .auth-form h3 {
+    color: #FFD54F;
+}
+
+.modo-escuro .auth-form > p {
+    color: #e5e7eb;
+}
+
+.modo-escuro .auth-form label {
+    color: #e5e7eb;
+}
+
+.modo-escuro .auth-form input {
+    background: #0b1d3a;
+    border-color: #29456f;
+    color: white;
+}
+
+.modo-escuro .auth-form input:focus {
+    border-color: #FFD54F;
+}
+
+.modo-escuro .auth-abas {
+    background: #0b1d3a;
+}
+
+.modo-escuro .auth-abas .auth-aba {
+    color: #e5e7eb;
+}
+
+.modo-escuro .auth-abas .auth-aba.ativa {
+    background: #1E3A8A;
+    color: white;
+}
+
+.modo-escuro .auth-aviso {
+    background: #1d3b6d;
+    color: #e5e7eb !important;
+}
+
+.modo-escuro .auth-form #botaoRecuperarSenha {
+    color: #FFD54F;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 500px) {
+    .auth-container {
+        padding: 22px 17px;
+        border-radius: 17px;
+    }
+
+    .auth-form h3 {
+        font-size: 22px;
+    }
+}
