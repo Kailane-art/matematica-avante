@@ -209,7 +209,56 @@ if (window.supabase && window.supabase.createClient) {
     );
 }
 
+// ================================
+// PROTEÇÃO DE PÁGINAS COM LOGIN
+// ================================
 
+const paginasProtegidas = new Set([
+    "inicio.html",
+    "perfil.html",
+    "materias.html",
+    "atividades.html",
+    "professores.html",
+    "geometria.html",
+    "basico.html",
+    "aprender-basico.html",
+    "nivel1.html",
+    "adicao.html",
+    "subtracao.html",
+    "multiplicacao.html",
+    "divisao.html"
+]);
+
+const paginaAtual = window.location.pathname.split("/").pop() || "index.html";
+
+if (paginasProtegidas.has(paginaAtual)) {
+
+    (async function(){
+
+        try {
+
+            if (!supabaseClient) {
+                window.location.replace("index.html");
+                return;
+            }
+
+            const { data: { user }, error } =
+                await supabaseClient.auth.getUser();
+
+            if (error || !user) {
+                window.location.replace("index.html");
+            }
+
+        } catch (erro) {
+
+            console.error("Erro ao verificar sessão:", erro);
+            window.location.replace("index.html");
+
+        }
+
+    })();
+
+                } 
 // ================================
 // ABAS DE LOGIN E CADASTRO
 // ================================
