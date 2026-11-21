@@ -3076,3 +3076,20 @@ header svg {
         width: 100%;
     }
     }
+/* =================================
+   VERIFICAÇÃO DE SESSÃO
+================================= */
+
+html.verificando-sessao::before {
+    content: "Verificando sua sessão...";
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f8ff;
+    color: #1E3A8A;
+    font-size: 17px;
+    font-weight: 600;
+} 
