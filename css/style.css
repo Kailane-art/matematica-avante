@@ -3523,3 +3523,146 @@ html.verificando-sessao:has(body.modo-escuro)::before {
     color: #cbd5e1;
 }
 
+
+
+/* =====================================================
+   NOTIFICAÇÃO DE NÍVEL BLOQUEADO — AZUL ROYAL
+   ===================================================== */
+
+.notificacao-nivel-bloqueado {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(92%, 700px);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: #e8efff;
+    color: #172554;
+    border: 2px solid #4169e1;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    z-index: 2001;
+}
+
+.notificacao-nivel-bloqueado[hidden] {
+    display: none;
+}
+
+.notificacao-nivel-icone {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #4169e1;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notificacao-nivel-icone svg {
+    width: 26px;
+    height: 26px;
+    stroke-width: 2.5;
+}
+
+.notificacao-nivel-conteudo {
+    flex: 1;
+}
+
+.notificacao-nivel-conteudo strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #1e3a8a;
+    font-size: 18px;
+}
+
+.notificacao-nivel-conteudo p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1e40af;
+}
+
+.notificacao-nivel-acoes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.botao-fechar-nivel {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #1e40af;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.botao-fechar-nivel svg {
+    width: 21px;
+    height: 21px;
+    stroke: #1e40af;
+    stroke-width: 2.5;
+}
+
+.botao-fechar-nivel:hover {
+    background: rgba(65, 105, 225, 0.15);
+}
+
+.modo-escuro .notificacao-nivel-bloqueado {
+    background: #102b5c;
+    color: white;
+    border-color: #4169e1;
+}
+
+.modo-escuro .notificacao-nivel-conteudo strong {
+    color: #bfdbfe;
+}
+
+.modo-escuro .notificacao-nivel-conteudo p {
+    color: #dbeafe;
+}
+
+.modo-escuro .notificacao-nivel-icone {
+    background: #4169e1;
+    color: white;
+}
+
+.modo-escuro .botao-fechar-nivel,
+.modo-escuro .botao-fechar-nivel svg {
+    color: #bfdbfe;
+    stroke: #bfdbfe;
+}
+
+@media (max-width: 700px) {
+    .notificacao-nivel-bloqueado {
+        top: 12px;
+        width: calc(100% - 24px);
+        align-items: flex-start;
+        padding: 14px;
+        gap: 11px;
+    }
+
+    .notificacao-nivel-icone {
+        width: 40px;
+        height: 40px;
+    }
+
+    .notificacao-nivel-conteudo strong {
+        font-size: 16px;
+    }
+
+    .notificacao-nivel-conteudo p {
+        font-size: 13px;
+    }
+}
