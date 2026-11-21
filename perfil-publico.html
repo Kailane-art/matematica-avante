@@ -49,6 +49,14 @@
             </a>
         </p>
 
+        <div id="acoesPerfilPublico" class="acoes-perfil-publico" hidden>
+            <button id="botaoAdicionarAmizade" type="button" disabled>
+                <i data-lucide="user-round-plus"></i>
+                Adicionar amizade
+            </button>
+            <p>O envio de solicitações de amizade estará disponível em breve.</p>
+        </div>
+
         <p id="statusPerfilPublico" role="status" aria-live="polite"></p>
 
     </section>
@@ -99,6 +107,14 @@ async function carregarPerfilPublico() {
         }
 
         nome.textContent = perfil.display_name || "Usuário";
+
+        const { data: sessaoAtual } = await supabaseClient.auth.getUser();
+        const ehProprioPerfil = sessaoAtual?.user?.id === perfil.id;
+        const acoesPerfil = document.getElementById("acoesPerfilPublico");
+
+        if (acoesPerfil && !ehProprioPerfil) {
+            acoesPerfil.hidden = false;
+        }
         username.textContent = "@" + perfil.username;
         tipo.textContent =
             perfil.tipo_usuario === "professor"
@@ -113,9 +129,25 @@ async function carregarPerfilPublico() {
                 .from("avatars")
                 .getPublicUrl(perfil.avatar_path);
 
+            foto.onload = function() {
+                foto.hidden = false;
+
+                const iconeAtual = document.getElementById("iconeAvatarPublico");
+                if (iconeAtual) {
+                    iconeAtual.hidden = true;
+                }
+            };
+
+            foto.onerror = function() {
+                foto.hidden = true;
+
+                const iconeAtual = document.getElementById("iconeAvatarPublico");
+                if (iconeAtual) {
+                    iconeAtual.hidden = false;
+                }
+            };
+
             foto.src = imagem.publicUrl + "?v=" + Date.now();
-            foto.hidden = false;
-            icone.hidden = true;
 
         }
 
