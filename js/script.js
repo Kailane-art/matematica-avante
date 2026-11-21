@@ -953,7 +953,9 @@ if(fecharNotificacaoPremium){
 
 const CHAVE_STREAK = "diasEstudados";
 
-const CHAVE_ULTIMA_ATIVIDADE = "ultimaAtividade"; 
+const CHAVE_ULTIMA_ATIVIDADE = "ultimaAtividade";
+
+let diasEstudoSincronizados = null;
 // =====================================================
 // OBTER DATA LOCAL NO FORMATO YYYY-MM-DD
 // =====================================================
@@ -1000,6 +1002,12 @@ function converterData(dataString) {
 // =====================================================
 
 function obterDiasEstudados() {
+
+    if (Array.isArray(diasEstudoSincronizados)) {
+
+        return [...new Set(diasEstudoSincronizados)].sort();
+
+    }
 
     const salvo =
         localStorage.getItem(
@@ -1491,6 +1499,233 @@ if (
     atualizarSequenciaInicio();
 
 }  
+
+
+// =====================================================
+// INDICADORES E ÚLTIMA ATIVIDADE SINCRONIZADOS
+// =====================================================
+
+async function registrarUltimaAtividade(chave, nome, url) {
+
+    if (!supabaseClient) return false;
+
+    try {
+
+        const { data: { user }, error: erroUsuario } =
+            await supabaseClient.auth.getUser();
+
+        if (erroUsuario || !user) return false;
+
+        const { error } = await supabaseClient.rpc(
+            "record_user_last_activity",
+            {
+                p_activity_key: chave,
+                p_activity_name: nome,
+                p_activity_url: url
+            }
+        );
+
+        if (error) throw error;
+
+        return true;
+
+    } catch (erro) {
+
+        console.error("Não foi possível registrar a última atividade:", erro);
+        return false;
+
+    }
+
+}
+
+
+async function carregarIndicadoresUsuario() {
+
+    if (!supabaseClient) return;
+
+    try {
+
+        const { data: { user }, error: erroUsuario } =
+            await supabaseClient.auth.getUser();
+
+        if (erroUsuario || !user) return;
+
+        const [
+            resultadoQuestoes,
+            resultadoDias,
+            resultadoUltimaAtividade
+        ] = await Promise.all([
+
+            supabaseClient
+                .from("user_question_attempts")
+                .select("id", { count: "exact", head: true })
+                .eq("user_id", user.id),
+
+            supabaseClient
+                .from("user_study_days")
+                .select("study_date")
+                .eq("user_id", user.id)
+                .order("study_date", { ascending: true }),
+
+            supabaseClient
+                .from("user_last_activity")
+                .select("activity_name, activity_url, last_accessed_at")
+                .eq("user_id", user.id)
+                .maybeSingle()
+
+        ]);
+
+        if (resultadoQuestoes.error) throw resultadoQuestoes.error;
+        if (resultadoDias.error) throw resultadoDias.error;
+        if (resultadoUltimaAtividade.error) {
+            throw resultadoUltimaAtividade.error;
+        }
+
+        const elementoQuestoes = document.getElementById(
+            "questoesRespondidasPerfil"
+        );
+
+        if (elementoQuestoes) {
+            elementoQuestoes.textContent =
+                resultadoQuestoes.count || 0;
+        }
+
+        diasEstudoSincronizados = (resultadoDias.data || [])
+            .map(function(registro) {
+                return registro.study_date;
+            });
+
+        atualizarSequenciaInicio();
+
+        const sequenciaPerfil = document.getElementById(
+            "sequenciaEstudosPerfil"
+        );
+
+        if (sequenciaPerfil) {
+
+            const sequencia = calcularSequenciaAtual();
+
+            sequenciaPerfil.textContent =
+                sequencia === 1
+                    ? "1 dia"
+                    : sequencia + " dias";
+
+        }
+
+        const elementoUltimaAtividade = document.getElementById(
+            "ultimaAtividade"
+        );
+
+        if (elementoUltimaAtividade) {
+
+            const atividade = resultadoUltimaAtividade.data;
+            const dataSalva = atividade?.last_accessed_at ||
+                localStorage.getItem(CHAVE_ULTIMA_ATIVIDADE);
+
+            if (dataSalva) {
+
+                const data = new Date(dataSalva);
+
+                if (!isNaN(data.getTime())) {
+
+                    const dataFormatada = data.toLocaleDateString("pt-BR");
+                    const horaFormatada = data.toLocaleTimeString(
+                        "pt-BR",
+                        {
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        }
+                    );
+
+                    elementoUltimaAtividade.textContent =
+                        atividade?.activity_name
+                            ? atividade.activity_name + " • " +
+                              dataFormatada + " às " + horaFormatada
+                            : dataFormatada + " às " + horaFormatada;
+
+                }
+
+            } else {
+
+                elementoUltimaAtividade.textContent = "Nenhuma ainda";
+
+            }
+
+        }
+
+    } catch (erro) {
+
+        console.error("Não foi possível carregar os indicadores do usuário:", erro);
+
+    }
+
+}
+
+
+// =====================================================
+// REGISTRAR ACESSO A CONTEÚDOS EDUCACIONAIS
+// =====================================================
+
+const conteudosRastreaveis = {
+
+    "basico.html": {
+        chave: "basico",
+        nome: "Básico da Matemática"
+    },
+
+    "geometria.html": {
+        chave: "geometria",
+        nome: "Geometria"
+    },
+
+    "adicao.html": {
+        chave: "adicao",
+        nome: "Adição"
+    },
+
+    "subtracao.html": {
+        chave: "subtracao",
+        nome: "Subtração"
+    },
+
+    "multiplicacao.html": {
+        chave: "multiplicacao",
+        nome: "Multiplicação"
+    },
+
+    "divisao.html": {
+        chave: "divisao",
+        nome: "Divisão"
+    }
+
+};
+
+const conteudoAtual = conteudosRastreaveis[paginaAtual];
+
+if (conteudoAtual) {
+
+    registrarUltimaAtividade(
+        conteudoAtual.chave,
+        conteudoAtual.nome,
+        paginaAtual
+    );
+
+}
+
+
+// Atualiza os painéis que exibem os indicadores do usuário.
+
+if (
+    document.getElementById("questoesRespondidasPerfil") ||
+    document.getElementById("sequenciaEstudosPerfil") ||
+    document.getElementById("diasSequencia") ||
+    document.getElementById("ultimaAtividade")
+) {
+
+    carregarIndicadoresUsuario();
+
+}
+
 
 // =====================================================
 // SISTEMA DE XP
