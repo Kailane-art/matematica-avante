@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil público - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<header>
+    <button id="voltarPagina" type="button" aria-label="Voltar">
+        <i data-lucide="arrow-left"></i>
+    </button>
+
+    <h1>Perfil público</h1>
+
+    <button id="modoEscuro" type="button" aria-label="Alternar tema">
+        <i data-lucide="moon"></i>
+    </button>
+</header>
+
+<main class="perfil-container">
+
+    <section class="card-perfil identidade">
+
+        <div class="avatar-area">
+            <i id="iconeAvatarPublico" data-lucide="user-round"></i>
+            <img id="fotoPerfilPublico" src="" alt="Foto do perfil" hidden>
+        </div>
+
+        <h2>Perfil do estudante</h2>
+
+        <h3 id="nomePerfilPublico">Carregando perfil...</h3>
+
+        <p id="usernamePerfilPublico"></p>
+
+        <p id="tipoPerfilPublico"></p>
+
+        <p id="bioPerfilPublico"></p>
+
+        <p>
+            <a id="linkPerfilPublico" href="" target="_blank" rel="noopener noreferrer" hidden>
+                Acessar link
+            </a>
+        </p>
+
+        <p id="statusPerfilPublico" role="status" aria-live="polite"></p>
+
+    </section>
+
+</main>
+
+<script src="js/script.js"></script>
+
+<script>
+
+async function carregarPerfilPublico() {
+
+    const status = document.getElementById("statusPerfilPublico");
+    const nome = document.getElementById("nomePerfilPublico");
+    const username = document.getElementById("usernamePerfilPublico");
+    const tipo = document.getElementById("tipoPerfilPublico");
+    const bio = document.getElementById("bioPerfilPublico");
+    const link = document.getElementById("linkPerfilPublico");
+    const foto = document.getElementById("fotoPerfilPublico");
+    const icone = document.getElementById("iconeAvatarPublico");
+
+    const parametros = new URLSearchParams(window.location.search);
+    const nomeUsuario = (parametros.get("usuario") || "").trim();
+
+    if (!/^[a-zA-Z0-9_]{3,20}$/.test(nomeUsuario)) {
+        nome.textContent = "Perfil não encontrado";
+        status.textContent = "O endereço do perfil é inválido.";
+        return;
+    }
+
+    try {
+
+        const { data, error } = await supabaseClient.rpc(
+            "get_public_profile",
+            { p_username: nomeUsuario }
+        );
+
+        if (error) {
+            throw error;
+        }
+
+        const perfil = Array.isArray(data) ? data[0] : data;
+
+        if (!perfil) {
+            nome.textContent = "Perfil não encontrado";
+            status.textContent = "Esse usuário não existe ou o perfil não está disponível.";
+            return;
+        }
+
+        nome.textContent = perfil.display_name || "Usuário";
+        username.textContent = "@" + perfil.username;
+        tipo.textContent =
+            perfil.tipo_usuario === "professor"
+                ? "Professor"
+                : "Aluno";
+        bio.textContent = perfil.bio || "Este usuário ainda não adicionou uma bio.";
+
+        if (perfil.avatar_path) {
+
+            const { data: imagem } = supabaseClient
+                .storage
+                .from("avatars")
+                .getPublicUrl(perfil.avatar_path);
+
+            foto.src = imagem.publicUrl + "?v=" + Date.now();
+            foto.hidden = false;
+            icone.hidden = true;
+
+        }
+
+        if (perfil.link) {
+
+            link.href = perfil.link;
+            link.textContent = perfil.link;
+            link.hidden = false;
+
+        }
+
+        status.textContent = "";
+
+    } catch (erro) {
+
+        console.error("Erro ao carregar perfil público:", erro);
+        nome.textContent = "Não foi possível carregar o perfil";
+        status.textContent = "Verifique sua conexão e tente novamente.";
+
+    }
+
+}
+
+carregarPerfilPublico();
+
+if (window.lucide) {
+    lucide.createIcons();
+}
+
+</script>
+
+</body>
+</html>
