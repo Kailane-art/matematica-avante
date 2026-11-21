@@ -3471,3 +3471,29 @@ html.verificando-sessao:has(body.modo-escuro)::before {
         flex-direction: column-reverse;
     }
 }
+
+/* Identidade do usuário no perfil */
+.identidade .username-perfil {
+    margin: -10px 0 14px;
+    font-size: 13px;
+    opacity: 0.55;
+    letter-spacing: 0.2px;
+}
+
+.identidade .bio-perfil {
+    max-width: 520px;
+    margin: 0 auto 18px;
+    color: #555;
+    font-size: 15px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.modo-escuro .identidade h3 {
+    color: #f1f5f9;
+}
+
+.modo-escuro .identidade .bio-perfil {
+    color: #cbd5e1;
+}
+
