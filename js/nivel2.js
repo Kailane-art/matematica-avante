@@ -4044,8 +4044,7 @@ async function inicializarNivel2() {
     const acessoNivel = await verificarAcessoNivelProgressivo(2);
 
     if (!acessoNivel.permitido) {
-        alert(acessoNivel.motivo);
-        window.location.replace("atividades.html");
+        mostrarNotificacaoNivelBloqueado(2, acessoNivel.motivo);
         return;
     }
 
