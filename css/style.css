@@ -3666,3 +3666,50 @@ html.verificando-sessao:has(body.modo-escuro)::before {
         font-size: 13px;
     }
 }
+
+
+/* PERFIL PÚBLICO — AÇÕES DE AMIZADE */
+.acoes-perfil-publico {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    margin: 22px auto 8px;
+}
+
+.acoes-perfil-publico[hidden] {
+    display: none !important;
+}
+
+.acoes-perfil-publico button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 46px;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 12px;
+    background: #4169E1;
+    color: #fff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: not-allowed;
+    opacity: 0.72;
+}
+
+.acoes-perfil-publico button svg {
+    width: 19px;
+    height: 19px;
+}
+
+.acoes-perfil-publico p {
+    color: #64748b;
+    font-size: 13px;
+    text-align: center;
+}
+
+.modo-escuro .acoes-perfil-publico p {
+    color: #cbd5e1;
+}
