@@ -3474,8 +3474,10 @@ html.verificando-sessao:has(body.modo-escuro)::before {
 
 /* Identidade do usuário no perfil */
 .identidade .username-perfil {
-    margin: -10px 0 14px;
+    display: block;
+    margin-top: 2px;
     font-size: 13px;
+    font-weight: 400;
     opacity: 0.55;
     letter-spacing: 0.2px;
 }
