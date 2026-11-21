@@ -1751,6 +1751,70 @@ const conteudosRastreaveis = {
 
 };
 
+// =====================================================
+// BOTÃO CONTINUAR ESTUDANDO
+// =====================================================
+
+const botaoContinuarEstudando = document.getElementById(
+    "continuarEstudando"
+);
+
+if (botaoContinuarEstudando) {
+
+    botaoContinuarEstudando.addEventListener("click", async function() {
+
+        let destino = "atividades.html";
+
+        try {
+
+            if (supabaseClient) {
+
+                const { data: { user }, error: erroUsuario } =
+                    await supabaseClient.auth.getUser();
+
+                if (!erroUsuario && user) {
+
+                    const { data, error } = await supabaseClient
+                        .from("user_last_activity")
+                        .select("activity_url")
+                        .eq("user_id", user.id)
+                        .maybeSingle();
+
+                    if (error) throw error;
+
+                    const ultimaUrl = data?.activity_url;
+
+                    // Só aceita páginas educacionais que o sistema rastreia.
+                    if (
+                        typeof ultimaUrl === "string" &&
+                        Object.prototype.hasOwnProperty.call(
+                            conteudosRastreaveis,
+                            ultimaUrl
+                        )
+                    ) {
+                        destino = ultimaUrl;
+                    }
+
+                }
+
+            }
+
+        } catch (erro) {
+
+            console.error(
+                "Não foi possível recuperar a última atividade:",
+                erro
+            );
+
+        }
+
+        window.location.href = destino;
+
+    });
+
+}
+
+
 const conteudoAtual = conteudosRastreaveis[paginaAtual];
 
 if (conteudoAtual) {
