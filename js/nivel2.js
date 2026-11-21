@@ -4041,6 +4041,14 @@ async function restaurarRevisaoAtivaNivel2() {
 
 async function inicializarNivel2() {
 
+    const acessoNivel = await verificarAcessoNivelProgressivo(2);
+
+    if (!acessoNivel.permitido) {
+        alert(acessoNivel.motivo);
+        window.location.replace("atividades.html");
+        return;
+    }
+
     configurarEventosNivel2();
 
     try {
