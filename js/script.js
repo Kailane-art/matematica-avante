@@ -2520,6 +2520,22 @@ if (formEditarPerfil) {
 
                 }
 
+                const elementoUsernamePerfil =
+                    document.getElementById("usernamePerfil");
+
+                if (elementoUsernamePerfil) {
+                    elementoUsernamePerfil.textContent = "@" + username;
+                    elementoUsernamePerfil.hidden = !username;
+                }
+
+                const elementoBioPerfil =
+                    document.getElementById("bioPerfil");
+
+                if (elementoBioPerfil) {
+                    elementoBioPerfil.textContent = bio;
+                    elementoBioPerfil.hidden = !bio;
+                }
+
 
                 mostrarMensagemEditarPerfil(
                     "Perfil atualizado com sucesso!"
