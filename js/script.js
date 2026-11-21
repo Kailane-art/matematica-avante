@@ -1554,7 +1554,7 @@ async function carregarIndicadoresUsuario() {
         // O banco ignora dias que já existem para essa conta.
         const diasLegados = obterDiasEstudados().filter(function(data) {
             return typeof data === "string" &&
-                /^\\d{4}-\\d{2}-\\d{2}$/.test(data);
+                /^\d{4}-\d{2}-\d{2}$/.test(data);
         });
 
         if (diasLegados.length > 0) {
