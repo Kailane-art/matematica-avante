@@ -3081,7 +3081,7 @@ header svg {
 ================================= */
 
 html.verificando-sessao::before {
-    content: "Verificando sua sessão...";
+    content: "Carregando...";
     position: fixed;
     inset: 0;
     z-index: 100000;
