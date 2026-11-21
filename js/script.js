@@ -224,6 +224,7 @@ const paginasProtegidas = new Set([
     "basico.html",
     "aprender-basico.html",
     "nivel1.html",
+    "nivel2.html",
     "adicao.html",
     "subtracao.html",
     "multiplicacao.html",
