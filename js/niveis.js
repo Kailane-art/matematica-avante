@@ -2013,23 +2013,17 @@ function faseEstaDesbloqueada(numeroFase) {
 // VERIFICAR SE A FASE FOI CONCLUÍDA
 // =====================================================
 
-function faseFoiConcluida(
-    numeroFase
-) {
+function faseFoiConcluida(numeroFase) {
 
-    const dados =
-        obterDadosFase(
-            nivelAtual,
-            numeroFase
-        );
+    const dados = progressoBancoNiveis[numeroFase];
 
-
-    return dados.concluida === true;
+    return Boolean(dados && dados.concluida === true);
 
 }
 
 
 // =====================================================
+// OBTER QUESTÕES DA FASE// =====================================================
 // OBTER QUESTÕES DA FASE
 // =====================================================
 
@@ -2627,10 +2621,29 @@ function avancarQuestao() {
 
 function salvarEstadoAtual() {
 
-    const dadosFase = obterDadosFase(nivelAtual, faseAtual);
+    const progresso = carregarProgresso();
 
-    // O tempo continua local. Respostas, correção e progresso oficial
-    // são mantidos pelo Supabase.
+    if (!progresso.niveis[nivelAtual]) {
+        progresso.niveis[nivelAtual] = { fases: {} };
+    }
+
+    if (!progresso.niveis[nivelAtual].fases[faseAtual]) {
+        progresso.niveis[nivelAtual].fases[faseAtual] = {
+            concluida: false,
+            melhorResultado: 0,
+            questaoAtual: 1,
+            respostas: {},
+            xpRecebido: {},
+            bonusXPRecebido: false,
+            acertos: 0,
+            erros: 0,
+            tempo: 0
+        };
+    }
+
+    const dadosFase =
+        progresso.niveis[nivelAtual].fases[faseAtual];
+
     if (inicioFase) {
         const tempoDecorrido =
             Math.floor((Date.now() - inicioFase) / 1000);
@@ -2643,7 +2656,7 @@ function salvarEstadoAtual() {
     }
 
     dadosFase.questaoAtual = questaoAtual;
-    salvarProgresso(carregarProgresso());
+    salvarProgresso(progresso);
 }
 
 
@@ -2810,7 +2823,6 @@ async function finalizarFase() {
 
 
 // =====================================================
-// MOSTRAR RESULTADO DA FASE// =====================================================
 // MOSTRAR RESULTADO DA FASE
 // =====================================================
 
