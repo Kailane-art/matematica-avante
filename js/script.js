@@ -216,6 +216,7 @@ if (window.supabase && window.supabase.createClient) {
 const paginasProtegidas = new Set([
     "inicio.html",
     "perfil.html",
+    "perfil-publico.html",
     "materias.html",
     "atividades.html",
     "professores.html",
