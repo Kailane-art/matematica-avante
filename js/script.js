@@ -1550,6 +1550,31 @@ async function carregarIndicadoresUsuario() {
 
         if (erroUsuario || !user) return;
 
+        // Importa datas antigas do navegador sem duplicar registros.
+        // O banco ignora dias que já existem para essa conta.
+        const diasLegados = obterDiasEstudados().filter(function(data) {
+            return typeof data === "string" &&
+                /^\\d{4}-\\d{2}-\\d{2}$/.test(data);
+        });
+
+        if (diasLegados.length > 0) {
+
+            const { error: erroImportacao } = await supabaseClient.rpc(
+                "import_legacy_study_days",
+                {
+                    p_study_dates: diasLegados
+                }
+            );
+
+            if (erroImportacao) {
+                console.warn(
+                    "Não foi possível importar os dias antigos de estudo:",
+                    erroImportacao
+                );
+            }
+
+        }
+
         const [
             resultadoQuestoes,
             resultadoDias,
