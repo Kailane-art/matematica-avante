@@ -108,10 +108,10 @@ const fasesNivel1 = {
 //     pergunta: "Quanto é 2 + 3?",
 //
 //     alternativas: [
-//         { texto: "4", correta: false },
-//         { texto: "5", correta: true },
-//         { texto: "6", correta: false },
-//         { texto: "7", correta: false }
+//         { texto: "4" },
+//         { texto: "5" },
+//         { texto: "6" },
+//         { texto: "7" }
 //     ],
 //
 //     explicacao: "Somamos 2 + 3 e obtemos 5."
@@ -129,10 +129,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 24 + 15?",
 
         alternativas: [
-            { texto: "39", correta: true },
-            { texto: "38", correta: false },
-            { texto: "40", correta: false },
-            { texto: "41", correta: false }
+            { texto: "39" },
+            { texto: "38" },
+            { texto: "40" },
+            { texto: "41" }
         ],
 
         explicacao:
@@ -144,10 +144,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 57 - 23?",
 
         alternativas: [
-            { texto: "34", correta: true },
-            { texto: "33", correta: false },
-            { texto: "35", correta: false },
-            { texto: "36", correta: false }
+            { texto: "34" },
+            { texto: "33" },
+            { texto: "35" },
+            { texto: "36" }
         ],
 
         explicacao:
@@ -159,10 +159,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 7 × 6?",
 
         alternativas: [
-            { texto: "42", correta: true },
-            { texto: "36", correta: false },
-            { texto: "48", correta: false },
-            { texto: "40", correta: false }
+            { texto: "42" },
+            { texto: "36" },
+            { texto: "48" },
+            { texto: "40" }
         ],
 
         explicacao:
@@ -174,10 +174,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 48 ÷ 6?",
 
         alternativas: [
-            { texto: "8", correta: true },
-            { texto: "6", correta: false },
-            { texto: "7", correta: false },
-            { texto: "9", correta: false }
+            { texto: "8" },
+            { texto: "6" },
+            { texto: "7" },
+            { texto: "9" }
         ],
 
         explicacao:
@@ -189,10 +189,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 35 + 27?",
 
         alternativas: [
-            { texto: "62", correta: true },
-            { texto: "61", correta: false },
-            { texto: "63", correta: false },
-            { texto: "64", correta: false }
+            { texto: "62" },
+            { texto: "61" },
+            { texto: "63" },
+            { texto: "64" }
         ],
 
         explicacao:
@@ -204,10 +204,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 81 - 46?",
 
         alternativas: [
-            { texto: "35", correta: true },
-            { texto: "34", correta: false },
-            { texto: "36", correta: false },
-            { texto: "37", correta: false }
+            { texto: "35" },
+            { texto: "34" },
+            { texto: "36" },
+            { texto: "37" }
         ],
 
         explicacao:
@@ -219,10 +219,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 8 × 4?",
 
         alternativas: [
-            { texto: "32", correta: true },
-            { texto: "28", correta: false },
-            { texto: "30", correta: false },
-            { texto: "36", correta: false }
+            { texto: "32" },
+            { texto: "28" },
+            { texto: "30" },
+            { texto: "36" }
         ],
 
         explicacao:
@@ -234,10 +234,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 72 ÷ 9?",
 
         alternativas: [
-            { texto: "8", correta: true },
-            { texto: "7", correta: false },
-            { texto: "9", correta: false },
-            { texto: "6", correta: false }
+            { texto: "8" },
+            { texto: "7" },
+            { texto: "9" },
+            { texto: "6" }
         ],
 
         explicacao:
@@ -249,10 +249,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 18 + 26 - 10?",
 
         alternativas: [
-            { texto: "34", correta: true },
-            { texto: "32", correta: false },
-            { texto: "36", correta: false },
-            { texto: "38", correta: false }
+            { texto: "34" },
+            { texto: "32" },
+            { texto: "36" },
+            { texto: "38" }
         ],
 
         explicacao:
@@ -264,10 +264,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 5 × 7 + 3?",
 
         alternativas: [
-            { texto: "38", correta: true },
-            { texto: "35", correta: false },
-            { texto: "40", correta: false },
-            { texto: "42", correta: false }
+            { texto: "38" },
+            { texto: "35" },
+            { texto: "40" },
+            { texto: "42" }
         ],
 
         explicacao:
@@ -282,10 +282,10 @@ const questoesNivel1 = {
         pergunta: "Quantos lados tem um triângulo?",
 
         alternativas: [
-            { texto: "3", correta: true },
-            { texto: "4", correta: false },
-            { texto: "5", correta: false },
-            { texto: "6", correta: false }
+            { texto: "3" },
+            { texto: "4" },
+            { texto: "5" },
+            { texto: "6" }
         ],
 
         explicacao:
@@ -297,10 +297,10 @@ const questoesNivel1 = {
         pergunta: "Quantos lados tem um quadrado?",
 
         alternativas: [
-            { texto: "4", correta: true },
-            { texto: "3", correta: false },
-            { texto: "5", correta: false },
-            { texto: "6", correta: false }
+            { texto: "4" },
+            { texto: "3" },
+            { texto: "5" },
+            { texto: "6" }
         ],
 
         explicacao:
@@ -312,10 +312,10 @@ const questoesNivel1 = {
         pergunta: "Qual figura possui 3 lados?",
 
         alternativas: [
-            { texto: "Triângulo", correta: true },
-            { texto: "Quadrado", correta: false },
-            { texto: "Círculo", correta: false },
-            { texto: "Retângulo", correta: false }
+            { texto: "Triângulo" },
+            { texto: "Quadrado" },
+            { texto: "Círculo" },
+            { texto: "Retângulo" }
         ],
 
         explicacao:
@@ -327,10 +327,10 @@ const questoesNivel1 = {
         pergunta: "Quantos lados tem um pentágono?",
 
         alternativas: [
-            { texto: "5", correta: true },
-            { texto: "4", correta: false },
-            { texto: "6", correta: false },
-            { texto: "7", correta: false }
+            { texto: "5" },
+            { texto: "4" },
+            { texto: "6" },
+            { texto: "7" }
         ],
 
         explicacao:
@@ -342,10 +342,10 @@ const questoesNivel1 = {
         pergunta: "Um quadrado possui lados de 5 cm. Qual é o seu perímetro?",
 
         alternativas: [
-            { texto: "20 cm", correta: true },
-            { texto: "15 cm", correta: false },
-            { texto: "10 cm", correta: false },
-            { texto: "25 cm", correta: false }
+            { texto: "20 cm" },
+            { texto: "15 cm" },
+            { texto: "10 cm" },
+            { texto: "25 cm" }
         ],
 
         explicacao:
@@ -357,10 +357,10 @@ const questoesNivel1 = {
         pergunta: "Qual figura geométrica não possui lados?",
 
         alternativas: [
-            { texto: "Círculo", correta: true },
-            { texto: "Triângulo", correta: false },
-            { texto: "Quadrado", correta: false },
-            { texto: "Pentágono", correta: false }
+            { texto: "Círculo" },
+            { texto: "Triângulo" },
+            { texto: "Quadrado" },
+            { texto: "Pentágono" }
         ],
 
         explicacao:
@@ -372,10 +372,10 @@ const questoesNivel1 = {
         pergunta: "Um retângulo tem 6 cm de comprimento e 3 cm de largura. Qual é o perímetro?",
 
         alternativas: [
-            { texto: "18 cm", correta: true },
-            { texto: "12 cm", correta: false },
-            { texto: "9 cm", correta: false },
-            { texto: "20 cm", correta: false }
+            { texto: "18 cm" },
+            { texto: "12 cm" },
+            { texto: "9 cm" },
+            { texto: "20 cm" }
         ],
 
         explicacao:
@@ -387,10 +387,10 @@ const questoesNivel1 = {
         pergunta: "Quantos vértices possui um quadrado?",
 
         alternativas: [
-            { texto: "4", correta: true },
-            { texto: "3", correta: false },
-            { texto: "5", correta: false },
-            { texto: "6", correta: false }
+            { texto: "4" },
+            { texto: "3" },
+            { texto: "5" },
+            { texto: "6" }
         ],
 
         explicacao:
@@ -402,10 +402,10 @@ const questoesNivel1 = {
         pergunta: "Qual destas figuras possui quatro lados?",
 
         alternativas: [
-            { texto: "Retângulo", correta: true },
-            { texto: "Triângulo", correta: false },
-            { texto: "Pentágono", correta: false },
-            { texto: "Círculo", correta: false }
+            { texto: "Retângulo" },
+            { texto: "Triângulo" },
+            { texto: "Pentágono" },
+            { texto: "Círculo" }
         ],
 
         explicacao:
@@ -417,10 +417,10 @@ const questoesNivel1 = {
         pergunta: "Um quadrado tem lado de 4 cm. Qual é o seu perímetro?",
 
         alternativas: [
-            { texto: "16 cm", correta: true },
-            { texto: "12 cm", correta: false },
-            { texto: "8 cm", correta: false },
-            { texto: "20 cm", correta: false }
+            { texto: "16 cm" },
+            { texto: "12 cm" },
+            { texto: "8 cm" },
+            { texto: "20 cm" }
         ],
 
         explicacao:
@@ -435,10 +435,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de f(2) na função f(x) = x + 3?",
 
         alternativas: [
-            { texto: "5", correta: true },
-            { texto: "4", correta: false },
-            { texto: "6", correta: false },
-            { texto: "3", correta: false }
+            { texto: "5" },
+            { texto: "4" },
+            { texto: "6" },
+            { texto: "3" }
         ],
 
         explicacao:
@@ -450,10 +450,10 @@ const questoesNivel1 = {
         pergunta: "Na função f(x) = x + 1, qual é o valor de f(4)?",
 
         alternativas: [
-            { texto: "5", correta: true },
-            { texto: "4", correta: false },
-            { texto: "3", correta: false },
-            { texto: "6", correta: false }
+            { texto: "5" },
+            { texto: "4" },
+            { texto: "3" },
+            { texto: "6" }
         ],
 
         explicacao:
@@ -465,10 +465,10 @@ const questoesNivel1 = {
         pergunta: "Se f(x) = 2x, qual é o valor de f(3)?",
 
         alternativas: [
-            { texto: "6", correta: true },
-            { texto: "5", correta: false },
-            { texto: "3", correta: false },
-            { texto: "9", correta: false }
+            { texto: "6" },
+            { texto: "5" },
+            { texto: "3" },
+            { texto: "9" }
         ],
 
         explicacao:
@@ -480,10 +480,10 @@ const questoesNivel1 = {
         pergunta: "Na função f(x) = x - 2, qual é o valor de f(5)?",
 
         alternativas: [
-            { texto: "3", correta: true },
-            { texto: "2", correta: false },
-            { texto: "7", correta: false },
-            { texto: "5", correta: false }
+            { texto: "3" },
+            { texto: "2" },
+            { texto: "7" },
+            { texto: "5" }
         ],
 
         explicacao:
@@ -495,10 +495,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de f(0) na função f(x) = x + 7?",
 
         alternativas: [
-            { texto: "7", correta: true },
-            { texto: "0", correta: false },
-            { texto: "1", correta: false },
-            { texto: "8", correta: false }
+            { texto: "7" },
+            { texto: "0" },
+            { texto: "1" },
+            { texto: "8" }
         ],
 
         explicacao:
@@ -510,10 +510,10 @@ const questoesNivel1 = {
         pergunta: "Se f(x) = 3x, qual é o valor de f(2)?",
 
         alternativas: [
-            { texto: "6", correta: true },
-            { texto: "5", correta: false },
-            { texto: "3", correta: false },
-            { texto: "9", correta: false }
+            { texto: "6" },
+            { texto: "5" },
+            { texto: "3" },
+            { texto: "9" }
         ],
 
         explicacao:
@@ -525,10 +525,10 @@ const questoesNivel1 = {
         pergunta: "Na função f(x) = x + 5, qual é o valor de f(1)?",
 
         alternativas: [
-            { texto: "6", correta: true },
-            { texto: "5", correta: false },
-            { texto: "4", correta: false },
-            { texto: "7", correta: false }
+            { texto: "6" },
+            { texto: "5" },
+            { texto: "4" },
+            { texto: "7" }
         ],
 
         explicacao:
@@ -540,10 +540,10 @@ const questoesNivel1 = {
         pergunta: "Se f(x) = x - 1, qual é o valor de f(6)?",
 
         alternativas: [
-            { texto: "5", correta: true },
-            { texto: "6", correta: false },
-            { texto: "7", correta: false },
-            { texto: "4", correta: false }
+            { texto: "5" },
+            { texto: "6" },
+            { texto: "7" },
+            { texto: "4" }
         ],
 
         explicacao:
@@ -555,10 +555,10 @@ const questoesNivel1 = {
         pergunta: "Se f(x) = 2x + 1, qual é o valor de f(2)?",
 
         alternativas: [
-            { texto: "5", correta: true },
-            { texto: "4", correta: false },
-            { texto: "3", correta: false },
-            { texto: "6", correta: false }
+            { texto: "5" },
+            { texto: "4" },
+            { texto: "3" },
+            { texto: "6" }
         ],
 
         explicacao:
@@ -570,10 +570,10 @@ const questoesNivel1 = {
         pergunta: "Na função f(x) = x + 2, qual é o valor de f(3)?",
 
         alternativas: [
-            { texto: "5", correta: true },
-            { texto: "6", correta: false },
-            { texto: "4", correta: false },
-            { texto: "3", correta: false }
+            { texto: "5" },
+            { texto: "6" },
+            { texto: "4" },
+            { texto: "3" }
         ],
 
         explicacao:
@@ -588,10 +588,10 @@ const questoesNivel1 = {
         pergunta: "Quanto vale x na equação x + 3 = 7?",
 
         alternativas: [
-            { texto: "4", correta: true },
-            { texto: "3", correta: false },
-            { texto: "5", correta: false },
-            { texto: "10", correta: false }
+            { texto: "4" },
+            { texto: "3" },
+            { texto: "5" },
+            { texto: "10" }
         ],
 
         explicacao:
@@ -603,10 +603,10 @@ const questoesNivel1 = {
         pergunta: "Quanto vale x na equação x - 2 = 5?",
 
         alternativas: [
-            { texto: "7", correta: true },
-            { texto: "3", correta: false },
-            { texto: "5", correta: false },
-            { texto: "10", correta: false }
+            { texto: "7" },
+            { texto: "3" },
+            { texto: "5" },
+            { texto: "10" }
         ],
 
         explicacao:
@@ -618,10 +618,10 @@ const questoesNivel1 = {
         pergunta: "Quanto vale x na equação 2x = 10?",
 
         alternativas: [
-            { texto: "5", correta: true },
-            { texto: "2", correta: false },
-            { texto: "8", correta: false },
-            { texto: "12", correta: false }
+            { texto: "5" },
+            { texto: "2" },
+            { texto: "8" },
+            { texto: "12" }
         ],
 
         explicacao:
@@ -633,10 +633,10 @@ const questoesNivel1 = {
         pergunta: "Quanto vale x na equação x + 6 = 10?",
 
         alternativas: [
-            { texto: "4", correta: true },
-            { texto: "6", correta: false },
-            { texto: "16", correta: false },
-            { texto: "3", correta: false }
+            { texto: "4" },
+            { texto: "6" },
+            { texto: "16" },
+            { texto: "3" }
         ],
 
         explicacao:
@@ -648,10 +648,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de 3x quando x = 4?",
 
         alternativas: [
-            { texto: "12", correta: true },
-            { texto: "7", correta: false },
-            { texto: "9", correta: false },
-            { texto: "16", correta: false }
+            { texto: "12" },
+            { texto: "7" },
+            { texto: "9" },
+            { texto: "16" }
         ],
 
         explicacao:
@@ -663,10 +663,10 @@ const questoesNivel1 = {
         pergunta: "Quanto vale x na equação x - 5 = 3?",
 
         alternativas: [
-            { texto: "8", correta: true },
-            { texto: "2", correta: false },
-            { texto: "5", correta: false },
-            { texto: "15", correta: false }
+            { texto: "8" },
+            { texto: "2" },
+            { texto: "5" },
+            { texto: "15" }
         ],
 
         explicacao:
@@ -678,10 +678,10 @@ const questoesNivel1 = {
         pergunta: "Quanto vale x na equação 3x = 15?",
 
         alternativas: [
-            { texto: "5", correta: true },
-            { texto: "3", correta: false },
-            { texto: "12", correta: false },
-            { texto: "18", correta: false }
+            { texto: "5" },
+            { texto: "3" },
+            { texto: "12" },
+            { texto: "18" }
         ],
 
         explicacao:
@@ -693,10 +693,10 @@ const questoesNivel1 = {
         pergunta: "Se x = 5, qual é o valor de x + 4?",
 
         alternativas: [
-            { texto: "9", correta: true },
-            { texto: "1", correta: false },
-            { texto: "20", correta: false },
-            { texto: "8", correta: false }
+            { texto: "9" },
+            { texto: "1" },
+            { texto: "20" },
+            { texto: "8" }
         ],
 
         explicacao:
@@ -708,10 +708,10 @@ const questoesNivel1 = {
         pergunta: "Quanto vale x na equação x + 8 = 12?",
 
         alternativas: [
-            { texto: "4", correta: true },
-            { texto: "8", correta: false },
-            { texto: "20", correta: false },
-            { texto: "3", correta: false }
+            { texto: "4" },
+            { texto: "8" },
+            { texto: "20" },
+            { texto: "3" }
         ],
 
         explicacao:
@@ -723,10 +723,10 @@ const questoesNivel1 = {
         pergunta: "Se x = 3, qual é o valor de 2x + 1?",
 
         alternativas: [
-            { texto: "7", correta: true },
-            { texto: "6", correta: false },
-            { texto: "5", correta: false },
-            { texto: "8", correta: false }
+            { texto: "7" },
+            { texto: "6" },
+            { texto: "5" },
+            { texto: "8" }
         ],
 
         explicacao:
@@ -741,10 +741,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 48 + 37?",
 
         alternativas: [
-            { texto: "85", correta: true },
-            { texto: "75", correta: false },
-            { texto: "84", correta: false },
-            { texto: "95", correta: false }
+            { texto: "85" },
+            { texto: "75" },
+            { texto: "84" },
+            { texto: "95" }
         ],
 
         explicacao:
@@ -756,10 +756,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 96 - 47?",
 
         alternativas: [
-            { texto: "49", correta: true },
-            { texto: "39", correta: false },
-            { texto: "59", correta: false },
-            { texto: "51", correta: false }
+            { texto: "49" },
+            { texto: "39" },
+            { texto: "59" },
+            { texto: "51" }
         ],
 
         explicacao:
@@ -771,10 +771,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 14 × 6?",
 
         alternativas: [
-            { texto: "84", correta: true },
-            { texto: "74", correta: false },
-            { texto: "94", correta: false },
-            { texto: "80", correta: false }
+            { texto: "84" },
+            { texto: "74" },
+            { texto: "94" },
+            { texto: "80" }
         ],
 
         explicacao:
@@ -786,10 +786,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 144 ÷ 12?",
 
         alternativas: [
-            { texto: "12", correta: true },
-            { texto: "10", correta: false },
-            { texto: "14", correta: false },
-            { texto: "24", correta: false }
+            { texto: "12" },
+            { texto: "10" },
+            { texto: "14" },
+            { texto: "24" }
         ],
 
         explicacao:
@@ -801,10 +801,10 @@ const questoesNivel1 = {
         pergunta: "João tinha 35 reais e gastou 18 reais. Quanto dinheiro restou?",
 
         alternativas: [
-            { texto: "17 reais", correta: true },
-            { texto: "13 reais", correta: false },
-            { texto: "18 reais", correta: false },
-            { texto: "23 reais", correta: false }
+            { texto: "17 reais" },
+            { texto: "13 reais" },
+            { texto: "18 reais" },
+            { texto: "23 reais" }
         ],
 
         explicacao:
@@ -816,10 +816,10 @@ const questoesNivel1 = {
         pergunta: "Uma caixa possui 8 fileiras com 7 objetos em cada uma. Quantos objetos há ao todo?",
 
         alternativas: [
-            { texto: "56", correta: true },
-            { texto: "48", correta: false },
-            { texto: "64", correta: false },
-            { texto: "54", correta: false }
+            { texto: "56" },
+            { texto: "48" },
+            { texto: "64" },
+            { texto: "54" }
         ],
 
         explicacao:
@@ -831,10 +831,10 @@ const questoesNivel1 = {
         pergunta: "Maria tinha 72 balas e dividiu igualmente entre 8 crianças. Quantas balas cada criança recebeu?",
 
         alternativas: [
-            { texto: "9", correta: true },
-            { texto: "8", correta: false },
-            { texto: "10", correta: false },
-            { texto: "12", correta: false }
+            { texto: "9" },
+            { texto: "8" },
+            { texto: "10" },
+            { texto: "12" }
         ],
 
         explicacao:
@@ -846,10 +846,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 25 + 18 - 10?",
 
         alternativas: [
-            { texto: "33", correta: true },
-            { texto: "43", correta: false },
-            { texto: "23", correta: false },
-            { texto: "35", correta: false }
+            { texto: "33" },
+            { texto: "43" },
+            { texto: "23" },
+            { texto: "35" }
         ],
 
         explicacao:
@@ -861,10 +861,10 @@ const questoesNivel1 = {
         pergunta: "Uma escola comprou 6 caixas com 12 lápis em cada caixa. Quantos lápis foram comprados?",
 
         alternativas: [
-            { texto: "72", correta: true },
-            { texto: "62", correta: false },
-            { texto: "68", correta: false },
-            { texto: "82", correta: false }
+            { texto: "72" },
+            { texto: "62" },
+            { texto: "68" },
+            { texto: "82" }
         ],
 
         explicacao:
@@ -876,10 +876,10 @@ const questoesNivel1 = {
         pergunta: "Pedro tinha 100 reais. Comprou um livro por 35 reais e um caderno por 18 reais. Quanto sobrou?",
 
         alternativas: [
-            { texto: "47 reais", correta: true },
-            { texto: "53 reais", correta: false },
-            { texto: "57 reais", correta: false },
-            { texto: "45 reais", correta: false }
+            { texto: "47 reais" },
+            { texto: "53 reais" },
+            { texto: "57 reais" },
+            { texto: "45 reais" }
         ],
 
         explicacao:
@@ -893,10 +893,10 @@ const questoesNivel1 = {
         pergunta: "Um quadrado possui lado de 6 cm. Qual é o seu perímetro?",
 
         alternativas: [
-            { texto: "24 cm", correta: true },
-            { texto: "12 cm", correta: false },
-            { texto: "18 cm", correta: false },
-            { texto: "36 cm", correta: false }
+            { texto: "24 cm" },
+            { texto: "12 cm" },
+            { texto: "18 cm" },
+            { texto: "36 cm" }
         ],
 
         explicacao:
@@ -908,10 +908,10 @@ const questoesNivel1 = {
         pergunta: "Um retângulo possui 8 cm de comprimento e 5 cm de largura. Qual é a sua área?",
 
         alternativas: [
-            { texto: "40 cm²", correta: true },
-            { texto: "26 cm²", correta: false },
-            { texto: "13 cm²", correta: false },
-            { texto: "35 cm²", correta: false }
+            { texto: "40 cm²" },
+            { texto: "26 cm²" },
+            { texto: "13 cm²" },
+            { texto: "35 cm²" }
         ],
 
         explicacao:
@@ -923,10 +923,10 @@ const questoesNivel1 = {
         pergunta: "Um triângulo possui base de 10 cm e altura de 6 cm. Qual é sua área?",
 
         alternativas: [
-            { texto: "30 cm²", correta: true },
-            { texto: "60 cm²", correta: false },
-            { texto: "16 cm²", correta: false },
-            { texto: "36 cm²", correta: false }
+            { texto: "30 cm²" },
+            { texto: "60 cm²" },
+            { texto: "16 cm²" },
+            { texto: "36 cm²" }
         ],
 
         explicacao:
@@ -938,10 +938,10 @@ const questoesNivel1 = {
         pergunta: "Um retângulo possui perímetro de 30 cm. Se o comprimento é 10 cm, qual é a largura?",
 
         alternativas: [
-            { texto: "5 cm", correta: true },
-            { texto: "10 cm", correta: false },
-            { texto: "15 cm", correta: false },
-            { texto: "3 cm", correta: false }
+            { texto: "5 cm" },
+            { texto: "10 cm" },
+            { texto: "15 cm" },
+            { texto: "3 cm" }
         ],
 
         explicacao:
@@ -953,10 +953,10 @@ const questoesNivel1 = {
         pergunta: "Quantos lados possui um hexágono?",
 
         alternativas: [
-            { texto: "6", correta: true },
-            { texto: "5", correta: false },
-            { texto: "7", correta: false },
-            { texto: "8", correta: false }
+            { texto: "6" },
+            { texto: "5" },
+            { texto: "7" },
+            { texto: "8" }
         ],
 
         explicacao:
@@ -968,10 +968,10 @@ const questoesNivel1 = {
         pergunta: "Um quadrado possui área de 49 cm². Quanto mede cada lado?",
 
         alternativas: [
-            { texto: "7 cm", correta: true },
-            { texto: "6 cm", correta: false },
-            { texto: "8 cm", correta: false },
-            { texto: "14 cm", correta: false }
+            { texto: "7 cm" },
+            { texto: "6 cm" },
+            { texto: "8 cm" },
+            { texto: "14 cm" }
         ],
 
         explicacao:
@@ -983,10 +983,10 @@ const questoesNivel1 = {
         pergunta: "Um retângulo possui comprimento de 12 cm e largura de 4 cm. Qual é o perímetro?",
 
         alternativas: [
-            { texto: "32 cm", correta: true },
-            { texto: "48 cm", correta: false },
-            { texto: "24 cm", correta: false },
-            { texto: "16 cm", correta: false }
+            { texto: "32 cm" },
+            { texto: "48 cm" },
+            { texto: "24 cm" },
+            { texto: "16 cm" }
         ],
 
         explicacao:
@@ -998,10 +998,10 @@ const questoesNivel1 = {
         pergunta: "Um triângulo possui lados de 5 cm, 7 cm e 8 cm. Qual é o seu perímetro?",
 
         alternativas: [
-            { texto: "20 cm", correta: true },
-            { texto: "18 cm", correta: false },
-            { texto: "21 cm", correta: false },
-            { texto: "24 cm", correta: false }
+            { texto: "20 cm" },
+            { texto: "18 cm" },
+            { texto: "21 cm" },
+            { texto: "24 cm" }
         ],
 
         explicacao:
@@ -1013,10 +1013,10 @@ const questoesNivel1 = {
         pergunta: "Um quadrado possui lado de 9 cm. Qual é a sua área?",
 
         alternativas: [
-            { texto: "81 cm²", correta: true },
-            { texto: "36 cm²", correta: false },
-            { texto: "18 cm²", correta: false },
-            { texto: "90 cm²", correta: false }
+            { texto: "81 cm²" },
+            { texto: "36 cm²" },
+            { texto: "18 cm²" },
+            { texto: "90 cm²" }
         ],
 
         explicacao:
@@ -1028,10 +1028,10 @@ const questoesNivel1 = {
         pergunta: "Uma figura possui 4 lados iguais e 4 ângulos retos. Qual é essa figura?",
 
         alternativas: [
-            { texto: "Quadrado", correta: true },
-            { texto: "Triângulo", correta: false },
-            { texto: "Círculo", correta: false },
-            { texto: "Pentágono", correta: false }
+            { texto: "Quadrado" },
+            { texto: "Triângulo" },
+            { texto: "Círculo" },
+            { texto: "Pentágono" }
         ],
 
         explicacao:
@@ -1046,10 +1046,10 @@ const questoesNivel1 = {
         pergunta: "Considere a função f(x) = x + 3. Qual é o valor de f(5)?",
 
         alternativas: [
-            { texto: "8", correta: true },
-            { texto: "7", correta: false },
-            { texto: "9", correta: false },
-            { texto: "15", correta: false }
+            { texto: "8" },
+            { texto: "7" },
+            { texto: "9" },
+            { texto: "15" }
         ],
 
         explicacao:
@@ -1061,10 +1061,10 @@ const questoesNivel1 = {
         pergunta: "Considere a função f(x) = 2x. Qual é o valor de f(7)?",
 
         alternativas: [
-            { texto: "14", correta: true },
-            { texto: "9", correta: false },
-            { texto: "12", correta: false },
-            { texto: "16", correta: false }
+            { texto: "14" },
+            { texto: "9" },
+            { texto: "12" },
+            { texto: "16" }
         ],
 
         explicacao:
@@ -1076,10 +1076,10 @@ const questoesNivel1 = {
         pergunta: "Se f(x) = x - 4, qual é o valor de f(10)?",
 
         alternativas: [
-            { texto: "6", correta: true },
-            { texto: "14", correta: false },
-            { texto: "4", correta: false },
-            { texto: "5", correta: false }
+            { texto: "6" },
+            { texto: "14" },
+            { texto: "4" },
+            { texto: "5" }
         ],
 
         explicacao:
@@ -1091,10 +1091,10 @@ const questoesNivel1 = {
         pergunta: "Uma função é dada por f(x) = 3x + 1. Qual é o valor de f(4)?",
 
         alternativas: [
-            { texto: "13", correta: true },
-            { texto: "12", correta: false },
-            { texto: "10", correta: false },
-            { texto: "15", correta: false }
+            { texto: "13" },
+            { texto: "12" },
+            { texto: "10" },
+            { texto: "15" }
         ],
 
         explicacao:
@@ -1106,10 +1106,10 @@ const questoesNivel1 = {
         pergunta: "Observe a função f(x) = 5x. Quando x aumenta de 2 para 3, quanto aumenta o valor de f(x)?",
 
         alternativas: [
-            { texto: "5", correta: true },
-            { texto: "1", correta: false },
-            { texto: "10", correta: false },
-            { texto: "15", correta: false }
+            { texto: "5" },
+            { texto: "1" },
+            { texto: "10" },
+            { texto: "15" }
         ],
 
         explicacao:
@@ -1121,10 +1121,10 @@ const questoesNivel1 = {
         pergunta: "Se f(x) = x + 10, qual valor de x faz com que f(x) seja igual a 18?",
 
         alternativas: [
-            { texto: "8", correta: true },
-            { texto: "10", correta: false },
-            { texto: "28", correta: false },
-            { texto: "9", correta: false }
+            { texto: "8" },
+            { texto: "10" },
+            { texto: "28" },
+            { texto: "9" }
         ],
 
         explicacao:
@@ -1136,10 +1136,10 @@ const questoesNivel1 = {
         pergunta: "Uma função associa cada número ao seu dobro. Qual expressão representa essa função?",
 
         alternativas: [
-            { texto: "f(x) = 2x", correta: true },
-            { texto: "f(x) = x + 2", correta: false },
-            { texto: "f(x) = x - 2", correta: false },
-            { texto: "f(x) = x ÷ 2", correta: false }
+            { texto: "f(x) = 2x" },
+            { texto: "f(x) = x + 2" },
+            { texto: "f(x) = x - 2" },
+            { texto: "f(x) = x ÷ 2" }
         ],
 
         explicacao:
@@ -1151,10 +1151,10 @@ const questoesNivel1 = {
         pergunta: "Considere f(x) = x². Qual é o valor de f(6)?",
 
         alternativas: [
-            { texto: "36", correta: true },
-            { texto: "12", correta: false },
-            { texto: "18", correta: false },
-            { texto: "30", correta: false }
+            { texto: "36" },
+            { texto: "12" },
+            { texto: "18" },
+            { texto: "30" }
         ],
 
         explicacao:
@@ -1166,10 +1166,10 @@ const questoesNivel1 = {
         pergunta: "Se f(x) = 4x - 2, qual é o valor de f(3)?",
 
         alternativas: [
-            { texto: "10", correta: true },
-            { texto: "12", correta: false },
-            { texto: "8", correta: false },
-            { texto: "14", correta: false }
+            { texto: "10" },
+            { texto: "12" },
+            { texto: "8" },
+            { texto: "14" }
         ],
 
         explicacao:
@@ -1181,10 +1181,10 @@ const questoesNivel1 = {
         pergunta: "Uma função é definida por f(x) = x + 2. Qual é o valor de x quando f(x) = 15?",
 
         alternativas: [
-            { texto: "13", correta: true },
-            { texto: "17", correta: false },
-            { texto: "12", correta: false },
-            { texto: "10", correta: false }
+            { texto: "13" },
+            { texto: "17" },
+            { texto: "12" },
+            { texto: "10" }
         ],
 
         explicacao:
@@ -1199,10 +1199,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de x na equação x + 7 = 15?",
 
         alternativas: [
-            { texto: "8", correta: true },
-            { texto: "7", correta: false },
-            { texto: "9", correta: false },
-            { texto: "22", correta: false }
+            { texto: "8" },
+            { texto: "7" },
+            { texto: "9" },
+            { texto: "22" }
         ],
 
         explicacao:
@@ -1214,10 +1214,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de x na equação x - 9 = 6?",
 
         alternativas: [
-            { texto: "15", correta: true },
-            { texto: "3", correta: false },
-            { texto: "14", correta: false },
-            { texto: "17", correta: false }
+            { texto: "15" },
+            { texto: "3" },
+            { texto: "14" },
+            { texto: "17" }
         ],
 
         explicacao:
@@ -1229,10 +1229,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de x na equação 3x = 21?",
 
         alternativas: [
-            { texto: "7", correta: true },
-            { texto: "6", correta: false },
-            { texto: "8", correta: false },
-            { texto: "9", correta: false }
+            { texto: "7" },
+            { texto: "6" },
+            { texto: "8" },
+            { texto: "9" }
         ],
 
         explicacao:
@@ -1244,10 +1244,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de x na equação 2x + 5 = 17?",
 
         alternativas: [
-            { texto: "6", correta: true },
-            { texto: "5", correta: false },
-            { texto: "7", correta: false },
-            { texto: "11", correta: false }
+            { texto: "6" },
+            { texto: "5" },
+            { texto: "7" },
+            { texto: "11" }
         ],
 
         explicacao:
@@ -1259,10 +1259,10 @@ const questoesNivel1 = {
         pergunta: "Simplifique a expressão 4x + 3x.",
 
         alternativas: [
-            { texto: "7x", correta: true },
-            { texto: "12x", correta: false },
-            { texto: "7", correta: false },
-            { texto: "x + 7", correta: false }
+            { texto: "7x" },
+            { texto: "12x" },
+            { texto: "7" },
+            { texto: "x + 7" }
         ],
 
         explicacao:
@@ -1274,10 +1274,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de x na equação 5x - 10 = 20?",
 
         alternativas: [
-            { texto: "6", correta: true },
-            { texto: "4", correta: false },
-            { texto: "5", correta: false },
-            { texto: "8", correta: false }
+            { texto: "6" },
+            { texto: "4" },
+            { texto: "5" },
+            { texto: "8" }
         ],
 
         explicacao:
@@ -1289,10 +1289,10 @@ const questoesNivel1 = {
         pergunta: "Qual expressão representa o dobro de um número x aumentado em 5?",
 
         alternativas: [
-            { texto: "2x + 5", correta: true },
-            { texto: "2(x + 5)", correta: false },
-            { texto: "x + 10", correta: false },
-            { texto: "5x + 2", correta: false }
+            { texto: "2x + 5" },
+            { texto: "2(x + 5)" },
+            { texto: "x + 10" },
+            { texto: "5x + 2" }
         ],
 
         explicacao:
@@ -1304,10 +1304,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de x na equação 4x + 4 = 20?",
 
         alternativas: [
-            { texto: "4", correta: true },
-            { texto: "5", correta: false },
-            { texto: "6", correta: false },
-            { texto: "16", correta: false }
+            { texto: "4" },
+            { texto: "5" },
+            { texto: "6" },
+            { texto: "16" }
         ],
 
         explicacao:
@@ -1319,10 +1319,10 @@ const questoesNivel1 = {
         pergunta: "Simplifique a expressão 9x - 4x.",
 
         alternativas: [
-            { texto: "5x", correta: true },
-            { texto: "13x", correta: false },
-            { texto: "36x", correta: false },
-            { texto: "5", correta: false }
+            { texto: "5x" },
+            { texto: "13x" },
+            { texto: "36x" },
+            { texto: "5" }
         ],
 
         explicacao:
@@ -1334,10 +1334,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de x na equação 3x + 6 = 24?",
 
         alternativas: [
-            { texto: "6", correta: true },
-            { texto: "8", correta: false },
-            { texto: "9", correta: false },
-            { texto: "10", correta: false }
+            { texto: "6" },
+            { texto: "8" },
+            { texto: "9" },
+            { texto: "10" }
         ],
 
         explicacao:
@@ -1352,10 +1352,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 24 ÷ 6 + 5?",
 
         alternativas: [
-            { texto: "9", correta: true },
-            { texto: "4", correta: false },
-            { texto: "14", correta: false },
-            { texto: "29", correta: false }
+            { texto: "9" },
+            { texto: "4" },
+            { texto: "14" },
+            { texto: "29" }
         ],
 
         explicacao:
@@ -1367,10 +1367,10 @@ const questoesNivel1 = {
         pergunta: "Um quadrado possui lado de 8 cm. Qual é sua área?",
 
         alternativas: [
-            { texto: "64 cm²", correta: true },
-            { texto: "32 cm²", correta: false },
-            { texto: "24 cm²", correta: false },
-            { texto: "16 cm²", correta: false }
+            { texto: "64 cm²" },
+            { texto: "32 cm²" },
+            { texto: "24 cm²" },
+            { texto: "16 cm²" }
         ],
 
         explicacao:
@@ -1382,10 +1382,10 @@ const questoesNivel1 = {
         pergunta: "Considere f(x) = 2x + 1. Qual é o valor de f(5)?",
 
         alternativas: [
-            { texto: "11", correta: true },
-            { texto: "10", correta: false },
-            { texto: "12", correta: false },
-            { texto: "7", correta: false }
+            { texto: "11" },
+            { texto: "10" },
+            { texto: "12" },
+            { texto: "7" }
         ],
 
         explicacao:
@@ -1397,10 +1397,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de x na equação 2x + 4 = 18?",
 
         alternativas: [
-            { texto: "7", correta: true },
-            { texto: "6", correta: false },
-            { texto: "8", correta: false },
-            { texto: "9", correta: false }
+            { texto: "7" },
+            { texto: "6" },
+            { texto: "8" },
+            { texto: "9" }
         ],
 
         explicacao:
@@ -1412,10 +1412,10 @@ const questoesNivel1 = {
         pergunta: "Um retângulo possui 9 cm de comprimento e 4 cm de largura. Qual é seu perímetro?",
 
         alternativas: [
-            { texto: "26 cm", correta: true },
-            { texto: "36 cm", correta: false },
-            { texto: "13 cm", correta: false },
-            { texto: "18 cm", correta: false }
+            { texto: "26 cm" },
+            { texto: "36 cm" },
+            { texto: "13 cm" },
+            { texto: "18 cm" }
         ],
 
         explicacao:
@@ -1427,10 +1427,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 7 × 8 - 10?",
 
         alternativas: [
-            { texto: "46", correta: true },
-            { texto: "54", correta: false },
-            { texto: "56", correta: false },
-            { texto: "38", correta: false }
+            { texto: "46" },
+            { texto: "54" },
+            { texto: "56" },
+            { texto: "38" }
         ],
 
         explicacao:
@@ -1442,10 +1442,10 @@ const questoesNivel1 = {
         pergunta: "Se f(x) = x - 3, qual é o valor de x quando f(x) = 9?",
 
         alternativas: [
-            { texto: "12", correta: true },
-            { texto: "6", correta: false },
-            { texto: "9", correta: false },
-            { texto: "3", correta: false }
+            { texto: "12" },
+            { texto: "6" },
+            { texto: "9" },
+            { texto: "3" }
         ],
 
         explicacao:
@@ -1457,10 +1457,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de x na equação 5x = 45?",
 
         alternativas: [
-            { texto: "9", correta: true },
-            { texto: "8", correta: false },
-            { texto: "10", correta: false },
-            { texto: "40", correta: false }
+            { texto: "9" },
+            { texto: "8" },
+            { texto: "10" },
+            { texto: "40" }
         ],
 
         explicacao:
@@ -1472,10 +1472,10 @@ const questoesNivel1 = {
         pergunta: "Um triângulo possui base de 12 cm e altura de 5 cm. Qual é sua área?",
 
         alternativas: [
-            { texto: "30 cm²", correta: true },
-            { texto: "60 cm²", correta: false },
-            { texto: "17 cm²", correta: false },
-            { texto: "25 cm²", correta: false }
+            { texto: "30 cm²" },
+            { texto: "60 cm²" },
+            { texto: "17 cm²" },
+            { texto: "25 cm²" }
         ],
 
         explicacao:
@@ -1487,10 +1487,10 @@ const questoesNivel1 = {
         pergunta: "Simplifique a expressão 6x + 2x - 3x.",
 
         alternativas: [
-            { texto: "5x", correta: true },
-            { texto: "11x", correta: false },
-            { texto: "8x", correta: false },
-            { texto: "5", correta: false }
+            { texto: "5x" },
+            { texto: "11x" },
+            { texto: "8x" },
+            { texto: "5" }
         ],
 
         explicacao:
@@ -1505,10 +1505,10 @@ const questoesNivel1 = {
         pergunta: "Uma loja vende um produto por R$ 80,00 e oferece R$ 15,00 de desconto. Qual será o preço final?",
 
         alternativas: [
-            { texto: "R$ 65,00", correta: true },
-            { texto: "R$ 70,00", correta: false },
-            { texto: "R$ 95,00", correta: false },
-            { texto: "R$ 55,00", correta: false }
+            { texto: "R$ 65,00" },
+            { texto: "R$ 70,00" },
+            { texto: "R$ 95,00" },
+            { texto: "R$ 55,00" }
         ],
 
         explicacao:
@@ -1520,10 +1520,10 @@ const questoesNivel1 = {
         pergunta: "Um retângulo possui 12 cm de comprimento e 5 cm de largura. Qual é a sua área?",
 
         alternativas: [
-            { texto: "60 cm²", correta: true },
-            { texto: "34 cm²", correta: false },
-            { texto: "17 cm²", correta: false },
-            { texto: "24 cm²", correta: false }
+            { texto: "60 cm²" },
+            { texto: "34 cm²" },
+            { texto: "17 cm²" },
+            { texto: "24 cm²" }
         ],
 
         explicacao:
@@ -1535,10 +1535,10 @@ const questoesNivel1 = {
         pergunta: "Considere f(x) = 3x - 2. Qual é o valor de f(6)?",
 
         alternativas: [
-            { texto: "16", correta: true },
-            { texto: "18", correta: false },
-            { texto: "20", correta: false },
-            { texto: "14", correta: false }
+            { texto: "16" },
+            { texto: "18" },
+            { texto: "20" },
+            { texto: "14" }
         ],
 
         explicacao:
@@ -1550,10 +1550,10 @@ const questoesNivel1 = {
         pergunta: "Qual é o valor de x na equação 4x + 8 = 28?",
 
         alternativas: [
-            { texto: "5", correta: true },
-            { texto: "6", correta: false },
-            { texto: "7", correta: false },
-            { texto: "4", correta: false }
+            { texto: "5" },
+            { texto: "6" },
+            { texto: "7" },
+            { texto: "4" }
         ],
 
         explicacao:
@@ -1565,10 +1565,10 @@ const questoesNivel1 = {
         pergunta: "Um triângulo possui lados de 6 cm, 8 cm e 10 cm. Qual é o seu perímetro?",
 
         alternativas: [
-            { texto: "24 cm", correta: true },
-            { texto: "20 cm", correta: false },
-            { texto: "26 cm", correta: false },
-            { texto: "48 cm", correta: false }
+            { texto: "24 cm" },
+            { texto: "20 cm" },
+            { texto: "26 cm" },
+            { texto: "48 cm" }
         ],
 
         explicacao:
@@ -1580,10 +1580,10 @@ const questoesNivel1 = {
         pergunta: "Quanto é 36 ÷ 4 + 7 × 2?",
 
         alternativas: [
-            { texto: "23", correta: true },
-            { texto: "32", correta: false },
-            { texto: "25", correta: false },
-            { texto: "16", correta: false }
+            { texto: "23" },
+            { texto: "32" },
+            { texto: "25" },
+            { texto: "16" }
         ],
 
         explicacao:
@@ -1595,10 +1595,10 @@ const questoesNivel1 = {
         pergunta: "Se f(x) = x + 5 e f(x) = 17, qual é o valor de x?",
 
         alternativas: [
-            { texto: "12", correta: true },
-            { texto: "10", correta: false },
-            { texto: "22", correta: false },
-            { texto: "13", correta: false }
+            { texto: "12" },
+            { texto: "10" },
+            { texto: "22" },
+            { texto: "13" }
         ],
 
         explicacao:
@@ -1610,10 +1610,10 @@ const questoesNivel1 = {
         pergunta: "Um quadrado possui área de 81 cm². Qual é a medida de seu lado?",
 
         alternativas: [
-            { texto: "9 cm", correta: true },
-            { texto: "8 cm", correta: false },
-            { texto: "18 cm", correta: false },
-            { texto: "27 cm", correta: false }
+            { texto: "9 cm" },
+            { texto: "8 cm" },
+            { texto: "18 cm" },
+            { texto: "27 cm" }
         ],
 
         explicacao:
@@ -1625,10 +1625,10 @@ const questoesNivel1 = {
         pergunta: "Simplifique a expressão 8x - 3x + 2x.",
 
         alternativas: [
-            { texto: "7x", correta: true },
-            { texto: "13x", correta: false },
-            { texto: "6x", correta: false },
-            { texto: "7", correta: false }
+            { texto: "7x" },
+            { texto: "13x" },
+            { texto: "6x" },
+            { texto: "7" }
         ],
 
         explicacao:
@@ -1640,10 +1640,10 @@ const questoesNivel1 = {
         pergunta: "Uma pessoa tinha R$ 120,00 e gastou R$ 35,00. Depois recebeu R$ 20,00. Quanto ela possui agora?",
 
         alternativas: [
-            { texto: "R$ 105,00", correta: true },
-            { texto: "R$ 85,00", correta: false },
-            { texto: "R$ 100,00", correta: false },
-            { texto: "R$ 75,00", correta: false }
+            { texto: "R$ 105,00" },
+            { texto: "R$ 85,00" },
+            { texto: "R$ 100,00" },
+            { texto: "R$ 75,00" }
         ],
 
         explicacao:
@@ -1667,9 +1667,105 @@ let questaoAtual = 1;
 
 let respostas = {};
 
+let alternativasSelecionadas = {};
+
+let progressoBancoNiveis = {};
+
+let tentativasBancoNivel1 = {};
+
 let inicioFase = null;
 
 let faseFinalizada = false;
+
+let respostaEmEnvio = false;
+
+let modoRevisao = false;
+
+
+// =====================================================
+// CARREGAR PROGRESSO DO NÍVEL 1 NO SUPABASE
+// =====================================================
+
+async function carregarProgressoBancoNivel1() {
+
+    if (typeof supabaseClient === "undefined" || !supabaseClient) {
+        throw new Error("A conexão com o Supabase não está disponível.");
+    }
+
+    const {
+        data: { session },
+        error: erroSessao
+    } = await supabaseClient.auth.getSession();
+
+    if (erroSessao || !session) {
+        throw new Error("Sua sessão expirou. Entre novamente.");
+    }
+
+    const [resultadoFases, resultadoTentativas, resultadoXP] =
+        await Promise.all([
+
+            supabaseClient
+                .from("user_level_progress")
+                .select("phase_number, completed, best_result, current_question, answers")
+                .eq("level_number", 1),
+
+            supabaseClient
+                .from("user_question_attempts")
+                .select("question_id, selected_option_id, is_correct")
+                .eq("activity_type", "nivel")
+                .like("question_id", "nivel:1:fase:%"),
+
+            supabaseClient
+                .from("user_progress")
+                .select("total_xp")
+                .maybeSingle()
+
+        ]);
+
+    if (resultadoFases.error) throw resultadoFases.error;
+    if (resultadoTentativas.error) throw resultadoTentativas.error;
+    if (resultadoXP.error) throw resultadoXP.error;
+
+    progressoBancoNiveis = {};
+    tentativasBancoNivel1 = {};
+
+    (resultadoFases.data || []).forEach(function(fase) {
+        progressoBancoNiveis[fase.phase_number] = {
+            concluida: fase.completed === true,
+            melhorResultado: Number(fase.best_result) || 0,
+            questaoAtual: Number(fase.current_question) || 1,
+            respostas: fase.answers || {}
+        };
+    });
+
+    (resultadoTentativas.data || []).forEach(function(tentativa) {
+        const identificacao = tentativa.question_id.match(
+            /^nivel:1:fase:(\d+):questao:(\d+)$/
+        );
+
+        if (!identificacao) return;
+
+        const numeroFase = Number(identificacao[1]);
+        const numeroQuestao = Number(identificacao[2]);
+
+        if (!tentativasBancoNivel1[numeroFase]) {
+            tentativasBancoNivel1[numeroFase] = {};
+        }
+
+        tentativasBancoNivel1[numeroFase][numeroQuestao] = {
+            alternativa: tentativa.selected_option_id,
+            correta: tentativa.is_correct === true
+        };
+    });
+
+    if (
+        resultadoXP.data &&
+        Number.isFinite(Number(resultadoXP.data.total_xp)) &&
+        typeof salvarXP === "function"
+    ) {
+        salvarXP(Number(resultadoXP.data.total_xp));
+    }
+}
 
 
 // =====================================================
@@ -1899,30 +1995,19 @@ if (
 // VERIFICAR SE A FASE ESTÁ DESBLOQUEADA
 // =====================================================
 
-function faseEstaDesbloqueada(
-    numeroFase
-) {
+function faseEstaDesbloqueada(numeroFase) {
 
-    if (
-        numeroFase === 1
-    ) {
+    if (numeroFase === 1) return true;
 
-        return true;
+    const faseAnterior = progressoBancoNiveis[numeroFase - 1];
 
-    }
-
-
-    const faseAnterior =
-        obterDadosFase(
-            nivelAtual,
-            numeroFase - 1
-        );
-
-
-    return faseAnterior.concluida;
+    return Boolean(faseAnterior && faseAnterior.concluida === true);
 
 }
 
+
+// =====================================================
+// VERIFICAR SE A FASE FOI CONCLUÍDA
 
 // =====================================================
 // VERIFICAR SE A FASE FOI CONCLUÍDA
@@ -2130,167 +2215,75 @@ function atualizarNumeroQuestao() {
 
 function mostrarQuestao() {
 
-    const questoes =
-        obterQuestoesDaFase(
-            faseAtual
-        );
+    const questoes = obterQuestoesDaFase(faseAtual);
+    const textoQuestao = document.getElementById("textoQuestao");
+    const alternativas = document.getElementById("alternativas");
+    const explicacao = document.getElementById("explicacaoErro");
 
-
-    const textoQuestao =
-        document.getElementById(
-            "textoQuestao"
-        );
-
-
-    const alternativas =
-        document.getElementById(
-            "alternativas"
-        );
-
-
-    const explicacao =
-        document.getElementById(
-            "explicacaoErro"
-        );
-
-
-    if (
-        !textoQuestao ||
-        !alternativas
-    ) {
-
-        return;
-
-    }
-
+    if (!textoQuestao || !alternativas) return;
 
     atualizarNumeroQuestao();
-
     atualizarProgressoVisual();
 
-
-    // Limpa a explicação da questão anterior.
-
     if (explicacao) {
-
         explicacao.hidden = true;
-
         explicacao.textContent = "";
-
     }
 
-
-    const questao =
-        questoes[
-            questaoAtual - 1
-        ];
-
-
-    // =================================================
-    // CASO A QUESTÃO AINDA NÃO EXISTA
-    // =================================================
+    const questao = questoes[questaoAtual - 1];
 
     if (!questao) {
-
         textoQuestao.textContent =
             "As questões desta fase serão adicionadas em breve.";
-
-
         alternativas.innerHTML = "";
-
-
         atualizarBotoesNavegacao();
-
         return;
-
     }
 
-
-    // =================================================
-    // MOSTRAR PERGUNTA
-    // =================================================
-
-    textoQuestao.textContent =
-        questao.pergunta;
-
-
+    textoQuestao.textContent = questao.pergunta;
     alternativas.innerHTML = "";
 
-
-    // =================================================
-    // EMBARALHAR ALTERNATIVAS
-    // =================================================
-
-    const alternativasEmbaralhadas =
-        embaralhar(
-            questao.alternativas
-        );
-
-
-    alternativasEmbaralhadas.forEach(
-        function(alternativa) {
-
-            const botao =
-                document.createElement(
-                    "button"
-                );
-
-
-            botao.type = "button";
-
-
-            botao.textContent =
-                alternativa.texto;
-
-
-            botao.addEventListener(
-                "click",
-                function() {
-
-                    responderAlternativa(
-                        alternativa,
-                        botao
-                    );
-
-                }
-            );
-
-
-            alternativas.appendChild(
-                botao
-            );
-
+    // O ID é definido pela ordem original antes do embaralhamento.
+    const alternativasComIds = questao.alternativas.map(
+        function(alternativa, indice) {
+            return {
+                ...alternativa,
+                id: String.fromCharCode(97 + indice)
+            };
         }
     );
 
+    embaralhar(alternativasComIds).forEach(function(alternativa) {
 
-    // =================================================
-    // SE A QUESTÃO JÁ FOI RESPONDIDA
-    // =================================================
+        const botao = document.createElement("button");
+        botao.type = "button";
+        botao.textContent = alternativa.texto;
+        botao.dataset.optionId = alternativa.id;
 
-    if (
-        respostas[questaoAtual] !== undefined
-    ) {
+        if (respostas[questaoAtual] === undefined) {
+            botao.addEventListener("click", function() {
+                responderAlternativa(alternativa, botao);
+            });
+        } else {
+            botao.disabled = true;
 
-        const botoes =
-            document.querySelectorAll(
-                "#alternativas button"
-            );
-
-
-        botoes.forEach(
-            function(botao) {
-
-                botao.disabled = true;
-
+            if (alternativasSelecionadas[questaoAtual] === alternativa.id) {
+                botao.classList.add(
+                    respostas[questaoAtual]
+                        ? "resposta-correta"
+                        : "resposta-errada"
+                );
             }
-        );
+        }
 
+        alternativas.appendChild(botao);
+    });
+
+    if (respostas[questaoAtual] === false) {
+        mostrarExplicacao();
     }
 
-
     atualizarBotoesNavegacao();
-
 }
 
 
@@ -2298,145 +2291,129 @@ function mostrarQuestao() {
 // RESPONDER ALTERNATIVA
 // =====================================================
 
-function responderAlternativa(
-    alternativa,
-    botao
-) {
-
-    // Impede responder a mesma questão duas vezes.
+async function responderAlternativa(alternativa, botao) {
 
     if (
-        respostas[questaoAtual] !== undefined
-    ) {
+        respostas[questaoAtual] !== undefined ||
+        respostaEmEnvio ||
+        modoRevisao
+    ) return;
 
+    if (!alternativa || !["a", "b", "c", "d"].includes(alternativa.id)) {
+        console.error("ID de alternativa inválido.");
         return;
-
     }
 
+    respostaEmEnvio = true;
 
-    // Guarda a resposta.
+    const botoes = document.querySelectorAll("#alternativas button");
+    botoes.forEach(function(item) {
+        item.disabled = true;
+    });
 
-    respostas[questaoAtual] =
-        alternativa.correta;
-// =================================================
-// REGISTRAR XP DA QUESTÃO
-// =================================================
+    try {
 
-const dadosFaseXP =
-    obterDadosFase(
-        nivelAtual,
-        faseAtual
-    );
-
-
-if (
-    !dadosFaseXP.xpRecebido
-) {
-
-    dadosFaseXP.xpRecebido = {};
-
-}
-
-
-if (
-    alternativa.correta &&
-    !dadosFaseXP.xpRecebido[questaoAtual]
-) {
-
-    registrarXPResposta(
-        true
-    );
-
-
-    dadosFaseXP.xpRecebido[
-        questaoAtual
-    ] = true;
-
-
-    const progressoXP =
-        carregarProgresso();
-
-
-    progressoXP.niveis[nivelAtual]
-        .fases[faseAtual]
-        .xpRecebido =
-            dadosFaseXP.xpRecebido;
-
-
-    salvarProgresso(
-        progressoXP
-    );
-
-} 
-
-// Registra que o usuário estudou hoje.
-
-if (
-    typeof registrarEstudoHoje ===
-    "function"
-) {
-
-    registrarEstudoHoje();
-
-}  
-    // =================================================
-    // BLOQUEAR TODAS AS ALTERNATIVAS
-    // =================================================
-
-    const botoes =
-        document.querySelectorAll(
-            "#alternativas button"
+        const { data, error } = await supabaseClient.rpc(
+            "submit_level_answer",
+            {
+                p_level_number: nivelAtual,
+                p_phase_number: faseAtual,
+                p_question_number: questaoAtual,
+                p_option_id: alternativa.id
+            }
         );
 
+        if (error) throw error;
+        if (!data || typeof data !== "object") {
+            throw new Error("O Supabase retornou uma resposta inválida.");
+        }
 
-    botoes.forEach(
-        function(item) {
+        if (data.already_answered === true) {
 
-            item.disabled = true;
+            const questionId =
+                "nivel:1:fase:" + faseAtual + ":questao:" + questaoAtual;
+
+            const { data: tentativa, error: erroTentativa } =
+                await supabaseClient
+                    .from("user_question_attempts")
+                    .select("selected_option_id, is_correct")
+                    .eq("activity_type", "nivel")
+                    .eq("question_id", questionId)
+                    .maybeSingle();
+
+            if (erroTentativa || !tentativa) {
+                throw erroTentativa ||
+                    new Error("Não foi possível recuperar a resposta já registrada.");
+            }
+
+            respostas[questaoAtual] = tentativa.is_correct === true;
+            alternativasSelecionadas[questaoAtual] =
+                tentativa.selected_option_id;
+
+        } else {
+
+            if (typeof data.correct !== "boolean") {
+                throw new Error("O banco não retornou o resultado da correção.");
+            }
+
+            respostas[questaoAtual] = data.correct;
+            alternativasSelecionadas[questaoAtual] = alternativa.id;
 
         }
-    );
 
+        if (
+            Number.isFinite(Number(data.total_xp)) &&
+            typeof salvarXP === "function"
+        ) {
+            salvarXP(Number(data.total_xp));
+        }
 
-    // =================================================
-    // MOSTRAR RESULTADO VISUAL
-    // =================================================
+        respostaEmEnvio = false;
 
-    if (
-        alternativa.correta
-    ) {
-
-        botao.classList.add(
-            "resposta-correta"
+        const idSelecionado = alternativasSelecionadas[questaoAtual];
+        const botaoSelecionado = document.querySelector(
+            '#alternativas button[data-option-id="' + idSelecionado + '"]'
         );
 
-    } else {
+        if (botaoSelecionado) {
+            botaoSelecionado.classList.add(
+                respostas[questaoAtual]
+                    ? "resposta-correta"
+                    : "resposta-errada"
+            );
+        }
 
-        botao.classList.add(
-            "resposta-errada"
-        );
+        if (respostas[questaoAtual] === false) {
+            mostrarExplicacao();
+        }
 
+        salvarEstadoAtual();
+        atualizarProgressoVisual();
+        atualizarBotoesNavegacao();
 
-        mostrarExplicacao();
+    } catch (erro) {
 
+        respostaEmEnvio = false;
+
+        botoes.forEach(function(item) {
+            item.disabled = false;
+        });
+
+        const areaErro = document.getElementById("explicacaoErro");
+
+        if (areaErro) {
+            areaErro.textContent =
+                "Não foi possível salvar sua resposta. Verifique sua conexão e tente novamente.";
+            areaErro.hidden = false;
+        }
+
+        console.error("Erro ao registrar resposta no Supabase:", erro);
     }
-
-
-    // =================================================
-    // SALVAR PROGRESSO
-    // =================================================
-
-    salvarEstadoAtual();
-
-
-    atualizarProgressoVisual();
-
-    atualizarBotoesNavegacao();
-
 }
 
 
 // =====================================================
+// MOSTRAR EXPLICAÇÃO APÓS ERRO// =====================================================
 // MOSTRAR EXPLICAÇÃO APÓS ERRO
 // =====================================================
 
@@ -2650,456 +2627,190 @@ function avancarQuestao() {
 
 function salvarEstadoAtual() {
 
-    const progresso =
-        carregarProgresso();
+    const dadosFase = obterDadosFase(nivelAtual, faseAtual);
 
+    // O tempo continua local. Respostas, correção e progresso oficial
+    // são mantidos pelo Supabase.
+    if (inicioFase) {
+        const tempoDecorrido =
+            Math.floor((Date.now() - inicioFase) / 1000);
 
-    // =================================================
-    // GARANTIR QUE O NÍVEL EXISTE
-    // =================================================
+        dadosFase.tempo =
+            (Number(dadosFase.tempo) || 0) +
+            Math.max(0, tempoDecorrido);
 
-    if (
-        !progresso.niveis[nivelAtual]
-    ) {
-
-        progresso.niveis[nivelAtual] = {
-            fases: {}
-        };
-
+        inicioFase = Date.now();
     }
 
-
-    // =================================================
-    // GARANTIR QUE A FASE EXISTE
-    // =================================================
-
-    if (
-        !progresso.niveis[nivelAtual]
-            .fases[faseAtual]
-    ) {
-
-        progresso.niveis[nivelAtual]
-            .fases[faseAtual] = {
-
-                concluida: false,
-
-                melhorResultado: 0,
-
-                questaoAtual: 1,
-
-                respostas: {},
-
-                acertos: 0,
-
-                erros: 0,
-
-                tempo: 0
-
-            };
-
-    }
+    dadosFase.questaoAtual = questaoAtual;
+    salvarProgresso(carregarProgresso());
+}
 
 
-    const dadosFase =
-        progresso.niveis[nivelAtual]
-            .fases[faseAtual];
-
-
-    // =================================================
-    // SALVAR QUESTÃO ATUAL
-    // =================================================
-
-    dadosFase.questaoAtual =
-        questaoAtual;
-
-
-    // =================================================
-    // SALVAR RESPOSTAS
-    // =================================================
-
-    dadosFase.respostas =
-        respostas;
-
-
-    // =================================================
-    // CALCULAR ACERTOS
-    // =================================================
-
-    dadosFase.acertos =
-        Object.values(
-            respostas
-        ).filter(
-            function(resposta) {
-
-                return resposta === true;
-
-            }
-        ).length;
-
-
-    // =================================================
-    // CALCULAR ERROS
-    // =================================================
-
-    dadosFase.erros =
-        Object.values(
-            respostas
-        ).filter(
-            function(resposta) {
-
-                return resposta === false;
-
-            }
-        ).length;
-
-
-    // =================================================
-    // SALVAR
-    // =================================================
-
-    progresso.niveis[nivelAtual]
-        .fases[faseAtual] =
-        dadosFase;
-
-
-    salvarProgresso(
-        progresso
-    );
-
-}   // =====================================================
+// =====================================================
+// INICIAR FASE// =====================================================
 // INICIAR FASE
 // =====================================================
 
 function iniciarFase(numeroFase) {
 
-    // Verifica se o número da fase é válido.
-
     if (
         numeroFase < 1 ||
-        numeroFase > TOTAL_FASES
-    ) {
+        numeroFase > TOTAL_FASES ||
+        !faseEstaDesbloqueada(numeroFase)
+    ) return;
 
-        return;
-
+    if (inicioFase && numeroFase !== faseAtual) {
+        salvarEstadoAtual();
     }
 
+    faseAtual = numeroFase;
 
-    // Verifica se a fase está desbloqueada.
+    const dadosFase = obterDadosFase(nivelAtual, faseAtual);
+    const dadosBanco = progressoBancoNiveis[faseAtual] || {};
 
-    if (
-        !faseEstaDesbloqueada(
-            numeroFase
-        )
-    ) {
+    questaoAtual = Math.min(
+        Math.max(Number(dadosBanco.questaoAtual) || 1, 1),
+        TOTAL_QUESTOES
+    );
 
-        return;
+    respostas = { ...(dadosBanco.respostas || {}) };
+    alternativasSelecionadas = {};
 
-    }
+    const tentativas = tentativasBancoNivel1[faseAtual] || {};
 
+    Object.keys(tentativas).forEach(function(numero) {
+        alternativasSelecionadas[numero] =
+            tentativas[numero].alternativa;
+    });
 
-    // Define a fase atual.
+    inicioFase = Date.now();
+    faseFinalizada = false;
+    respostaEmEnvio = false;
+    modoRevisao = false;
 
-    faseAtual =
-        numeroFase;
+    const areaQuestao = document.getElementById("areaQuestao");
+    const resultado = document.getElementById("resultadoFase");
 
-
-    // Carrega os dados salvos da fase.
-
-    const dadosFase =
-        obterDadosFase(
-            nivelAtual,
-            faseAtual
-        );
-
-
-    // Recupera a questão onde o aluno parou.
-
-    questaoAtual =
-        dadosFase.questaoAtual || 1;
-
-
-    // Recupera as respostas anteriores.
-
-    respostas =
-        dadosFase.respostas || {};
-
-
-    // Inicia o contador da fase.
-
-    inicioFase =
-        Date.now();
-
-
-    faseFinalizada =
-        false;
-
-
-    // =================================================
-    // MOSTRAR ÁREA DA QUESTÃO
-    // =================================================
-
-    const areaQuestao =
-        document.getElementById(
-            "areaQuestao"
-        );
-
-
-    const resultado =
-        document.getElementById(
-            "resultadoFase"
-        );
-
-
-    if (areaQuestao) {
-
-        areaQuestao.hidden =
-            false;
-
-    }
-
-
-    if (resultado) {
-
-        resultado.hidden =
-            true;
-
-    }
-
-
-    // =================================================
-    // ATUALIZAR INTERFACE
-    // =================================================
+    if (areaQuestao) areaQuestao.hidden = false;
+    if (resultado) resultado.hidden = true;
 
     atualizarInformacoesFase();
-
     mostrarQuestao();
-
 }
 
 
 // =====================================================
+// FINALIZAR FASE// =====================================================
 // FINALIZAR FASE
 // =====================================================
 
-function finalizarFase() {
+async function finalizarFase() {
 
-    // Evita finalizar a mesma fase duas vezes.
+    if (faseFinalizada || respostaEmEnvio) return;
 
-    if (
-        faseFinalizada
-    ) {
+    if (Object.keys(respostas).length !== TOTAL_QUESTOES) return;
 
-        return;
+    respostaEmEnvio = true;
+    salvarEstadoAtual();
 
-    }
+    const acertos = Object.values(respostas).filter(
+        function(resposta) { return resposta === true; }
+    ).length;
 
+    const erros = Object.values(respostas).filter(
+        function(resposta) { return resposta === false; }
+    ).length;
 
-    faseFinalizada =
-        true;
+    const porcentagem = (acertos / TOTAL_QUESTOES) * 100;
+    const dadosFase = obterDadosFase(nivelAtual, faseAtual);
+    const tempo = Number(dadosFase.tempo) || 0;
 
+    const botaoProxima = document.getElementById("proximaQuestao");
+    if (botaoProxima) botaoProxima.disabled = true;
 
-    // =================================================
-    // CALCULAR ACERTOS
-    // =================================================
+    try {
 
-    const acertos =
-        Object.values(
-            respostas
-        ).filter(
-            function(resposta) {
-
-                return resposta === true;
-
+        const { data, error } = await supabaseClient.rpc(
+            "complete_level_phase",
+            {
+                p_level_number: nivelAtual,
+                p_phase_number: faseAtual
             }
-        ).length;
+        );
 
+        if (error) throw error;
 
-    // =================================================
-    // CALCULAR ERROS
-    // =================================================
-
-    const erros =
-        TOTAL_QUESTOES -
-        acertos;
-
-
-    // =================================================
-    // CALCULAR PORCENTAGEM
-    // =================================================
-
-    const porcentagem =
-        (
-            acertos /
-            TOTAL_QUESTOES
-        ) * 100;
-
-
-    // =================================================
-    // CALCULAR TEMPO
-    // =================================================
-
-    let tempo =
-        0;
-
-
-    if (
-        inicioFase
-    ) {
-
-        tempo =
-            Math.floor(
-                (
-                    Date.now() -
-                    inicioFase
-                ) / 1000
+        if (!data || data.completed !== true) {
+            throw new Error(
+                data && data.reason === "questions_incomplete"
+                    ? "O banco ainda não identificou todas as respostas da fase."
+                    : "O banco não confirmou a conclusão da fase."
             );
+        }
 
-    }
+        if (
+            Number.isFinite(Number(data.total_xp)) &&
+            typeof salvarXP === "function"
+        ) {
+            salvarXP(Number(data.total_xp));
+        }
 
+        faseFinalizada = true;
+        respostaEmEnvio = false;
 
-    // =================================================
-    // CARREGAR PROGRESSO
-    // =================================================
+        const melhorResultado = Math.max(
+            Number(dadosFase.melhorResultado) || 0,
+            acertos
+        );
 
-    const progresso =
-        carregarProgresso();
+        dadosFase.concluida = true;
+        dadosFase.questaoAtual = TOTAL_QUESTOES;
+        dadosFase.melhorResultado = melhorResultado;
+        dadosFase.tempo = tempo;
 
+        const progresso = carregarProgresso();
+        progresso.niveis[nivelAtual] =
+            progresso.niveis[nivelAtual] || { fases: {} };
+        progresso.niveis[nivelAtual].fases[faseAtual] = dadosFase;
+        salvarProgresso(progresso);
 
-    // =================================================
-    // GARANTIR QUE O NÍVEL EXISTE
-    // =================================================
-
-    if (
-        !progresso.niveis[nivelAtual]
-    ) {
-
-        progresso.niveis[nivelAtual] = {
-            fases: {}
+        progressoBancoNiveis[faseAtual] = {
+            concluida: true,
+            melhorResultado: melhorResultado,
+            questaoAtual: TOTAL_QUESTOES,
+            respostas: { ...respostas }
         };
 
+        mostrarResultado(
+            acertos,
+            erros,
+            porcentagem,
+            tempo,
+            melhorResultado
+        );
+
+        atualizarListaFases();
+
+    } catch (erro) {
+
+        respostaEmEnvio = false;
+        if (botaoProxima) botaoProxima.disabled = false;
+
+        const areaErro = document.getElementById("explicacaoErro");
+        if (areaErro) {
+            areaErro.textContent =
+                "Não foi possível concluir a fase no servidor. Suas respostas continuam salvas. Tente novamente.";
+            areaErro.hidden = false;
+        }
+
+        console.error("Erro ao concluir fase no Supabase:", erro);
     }
-
-
-    // =================================================
-    // GARANTIR QUE A FASE EXISTE
-    // =================================================
-
-    if (
-        !progresso.niveis[nivelAtual]
-            .fases[faseAtual]
-    ) {
-
-        progresso.niveis[nivelAtual]
-            .fases[faseAtual] = {
-
-                concluida: false,
-
-                melhorResultado: 0,
-
-                questaoAtual: 1,
-
-                respostas: {},
-
-                acertos: 0,
-
-                erros: 0,
-
-                tempo: 0
-
-            };
-
-    }
-
-
-    const dadosFase =
-        progresso.niveis[nivelAtual]
-            .fases[faseAtual];
-
-
-    // =================================================
-    // MARCAR FASE COMO CONCLUÍDA
-    // =================================================
-
-    dadosFase.concluida =
-        true;
-
-
-    dadosFase.questaoAtual =
-        TOTAL_QUESTOES;
-
-
-    dadosFase.respostas =
-        respostas;
-
-
-    dadosFase.acertos =
-        acertos;
-
-
-    dadosFase.erros =
-        erros;
-
-
-    dadosFase.tempo =
-        tempo;
-
-// =================================================
-// BÔNUS DE XP POR CONCLUSÃO DA FASE
-// =================================================
-
-registrarXPConclusaoFase(
-    dadosFase
-);
-
-
-    // =================================================
-    // ATUALIZAR MELHOR RESULTADO
-    // =================================================
-
-    if (
-        acertos >
-        (
-            dadosFase.melhorResultado ||
-            0
-        )
-    ) {
-
-        dadosFase.melhorResultado =
-            acertos;
-
-    }
-
-
-    // =================================================
-    // SALVAR FASE
-    // =================================================
-
-    progresso.niveis[nivelAtual]
-        .fases[faseAtual] =
-        dadosFase;
-
-
-    salvarProgresso(
-        progresso
-    );
-
-
-    // =================================================
-    // MOSTRAR RESULTADO
-    // =================================================
-
-    mostrarResultado(
-        acertos,
-        erros,
-        porcentagem,
-        tempo,
-        dadosFase.melhorResultado
-    );
-
 }
 
 
 // =====================================================
+// MOSTRAR RESULTADO DA FASE// =====================================================
 // MOSTRAR RESULTADO DA FASE
 // =====================================================
 
@@ -3364,121 +3075,27 @@ function formatarTempo(
 
 function refazerFase() {
 
-    // =================================================
-    // RESETAR ESTADO
-    // =================================================
+    // Revisão não apaga respostas, tentativas, conclusão nem XP.
+    modoRevisao = true;
+    faseFinalizada = false;
+    respostaEmEnvio = false;
 
-    respostas =
-        {};
+    questaoAtual = 1;
+    inicioFase = Date.now();
 
-    questaoAtual =
-        1;
+    const areaQuestao = document.getElementById("areaQuestao");
+    const resultado = document.getElementById("resultadoFase");
 
-    inicioFase =
-        Date.now();
-
-    faseFinalizada =
-        false;
-
-
-    // =================================================
-    // CARREGAR PROGRESSO
-    // =================================================
-
-    const progresso =
-        carregarProgresso();
-
-
-    // =================================================
-    // MANTER MELHOR RESULTADO
-    // =================================================
-
-    if (
-        progresso.niveis[nivelAtual] &&
-        progresso.niveis[nivelAtual]
-            .fases[faseAtual]
-    ) {
-
-        const dadosFase =
-            progresso.niveis[nivelAtual]
-                .fases[faseAtual];
-
-
-        dadosFase.concluida =
-            false;
-
-
-        dadosFase.questaoAtual =
-            1;
-
-
-        dadosFase.respostas =
-            {};
-
-
-        dadosFase.acertos =
-            0;
-
-
-        dadosFase.erros =
-            0;
-
-
-        dadosFase.tempo =
-            0;
-
-
-        // O melhor resultado NÃO é apagado.
-
-        progresso.niveis[nivelAtual]
-            .fases[faseAtual] =
-            dadosFase;
-
-
-        salvarProgresso(
-            progresso
-        );
-
-    }
-
-
-    // =================================================
-    // MOSTRAR FASE NOVAMENTE
-    // =================================================
-
-    const areaQuestao =
-        document.getElementById(
-            "areaQuestao"
-        );
-
-
-    const resultado =
-        document.getElementById(
-            "resultadoFase"
-        );
-
-
-    if (areaQuestao) {
-
-        areaQuestao.hidden =
-            false;
-
-    }
-
-
-    if (resultado) {
-
-        resultado.hidden =
-            true;
-
-    }
-
+    if (areaQuestao) areaQuestao.hidden = false;
+    if (resultado) resultado.hidden = true;
 
     atualizarInformacoesFase();
-
     mostrarQuestao();
+}
 
-}    // =====================================================
+
+// =====================================================
+// PRÓXIMA FASE// =====================================================
 // PRÓXIMA FASE
 // =====================================================
 
@@ -3969,39 +3586,42 @@ function configurarEventosNivel1() {
 // INICIALIZAÇÃO DO NÍVEL 1
 // =====================================================
 
-function inicializarNivel1() {
-
-    // Configura os eventos.
+async function inicializarNivel1() {
 
     configurarEventosNivel1();
 
+    try {
+        await carregarProgressoBancoNivel1();
+    } catch (erro) {
 
-    // Cria a lista lateral.
+        console.error(
+            "Não foi possível carregar o progresso do Nível 1:",
+            erro
+        );
 
-    atualizarListaFases();
+        const textoQuestao = document.getElementById("textoQuestao");
+        const alternativas = document.getElementById("alternativas");
 
+        if (textoQuestao) {
+            textoQuestao.textContent =
+                "Não foi possível carregar seu progresso. Atualize a página ou entre novamente.";
+        }
 
-    // Inicia a primeira fase disponível.
-
-    iniciarFase(
-        faseAtual
-    );
-
-
-    // Atualiza os ícones.
-
-    if (
-        typeof atualizarIcones === "function"
-    ) {
-
-        atualizarIcones();
-
+        if (alternativas) alternativas.innerHTML = "";
+        return;
     }
 
+    atualizarListaFases();
+    iniciarFase(faseAtual);
+
+    if (typeof atualizarIcones === "function") {
+        atualizarIcones();
+    }
 }
 
 
 // =====================================================
+// INICIAR QUANDO O HTML ESTIVER PRONTO// =====================================================
 // INICIAR QUANDO O HTML ESTIVER PRONTO
 // =====================================================
 
