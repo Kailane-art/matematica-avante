@@ -535,87 +535,80 @@ if(tipoSalvo){
     }
 
 } 
-const progressoSalvo =
-    localStorage.getItem("progressoNiveis");
+async function carregarProgressoFasesPerfil() {
 
+    const elementoFases = document.getElementById("fasesConcluidasResumo");
+    const elementoEvolucao = document.getElementById("evolucaoGeralPerfil");
+    const barraEvolucao = document.querySelector(
+        ".card-perfil.progresso .progresso-atual"
+    );
 
-if(progressoSalvo){
+    if (elementoFases) elementoFases.textContent = "Carregando...";
+    if (elementoEvolucao) elementoEvolucao.textContent = "Carregando...";
 
     try {
 
-        const progresso =
-            JSON.parse(progressoSalvo);
-
-
-        let fasesConcluidas = 0;
-
-
-        if(
-            progresso &&
-            progresso.niveis &&
-            typeof progresso.niveis === "object"
-        ){
-
-            Object.values(
-                progresso.niveis
-            ).forEach(function(nivel){
-
-                if(
-                    !nivel ||
-                    !nivel.fases ||
-                    typeof nivel.fases !== "object"
-                ){
-
-                    return;
-
-                }
-
-
-                Object.values(
-                    nivel.fases
-                ).forEach(function(fase){
-
-                    if(
-                        fase &&
-                        fase.concluida === true
-                    ){
-
-                        fasesConcluidas++;
-
-                    }
-
-                });
-
-            });
-
+        if (!supabaseClient) {
+            throw new Error("A conexão com o Supabase não está disponível.");
         }
 
+        const {
+            data: { user },
+            error: erroUsuario
+        } = await supabaseClient.auth.getUser();
 
-        const elementoFases =
-            document.getElementById(
-                "fasesConcluidasResumo"
-            );
-
-
-        if(elementoFases){
-
-            elementoFases.textContent =
-                fasesConcluidas + " / 30";
-
+        if (erroUsuario || !user) {
+            throw erroUsuario || new Error("Usuário não autenticado.");
         }
 
+        const { data: fases, error } = await supabaseClient
+            .from("user_level_progress")
+            .select("level_number, phase_number, completed")
+            .in("level_number", [1, 2, 3])
+            .eq("completed", true);
 
-    } catch(erro){
+        if (error) {
+            throw error;
+        }
 
-        console.error(
-            "Não foi possível carregar as fases concluídas:",
-            erro
+        const fasesConcluidas = (fases || []).filter(function(fase) {
+            return fase.completed === true;
+        }).length;
+
+        const totalFasesAtuais = 30;
+
+        const porcentagemEvolucao = Math.min(
+            100,
+            Math.round((fasesConcluidas / totalFasesAtuais) * 100)
         );
+
+        if (elementoFases) {
+            elementoFases.textContent = fasesConcluidas + " / " + totalFasesAtuais;
+        }
+
+        if (elementoEvolucao) {
+            elementoEvolucao.textContent = porcentagemEvolucao + "%";
+        }
+
+        if (barraEvolucao) {
+            barraEvolucao.style.width = porcentagemEvolucao + "%";
+        }
+
+    } catch (erro) {
+
+        console.error("Não foi possível carregar o progresso das fases:", erro);
+
+        if (elementoFases) elementoFases.textContent = "— / 30";
+        if (elementoEvolucao) elementoEvolucao.textContent = "—";
+        if (barraEvolucao) barraEvolucao.style.width = "0%";
 
     }
 
-} 
-    // A taxa de acertos é carregada do Supabase
+}
+
+carregarProgressoFasesPerfil();
+
+// A taxa de acertos é carregada do Supabase
 // pelo carregador central em js/script.js.
 
     // =====================================================
@@ -696,126 +689,6 @@ if (elementoSequencia) {
 
 } 
     // =====================================================
-// EVOLUÇÃO GERAL
-// =====================================================
-
-const progressoEvolucao =
-    localStorage.getItem(
-        "progressoNiveis"
-    );
-
-
-if(progressoEvolucao){
-
-    try {
-
-        const progresso =
-            JSON.parse(
-                progressoEvolucao
-            );
-
-
-        let fasesConcluidas =
-            0;
-
-
-        const totalFasesAtuais =
-            30;
-
-
-        if(
-            progresso &&
-            progresso.niveis &&
-            typeof progresso.niveis === "object"
-        ){
-
-            Object.values(
-                progresso.niveis
-            ).forEach(function(nivel){
-
-                if(
-                    !nivel ||
-                    !nivel.fases ||
-                    typeof nivel.fases !== "object"
-                ){
-
-                    return;
-
-                }
-
-
-                Object.values(
-                    nivel.fases
-                ).forEach(function(fase){
-
-                    if(
-                        fase &&
-                        fase.concluida === true
-                    ){
-
-                        fasesConcluidas++;
-
-                    }
-
-                });
-
-            });
-
-        }
-
-
-        const porcentagemEvolucao =
-            Math.min(
-                100,
-                Math.round(
-                    (
-                        fasesConcluidas /
-                        totalFasesAtuais
-                    ) * 100
-                )
-            );
-
-
-        const elementoEvolucao =
-            document.getElementById(
-                "evolucaoGeralPerfil"
-            );
-
-
-        if(elementoEvolucao){
-
-            elementoEvolucao.textContent =
-                porcentagemEvolucao + "%";
-
-        }
-
-
-        const barraEvolucao =
-            document.querySelector(
-                ".card-perfil.progresso .progresso-atual"
-            );
-
-
-        if(barraEvolucao){
-
-            barraEvolucao.style.width =
-                porcentagemEvolucao + "%";
-
-        }
-
-
-    } catch(erro){
-
-        console.error(
-            "Não foi possível calcular a evolução geral:",
-            erro
-        );
-
-    }
-
-}  
-
-// =====================================================
 // XP ACUMULADO
 // =====================================================
 
