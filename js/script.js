@@ -225,6 +225,7 @@ const paginasProtegidas = new Set([
     "aprender-basico.html",
     "nivel1.html",
     "nivel2.html",
+    "nivel3.html",
     "adicao.html",
     "subtracao.html",
     "multiplicacao.html",
@@ -1805,6 +1806,11 @@ const conteudosRastreaveis = {
     "nivel2.html": {
         chave: "nivel2",
         nome: "Nível 2"
+    },
+
+    "nivel3.html": {
+        chave: "nivel3",
+        nome: "Nível 3"
     }
 
 };
