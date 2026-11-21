@@ -2511,7 +2511,7 @@ if (formEditarPerfil) {
 
 
                 const elementoNome =
-                    document.getElementById("nomeUsuario");
+                    document.getElementById("nomeUsuarioTexto");
 
                 if (elementoNome) {
 
