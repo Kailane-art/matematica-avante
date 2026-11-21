@@ -146,7 +146,7 @@ Identidade
 
 <p id="seloConta">
 
-💎 <span id="seloContaRotulo">Selo Premium:</span>
+<span id="seloContaIcone">💎</span><span id="seloContaRotulo"> Selo Premium:</span>
 
 <span id="seloContaNome">
 Não possui
@@ -929,19 +929,29 @@ async function carregarAvatarDaConta() {
         const elementoSeloRotulo = document.getElementById("seloContaRotulo");
         const elementoSeloNome = document.getElementById("seloContaNome");
 
+        const elementoSeloIcone = document.getElementById("seloContaIcone");
+
         if (perfil.tipo_usuario === "dev") {
+            if (elementoSeloIcone) {
+                elementoSeloIcone.textContent = "⚡";
+            }
             if (elementoSeloRotulo) {
                 elementoSeloRotulo.textContent = "Selo:";
             }
             if (elementoSeloNome) {
-                elementoSeloNome.textContent = "⚡ Coração da Matrix";
+                elementoSeloNome.textContent = "Coração da Matrix";
+                elementoSeloNome.classList.add("selo-dev-nome");
             }
         } else {
+            if (elementoSeloIcone) {
+                elementoSeloIcone.textContent = "💎";
+            }
             if (elementoSeloRotulo) {
-                elementoSeloRotulo.textContent = "Selo Premium:";
+                elementoSeloRotulo.textContent = " Selo Premium:";
             }
             if (elementoSeloNome) {
                 elementoSeloNome.textContent = "Não possui";
+                elementoSeloNome.classList.remove("selo-dev-nome");
             }
         }
 
