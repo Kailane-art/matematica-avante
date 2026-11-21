@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+content = r'''<!DOCTYPE html>
 <html lang="pt-BR" class="verificando-sessao">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <title>Subtração - Matemática Avante</title>
 
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://unpkg.com/lucide@latest"></script> 
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
@@ -119,15 +119,15 @@
 
                 <div class="alternativas">
 
-                    <button onclick="responderQuestaoSubtracao(1, false, this)">
+                    <button data-option-id="a" onclick="responderQuestaoSubtracao(1, 'a', this)" disabled>
                         4
                     </button>
 
-                    <button onclick="responderQuestaoSubtracao(1, true, this)">
+                    <button data-option-id="b" onclick="responderQuestaoSubtracao(1, 'b', this)" disabled>
                         5
                     </button>
 
-                    <button onclick="responderQuestaoSubtracao(1, false, this)">
+                    <button data-option-id="c" onclick="responderQuestaoSubtracao(1, 'c', this)" disabled>
                         6
                     </button>
 
@@ -145,15 +145,15 @@
 
                 <div class="alternativas">
 
-                    <button onclick="responderQuestaoSubtracao(2, false, this)">
+                    <button data-option-id="a" onclick="responderQuestaoSubtracao(2, 'a', this)" disabled>
                         7
                     </button>
 
-                    <button onclick="responderQuestaoSubtracao(2, true, this)">
+                    <button data-option-id="b" onclick="responderQuestaoSubtracao(2, 'b', this)" disabled>
                         8
                     </button>
 
-                    <button onclick="responderQuestaoSubtracao(2, false, this)">
+                    <button data-option-id="c" onclick="responderQuestaoSubtracao(2, 'c', this)" disabled>
                         9
                     </button>
 
@@ -171,15 +171,15 @@
 
                 <div class="alternativas">
 
-                    <button onclick="responderQuestaoSubtracao(3, true, this)">
+                    <button data-option-id="a" onclick="responderQuestaoSubtracao(3, 'a', this)" disabled>
                         14
                     </button>
 
-                    <button onclick="responderQuestaoSubtracao(3, false, this)">
+                    <button data-option-id="b" onclick="responderQuestaoSubtracao(3, 'b', this)" disabled>
                         16
                     </button>
 
-                    <button onclick="responderQuestaoSubtracao(3, false, this)">
+                    <button data-option-id="c" onclick="responderQuestaoSubtracao(3, 'c', this)" disabled>
                         12
                     </button>
 
@@ -197,15 +197,15 @@
 
                 <div class="alternativas">
 
-                    <button onclick="responderQuestaoSubtracao(4, false, this)">
+                    <button data-option-id="a" onclick="responderQuestaoSubtracao(4, 'a', this)" disabled>
                         26
                     </button>
 
-                    <button onclick="responderQuestaoSubtracao(4, false, this)">
+                    <button data-option-id="b" onclick="responderQuestaoSubtracao(4, 'b', this)" disabled>
                         23
                     </button>
 
-                    <button onclick="responderQuestaoSubtracao(4, true, this)">
+                    <button data-option-id="c" onclick="responderQuestaoSubtracao(4, 'c', this)" disabled>
                         24
                     </button>
 
@@ -223,15 +223,15 @@
 
                 <div class="alternativas">
 
-                    <button onclick="responderQuestaoSubtracao(5, false, this)">
+                    <button data-option-id="a" onclick="responderQuestaoSubtracao(5, 'a', this)" disabled>
                         43
                     </button>
 
-                    <button onclick="responderQuestaoSubtracao(5, true, this)">
+                    <button data-option-id="b" onclick="responderQuestaoSubtracao(5, 'b', this)" disabled>
                         45
                     </button>
 
-                    <button onclick="responderQuestaoSubtracao(5, false, this)">
+                    <button data-option-id="c" onclick="responderQuestaoSubtracao(5, 'c', this)" disabled>
                         47
                     </button>
 
@@ -276,46 +276,17 @@
 
     <script>
 
-        const CHAVE_XP_SUBTRACAO = "questoesSubtracaoComXP";
-
         let acertosSubtracao = 0;
-
         let questoesRespondidasSubtracao = [];
-
-
-        // Carregar questões que já concederam XP.
-
-        function obterQuestoesComXPSubtracao() {
-
-            try {
-
-                const dados = JSON.parse(
-                    localStorage.getItem(CHAVE_XP_SUBTRACAO) || "[]"
-                );
-
-                return Array.isArray(dados) ? dados : [];
-
-            } catch (erro) {
-
-                console.error(
-                    "Erro ao carregar o progresso da subtração:",
-                    erro
-                );
-
-                return [];
-
-            }
-
-        }
+        let xpTotalSubtracao = 0;
+        let carregamentoSubtracaoConcluido = false;
 
 
         // Atualizar pontuação.
 
         function atualizarPontuacaoSubtracao() {
 
-            const pontuacao = document.getElementById("pontuacao");
-
-            pontuacao.textContent =
+            document.getElementById("pontuacao").textContent =
                 "Pontuação: " + acertosSubtracao + "/5";
 
         }
@@ -326,7 +297,7 @@
         function atualizarXPSubtracao() {
 
             document.getElementById("xpTotalSubtracao").textContent =
-                obterXP();
+                xpTotalSubtracao;
 
         }
 
@@ -340,117 +311,325 @@
         }
 
 
-        // Responder questão.
+        // Bloquear ou liberar os botões de uma questão.
 
-        function responderQuestaoSubtracao(numero, correta, botao) {
-
-            if (questoesRespondidasSubtracao.includes(numero)) {
-
-                return;
-
-            }
-
-            questoesRespondidasSubtracao.push(numero);
-
+        function bloquearBotoesSubtracao(numero, bloquear) {
 
             const questao = document.querySelector(
                 '.questao[data-numero="' + numero + '"]'
             );
 
-            const botoes = questao.querySelectorAll("button");
+            if (!questao) return;
 
-            botoes.forEach(function(item) {
+            questao.querySelectorAll("button").forEach(function(botao) {
 
-                item.disabled = true;
+                botao.disabled = bloquear;
 
-                item.classList.add("resposta-bloqueada");
+                if (bloquear) {
+                    botao.classList.add("resposta-bloqueada");
+                } else {
+                    botao.classList.remove("resposta-bloqueada");
+                }
 
             });
 
+        }
 
-            if (typeof registrarEstudoHoje === "function") {
 
-                registrarEstudoHoje();
+        // Aplicar uma tentativa já registrada no banco.
 
+        function aplicarTentativaSubtracao(numero, tentativa) {
+
+            if (questoesRespondidasSubtracao.includes(numero)) {
+                return;
             }
 
+            questoesRespondidasSubtracao.push(numero);
 
-            if (correta) {
+            bloquearBotoesSubtracao(numero, true);
 
+            const questao = document.querySelector(
+                '.questao[data-numero="' + numero + '"]'
+            );
+
+            const botaoSelecionado = questao.querySelector(
+                '[data-option-id="' + tentativa.selected_option_id + '"]'
+            );
+
+            if (tentativa.is_correct) {
                 acertosSubtracao++;
+            }
 
-                botao.classList.add("resposta-correta");
+            if (botaoSelecionado) {
 
-
-                const questoesComXP = obterQuestoesComXPSubtracao();
-
-                const identificador = String(numero);
-
-
-                if (!questoesComXP.includes(identificador)) {
-
-                    questoesComXP.push(identificador);
-
-                    localStorage.setItem(
-                        CHAVE_XP_SUBTRACAO,
-                        JSON.stringify(questoesComXP)
-                    );
-
-                    adicionarXP(10);
-
-                    mostrarResultadoSubtracao(
-                        "Resposta correta! Você ganhou 10 XP."
-                    );
-
-                } else {
-
-                    mostrarResultadoSubtracao(
-                        "Resposta correta! Você já recebeu XP por esta questão."
-                    );
-
-                }
-
-            } else {
-
-                botao.classList.add("resposta-errada");
-
-                mostrarResultadoSubtracao(
-                    "Resposta incorreta. Continue estudando!"
+                botaoSelecionado.classList.add(
+                    tentativa.is_correct
+                        ? "resposta-correta"
+                        : "resposta-errada"
                 );
 
             }
 
-
             atualizarPontuacaoSubtracao();
 
-            atualizarXPSubtracao();
+        }
 
 
-            if (questoesRespondidasSubtracao.length === 5) {
+        // Atualizar mensagem de conclusão.
 
-                if (acertosSubtracao === 5) {
+        function verificarConclusaoSubtracao() {
 
-                    mostrarResultadoSubtracao(
-                        "Parabéns! Você acertou todas as questões!"
-                    );
+            if (questoesRespondidasSubtracao.length !== 5) {
+                return;
+            }
 
-                } else {
+            if (acertosSubtracao === 5) {
 
-                    mostrarResultadoSubtracao(
-                        "Atividade concluída! Você acertou " +
-                        acertosSubtracao + " de 5 questões."
-                    );
+                mostrarResultadoSubtracao(
+                    "Parabéns! Você acertou todas as questões!"
+                );
 
-                }
+            } else {
+
+                mostrarResultadoSubtracao(
+                    "Atividade concluída! Você acertou " +
+                    acertosSubtracao + " de 5 questões."
+                );
 
             }
 
         }
 
 
-        // Mostrar XP atual ao abrir a página.
+        // Carregar XP e tentativas anteriores.
 
-        atualizarXPSubtracao();
+        async function carregarEstadoSubtracao() {
+
+            try {
+
+                if (!supabaseClient) {
+                    throw new Error("Conexão com o Supabase indisponível.");
+                }
+
+                const {
+                    data: { user },
+                    error: erroUsuario
+                } = await supabaseClient.auth.getUser();
+
+                if (erroUsuario || !user) {
+                    throw new Error("Sessão não autenticada.");
+                }
+
+                const [resultadoXP, resultadoTentativas] = await Promise.all([
+
+                    supabaseClient
+                        .from("user_progress")
+                        .select("total_xp")
+                        .eq("user_id", user.id)
+                        .maybeSingle(),
+
+                    supabaseClient
+                        .from("user_question_attempts")
+                        .select("question_id, selected_option_id, is_correct")
+                        .eq("user_id", user.id)
+                        .eq("activity_type", "subtracao")
+
+                ]);
+
+                if (resultadoXP.error) {
+                    throw resultadoXP.error;
+                }
+
+                if (resultadoTentativas.error) {
+                    throw resultadoTentativas.error;
+                }
+
+                xpTotalSubtracao = Number(
+                    resultadoXP.data?.total_xp || 0
+                );
+
+                resultadoTentativas.data.forEach(function(tentativa) {
+
+                    const numero = Number(tentativa.question_id);
+
+                    if (
+                        Number.isInteger(numero) &&
+                        numero >= 1 &&
+                        numero <= 5
+                    ) {
+
+                        aplicarTentativaSubtracao(numero, tentativa);
+
+                    }
+
+                });
+
+                atualizarPontuacaoSubtracao();
+                atualizarXPSubtracao();
+
+                for (let numero = 1; numero <= 5; numero++) {
+
+                    if (!questoesRespondidasSubtracao.includes(numero)) {
+
+                        bloquearBotoesSubtracao(numero, false);
+
+                    }
+
+                }
+
+                carregamentoSubtracaoConcluido = true;
+
+                if (questoesRespondidasSubtracao.length > 0) {
+
+                    mostrarResultadoSubtracao(
+                        "Seu progresso anterior foi carregado."
+                    );
+
+                }
+
+                verificarConclusaoSubtracao();
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao carregar progresso da subtração:",
+                    erro
+                );
+
+                mostrarResultadoSubtracao(
+                    "Não foi possível carregar seu progresso. Atualize a página e tente novamente."
+                );
+
+            }
+
+        }
+
+
+        // Responder questão usando o Supabase.
+
+        async function responderQuestaoSubtracao(numero, optionId, botao) {
+
+            if (
+                !carregamentoSubtracaoConcluido ||
+                questoesRespondidasSubtracao.includes(numero)
+            ) {
+                return;
+            }
+
+            const questao = document.querySelector(
+                '.questao[data-numero="' + numero + '"]'
+            );
+
+            if (!questao) return;
+
+            bloquearBotoesSubtracao(numero, true);
+
+            mostrarResultadoSubtracao("Registrando sua resposta...");
+
+            try {
+
+                const { data, error } = await supabaseClient.rpc(
+                    "submit_operation_answer",
+                    {
+                        p_activity_type: "subtracao",
+                        p_question_id: String(numero),
+                        p_option_id: optionId
+                    }
+                );
+
+                if (error) {
+                    throw error;
+                }
+
+                if (!data) {
+                    throw new Error("O banco não retornou um resultado.");
+                }
+
+                xpTotalSubtracao = Number(data.total_xp || 0);
+
+                atualizarXPSubtracao();
+
+                if (data.already_answered) {
+
+                    const {
+                        data: tentativa,
+                        error: erroTentativa
+                    } = await supabaseClient
+                        .from("user_question_attempts")
+                        .select("question_id, selected_option_id, is_correct")
+                        .eq("user_id", (await supabaseClient.auth.getUser()).data.user.id)
+                        .eq("activity_type", "subtracao")
+                        .eq("question_id", String(numero))
+                        .maybeSingle();
+
+                    if (erroTentativa) {
+                        throw erroTentativa;
+                    }
+
+                    if (tentativa) {
+
+                        aplicarTentativaSubtracao(numero, tentativa);
+
+                    } else {
+
+                        questoesRespondidasSubtracao.push(numero);
+
+                    }
+
+                    mostrarResultadoSubtracao(
+                        "Esta questão já foi respondida anteriormente."
+                    );
+
+                    verificarConclusaoSubtracao();
+
+                    return;
+                }
+
+                const tentativaAtual = {
+                    selected_option_id: optionId,
+                    is_correct: data.correct
+                };
+
+                aplicarTentativaSubtracao(numero, tentativaAtual);
+
+                if (data.correct) {
+
+                    mostrarResultadoSubtracao(
+                        "Resposta correta! Você ganhou " +
+                        data.xp_awarded + " XP."
+                    );
+
+                } else {
+
+                    mostrarResultadoSubtracao(
+                        "Resposta incorreta. Continue estudando!"
+                    );
+
+                }
+
+                verificarConclusaoSubtracao();
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao registrar resposta da subtração:",
+                    erro
+                );
+
+                bloquearBotoesSubtracao(numero, false);
+
+                mostrarResultadoSubtracao(
+                    "Não foi possível registrar sua resposta. Tente novamente."
+                );
+
+            }
+
+        }
+
+
+        // Inicializar a página.
+
+        carregarEstadoSubtracao();
 
 
         // Atualizar ícones.
@@ -461,5 +640,9 @@
 
 </body>
 
-  </html>
-  
+</html>
+'''
+path = "/mnt/data/subtracao.html"
+with open(path, "w", encoding="utf-8") as f:
+    f.write(content)
+print(f"Arquivo criado: {path}\nLinhas: {len(content.splitlines())}\nBytes: {len(content.encode('utf-8'))}")
