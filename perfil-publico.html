@@ -119,7 +119,10 @@ async function carregarPerfilPublico() {
 
         }
 
-        if (perfil.link) {
+        if (
+            perfil.link &&
+            /^https?:\/\/.+/i.test(perfil.link)
+        ) {
 
             link.href = perfil.link;
             link.textContent = perfil.link;
