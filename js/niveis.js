@@ -2023,7 +2023,6 @@ function faseFoiConcluida(numeroFase) {
 
 
 // =====================================================
-// OBTER QUESTÕES DA FASE// =====================================================
 // OBTER QUESTÕES DA FASE
 // =====================================================
 
@@ -2407,7 +2406,6 @@ async function responderAlternativa(alternativa, botao) {
 
 
 // =====================================================
-// MOSTRAR EXPLICAÇÃO APÓS ERRO// =====================================================
 // MOSTRAR EXPLICAÇÃO APÓS ERRO
 // =====================================================
 
@@ -2661,7 +2659,6 @@ function salvarEstadoAtual() {
 
 
 // =====================================================
-// INICIAR FASE// =====================================================
 // INICIAR FASE
 // =====================================================
 
@@ -2673,7 +2670,7 @@ function iniciarFase(numeroFase) {
         !faseEstaDesbloqueada(numeroFase)
     ) return;
 
-    if (inicioFase && numeroFase !== faseAtual) {
+    if (inicioFase) {
         salvarEstadoAtual();
     }
 
@@ -2714,7 +2711,6 @@ function iniciarFase(numeroFase) {
 
 
 // =====================================================
-// FINALIZAR FASE// =====================================================
 // FINALIZAR FASE
 // =====================================================
 
@@ -2774,6 +2770,9 @@ async function finalizarFase() {
 
         const melhorResultado = Math.max(
             Number(dadosFase.melhorResultado) || 0,
+            Number(
+                (progressoBancoNiveis[faseAtual] || {}).melhorResultado
+            ) || 0,
             acertos
         );
 
@@ -3107,7 +3106,6 @@ function refazerFase() {
 
 
 // =====================================================
-// PRÓXIMA FASE// =====================================================
 // PRÓXIMA FASE
 // =====================================================
 
@@ -3633,7 +3631,6 @@ async function inicializarNivel1() {
 
 
 // =====================================================
-// INICIAR QUANDO O HTML ESTIVER PRONTO// =====================================================
 // INICIAR QUANDO O HTML ESTIVER PRONTO
 // =====================================================
 
