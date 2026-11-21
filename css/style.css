@@ -3506,6 +3506,15 @@ html.verificando-sessao:has(body.modo-escuro)::before {
     overflow-wrap: anywhere;
 }
 
+.identidade .selo-dev-nome {
+    color: #d4a900;
+    font-weight: 700;
+}
+
+.modo-escuro .identidade .selo-dev-nome {
+    color: #FFD54F;
+}
+
 .modo-escuro .identidade h3 {
     color: #f1f5f9;
 }
