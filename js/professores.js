@@ -645,3 +645,151 @@ if (
 renderizarProfessores(
     professores
 );   
+
+
+// =====================================================
+// MODAL DE CADASTRO COMO PROFESSOR
+// =====================================================
+
+const botaoAbrirCadastroProfessor =
+    document.getElementById("abrirCadastroProfessor");
+
+const modalCadastroProfessor =
+    document.getElementById("modalCadastroProfessor");
+
+const botaoFecharCadastroProfessor =
+    document.getElementById("fecharCadastroProfessor");
+
+const botaoCancelarCadastroProfessor =
+    document.getElementById("cancelarCadastroProfessor");
+
+const campoEmailContaProfessor =
+    document.getElementById("emailContaProfessor");
+
+const usernameContaProfessor =
+    document.getElementById("usernameContaProfessor");
+
+
+async function carregarIdentificacaoContaProfessor() {
+
+    if (!window.supabaseClient || !campoEmailContaProfessor || !usernameContaProfessor) {
+        campoEmailContaProfessor.value = "";
+        usernameContaProfessor.textContent = "Indisponível";
+        return;
+    }
+
+    try {
+
+        const { data: { user }, error } =
+            await supabaseClient.auth.getUser();
+
+        if (error || !user) {
+            throw new Error("Não foi possível identificar a conta.");
+        }
+
+        campoEmailContaProfessor.value = user.email || "";
+
+        const { data: perfil, error: erroPerfil } =
+            await supabaseClient
+                .from("profiles")
+                .select("username")
+                .eq("id", user.id)
+                .single();
+
+        if (erroPerfil || !perfil) {
+            throw new Error("Não foi possível carregar o username da conta.");
+        }
+
+        usernameContaProfessor.textContent =
+            perfil.username ? "@" + perfil.username : "Não definido";
+
+    } catch (erro) {
+
+        console.error("Erro ao carregar dados da conta para o cadastro de professor:", erro);
+
+        campoEmailContaProfessor.value = "";
+        usernameContaProfessor.textContent = "Não foi possível carregar";
+
+    }
+
+}
+
+
+function abrirModalCadastroProfessor() {
+
+    if (!modalCadastroProfessor) return;
+
+    modalCadastroProfessor.hidden = false;
+    document.body.style.overflow = "hidden";
+
+    carregarIdentificacaoContaProfessor();
+
+    if (window.atualizarIcones) {
+        atualizarIcones();
+    }
+
+    const campoNome = document.getElementById("nomeCompletoProfessor");
+
+    if (campoNome) {
+        campoNome.focus();
+    }
+
+}
+
+
+function fecharModalCadastroProfessor() {
+
+    if (!modalCadastroProfessor) return;
+
+    modalCadastroProfessor.hidden = true;
+    document.body.style.overflow = "";
+
+}
+
+
+if (botaoAbrirCadastroProfessor) {
+    botaoAbrirCadastroProfessor.addEventListener(
+        "click",
+        abrirModalCadastroProfessor
+    );
+}
+
+if (botaoFecharCadastroProfessor) {
+    botaoFecharCadastroProfessor.addEventListener(
+        "click",
+        fecharModalCadastroProfessor
+    );
+}
+
+if (botaoCancelarCadastroProfessor) {
+    botaoCancelarCadastroProfessor.addEventListener(
+        "click",
+        fecharModalCadastroProfessor
+    );
+}
+
+if (modalCadastroProfessor) {
+
+    modalCadastroProfessor.addEventListener("click", function(event) {
+
+        if (event.target === modalCadastroProfessor) {
+            fecharModalCadastroProfessor();
+        }
+
+    });
+
+}
+
+document.addEventListener("keydown", function(event) {
+
+    if (
+        event.key === "Escape" &&
+        modalCadastroProfessor &&
+        !modalCadastroProfessor.hidden
+    ) {
+        fecharModalCadastroProfessor();
+    }
+
+});
+
+// O botão "Enviar solicitação" permanece sem ação nesta etapa.
