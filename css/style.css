@@ -3149,3 +3149,325 @@ html.verificando-sessao:has(body.modo-escuro)::before {
         width: 100%;
     }
 }
+
+
+/* =====================================================
+   MODAL — CADASTRO COMO PROFESSOR
+===================================================== */
+
+.modal-cadastro-professor {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(0, 0, 0, 0.68);
+    overflow-y: auto;
+}
+
+.modal-cadastro-professor[hidden] {
+    display: none !important;
+}
+
+.conteudo-cadastro-professor {
+    width: 100%;
+    max-width: 560px;
+    max-height: 92vh;
+    overflow-y: auto;
+    padding: 28px;
+    border-radius: 18px;
+    background: #ffffff;
+    color: #222;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+}
+
+.cabecalho-cadastro-professor {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.cabecalho-cadastro-professor h2 {
+    margin-bottom: 8px;
+    color: #1E3A8A;
+    font-size: 24px;
+}
+
+.cabecalho-cadastro-professor p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.fechar-cadastro-professor {
+    display: flex;
+    flex: 0 0 38px;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: #eef3ff;
+    color: #1E3A8A;
+    cursor: pointer;
+}
+
+.fechar-cadastro-professor svg {
+    width: 20px;
+    height: 20px;
+}
+
+#formCadastroProfessor {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.grupo-cadastro-professor {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+}
+
+.grupo-cadastro-professor h3 {
+    margin-bottom: 5px;
+    color: #1E3A8A;
+    font-size: 17px;
+}
+
+.grupo-cadastro-professor > label,
+.especialidades-professor > label {
+    margin-top: 5px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.grupo-cadastro-professor input,
+.grupo-cadastro-professor textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    background: #f8fafc;
+    color: #1f2937;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.grupo-cadastro-professor input:focus,
+.grupo-cadastro-professor textarea:focus {
+    border-color: #4169E1;
+    box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.12);
+}
+
+.grupo-cadastro-professor input[readonly] {
+    background: #eef2f7;
+    color: #64748b;
+    cursor: default;
+}
+
+.grupo-cadastro-professor textarea {
+    resize: vertical;
+    min-height: 82px;
+}
+
+.username-vinculado-professor {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.username-vinculado-professor strong {
+    color: #1E3A8A;
+}
+
+.especialidades-professor {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+    padding: 14px;
+    border: 1px solid #dbe3ef;
+    border-radius: 10px;
+}
+
+.especialidades-professor legend {
+    padding: 0 5px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.especialidades-professor > p {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.opcoes-especialidades-professor {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.opcoes-especialidades-professor label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #334155;
+    font-size: 13px;
+}
+
+.opcoes-especialidades-professor input {
+    width: 16px;
+    height: 16px;
+    accent-color: #4169E1;
+}
+
+.aviso-cadastro-professor {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 13px;
+    border-radius: 11px;
+    background: #eef3ff;
+    color: #334155;
+}
+
+.aviso-cadastro-professor svg {
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+    color: #4169E1;
+}
+
+.aviso-cadastro-professor p {
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.acoes-cadastro-professor {
+    display: flex;
+    gap: 12px;
+}
+
+.acoes-cadastro-professor button {
+    flex: 1;
+    min-height: 46px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.botao-cancelar-cadastro-professor {
+    background: #e8edf5;
+    color: #334155;
+}
+
+.botao-enviar-solicitacao-professor {
+    background: #4169E1;
+    color: white;
+}
+
+.botao-enviar-solicitacao-professor:hover {
+    background: #294ec5;
+}
+
+.modo-escuro .conteudo-cadastro-professor {
+    background: #13294b;
+    color: #e5e7eb;
+}
+
+.modo-escuro .cabecalho-cadastro-professor h2,
+.modo-escuro .username-vinculado-professor strong {
+    color: #FFD54F;
+}
+
+.modo-escuro .cabecalho-cadastro-professor p,
+.modo-escuro .username-vinculado-professor {
+    color: #cbd5e1;
+}
+
+.modo-escuro .fechar-cadastro-professor {
+    background: #0b1d3a;
+    color: #e5e7eb;
+}
+
+.modo-escuro .grupo-cadastro-professor {
+    border-color: #29456f;
+}
+
+.modo-escuro .grupo-cadastro-professor h3 {
+    color: #FFD54F;
+}
+
+.modo-escuro .grupo-cadastro-professor > label,
+.modo-escuro .especialidades-professor legend,
+.modo-escuro .opcoes-especialidades-professor label {
+    color: #e5e7eb;
+}
+
+.modo-escuro .grupo-cadastro-professor input,
+.modo-escuro .grupo-cadastro-professor textarea {
+    background: #0b1d3a;
+    border-color: #29456f;
+    color: white;
+}
+
+.modo-escuro .grupo-cadastro-professor input[readonly] {
+    background: #102442;
+    color: #cbd5e1;
+}
+
+.modo-escuro .especialidades-professor {
+    border-color: #29456f;
+}
+
+.modo-escuro .especialidades-professor > p {
+    color: #cbd5e1;
+}
+
+.modo-escuro .aviso-cadastro-professor {
+    background: #1d3b6d;
+    color: #e5e7eb;
+}
+
+.modo-escuro .botao-cancelar-cadastro-professor {
+    background: #29456f;
+    color: #e5e7eb;
+}
+
+@media (max-width: 550px) {
+    .conteudo-cadastro-professor {
+        padding: 21px 16px;
+    }
+
+    .cabecalho-cadastro-professor h2 {
+        font-size: 21px;
+    }
+
+    .grupo-cadastro-professor {
+        padding: 14px;
+    }
+
+    .opcoes-especialidades-professor {
+        grid-template-columns: 1fr;
+    }
+
+    .acoes-cadastro-professor {
+        flex-direction: column-reverse;
+    }
+}
