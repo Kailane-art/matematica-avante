@@ -103,7 +103,7 @@
             Meus professores
         </button>
 
-        <button type="button" class="botao-acao-professores">
+        <button type="button" id="abrirCadastroProfessor" class="botao-acao-professores">
             Cadastrar como professor
         </button>
 
@@ -297,6 +297,166 @@
 
 </main>
 
+
+
+<!-- =====================================================
+     JANELA DE CADASTRO COMO PROFESSOR
+     ===================================================== -->
+<div
+    id="modalCadastroProfessor"
+    class="modal-cadastro-professor"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="tituloCadastroProfessor"
+    hidden
+>
+    <div class="conteudo-cadastro-professor">
+
+        <div class="cabecalho-cadastro-professor">
+            <div>
+                <h2 id="tituloCadastroProfessor">Cadastrar como professor</h2>
+                <p>Preencha seus dados para solicitar seu cadastro na plataforma.</p>
+            </div>
+
+            <button
+                type="button"
+                id="fecharCadastroProfessor"
+                class="fechar-cadastro-professor"
+                aria-label="Fechar janela"
+            >
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+
+        <form id="formCadastroProfessor">
+
+            <section class="grupo-cadastro-professor">
+                <h3>Informações pessoais</h3>
+
+                <label for="nomeCompletoProfessor">Nome completo *</label>
+                <input
+                    type="text"
+                    id="nomeCompletoProfessor"
+                    name="nome_completo"
+                    placeholder="Digite seu nome completo"
+                    maxlength="100"
+                    autocomplete="name"
+                    required
+                >
+
+                <label for="emailContaProfessor">E-mail da conta</label>
+                <input
+                    type="email"
+                    id="emailContaProfessor"
+                    name="email"
+                    placeholder="Carregando e-mail da conta..."
+                    autocomplete="email"
+                    readonly
+                >
+
+                <p class="username-vinculado-professor">
+                    Username vinculado: <strong id="usernameContaProfessor">Carregando...</strong>
+                </p>
+            </section>
+
+            <section class="grupo-cadastro-professor">
+                <h3>Informações profissionais</h3>
+
+                <label for="formacaoProfessor">Formação acadêmica *</label>
+                <input
+                    type="text"
+                    id="formacaoProfessor"
+                    name="formacao"
+                    placeholder="Ex.: Licenciatura em Matemática"
+                    maxlength="120"
+                    required
+                >
+
+                <label for="instituicaoProfessor">Instituição de formação *</label>
+                <input
+                    type="text"
+                    id="instituicaoProfessor"
+                    name="instituicao"
+                    placeholder="Nome da faculdade ou universidade"
+                    maxlength="150"
+                    required
+                >
+
+                <fieldset class="especialidades-professor">
+                    <legend>Especialidades *</legend>
+                    <p>Selecione uma ou mais áreas em que você atua.</p>
+
+                    <div class="opcoes-especialidades-professor">
+                        <label><input type="checkbox" name="especialidades" value="Matemática básica"> Matemática básica</label>
+                        <label><input type="checkbox" name="especialidades" value="Álgebra"> Álgebra</label>
+                        <label><input type="checkbox" name="especialidades" value="Geometria"> Geometria</label>
+                        <label><input type="checkbox" name="especialidades" value="Trigonometria"> Trigonometria</label>
+                        <label><input type="checkbox" name="especialidades" value="Funções"> Funções</label>
+                        <label><input type="checkbox" name="especialidades" value="Estatística e probabilidade"> Estatística e probabilidade</label>
+                    </div>
+
+                    <label for="outraEspecialidadeProfessor">Outra especialidade (opcional)</label>
+                    <input
+                        type="text"
+                        id="outraEspecialidadeProfessor"
+                        name="outra_especialidade"
+                        placeholder="Informe outra área"
+                        maxlength="100"
+                    >
+                </fieldset>
+
+                <label for="experienciaProfessor">Experiência profissional (opcional)</label>
+                <textarea
+                    id="experienciaProfessor"
+                    name="experiencia"
+                    rows="3"
+                    maxlength="1000"
+                    placeholder="Conte brevemente sobre sua experiência ensinando."
+                ></textarea>
+            </section>
+
+            <section class="grupo-cadastro-professor">
+                <h3>Contato</h3>
+
+                <label for="telefoneProfessor">Telefone/WhatsApp *</label>
+                <input
+                    type="tel"
+                    id="telefoneProfessor"
+                    name="telefone"
+                    placeholder="(00) 00000-0000"
+                    autocomplete="tel"
+                    maxlength="20"
+                    required
+                >
+
+                <label for="outroContatoProfessor">Outro meio de contato (opcional)</label>
+                <input
+                    type="text"
+                    id="outroContatoProfessor"
+                    name="outro_contato"
+                    placeholder="Link ou informação de contato"
+                    maxlength="200"
+                >
+            </section>
+
+            <div class="aviso-cadastro-professor">
+                <i data-lucide="info"></i>
+                <p>Sua solicitação será analisada pela administração. O cadastro como professor dependerá de aprovação. Seu telefone será utilizado para contato administrativo e não será exibido publicamente.</p>
+            </div>
+
+            <div class="acoes-cadastro-professor">
+                <button type="button" id="cancelarCadastroProfessor" class="botao-cancelar-cadastro-professor">
+                    Cancelar
+                </button>
+
+                <button type="button" id="enviarSolicitacaoProfessor" class="botao-enviar-solicitacao-professor">
+                    Enviar solicitação
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
 
 
 <!-- =====================================================
