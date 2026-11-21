@@ -1932,7 +1932,7 @@ const questoesNivel3 = {
 // ESTADO ATUAL
 // =====================================================
 
-let nivelAtual = 2;
+let nivelAtual = 3;
 
 let faseAtual = 1;
 
