@@ -882,6 +882,42 @@ atualizarIcones();
 // NOTIFICAÇÃO PREMIUM
 // ================================
 
+// Verifica o acesso Premium usando metadados protegidos do Supabase.
+async function usuarioTemAcessoPremium(){
+
+    if(!supabaseClient){
+
+        return false;
+
+    }
+
+    try{
+
+        const {
+            data: { user },
+            error
+        } = await supabaseClient.auth.getUser();
+
+        if(error || !user){
+
+            return false;
+
+        }
+
+        // O acesso especial é concedido à conta Dev autorizada.
+        return user.app_metadata?.role === "admin_dev";
+
+    }catch(erro){
+
+        console.error("Erro ao verificar acesso Premium:", erro);
+
+        return false;
+
+    }
+
+}
+
+
 const niveisPremium =
 document.querySelectorAll(".nivel-premium");
 
@@ -925,9 +961,25 @@ function fecharNotificacao(){
 
 niveisPremium.forEach(function(nivel){
 
-    nivel.addEventListener("click", function(event){
+    nivel.addEventListener("click", async function(event){
 
         event.preventDefault();
+
+        const acessoPremium = await usuarioTemAcessoPremium();
+
+        if(acessoPremium){
+
+            const destino = nivel.getAttribute("href");
+
+            if(destino && destino !== "#"){
+
+                window.location.href = destino;
+
+            }
+
+            return;
+
+        }
 
         abrirNotificacaoPremium();
 
