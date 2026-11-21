@@ -1154,7 +1154,8 @@ botaoAlterarAvatar.addEventListener("click", function(){
 const botaoSair = document.getElementById("botaoSair");
 
 
-botaoSair.addEventListener("click", function(){
+
+botaoSair.addEventListener("click", async function(){
 
     const confirmar = confirm("Tem certeza que deseja sair?");
 
@@ -1164,10 +1165,30 @@ botaoSair.addEventListener("click", function(){
 
     }
 
-    localStorage.removeItem("nomeUsuario");
-    localStorage.removeItem("fotoPerfil");
+    try {
 
-    window.location.href = "index.html";
+        const { error } =
+            await supabaseClient.auth.signOut();
+
+        if(error){
+
+            throw error;
+
+        }
+
+        localStorage.removeItem("nomeUsuario");
+        localStorage.removeItem("tipoUsuario");
+        localStorage.removeItem("fotoPerfil");
+
+        window.location.href = "index.html";
+
+    } catch(erro) {
+
+        console.error("Erro ao sair da conta:", erro);
+
+        alert("Não foi possível encerrar sua sessão. Tente novamente.");
+
+    }
 
 });
 
