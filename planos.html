@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao"> 
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Conheça o Matemática Avante Premium e descubra uma nova forma de aprender matemática."
+    >
+
+    <title>Premium - Matemática Avante</title>
+
+    <link rel="stylesheet" href="css/planos.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="js/script.js"></script> 
+  
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body class="pagina-premium">
+
+    <!-- CABEÇALHO -->
+
+    <header class="cabecalho-premium">
+
+        <a href="index.html" class="marca-premium">
+            <span class="marca-icone">
+                <i data-lucide="graduation-cap"></i>
+            </span>
+
+            <span>
+                MATEMÁTICA AVANTE
+                <small>PREMIUM</small>
+            </span>
+        </a>
+
+        <a href="index.html" class="voltar-site">
+            <i data-lucide="arrow-left"></i>
+            Voltar ao site
+        </a>
+
+    </header>
+
+
+    <main>
+
+        <!-- APRESENTAÇÃO -->
+
+        <section class="hero-premium">
+
+            <div class="hero-conteudo">
+
+                <span class="etiqueta-premium">
+                    <i data-lucide="crown"></i>
+                    UMA EXPERIÊNCIA EXCLUSIVA
+                </span>
+
+                <h1>
+                    Sua evolução merece algo a mais.
+                </h1>
+
+                <p>
+                    Vá além do básico com novos desafios, conteúdos
+                    especiais e recursos para personalizar sua
+                    experiência no Matemática Avante.
+                </p>
+
+                <a href="#planos" class="botao-dourado">
+                    Conhecer os planos
+                    <i data-lucide="arrow-down"></i>
+                </a>
+
+            </div>
+
+            <div class="hero-destaque">
+
+                <div class="simbolo-premium">
+                    <i data-lucide="crown"></i>
+                </div>
+
+                <span>MATEMÁTICA AVANTE</span>
+
+                <strong>PREMIUM</strong>
+
+                <small>Aprenda. Evolua. Destaque-se.</small>
+
+            </div>
+
+        </section>
+
+
+        <!-- PLANOS E PREÇOS -->
+
+        <section class="secao-planos" id="planos">
+
+            <div class="titulo-secao">
+
+                <span>ESCOLHA SUA EXPERIÊNCIA</span>
+
+                <h2>Um plano para cada jornada</h2>
+
+                <p>
+                    Continue aprendendo gratuitamente ou amplie
+                    suas possibilidades com o Premium.
+                </p>
+
+            </div>
+
+
+            <div class="grade-planos">
+
+                <!-- PLANO GRATUITO -->
+
+                <article class="card-plano plano-gratuito">
+
+                    <div class="plano-identificacao">
+
+                        <span class="plano-icone">
+                            <i data-lucide="book-open"></i>
+                        </span>
+
+                        <h3>Gratuito</h3>
+
+                    </div>
+
+                    <p class="descricao-plano">
+                        O essencial para começar e continuar aprendendo.
+                    </p>
+
+                    <div class="preco-plano">
+
+                        <strong>R$ 0</strong>
+
+                        <span>para sempre</span>
+
+                    </div>
+
+                    <ul class="lista-beneficios">
+
+                        <li>
+                            <i data-lucide="check"></i>
+                            Matérias disponíveis
+                        </li>
+
+                        <li>
+                            <i data-lucide="check"></i>
+                            Exercícios e atividades
+                        </li>
+
+                        <li>
+                            <i data-lucide="check"></i>
+                            XP e sequência diária
+                        </li>
+
+                        <li>
+                            <i data-lucide="check"></i>
+                            Perfil e acompanhamento do progresso
+                        </li>
+
+                    </ul>
+
+                    <a href="inicio.html" class="botao-plano-gratuito">
+                        Continuar gratuitamente
+                    </a>
+
+                </article>
+
+
+                <!-- PLANO PREMIUM -->
+
+                <article class="card-plano plano-destaque">
+
+                    <span class="selo-plano">
+                        <i data-lucide="crown"></i>
+                        EXPERIÊNCIA PREMIUM
+                    </span>
+
+                    <div class="plano-identificacao">
+
+                        <span class="plano-icone">
+                            <i data-lucide="crown"></i>
+                        </span>
+
+                        <h3>Premium</h3>
+
+                    </div>
+
+                    <p class="descricao-plano">
+                        Mais possibilidades para aprender, evoluir
+                        e personalizar seu espaço.
+                    </p>
+
+                    <div class="preco-plano">
+
+                        <strong>R$ 9,90</strong>
+
+                        <span>por mês</span>
+
+                    </div>
+
+                    <div class="preco-anual">
+
+                        <strong>Ou R$ 99,90 por ano</strong>
+
+                        <span>Economize R$ 18,90 no plano anual.</span>
+
+                    </div>
+
+                    <ul class="lista-beneficios">
+
+                        <li>
+                            <i data-lucide="check"></i>
+                            Todos os benefícios gratuitos
+                        </li>
+
+                        <li>
+                            <i data-lucide="check"></i>
+                            Desafios avançados
+                        </li>
+
+                        <li>
+                            <i data-lucide="check"></i>
+                            Aulas aprofundadas
+                        </li>
+
+                        <li>
+                            <i data-lucide="check"></i>
+                            Simulados especiais
+                        </li>
+
+                        <li>
+                            <i data-lucide="check"></i>
+                            Materiais de estudo
+                        </li>
+
+                        <li>
+                            <i data-lucide="check"></i>
+                            Acesso aos níveis 4 e 5
+                        </li>
+
+                        <li>
+                            <i data-lucide="check"></i>
+                            Personalização exclusiva
+                        </li>
+
+                    </ul>
+
+                    <button
+                        type="button"
+                        class="botao-assinar-premium"
+                        disabled
+                    >
+                        Assinatura em breve
+                        <i data-lucide="lock"></i>
+                    </button>
+
+                </article>
+
+            </div>
+
+            <p class="aviso-assinatura">
+                A contratação estará disponível após a implementação
+                do sistema de pagamentos.
+            </p>
+
+        </section>
+
+
+        <!-- BENEFÍCIOS EDUCACIONAIS -->
+
+        <section class="secao-beneficios">
+
+            <div class="titulo-secao">
+
+                <span>APRENDA MAIS</span>
+
+                <h2>Seu aprendizado vai mais longe</h2>
+
+                <p>
+                    Recursos especiais para aprofundar seus conhecimentos
+                    e enfrentar novos desafios.
+                </p>
+
+            </div>
+
+
+            <div class="grade-beneficios">
+
+                <article class="card-beneficio">
+
+                    <span class="icone-beneficio">
+                        <i data-lucide="brain"></i>
+                    </span>
+
+                    <h3>Desafios avançados</h3>
+
+                    <p>
+                        Problemas de raciocínio lógico, questões difíceis
+                        e desafios especiais para testar suas habilidades.
+                    </p>
+
+                </article>
+
+
+                <article class="card-beneficio">
+
+                    <span class="icone-beneficio">
+                        <i data-lucide="book-open-check"></i>
+                    </span>
+
+                    <h3>Aulas aprofundadas</h3>
+
+                    <p>
+                        Explicações detalhadas, exemplos resolvidos
+                        e aplicações dos conteúdos matemáticos.
+                    </p>
+
+                </article>
+
+
+                <article class="card-beneficio">
+
+                    <span class="icone-beneficio">
+                        <i data-lucide="clipboard-check"></i>
+                    </span>
+
+                    <h3>Simulados especiais</h3>
+
+                    <p>
+                        Prepare-se com avaliações temáticas,
+                        questões especiais e análise de desempenho.
+                    </p>
+
+                </article>
+
+
+                <article class="card-beneficio">
+
+                    <span class="icone-beneficio">
+                        <i data-lucide="file-text"></i>
+                    </span>
+
+                    <h3>Materiais de estudo</h3>
+
+                    <p>
+                        Resumos, fichas de revisão e materiais
+                        organizados para facilitar seus estudos.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- NÍVEIS EXCLUSIVOS -->
+
+        <section class="secao-niveis">
+
+            <div class="conteudo-niveis">
+
+                <span class="etiqueta-premium">
+                    <i data-lucide="lock-keyhole"></i>
+                    EXCLUSIVO PREMIUM
+                </span>
+
+                <h2>
+                    Novos níveis esperam por você.
+                </h2>
+
+                <p>
+                    Supere novos desafios e continue sua evolução
+                    com acesso exclusivo aos níveis 4 e 5.
+                </p>
+
+                <div class="grade-niveis">
+
+                    <div class="card-nivel">
+
+                        <span>NÍVEL</span>
+
+                        <strong>04</strong>
+
+                        <small>Desafios avançados</small>
+
+                    </div>
+
+                    <div class="card-nivel">
+
+                        <span>NÍVEL</span>
+
+                        <strong>05</strong>
+
+                        <small>Novos desafios e evolução</small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PERSONALIZAÇÃO -->
+
+        <section class="secao-personalizacao">
+
+            <div class="titulo-secao">
+
+                <span>SUA IDENTIDADE</span>
+
+                <h2>Seu perfil, do seu jeito.</h2>
+
+                <p>
+                    Personalize seu espaço e mostre sua identidade
+                    dentro do Matemática Avante.
+                </p>
+
+            </div>
+
+
+            <div class="grade-personalizacao">
+
+                <article class="card-personalizacao">
+
+                    <span class="icone-beneficio">
+                        <i data-lucide="palette"></i>
+                    </span>
+
+                    <h3>Temas e cores</h3>
+
+                    <p>
+                        Escolha cores e estilos para transformar
+                        a aparência da plataforma.
+                    </p>
+
+                </article>
+
+
+                <article class="card-personalizacao">
+
+                    <span class="icone-beneficio">
+                        <i data-lucide="image"></i>
+                    </span>
+
+                    <h3>Banner de perfil</h3>
+
+                    <p>
+                        Adicione uma imagem de destaque
+                        no topo do seu perfil.
+                    </p>
+
+                </article>
+
+
+                <article class="card-personalizacao">
+
+                    <span class="icone-beneficio">
+                        <i data-lucide="frame"></i>
+                    </span>
+
+                    <h3>Molduras especiais</h3>
+
+                    <p>
+                        Escolha molduras exclusivas
+                        para sua foto de perfil.
+                    </p>
+
+                </article>
+
+
+                <article class="card-personalizacao">
+
+                    <span class="icone-beneficio">
+                        <i data-lucide="type"></i>
+                    </span>
+
+                    <h3>Estilos de nome</h3>
+
+                    <p>
+                        Personalize a aparência do seu nome
+                        com estilos e efeitos especiais.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- COMPARAÇÃO -->
+
+        <section class="secao-comparacao">
+
+            <div class="titulo-secao">
+
+                <span>COMPARE OS PLANOS</span>
+
+                <h2>O que está incluído?</h2>
+
+            </div>
+
+
+            <div class="tabela-container">
+
+                <table class="tabela-planos">
+
+                    <thead>
+
+                        <tr>
+                            <th>Recursos</th>
+                            <th>Gratuito</th>
+                            <th>Premium</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>Matérias disponíveis</td>
+                            <td><i data-lucide="check"></i></td>
+                            <td><i data-lucide="check"></i></td>
+                        </tr>
+
+                        <tr>
+                            <td>Exercícios e atividades</td>
+                            <td><i data-lucide="check"></i></td>
+                            <td><i data-lucide="check"></i></td>
+                        </tr>
+
+                        <tr>
+                            <td>XP e sequência diária</td>
+                            <td><i data-lucide="check"></i></td>
+                            <td><i data-lucide="check"></i></td>
+                        </tr>
+
+                        <tr>
+                            <td>Desafios avançados</td>
+                            <td><i data-lucide="minus"></i></td>
+                            <td><i data-lucide="check"></i></td>
+                        </tr>
+
+                        <tr>
+                            <td>Aulas aprofundadas</td>
+                            <td><i data-lucide="minus"></i></td>
+                            <td><i data-lucide="check"></i></td>
+                        </tr>
+
+                        <tr>
+                            <td>Simulados especiais</td>
+                            <td><i data-lucide="minus"></i></td>
+                            <td><i data-lucide="check"></i></td>
+                        </tr>
+
+                        <tr>
+                            <td>Materiais de estudo</td>
+                            <td><i data-lucide="minus"></i></td>
+                            <td><i data-lucide="check"></i></td>
+                        </tr>
+
+                        <tr>
+                            <td>Níveis 4 e 5</td>
+                            <td><i data-lucide="minus"></i></td>
+                            <td><i data-lucide="check"></i></td>
+                        </tr>
+
+                        <tr>
+                            <td>Temas e cores exclusivos</td>
+                            <td><i data-lucide="minus"></i></td>
+                            <td><i data-lucide="check"></i></td>
+                        </tr>
+
+                        <tr>
+                            <td>Banner, molduras e estilos de nome</td>
+                            <td><i data-lucide="minus"></i></td>
+                            <td><i data-lucide="check"></i></td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- PERGUNTAS FREQUENTES -->
+
+        <section class="secao-faq">
+
+            <div class="titulo-secao">
+
+                <span>AINDA TEM DÚVIDAS?</span>
+
+                <h2>Perguntas frequentes</h2>
+
+            </div>
+
+
+            <div class="lista-faq">
+
+                <details class="item-faq">
+
+                    <summary>
+                        O plano gratuito continuará disponível?
+                        <i data-lucide="chevron-down"></i>
+                    </summary>
+
+                    <p>
+                        Sim! Você poderá continuar utilizando os recursos
+                        gratuitos do Matemática Avante normalmente.
+                    </p>
+
+                </details>
+
+
+                <details class="item-faq">
+
+                    <summary>
+                        Qual é a diferença entre os planos?
+                        <i data-lucide="chevron-down"></i>
+                    </summary>
+
+                    <p>
+                        O Premium oferece conteúdos educacionais
+                        exclusivos, acesso aos níveis 4 e 5 e opções
+                        adicionais de personalização.
+                    </p>
+
+                </details>
+
+
+                <details class="item-faq">
+
+                    <summary>
+                        Posso cancelar minha assinatura?
+                        <i data-lucide="chevron-down"></i>
+                    </summary>
+
+                    <p>
+                        Sim. A assinatura poderá ser cancelada sem
+                        que você precise excluir sua conta.
+                    </p>
+
+                </details>
+
+
+                <details class="item-faq">
+
+                    <summary>
+                        Vou perder meu progresso se cancelar?
+                        <i data-lucide="chevron-down"></i>
+                    </summary>
+
+                    <p>
+                        Não. Seu XP, sua sequência e seu progresso
+                        continuarão associados à sua conta.
+                    </p>
+
+                </details>
+
+
+                <details class="item-faq">
+
+                    <summary>
+                        Como posso assinar o Premium?
+                        <i data-lucide="chevron-down"></i>
+                    </summary>
+
+                    <p>
+                        A contratação estará disponível quando
+                        o sistema de pagamentos for implementado.
+                    </p>
+
+                </details>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHAMADA FINAL -->
+
+        <section class="chamada-premium">
+
+            <span class="icone-chamada">
+                <i data-lucide="crown"></i>
+            </span>
+
+            <h2>
+                Sua próxima evolução começa aqui.
+            </h2>
+
+            <p>
+                Continue aprendendo e descubra tudo o que
+                o Matemática Avante pode oferecer.
+            </p>
+
+            <a href="#planos" class="botao-dourado">
+                Ver planos
+                <i data-lucide="arrow-up"></i>
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- RODAPÉ -->
+
+    <footer class="rodape-premium">
+
+        <strong>MATEMÁTICA AVANTE</strong>
+
+        <span>Educação que transforma possibilidades.</span>
+
+        <a href="index.html">Voltar ao início</a>
+
+    </footer>
+
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+
+  </html>
+              
