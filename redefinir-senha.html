@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Redefinir senha | Matemática Avante</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>📘 Matemática Avante</h1>
+    </header>
+
+    <main class="hero">
+
+        <h2>Redefinir senha</h2>
+
+        <p>
+            Escolha uma nova senha para acessar sua conta.
+        </p>
+
+        <section class="auth-container">
+
+            <form id="formRedefinirSenha" class="auth-form" hidden>
+
+                <h3>Nova senha</h3>
+
+                <label for="novaSenha">
+                    Nova senha
+                </label>
+
+                <input
+                    type="password"
+                    id="novaSenha"
+                    placeholder="Digite sua nova senha"
+                    minlength="6"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <label for="confirmarNovaSenha">
+                    Confirmar nova senha
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmarNovaSenha"
+                    placeholder="Digite a senha novamente"
+                    minlength="6"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <button type="submit" id="botaoSalvarSenha">
+                    Salvar nova senha
+                </button>
+
+            </form>
+
+            <p
+                id="mensagemAutenticacao"
+                role="status"
+                aria-live="polite">
+                Validando link de recuperação...
+            </p>
+
+            <a
+                id="linkLogin"
+                href="index.html"
+                hidden>
+                Voltar para o login
+            </a>
+
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+
+        const SUPABASE_URL =
+            "https://yeinyqmpofdlpskvqqlz.supabase.co";
+
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_0aF8pNMEGN6wgAKrPVy3hw_zS0EQ9hp";
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
+
+        const form =
+            document.getElementById("formRedefinirSenha");
+
+        const mensagem =
+            document.getElementById("mensagemAutenticacao");
+
+        const botao =
+            document.getElementById("botaoSalvarSenha");
+
+        const linkLogin =
+            document.getElementById("linkLogin");
+
+        let recuperacaoAutorizada = false;
+
+        function mostrarMensagem(texto) {
+            mensagem.textContent = texto;
+        }
+
+        supabaseClient.auth.onAuthStateChange(
+            function(evento, sessao) {
+
+                if (
+                    evento === "PASSWORD_RECOVERY" &&
+                    sessao
+                ) {
+
+                    recuperacaoAutorizada = true;
+
+                    form.hidden = false;
+
+                    mostrarMensagem(
+                        "Link validado. Cadastre sua nova senha."
+                    );
+
+                }
+
+            }
+        );
+
+        form.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            if (!recuperacaoAutorizada) {
+
+                mostrarMensagem(
+                    "O link de recuperação não é válido ou expirou."
+                );
+
+                return;
+
+            }
+
+            const novaSenha =
+                document.getElementById("novaSenha").value;
+
+            const confirmarSenha =
+                document.getElementById("confirmarNovaSenha").value;
+
+            if (novaSenha.length < 6) {
+
+                mostrarMensagem(
+                    "A senha precisa ter pelo menos 6 caracteres."
+                );
+
+                return;
+
+            }
+
+            if (novaSenha !== confirmarSenha) {
+
+                mostrarMensagem(
+                    "As senhas não coincidem."
+                );
+
+                return;
+
+            }
+
+            botao.disabled = true;
+
+            mostrarMensagem(
+                "Salvando sua nova senha..."
+            );
+
+            try {
+
+                const { error } =
+                    await supabaseClient.auth.updateUser({
+
+                        password: novaSenha
+
+                    });
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+                form.hidden = true;
+
+                mostrarMensagem(
+                    "Senha alterada com sucesso! Você já pode entrar com sua nova senha."
+                );
+
+                linkLogin.hidden = false;
+
+                await supabaseClient.auth.signOut({
+                    scope: "local"
+                });
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao redefinir senha:",
+                    erro
+                );
+
+                mostrarMensagem(
+                    "Não foi possível alterar sua senha. Tente novamente."
+                );
+
+            } finally {
+
+                botao.disabled = false;
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
+  
