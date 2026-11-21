@@ -69,13 +69,13 @@ Matemática Avante
 
 <h2 id="mensagemInicio">
 
-Olá! 👋
+Olá!
 
 </h2>
 
 
 
-<p>
+<p id="descricaoInicio">
 
 Pronto para continuar aprendendo matemática?
 
@@ -363,16 +363,64 @@ lucide.createIcons();
 
 
 const mensagemInicio = document.getElementById("mensagemInicio");
+const descricaoInicio = document.getElementById("descricaoInicio");
 
-const nomeUsuario = localStorage.getItem("nomeUsuario");
+const nomeUsuario = localStorage.getItem("nomeUsuario") || "";
+const tipoUsuario = (localStorage.getItem("tipoUsuario") || "aluno")
+    .trim()
+    .toLowerCase();
 
+const mensagensDev = [
+    {
+        titulo: `Saudações, ${nomeUsuario || "Criador"}.`,
+        descricao: "O arquiteto retornou. O universo está em execução e o Matemática Avante aguarda suas próximas ordens."
+    },
+    {
+        titulo: "O Criador está de volta.",
+        descricao: "Até as equações aguardam sua decisão. O que construiremos hoje?"
+    },
+    {
+        titulo: "A presença do Desenvolvedor foi detectada.",
+        descricao: "Os sistemas estão estáveis. O mundo matemático está sob seu domínio."
+    },
+    {
+        titulo: "ELE RETORNOU.",
+        descricao: "O código desperta, os sistemas tremem e uma nova atualização se aproxima."
+    }
+];
 
+if (mensagemInicio && descricaoInicio) {
 
-if(mensagemInicio && nomeUsuario){
+    if (tipoUsuario === "dev") {
 
+        const indiceAleatorio = Math.floor(
+            Math.random() * mensagensDev.length
+        );
 
-    mensagemInicio.textContent = `Olá, ${nomeUsuario}! 👋`;
+        const mensagemEscolhida = mensagensDev[indiceAleatorio];
 
+        mensagemInicio.textContent = mensagemEscolhida.titulo;
+        descricaoInicio.textContent = mensagemEscolhida.descricao;
+
+    } else if (tipoUsuario === "professor") {
+
+        mensagemInicio.textContent = nomeUsuario
+            ? `Olá, Prof. ${nomeUsuario}!`
+            : "Olá, Prof.!";
+
+        descricaoInicio.textContent =
+            "Pronto para compartilhar conhecimento e inspirar novos aprendizados?";
+
+    } else {
+
+        mensagemInicio.textContent = nomeUsuario
+            ? `Olá, ${nomeUsuario}!`
+            : "Olá!";
+
+        descricaoInicio.textContent =
+            "Pronto para continuar aprendendo matemática?";
+
+    }
 
 }
 
