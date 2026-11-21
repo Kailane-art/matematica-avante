@@ -528,7 +528,9 @@ if(tipoSalvo){
         tipoUsuario.textContent =
             tipoSalvo === "professor"
                 ? "Professor"
-                : "Aluno";
+                : tipoSalvo === "dev"
+                    ? "DEV"
+                    : "Aluno";
 
     }
 
@@ -1131,6 +1133,22 @@ async function carregarAvatarDaConta() {
         if (error || !perfil) {
             throw error || new Error("Não foi possível carregar os dados do perfil.");
         }
+
+        // Atualiza o tipo exibido usando o valor atual do banco,
+        // evitando depender de um localStorage desatualizado.
+        const elementoTipoUsuario = document.getElementById("tipoUsuario");
+        const tiposUsuario = {
+            aluno: "Aluno",
+            professor: "Professor",
+            dev: "DEV"
+        };
+
+        if (elementoTipoUsuario) {
+            elementoTipoUsuario.textContent =
+                tiposUsuario[perfil.tipo_usuario] || "Aluno";
+        }
+
+        localStorage.setItem("tipoUsuario", perfil.tipo_usuario || "aluno");
 
         if (perfil.avatar_path) {
 
