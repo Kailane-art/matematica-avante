@@ -2695,7 +2695,7 @@ function configurarDesbloqueioDosCartoesDeNivel() {
             link.dataset.verificandoNivel = "false";
 
             if (!acesso.permitido) {
-                alert(acesso.motivo);
+                mostrarNotificacaoNivelBloqueado(numeroNivel, acesso.motivo);
                 return;
             }
 
@@ -2708,3 +2708,48 @@ function configurarDesbloqueioDosCartoesDeNivel() {
 }
 
 configurarDesbloqueioDosCartoesDeNivel();
+
+
+// =====================================================
+// NOTIFICAÇÃO DE NÍVEL BLOQUEADO
+// =====================================================
+
+function mostrarNotificacaoNivelBloqueado(numeroNivel, mensagem) {
+
+    const notificacao = document.getElementById("notificacaoNivelBloqueado");
+    const titulo = document.getElementById("tituloNotificacaoNivel");
+    const texto = document.getElementById("mensagemNotificacaoNivel");
+
+    if (!notificacao || !titulo || !texto) {
+        alert(mensagem || "Você ainda não pode realizar as atividades deste nível.");
+        return;
+    }
+
+    titulo.textContent = mensagem && mensagem.startsWith("Não foi possível")
+        ? "Não foi possível verificar"
+        : "Nível " + numeroNivel + " bloqueado";
+
+    texto.textContent = mensagem ||
+        "Você ainda não cumpriu os requisitos para realizar as atividades deste nível.";
+
+    notificacao.hidden = false;
+
+    if (typeof atualizarIcones === "function") {
+        atualizarIcones();
+    }
+}
+
+
+const botaoFecharNotificacaoNivel = document.getElementById("fecharNotificacaoNivel");
+
+if (botaoFecharNotificacaoNivel) {
+    botaoFecharNotificacaoNivel.addEventListener("click", function() {
+        const notificacao = document.getElementById("notificacaoNivelBloqueado");
+        if (notificacao) notificacao.hidden = true;
+
+        if (paginaAtual === "nivel2.html" || paginaAtual === "nivel3.html") {
+            window.location.replace("atividades.html");
+        }
+    });
+}
+
