@@ -2572,3 +2572,139 @@ if (formEditarPerfil) {
 
                     }
                 
+
+
+// =====================================================
+// DESBLOQUEIO PROGRESSIVO DOS NÍVEIS
+// =====================================================
+
+async function verificarAcessoNivelProgressivo(numeroNivel) {
+
+    if (numeroNivel <= 1) {
+        return { permitido: true };
+    }
+
+    try {
+
+        if (!supabaseClient) {
+            throw new Error("A conexão com o servidor não está disponível.");
+        }
+
+        const {
+            data: { user },
+            error: erroUsuario
+        } = await supabaseClient.auth.getUser();
+
+        if (erroUsuario || !user) {
+            throw erroUsuario || new Error("Usuário não autenticado.");
+        }
+
+        const nivelAnterior = numeroNivel - 1;
+
+        const [resultadoXP, resultadoFases] = await Promise.all([
+
+            supabaseClient
+                .from("user_progress")
+                .select("total_xp")
+                .maybeSingle(),
+
+            supabaseClient
+                .from("user_level_progress")
+                .select("phase_number, completed")
+                .eq("level_number", nivelAnterior)
+                .eq("completed", true)
+
+        ]);
+
+        if (resultadoXP.error) throw resultadoXP.error;
+        if (resultadoFases.error) throw resultadoFases.error;
+
+        const xpAtual = Number(resultadoXP.data?.total_xp) || 0;
+        const nivelDoPerfil = calcularNivelPorXP(xpAtual);
+
+        const fasesConcluidas = new Set(
+            (resultadoFases.data || [])
+                .filter(function(fase) {
+                    return fase.completed === true;
+                })
+                .map(function(fase) {
+                    return Number(fase.phase_number);
+                })
+        );
+
+        const permitido =
+            nivelDoPerfil >= numeroNivel ||
+            fasesConcluidas.size >= 10;
+
+        return {
+            permitido: permitido,
+            motivo: permitido
+                ? ""
+                : "Para acessar o Nível " + numeroNivel +
+                  ", alcance o Nível " + numeroNivel +
+                  " no seu perfil ou conclua todas as 10 fases do Nível " +
+                  nivelAnterior + "."
+        };
+
+    } catch (erro) {
+
+        console.error("Não foi possível verificar o desbloqueio do nível:", erro);
+
+        return {
+            permitido: false,
+            motivo: "Não foi possível verificar seu progresso. Confira sua conexão e tente novamente."
+        };
+
+    }
+
+}
+
+
+// Bloqueia a entrada pelos cartões da página Atividades.
+function configurarDesbloqueioDosCartoesDeNivel() {
+
+    const linksDeNivel = document.querySelectorAll(
+        '.pagina-atividades a[href="nivel2.html"], ' +
+        '.pagina-atividades a[href="nivel3.html"]'
+    );
+
+    linksDeNivel.forEach(function(link) {
+
+        if (link.dataset.verificacaoNivelConfigurada === "true") {
+            return;
+        }
+
+        link.dataset.verificacaoNivelConfigurada = "true";
+
+        link.addEventListener("click", async function(event) {
+
+            event.preventDefault();
+
+            if (link.dataset.verificandoNivel === "true") {
+                return;
+            }
+
+            link.dataset.verificandoNivel = "true";
+
+            const numeroNivel = link.getAttribute("href") === "nivel2.html"
+                ? 2
+                : 3;
+
+            const acesso = await verificarAcessoNivelProgressivo(numeroNivel);
+
+            link.dataset.verificandoNivel = "false";
+
+            if (!acesso.permitido) {
+                alert(acesso.motivo);
+                return;
+            }
+
+            window.location.href = link.getAttribute("href");
+
+        });
+
+    });
+
+}
+
+configurarDesbloqueioDosCartoesDeNivel();
