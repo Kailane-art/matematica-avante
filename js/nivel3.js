@@ -146,7 +146,7 @@ const questoesNivel3 = {
             "pergunta": "Qual é o valor de (0,00036 × 5 × 10⁶) em notação decimal?",
             "alternativas": [
                 {
-                    "texto": "1.800"
+                    "texto": "11√2"
                 },
                 {
                     "texto": "180"
@@ -164,7 +164,7 @@ const questoesNivel3 = {
             "pergunta": "Se x = 2/3, calcule (3x − 1)² + 2x.",
             "alternativas": [
                 {
-                    "texto": "17/3"
+                    "texto": "7/3"
                 },
                 {
                     "texto": "13/3"
@@ -328,7 +328,7 @@ const questoesNivel3 = {
             "pergunta": "Resolva a proporção (x−2)/5 = (x+4)/8.",
             "alternativas": [
                 {
-                    "texto": "14"
+                    "texto": "12"
                 },
                 {
                     "texto": "12"
@@ -364,7 +364,7 @@ const questoesNivel3 = {
             "pergunta": "Em uma PA, a₃=11 e a₈=31. Qual é a soma dos 12 primeiros termos?",
             "alternativas": [
                 {
-                    "texto": "288"
+                    "texto": "300"
                 },
                 {
                     "texto": "276"
@@ -600,7 +600,7 @@ const questoesNivel3 = {
             "pergunta": "Se 3x−2y=4 e x+y=6, determine x−y.",
             "alternativas": [
                 {
-                    "texto": "−2"
+                    "texto": "2/5"
                 },
                 {
                     "texto": "2"
@@ -838,7 +838,7 @@ const questoesNivel3 = {
             "pergunta": "Uma função quadrática tem raízes 2 e 6 e passa pelo ponto (0,−24). Qual é f(x)?",
             "alternativas": [
                 {
-                    "texto": "f(x)=2x²−16x+24"
+                    "texto": "f(x)=−2x²+16x−24"
                 },
                 {
                     "texto": "f(x)=x²−8x+12"
@@ -1092,7 +1092,7 @@ const questoesNivel3 = {
             "pergunta": "Se x²+y²=34 e xy=15, qual é |x+y|?",
             "alternativas": [
                 {
-                    "texto": "7"
+                    "texto": "8"
                 },
                 {
                     "texto": "5"
