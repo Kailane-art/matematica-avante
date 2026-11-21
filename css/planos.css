@@ -33,13 +33,25 @@ body.pagina-premium {
     margin: 0;
     color: var(--azul-texto);
     font-family: Arial, Helvetica, sans-serif;
-   background: #0a2144;
+    background:
+        radial-gradient(ellipse at 15% 8%, rgba(65, 137, 220, 0.22), transparent 38%),
+        radial-gradient(ellipse at 85% 45%, rgba(65, 190, 230, 0.10), transparent 35%),
+        linear-gradient(145deg, var(--fundo-1), var(--fundo-2) 48%, var(--fundo-3));
+    background-attachment: fixed;
 }
 
 .pagina-premium a {
     color: inherit;
     text-decoration: none;
 }
+
+.pagina-premium a,
+.pagina-premium button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* CABEÇALHO */
+
 .cabecalho-premium {
     width: 100%;
     min-height: 78px;
@@ -48,9 +60,6 @@ body.pagina-premium {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    border-bottom: 1px solid rgba(126, 180, 238, 0.2);
-    background: #05132a;
-}    gap: 20px;
     border-bottom: 1px solid rgba(126, 180, 238, 0.2);
     background: rgba(5, 19, 42, 0.92);
     -webkit-backdrop-filter: blur(12px);
@@ -303,8 +312,10 @@ body.pagina-premium {
 
 .plano-destaque {
     border: 2px solid transparent;
-  background: #194477;
-   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25), 0 0 25px rgba(75, 145, 220, 0.12);
+    background:
+        linear-gradient(145deg, #194477, #102b50) padding-box,
+        linear-gradient(135deg, #ffe18a, #d97724, #f6c65f) border-box;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25), 0 0 25px rgba(75, 145, 220, 0.12);
 }
 
 .plano-identificacao {
