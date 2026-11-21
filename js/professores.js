@@ -768,6 +768,15 @@ if (botaoCancelarCadastroProfessor) {
     );
 }
 
+const formCadastroProfessor =
+    document.getElementById("formCadastroProfessor");
+
+if (formCadastroProfessor) {
+    formCadastroProfessor.addEventListener("submit", function(event) {
+        event.preventDefault();
+    });
+}
+
 if (modalCadastroProfessor) {
 
     modalCadastroProfessor.addEventListener("click", function(event) {
