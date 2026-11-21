@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1E3A8A">
+    <title>Chat - Matemática Avante</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chat.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="pagina-chat">
+
+    <header class="cabecalho-chat">
+        <a href="inicio.html" class="chat-voltar" aria-label="Voltar ao início">
+            <i data-lucide="arrow-left"></i>
+        </a>
+
+        <h1>Chat</h1>
+
+        <button id="modoEscuro" type="button" class="icon-button" aria-label="Alternar tema">
+            <i data-lucide="moon"></i>
+        </button>
+
+        <button
+            id="botaoPainelChat"
+            type="button"
+            class="icon-button botao-painel-chat"
+            aria-label="Abrir contatos e notificações"
+            aria-expanded="false"
+            aria-controls="painelChat"
+        >
+            <i data-lucide="users"></i>
+            <span id="notificacoesChatBadge" class="chat-badge" hidden></span>
+        </button>
+    </header>
+
+    <main class="chat-container">
+
+        <section class="chat-pesquisa" aria-label="Pesquisar pessoas">
+            <form id="formPesquisaChat" class="campo-pesquisa-chat">
+                <i data-lucide="search" aria-hidden="true"></i>
+                <input
+                    id="campoPesquisaChat"
+                    type="search"
+                    placeholder="Pesquisar pelo @username..."
+                    autocomplete="off"
+                    maxlength="20"
+                    aria-label="Pesquisar usuário pelo nome de usuário"
+                >
+                <button type="submit" aria-label="Pesquisar">
+                    <i data-lucide="arrow-right"></i>
+                </button>
+            </form>
+            <p>Encontre pessoas que você conhece pelo nome de usuário.</p>
+        </section>
+
+        <section id="areaResultadoPesquisa" class="chat-resultado-pesquisa" hidden aria-live="polite">
+            <div class="chat-secao-titulo">
+                <h2>Resultado da pesquisa</h2>
+                <button id="limparPesquisaChat" type="button" class="chat-text-button">Limpar</button>
+            </div>
+            <div id="resultadoPesquisaChat"></div>
+        </section>
+
+        <section class="chat-lista-conversas">
+            <div class="chat-secao-titulo">
+                <h2>Mensagens</h2>
+            </div>
+
+            <div id="estadoVazioConversas" class="chat-estado-vazio">
+                <div class="chat-estado-icone">
+                    <i data-lucide="messages-square"></i>
+                </div>
+                <h3>Suas conversas aparecerão aqui</h3>
+                <p>Quando você começar a conversar com alguém, suas mensagens ficarão organizadas nesta área.</p>
+            </div>
+
+            <div id="listaConversas" class="chat-lista-itens" hidden></div>
+        </section>
+
+    </main>
+
+    <div id="fundoPainelChat" class="chat-fundo-painel"></div>
+
+    <aside
+        id="painelChat"
+        class="chat-painel"
+        aria-label="Central de contatos e notificações"
+        aria-hidden="true"
+        inert
+    >
+        <div class="chat-painel-cabecalho">
+            <div>
+                <span class="chat-painel-sobrelinha">MATEMÁTICA AVANTE</span>
+                <h2>Central de contatos</h2>
+            </div>
+            <button id="fecharPainelChat" type="button" class="icon-button" aria-label="Fechar painel">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+
+        <nav class="chat-painel-abas" aria-label="Seções da central">
+            <button type="button" class="chat-aba-painel ativa" data-secao-chat="amigos" aria-pressed="true">
+                <i data-lucide="users"></i>
+                Amigos
+            </button>
+            <button type="button" class="chat-aba-painel" data-secao-chat="solicitacoes" aria-pressed="false">
+                <i data-lucide="user-plus"></i>
+                Solicitações
+            </button>
+            <button type="button" class="chat-aba-painel" data-secao-chat="notificacoes" aria-pressed="false">
+                <i data-lucide="bell"></i>
+                Notificações
+            </button>
+        </nav>
+
+        <section class="chat-conteudo-painel" data-conteudo-chat="amigos">
+            <div class="chat-estado-painel">
+                <i data-lucide="users"></i>
+                <h3>Sua lista de amigos ficará aqui</h3>
+                <p>As pessoas que aceitarem sua solicitação aparecerão nesta seção.</p>
+            </div>
+        </section>
+
+        <section class="chat-conteudo-painel" data-conteudo-chat="solicitacoes" hidden>
+            <div class="chat-estado-painel">
+                <i data-lucide="user-round-plus"></i>
+                <h3>Nenhuma solicitação por enquanto</h3>
+                <p>As solicitações recebidas e enviadas serão organizadas aqui.</p>
+            </div>
+        </section>
+
+        <section class="chat-conteudo-painel" data-conteudo-chat="notificacoes" hidden>
+            <div class="chat-estado-painel">
+                <i data-lucide="bell"></i>
+                <h3>Suas notificações aparecerão aqui</h3>
+                <p>Você poderá acompanhar novas mensagens, amizades e outros avisos.</p>
+            </div>
+        </section>
+    </aside>
+
+    <script src="js/script.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+
+</html>
