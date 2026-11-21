@@ -121,10 +121,9 @@ Identidade
 
 
 <h3 id="nomeUsuario">
-Nome do aluno
+    <span id="nomeUsuarioTexto">Nome do aluno</span>
+    <span id="usernamePerfil" class="username-perfil" hidden></span>
 </h3>
-
-<p id="usernamePerfil" class="username-perfil" hidden></p>
 
 <p id="bioPerfil" class="bio-perfil" hidden></p>
 
@@ -514,7 +513,7 @@ const nomeSalvo = localStorage.getItem("nomeUsuario");
 
 if(nomeSalvo){
 
-    document.getElementById("nomeUsuario").textContent = nomeSalvo;
+    document.getElementById("nomeUsuarioTexto").textContent = nomeSalvo;
 
 }
 const tipoSalvo =
@@ -889,7 +888,7 @@ async function carregarAvatarDaConta() {
         }
 
         // Atualiza os dados de identidade diretamente do perfil salvo.
-        const elementoNomePerfil = document.getElementById("nomeUsuario");
+        const elementoNomePerfil = document.getElementById("nomeUsuarioTexto");
         const elementoUsername = document.getElementById("usernamePerfil");
         const elementoBio = document.getElementById("bioPerfil");
 
