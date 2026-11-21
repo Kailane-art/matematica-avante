@@ -1681,6 +1681,8 @@ let respostaEmEnvio = false;
 
 let modoRevisao = false;
 
+let idSessaoRevisao = null;
+
 
 // =====================================================
 // CARREGAR PROGRESSO DO NÍVEL 1 NO SUPABASE
@@ -2288,12 +2290,16 @@ async function responderAlternativa(alternativa, botao) {
 
     if (
         respostas[questaoAtual] !== undefined ||
-        respostaEmEnvio ||
-        modoRevisao
+        respostaEmEnvio
     ) return;
 
     if (!alternativa || !["a", "b", "c", "d"].includes(alternativa.id)) {
         console.error("ID de alternativa inválido.");
+        return;
+    }
+
+    if (modoRevisao && !idSessaoRevisao) {
+        console.error("A sessão de revisão não está disponível.");
         return;
     }
 
@@ -2306,14 +2312,26 @@ async function responderAlternativa(alternativa, botao) {
 
     try {
 
-        const { data, error } = await supabaseClient.rpc(
-            "submit_level_answer",
-            {
+        const nomeRPC = modoRevisao
+            ? "submit_level_phase_review_answer"
+            : "submit_level_answer";
+
+        const argumentosRPC = modoRevisao
+            ? {
+                p_review_session_id: idSessaoRevisao,
+                p_question_number: questaoAtual,
+                p_option_id: alternativa.id
+            }
+            : {
                 p_level_number: nivelAtual,
                 p_phase_number: faseAtual,
                 p_question_number: questaoAtual,
                 p_option_id: alternativa.id
-            }
+            };
+
+        const { data, error } = await supabaseClient.rpc(
+            nomeRPC,
+            argumentosRPC
         );
 
         if (error) throw error;
@@ -2323,25 +2341,31 @@ async function responderAlternativa(alternativa, botao) {
 
         if (data.already_answered === true) {
 
-            const questionId =
-                "nivel:1:fase:" + faseAtual + ":questao:" + questaoAtual;
+            if (modoRevisao) {
+                respostas[questaoAtual] = data.correct === true;
+                alternativasSelecionadas[questaoAtual] =
+                    data.selected_option_id;
+            } else {
+                const questionId =
+                    "nivel:1:fase:" + faseAtual + ":questao:" + questaoAtual;
 
-            const { data: tentativa, error: erroTentativa } =
-                await supabaseClient
-                    .from("user_question_attempts")
-                    .select("selected_option_id, is_correct")
-                    .eq("activity_type", "nivel")
-                    .eq("question_id", questionId)
-                    .maybeSingle();
+                const { data: tentativa, error: erroTentativa } =
+                    await supabaseClient
+                        .from("user_question_attempts")
+                        .select("selected_option_id, is_correct")
+                        .eq("activity_type", "nivel")
+                        .eq("question_id", questionId)
+                        .maybeSingle();
 
-            if (erroTentativa || !tentativa) {
-                throw erroTentativa ||
-                    new Error("Não foi possível recuperar a resposta já registrada.");
+                if (erroTentativa || !tentativa) {
+                    throw erroTentativa ||
+                        new Error("Não foi possível recuperar a resposta já registrada.");
+                }
+
+                respostas[questaoAtual] = tentativa.is_correct === true;
+                alternativasSelecionadas[questaoAtual] =
+                    tentativa.selected_option_id;
             }
-
-            respostas[questaoAtual] = tentativa.is_correct === true;
-            alternativasSelecionadas[questaoAtual] =
-                tentativa.selected_option_id;
 
         } else {
 
@@ -2355,6 +2379,7 @@ async function responderAlternativa(alternativa, botao) {
         }
 
         if (
+            !modoRevisao &&
             Number.isFinite(Number(data.total_xp)) &&
             typeof salvarXP === "function"
         ) {
@@ -2619,6 +2644,8 @@ function avancarQuestao() {
 
 function salvarEstadoAtual() {
 
+    if (modoRevisao) return;
+
     const progresso = carregarProgresso();
 
     if (!progresso.niveis[nivelAtual]) {
@@ -2698,6 +2725,7 @@ function iniciarFase(numeroFase) {
     faseFinalizada = false;
     respostaEmEnvio = false;
     modoRevisao = false;
+    idSessaoRevisao = null;
 
     const areaQuestao = document.getElementById("areaQuestao");
     const resultado = document.getElementById("resultadoFase");
@@ -2720,8 +2748,12 @@ async function finalizarFase() {
 
     if (Object.keys(respostas).length !== TOTAL_QUESTOES) return;
 
+    if (modoRevisao && !idSessaoRevisao) return;
+
     respostaEmEnvio = true;
     salvarEstadoAtual();
+
+    const revisaoAtual = modoRevisao;
 
     const acertos = Object.values(respostas).filter(
         function(resposta) { return resposta === true; }
@@ -2733,19 +2765,29 @@ async function finalizarFase() {
 
     const porcentagem = (acertos / TOTAL_QUESTOES) * 100;
     const dadosFase = obterDadosFase(nivelAtual, faseAtual);
-    const tempo = Number(dadosFase.tempo) || 0;
+    const tempo = revisaoAtual
+        ? Math.max(0, Math.floor((Date.now() - inicioFase) / 1000))
+        : Number(dadosFase.tempo) || 0;
 
     const botaoProxima = document.getElementById("proximaQuestao");
     if (botaoProxima) botaoProxima.disabled = true;
 
     try {
 
-        const { data, error } = await supabaseClient.rpc(
-            "complete_level_phase",
-            {
+        const nomeRPC = revisaoAtual
+            ? "complete_level_phase_review"
+            : "complete_level_phase";
+
+        const argumentosRPC = revisaoAtual
+            ? { p_review_session_id: idSessaoRevisao }
+            : {
                 p_level_number: nivelAtual,
                 p_phase_number: faseAtual
-            }
+            };
+
+        const { data, error } = await supabaseClient.rpc(
+            nomeRPC,
+            argumentosRPC
         );
 
         if (error) throw error;
@@ -2754,11 +2796,12 @@ async function finalizarFase() {
             throw new Error(
                 data && data.reason === "questions_incomplete"
                     ? "O banco ainda não identificou todas as respostas da fase."
-                    : "O banco não confirmou a conclusão da fase."
+                    : "O banco não confirmou a conclusão."
             );
         }
 
         if (
+            !revisaoAtual &&
             Number.isFinite(Number(data.total_xp)) &&
             typeof salvarXP === "function"
         ) {
@@ -2773,26 +2816,39 @@ async function finalizarFase() {
             Number(
                 (progressoBancoNiveis[faseAtual] || {}).melhorResultado
             ) || 0,
+            Number(data.best_result) || 0,
             acertos
         );
 
-        dadosFase.concluida = true;
-        dadosFase.questaoAtual = TOTAL_QUESTOES;
-        dadosFase.melhorResultado = melhorResultado;
-        dadosFase.tempo = tempo;
+        if (revisaoAtual) {
 
-        const progresso = carregarProgresso();
-        progresso.niveis[nivelAtual] =
-            progresso.niveis[nivelAtual] || { fases: {} };
-        progresso.niveis[nivelAtual].fases[faseAtual] = dadosFase;
-        salvarProgresso(progresso);
+            if (!progressoBancoNiveis[faseAtual]) {
+                progressoBancoNiveis[faseAtual] = {};
+            }
 
-        progressoBancoNiveis[faseAtual] = {
-            concluida: true,
-            melhorResultado: melhorResultado,
-            questaoAtual: TOTAL_QUESTOES,
-            respostas: { ...respostas }
-        };
+            progressoBancoNiveis[faseAtual].melhorResultado =
+                melhorResultado;
+
+        } else {
+
+            dadosFase.concluida = true;
+            dadosFase.questaoAtual = TOTAL_QUESTOES;
+            dadosFase.melhorResultado = melhorResultado;
+            dadosFase.tempo = tempo;
+
+            const progresso = carregarProgresso();
+            progresso.niveis[nivelAtual] =
+                progresso.niveis[nivelAtual] || { fases: {} };
+            progresso.niveis[nivelAtual].fases[faseAtual] = dadosFase;
+            salvarProgresso(progresso);
+
+            progressoBancoNiveis[faseAtual] = {
+                concluida: true,
+                melhorResultado: melhorResultado,
+                questaoAtual: TOTAL_QUESTOES,
+                respostas: { ...respostas }
+            };
+        }
 
         mostrarResultado(
             acertos,
@@ -2812,7 +2868,9 @@ async function finalizarFase() {
         const areaErro = document.getElementById("explicacaoErro");
         if (areaErro) {
             areaErro.textContent =
-                "Não foi possível concluir a fase no servidor. Suas respostas continuam salvas. Tente novamente.";
+                revisaoAtual
+                    ? "Não foi possível concluir a revisão no servidor. Suas respostas continuam salvas. Tente novamente."
+                    : "Não foi possível concluir a fase no servidor. Suas respostas continuam salvas. Tente novamente.";
             areaErro.hidden = false;
         }
 
@@ -2849,6 +2907,13 @@ function mostrarResultado(
 
         return;
 
+    }
+
+    const tituloResultado = resultado.querySelector(".resultado-titulo");
+    if (tituloResultado) {
+        tituloResultado.textContent = modoRevisao
+            ? "Revisão concluída!"
+            : "Fase concluída!";
     }
 
 
@@ -3084,24 +3149,76 @@ function formatarTempo(
 // REFAZER FASE
 // =====================================================
 
-function refazerFase() {
+async function refazerFase() {
 
-    // Revisão não apaga respostas, tentativas, conclusão nem XP.
-    modoRevisao = true;
-    faseFinalizada = false;
-    respostaEmEnvio = false;
+    if (respostaEmEnvio) return;
 
-    questaoAtual = 1;
-    inicioFase = Date.now();
+    const botaoRevisar = document.getElementById("refazerFase");
+    if (botaoRevisar) botaoRevisar.disabled = true;
 
-    const areaQuestao = document.getElementById("areaQuestao");
-    const resultado = document.getElementById("resultadoFase");
+    try {
 
-    if (areaQuestao) areaQuestao.hidden = false;
-    if (resultado) resultado.hidden = true;
+        const { data, error } = await supabaseClient.rpc(
+            "start_level_phase_review",
+            {
+                p_level_number: nivelAtual,
+                p_phase_number: faseAtual
+            }
+        );
 
-    atualizarInformacoesFase();
-    mostrarQuestao();
+        if (error) throw error;
+
+        if (!data || !data.session_id) {
+            throw new Error("O banco não retornou uma sessão de revisão válida.");
+        }
+
+        idSessaoRevisao = data.session_id;
+        modoRevisao = true;
+        faseFinalizada = false;
+        respostaEmEnvio = false;
+
+        respostas = {};
+        alternativasSelecionadas = {};
+
+        Object.entries(data.answers || {}).forEach(function([numero, resposta]) {
+            respostas[Number(numero)] = resposta.is_correct === true;
+            alternativasSelecionadas[Number(numero)] =
+                resposta.selected_option_id;
+        });
+
+        questaoAtual = 1;
+        inicioFase = Date.now();
+
+        const areaQuestao = document.getElementById("areaQuestao");
+        const resultado = document.getElementById("resultadoFase");
+        const areaErro = document.getElementById("explicacaoErro");
+
+        if (areaQuestao) areaQuestao.hidden = false;
+        if (resultado) resultado.hidden = true;
+        if (areaErro) {
+            areaErro.hidden = true;
+            areaErro.textContent = "";
+        }
+
+        atualizarInformacoesFase();
+        mostrarQuestao();
+
+    } catch (erro) {
+
+        const areaErro = document.getElementById("explicacaoErro");
+        if (areaErro) {
+            areaErro.textContent =
+                "Não foi possível iniciar a revisão. Tente novamente.";
+            areaErro.hidden = false;
+        }
+
+        console.error("Erro ao iniciar revisão da fase:", erro);
+
+    } finally {
+
+        if (botaoRevisar) botaoRevisar.disabled = false;
+
+    }
 }
 
 
