@@ -144,11 +144,11 @@ Identidade
 
 
 
-<p>
+<p id="seloConta">
 
-💎 Selo Premium:
+💎 <span id="seloContaRotulo">Selo Premium:</span>
 
-<span>
+<span id="seloContaNome">
 Não possui
 </span>
 
@@ -924,6 +924,25 @@ async function carregarAvatarDaConta() {
         if (elementoTipoUsuario) {
             elementoTipoUsuario.textContent =
                 tiposUsuario[perfil.tipo_usuario] || "Aluno";
+        }
+
+        const elementoSeloRotulo = document.getElementById("seloContaRotulo");
+        const elementoSeloNome = document.getElementById("seloContaNome");
+
+        if (perfil.tipo_usuario === "dev") {
+            if (elementoSeloRotulo) {
+                elementoSeloRotulo.textContent = "Selo:";
+            }
+            if (elementoSeloNome) {
+                elementoSeloNome.textContent = "⚡ Coração da Matrix";
+            }
+        } else {
+            if (elementoSeloRotulo) {
+                elementoSeloRotulo.textContent = "Selo Premium:";
+            }
+            if (elementoSeloNome) {
+                elementoSeloNome.textContent = "Não possui";
+            }
         }
 
         localStorage.setItem("tipoUsuario", perfil.tipo_usuario || "aluno");
