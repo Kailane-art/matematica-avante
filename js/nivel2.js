@@ -15,7 +15,7 @@ const CHAVE_PROGRESSO = "progressoNiveis";
 
 
 // =====================================================
-// CONFIGURAÇÃO DAS FASES — NÍVEL 1
+// CONFIGURAÇÃO DAS FASES — NÍVEL 2
 // =====================================================
 //
 // Fases 1 a 4:
@@ -28,7 +28,7 @@ const CHAVE_PROGRESSO = "progressoNiveis";
 // Fases 9 e 10:
 // Revisão e desafio final.
 //
-// Mantemos dificuldade fácil e média.
+// As fases 1 a 5 são médias; as fases 6 a 10 são difíceis.
 // =====================================================
 
 const fasesNivel2 = {
@@ -44,71 +44,9 @@ const fasesNivel2 = {
     10: { nome: "Desafio integrado", descricao: "Questões avançadas reunindo diferentes conteúdos.", dificuldade: "Difícil" }
 };
 
-    1: {
-        nome: "Básico da Matemática",
-        descricao: "As quatro operações fundamentais.",
-        dificuldade: "Fácil"
-    },
-
-    2: {
-        nome: "Geometria",
-        descricao: "Formas, medidas e conceitos geométricos.",
-        dificuldade: "Fácil"
-    },
-
-    3: {
-        nome: "Funções",
-        descricao: "Introdução ao conceito de funções.",
-        dificuldade: "Fácil"
-    },
-
-    4: {
-        nome: "Álgebra",
-        descricao: "Expressões e cálculos algébricos básicos.",
-        dificuldade: "Fácil"
-    },
-
-    5: {
-        nome: "Básico da Matemática",
-        descricao: "Praticando novamente as quatro operações.",
-        dificuldade: "Médio"
-    },
-
-    6: {
-        nome: "Geometria",
-        descricao: "Novos exercícios de geometria.",
-        dificuldade: "Médio"
-    },
-
-    7: {
-        nome: "Funções",
-        descricao: "Exercícios de funções em nível médio.",
-        dificuldade: "Médio"
-    },
-
-    8: {
-        nome: "Álgebra",
-        descricao: "Exercícios de álgebra em nível médio.",
-        dificuldade: "Médio"
-    },
-
-    9: {
-        nome: "Revisão mista",
-        descricao: "Questões envolvendo diferentes conteúdos.",
-        dificuldade: "Médio"
-    },
-
-    10: {
-        nome: "Desafio final",
-        descricao: "Questões mistas para concluir o nível.",
-        dificuldade: "Médio"
-    }
-
-};
-
 
 // =====================================================
-// BANCO DE QUESTÕES — NÍVEL 1
+// BANCO DE QUESTÕES — NÍVEL 2
 // =====================================================
 //
 // Cada fase terá exatamente 10 questões.
@@ -4041,7 +3979,7 @@ async function restaurarRevisaoAtivaNivel2() {
     const { data: revisao, error: erroRevisao } = await supabaseClient
         .from("user_phase_review_sessions")
         .select("id, phase_number, review_number, completed")
-        .eq("level_number", 1)
+        .eq("level_number", 2)
         .eq("completed", false)
         .order("created_at", { ascending: false })
         .limit(1)
