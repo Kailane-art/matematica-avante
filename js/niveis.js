@@ -2685,6 +2685,26 @@ function salvarEstadoAtual() {
 }
 
 
+
+function registrarAcessoFaseNivel1(numeroFase) {
+
+    if (typeof registrarUltimaAtividade !== "function") return;
+
+    const dadosFase = fasesNivel1[numeroFase];
+
+    const nomeFase = dadosFase
+        ? dadosFase.nome
+        : "Fundamentos";
+
+    registrarUltimaAtividade(
+        "nivel1_fase_" + numeroFase,
+        "Nível 1 • Fase " + numeroFase + ": " + nomeFase,
+        "nivel1.html"
+    );
+
+}
+
+
 // =====================================================
 // INICIAR FASE
 // =====================================================
@@ -2702,6 +2722,8 @@ function iniciarFase(numeroFase) {
     }
 
     faseAtual = numeroFase;
+
+    registrarAcessoFaseNivel1(numeroFase);
 
     const dadosFase = obterDadosFase(nivelAtual, faseAtual);
     const dadosBanco = progressoBancoNiveis[faseAtual] || {};
@@ -3737,6 +3759,7 @@ async function restaurarRevisaoAtivaNivel1() {
     if (erroRespostas) throw erroRespostas;
 
     faseAtual = Number(revisao.phase_number);
+    registrarAcessoFaseNivel1(faseAtual);
     idSessaoRevisao = revisao.id;
     modoRevisao = true;
     faseFinalizada = false;
