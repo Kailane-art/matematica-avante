@@ -18,17 +18,11 @@ const CHAVE_PROGRESSO = "progressoNiveis";
 // CONFIGURAÇÃO DAS FASES — NÍVEL 2
 // =====================================================
 //
-// Fases 1 a 4:
-// Conteúdo básico.
+// Fases 1 a 5:
+// Questões de dificuldade média.
 //
-// Fases 5 a 8:
-// Repetem as matérias, mas com questões
-// um pouco mais difíceis.
-//
-// Fases 9 e 10:
-// Revisão e desafio final.
-//
-// As fases 1 a 5 são médias; as fases 6 a 10 são difíceis.
+// Fases 6 a 10:
+// Questões de dificuldade difícil.
 // =====================================================
 
 const fasesNivel2 = {
