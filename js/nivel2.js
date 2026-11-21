@@ -94,9 +94,6 @@ const questoesNivel2 = {
             "pergunta": "Quanto é 5/6 - 1/4?",
             "alternativas": [
                 {
-                    "texto": "7/12"
-                },
-                {
                     "texto": "4/10"
                 },
                 {
@@ -104,6 +101,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "3/12"
+                },
+                {
+                    "texto": "7/12"
                 }
             ],
             "explicacao": "O MMC é 12: 10/12 - 3/12 = 7/12."
@@ -112,16 +112,16 @@ const questoesNivel2 = {
             "pergunta": "Qual é o resultado de 2/3 × 9/10?",
             "alternativas": [
                 {
-                    "texto": "3/5"
-                },
-                {
-                    "texto": "18/13"
-                },
-                {
                     "texto": "2/5"
                 },
                 {
                     "texto": "6/10"
+                },
+                {
+                    "texto": "3/5"
+                },
+                {
+                    "texto": "18/13"
                 }
             ],
             "explicacao": "Multiplicamos numeradores e denominadores: 18/30. Simplificando por 6, obtemos 3/5."
@@ -130,6 +130,9 @@ const questoesNivel2 = {
             "pergunta": "Calcule 7/8 ÷ 14/3.",
             "alternativas": [
                 {
+                    "texto": "7/12"
+                },
+                {
                     "texto": "3/16"
                 },
                 {
@@ -137,9 +140,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "1/4"
-                },
-                {
-                    "texto": "7/12"
                 }
             ],
             "explicacao": "Dividir por uma fração é multiplicar pelo inverso: 7/8 × 3/14 = 21/112 = 3/16."
@@ -166,9 +166,6 @@ const questoesNivel2 = {
             "pergunta": "Resolva: 1/2 + 3/4 × 2.",
             "alternativas": [
                 {
-                    "texto": "2"
-                },
-                {
                     "texto": "5/2"
                 },
                 {
@@ -176,6 +173,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "3/2"
+                },
+                {
+                    "texto": "2"
                 }
             ],
             "explicacao": "Primeiro fazemos a multiplicação: 3/4 × 2 = 3/2. Depois somamos 1/2 + 3/2 = 2."
@@ -184,16 +184,16 @@ const questoesNivel2 = {
             "pergunta": "Qual é o resultado de 2 1/3 + 1 5/6?",
             "alternativas": [
                 {
-                    "texto": "4 1/6"
-                },
-                {
-                    "texto": "3 1/2"
-                },
-                {
                     "texto": "4 1/3"
                 },
                 {
                     "texto": "3 5/6"
+                },
+                {
+                    "texto": "4 1/6"
+                },
+                {
+                    "texto": "3 1/2"
                 }
             ],
             "explicacao": "Transformando em sextos: 14/6 + 11/6 = 25/6, ou 4 1/6."
@@ -202,6 +202,9 @@ const questoesNivel2 = {
             "pergunta": "Quanto é 4/5 de 250?",
             "alternativas": [
                 {
+                    "texto": "225"
+                },
+                {
                     "texto": "200"
                 },
                 {
@@ -209,9 +212,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "210"
-                },
-                {
-                    "texto": "225"
                 }
             ],
             "explicacao": "Calculamos 250 ÷ 5 = 50 e depois 50 × 4 = 200."
@@ -238,9 +238,6 @@ const questoesNivel2 = {
             "pergunta": "Quanto é 1,2 ÷ 0,3?",
             "alternativas": [
                 {
-                    "texto": "4"
-                },
-                {
                     "texto": "0,4"
                 },
                 {
@@ -248,6 +245,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "40"
+                },
+                {
+                    "texto": "4"
                 }
             ],
             "explicacao": "Multiplicando os dois números por 10, temos 12 ÷ 3 = 4."
@@ -258,6 +258,9 @@ const questoesNivel2 = {
             "pergunta": "Quanto é 15% de 240?",
             "alternativas": [
                 {
+                    "texto": "48"
+                },
+                {
                     "texto": "36"
                 },
                 {
@@ -265,9 +268,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "40"
-                },
-                {
-                    "texto": "48"
                 }
             ],
             "explicacao": "15% = 0,15. Então 0,15 × 240 = 36."
@@ -294,9 +294,6 @@ const questoesNivel2 = {
             "pergunta": "Um valor de 80 aumenta 25%. Qual é o novo valor?",
             "alternativas": [
                 {
-                    "texto": "100"
-                },
-                {
                     "texto": "95"
                 },
                 {
@@ -304,6 +301,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "120"
+                },
+                {
+                    "texto": "100"
                 }
             ],
             "explicacao": "25% de 80 é 20. Somando o aumento: 80 + 20 = 100."
@@ -312,16 +312,16 @@ const questoesNivel2 = {
             "pergunta": "Uma quantidade está na razão 3:5 e o total é 64. Qual é a menor parte?",
             "alternativas": [
                 {
-                    "texto": "24"
-                },
-                {
-                    "texto": "32"
-                },
-                {
                     "texto": "40"
                 },
                 {
                     "texto": "16"
+                },
+                {
+                    "texto": "24"
+                },
+                {
+                    "texto": "32"
                 }
             ],
             "explicacao": "A soma das partes da razão é 8. Cada parte vale 64 ÷ 8 = 8; a menor é 3 × 8 = 24."
@@ -330,6 +330,9 @@ const questoesNivel2 = {
             "pergunta": "Quatro trabalhadores concluem um serviço em 6 dias. No mesmo ritmo, quanto tempo 8 trabalhadores levariam?",
             "alternativas": [
                 {
+                    "texto": "12 dias"
+                },
+                {
                     "texto": "3 dias"
                 },
                 {
@@ -337,9 +340,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "6 dias"
-                },
-                {
-                    "texto": "12 dias"
                 }
             ],
             "explicacao": "O trabalho total é 4 × 6 = 24 trabalhador-dias. Com 8 trabalhadores: 24 ÷ 8 = 3 dias."
@@ -366,9 +366,6 @@ const questoesNivel2 = {
             "pergunta": "30% de um número é igual a 54. Qual é esse número?",
             "alternativas": [
                 {
-                    "texto": "180"
-                },
-                {
                     "texto": "162"
                 },
                 {
@@ -376,6 +373,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "200"
+                },
+                {
+                    "texto": "180"
                 }
             ],
             "explicacao": "Se 0,30 × x = 54, então x = 54 ÷ 0,30 = 180."
@@ -384,16 +384,16 @@ const questoesNivel2 = {
             "pergunta": "Um produto de R$ 200 recebe descontos sucessivos de 10% e 20%. Qual é o preço final?",
             "alternativas": [
                 {
-                    "texto": "R$ 144"
-                },
-                {
-                    "texto": "R$ 140"
-                },
-                {
                     "texto": "R$ 150"
                 },
                 {
                     "texto": "R$ 160"
+                },
+                {
+                    "texto": "R$ 144"
+                },
+                {
+                    "texto": "R$ 140"
                 }
             ],
             "explicacao": "Após 10% de desconto: 200 × 0,9 = 180. Depois: 180 × 0,8 = R$ 144."
@@ -402,6 +402,9 @@ const questoesNivel2 = {
             "pergunta": "12 representa quantos por cento de 80?",
             "alternativas": [
                 {
+                    "texto": "20%"
+                },
+                {
                     "texto": "15%"
                 },
                 {
@@ -409,9 +412,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "18%"
-                },
-                {
-                    "texto": "20%"
                 }
             ],
             "explicacao": "Calculamos 12 ÷ 80 × 100 = 15%."
@@ -440,16 +440,16 @@ const questoesNivel2 = {
             "pergunta": "Resolva a equação 3x - 7 = 20.",
             "alternativas": [
                 {
-                    "texto": "9"
-                },
-                {
-                    "texto": "7"
-                },
-                {
                     "texto": "11"
                 },
                 {
                     "texto": "13"
+                },
+                {
+                    "texto": "9"
+                },
+                {
+                    "texto": "7"
                 }
             ],
             "explicacao": "Somando 7 aos dois lados: 3x = 27. Dividindo por 3: x = 9."
@@ -458,6 +458,9 @@ const questoesNivel2 = {
             "pergunta": "Resolva 5(x - 2) = 3x + 8.",
             "alternativas": [
                 {
+                    "texto": "8"
+                },
+                {
                     "texto": "9"
                 },
                 {
@@ -465,9 +468,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "6"
-                },
-                {
-                    "texto": "8"
                 }
             ],
             "explicacao": "Distribuindo: 5x - 10 = 3x + 8. Então 2x = 18 e x = 9."
@@ -494,9 +494,6 @@ const questoesNivel2 = {
             "pergunta": "Qual valor de x satisfaz 2x + 3 = 17?",
             "alternativas": [
                 {
-                    "texto": "7"
-                },
-                {
                     "texto": "8"
                 },
                 {
@@ -504,6 +501,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "6"
+                },
+                {
+                    "texto": "7"
                 }
             ],
             "explicacao": "Subtraindo 3, temos 2x = 14. Portanto, x = 7."
@@ -512,16 +512,16 @@ const questoesNivel2 = {
             "pergunta": "Resolva 4(2x + 1) = 3x + 24.",
             "alternativas": [
                 {
-                    "texto": "4"
-                },
-                {
-                    "texto": "5"
-                },
-                {
                     "texto": "3"
                 },
                 {
                     "texto": "6"
+                },
+                {
+                    "texto": "4"
+                },
+                {
+                    "texto": "5"
                 }
             ],
             "explicacao": "8x + 4 = 3x + 24. Logo, 5x = 20 e x = 4."
@@ -530,6 +530,9 @@ const questoesNivel2 = {
             "pergunta": "Resolva 7 - 2x = -9.",
             "alternativas": [
                 {
+                    "texto": "9"
+                },
+                {
                     "texto": "8"
                 },
                 {
@@ -537,9 +540,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "7"
-                },
-                {
-                    "texto": "9"
                 }
             ],
             "explicacao": "Subtraindo 7: -2x = -16. Dividindo por -2: x = 8."
@@ -566,9 +566,6 @@ const questoesNivel2 = {
             "pergunta": "Resolva 3x/4 = 18.",
             "alternativas": [
                 {
-                    "texto": "24"
-                },
-                {
                     "texto": "21"
                 },
                 {
@@ -576,6 +573,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "36"
+                },
+                {
+                    "texto": "24"
                 }
             ],
             "explicacao": "Multiplicando os dois lados por 4: 3x = 72. Assim, x = 24."
@@ -584,16 +584,16 @@ const questoesNivel2 = {
             "pergunta": "Resolva 2(x + 3) - 5 = 17.",
             "alternativas": [
                 {
-                    "texto": "8"
-                },
-                {
-                    "texto": "7"
-                },
-                {
                     "texto": "9"
                 },
                 {
                     "texto": "10"
+                },
+                {
+                    "texto": "8"
+                },
+                {
+                    "texto": "7"
                 }
             ],
             "explicacao": "Distribuindo e reduzindo: 2x + 6 - 5 = 17, então 2x = 16 e x = 8."
@@ -602,6 +602,9 @@ const questoesNivel2 = {
             "pergunta": "Qual é a solução de 6x - 2(2x + 1) = 14?",
             "alternativas": [
                 {
+                    "texto": "9"
+                },
+                {
                     "texto": "8"
                 },
                 {
@@ -609,9 +612,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "7"
-                },
-                {
-                    "texto": "9"
                 }
             ],
             "explicacao": "6x - 4x - 2 = 14. Então 2x = 16 e x = 8."
@@ -622,9 +622,6 @@ const questoesNivel2 = {
             "pergunta": "Um retângulo mede 12 cm por 7 cm. Qual é seu perímetro?",
             "alternativas": [
                 {
-                    "texto": "38 cm"
-                },
-                {
                     "texto": "84 cm"
                 },
                 {
@@ -632,6 +629,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "42 cm"
+                },
+                {
+                    "texto": "38 cm"
                 }
             ],
             "explicacao": "O perímetro é 2 × (12 + 7) = 38 cm."
@@ -640,16 +640,16 @@ const questoesNivel2 = {
             "pergunta": "Um triângulo tem base de 14 cm e altura de 9 cm. Qual é sua área?",
             "alternativas": [
                 {
-                    "texto": "63 cm²"
-                },
-                {
-                    "texto": "126 cm²"
-                },
-                {
                     "texto": "46 cm²"
                 },
                 {
                     "texto": "56 cm²"
+                },
+                {
+                    "texto": "63 cm²"
+                },
+                {
+                    "texto": "126 cm²"
                 }
             ],
             "explicacao": "Área do triângulo = base × altura ÷ 2 = 14 × 9 ÷ 2 = 63 cm²."
@@ -658,6 +658,9 @@ const questoesNivel2 = {
             "pergunta": "A diagonal de um quadrado mede 10 cm. Qual é sua área?",
             "alternativas": [
                 {
+                    "texto": "20 cm²"
+                },
+                {
                     "texto": "50 cm²"
                 },
                 {
@@ -665,9 +668,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "25 cm²"
-                },
-                {
-                    "texto": "20 cm²"
                 }
             ],
             "explicacao": "A área pode ser calculada por diagonal² ÷ 2: 10² ÷ 2 = 50 cm²."
@@ -694,9 +694,6 @@ const questoesNivel2 = {
             "pergunta": "Um trapézio tem bases de 8 cm e 14 cm e altura de 5 cm. Qual é a área?",
             "alternativas": [
                 {
-                    "texto": "55 cm²"
-                },
-                {
                     "texto": "110 cm²"
                 },
                 {
@@ -704,6 +701,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "70 cm²"
+                },
+                {
+                    "texto": "55 cm²"
                 }
             ],
             "explicacao": "A = (B + b) × h ÷ 2 = (14 + 8) × 5 ÷ 2 = 55 cm²."
@@ -712,16 +712,16 @@ const questoesNivel2 = {
             "pergunta": "Um paralelogramo tem base 12 cm e altura 7 cm. Qual é sua área?",
             "alternativas": [
                 {
-                    "texto": "84 cm²"
-                },
-                {
-                    "texto": "38 cm²"
-                },
-                {
                     "texto": "96 cm²"
                 },
                 {
                     "texto": "42 cm²"
+                },
+                {
+                    "texto": "84 cm²"
+                },
+                {
+                    "texto": "38 cm²"
                 }
             ],
             "explicacao": "A área do paralelogramo é base × altura: 12 × 7 = 84 cm²."
@@ -730,6 +730,9 @@ const questoesNivel2 = {
             "pergunta": "Um losango possui diagonais de 10 cm e 16 cm. Qual é sua área?",
             "alternativas": [
                 {
+                    "texto": "64 cm²"
+                },
+                {
                     "texto": "80 cm²"
                 },
                 {
@@ -737,9 +740,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "52 cm²"
-                },
-                {
-                    "texto": "64 cm²"
                 }
             ],
             "explicacao": "A = diagonal maior × diagonal menor ÷ 2 = 16 × 10 ÷ 2 = 80 cm²."
@@ -766,9 +766,6 @@ const questoesNivel2 = {
             "pergunta": "Um retângulo tem área de 96 cm² e largura de 8 cm. Qual é seu perímetro?",
             "alternativas": [
                 {
-                    "texto": "40 cm"
-                },
-                {
                     "texto": "24 cm"
                 },
                 {
@@ -776,6 +773,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "32 cm"
+                },
+                {
+                    "texto": "40 cm"
                 }
             ],
             "explicacao": "O comprimento é 96 ÷ 8 = 12 cm. O perímetro é 2 × (12 + 8) = 40 cm."
@@ -784,16 +784,16 @@ const questoesNivel2 = {
             "pergunta": "Qual é o perímetro de um hexágono regular de lado 4 cm?",
             "alternativas": [
                 {
-                    "texto": "24 cm"
-                },
-                {
-                    "texto": "20 cm"
-                },
-                {
                     "texto": "16 cm"
                 },
                 {
                     "texto": "28 cm"
+                },
+                {
+                    "texto": "24 cm"
+                },
+                {
+                    "texto": "20 cm"
                 }
             ],
             "explicacao": "Um hexágono regular possui 6 lados iguais: 6 × 4 = 24 cm."
@@ -822,9 +822,6 @@ const questoesNivel2 = {
             "pergunta": "Se f(x) = x² - 4, quanto vale f(-3)?",
             "alternativas": [
                 {
-                    "texto": "5"
-                },
-                {
                     "texto": "-13"
                 },
                 {
@@ -832,6 +829,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "1"
+                },
+                {
+                    "texto": "5"
                 }
             ],
             "explicacao": "f(-3) = (-3)² - 4 = 9 - 4 = 5."
@@ -840,16 +840,16 @@ const questoesNivel2 = {
             "pergunta": "Uma função afim passa pelos pontos (2, 5) e (4, 9). Qual é seu coeficiente angular?",
             "alternativas": [
                 {
-                    "texto": "2"
-                },
-                {
-                    "texto": "1"
-                },
-                {
                     "texto": "3"
                 },
                 {
                     "texto": "4"
+                },
+                {
+                    "texto": "2"
+                },
+                {
+                    "texto": "1"
                 }
             ],
             "explicacao": "O coeficiente angular é (9 - 5) ÷ (4 - 2) = 4 ÷ 2 = 2."
@@ -858,6 +858,9 @@ const questoesNivel2 = {
             "pergunta": "Qual é a média aritmética dos números 6, 8, 10 e 12?",
             "alternativas": [
                 {
+                    "texto": "11"
+                },
+                {
                     "texto": "9"
                 },
                 {
@@ -865,9 +868,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "10"
-                },
-                {
-                    "texto": "11"
                 }
             ],
             "explicacao": "Somamos os valores: 36. Dividindo por 4, obtemos média 9."
@@ -894,9 +894,6 @@ const questoesNivel2 = {
             "pergunta": "Qual é a moda do conjunto 2, 3, 3, 4, 5?",
             "alternativas": [
                 {
-                    "texto": "3"
-                },
-                {
                     "texto": "2"
                 },
                 {
@@ -904,6 +901,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "5"
+                },
+                {
+                    "texto": "3"
                 }
             ],
             "explicacao": "A moda é o valor que mais se repete. O número 3 aparece duas vezes."
@@ -912,16 +912,16 @@ const questoesNivel2 = {
             "pergunta": "Qual é a amplitude dos valores 4, 9, 12 e 17?",
             "alternativas": [
                 {
-                    "texto": "13"
-                },
-                {
-                    "texto": "12"
-                },
-                {
                     "texto": "9"
                 },
                 {
                     "texto": "21"
+                },
+                {
+                    "texto": "13"
+                },
+                {
+                    "texto": "12"
                 }
             ],
             "explicacao": "Amplitude = maior valor - menor valor = 17 - 4 = 13."
@@ -930,6 +930,9 @@ const questoesNivel2 = {
             "pergunta": "Ao lançar um dado comum, qual é a probabilidade de sair um número par?",
             "alternativas": [
                 {
+                    "texto": "1/6"
+                },
+                {
                     "texto": "1/2"
                 },
                 {
@@ -937,9 +940,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "2/3"
-                },
-                {
-                    "texto": "1/6"
                 }
             ],
             "explicacao": "Os resultados pares são 2, 4 e 6: três resultados em seis possíveis. A probabilidade é 3/6 = 1/2."
@@ -966,9 +966,6 @@ const questoesNivel2 = {
             "pergunta": "Se f(x) = 2x², quanto vale f(3)?",
             "alternativas": [
                 {
-                    "texto": "18"
-                },
-                {
                     "texto": "12"
                 },
                 {
@@ -976,6 +973,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "36"
+                },
+                {
+                    "texto": "18"
                 }
             ],
             "explicacao": "f(3) = 2 × 3² = 2 × 9 = 18."
@@ -986,6 +986,9 @@ const questoesNivel2 = {
             "pergunta": "Resolva o sistema: x + y = 13 e x - y = 5.",
             "alternativas": [
                 {
+                    "texto": "x = 7 e y = 6"
+                },
+                {
                     "texto": "x = 9 e y = 4"
                 },
                 {
@@ -993,9 +996,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "x = 10 e y = 3"
-                },
-                {
-                    "texto": "x = 7 e y = 6"
                 }
             ],
             "explicacao": "Somando as equações: 2x = 18, então x = 9. Substituindo: y = 4."
@@ -1022,9 +1022,6 @@ const questoesNivel2 = {
             "pergunta": "Quais são as raízes de x² - 5x + 6 = 0?",
             "alternativas": [
                 {
-                    "texto": "2 e 3"
-                },
-                {
                     "texto": "-2 e -3"
                 },
                 {
@@ -1032,6 +1029,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "-1 e -6"
+                },
+                {
+                    "texto": "2 e 3"
                 }
             ],
             "explicacao": "Fatorando: (x - 2)(x - 3) = 0. Portanto, x = 2 ou x = 3."
@@ -1040,16 +1040,16 @@ const questoesNivel2 = {
             "pergunta": "Quais são as soluções reais de 2x² - 8 = 0?",
             "alternativas": [
                 {
-                    "texto": "-2 e 2"
-                },
-                {
-                    "texto": "-4 e 4"
-                },
-                {
                     "texto": "0 e 2"
                 },
                 {
                     "texto": "-2 e 4"
+                },
+                {
+                    "texto": "-2 e 2"
+                },
+                {
+                    "texto": "-4 e 4"
                 }
             ],
             "explicacao": "2x² = 8, então x² = 4. As soluções são x = -2 e x = 2."
@@ -1058,6 +1058,9 @@ const questoesNivel2 = {
             "pergunta": "Resolva o sistema: 3x + 2y = 16 e x + 2y = 8.",
             "alternativas": [
                 {
+                    "texto": "x = 5 e y = 1"
+                },
+                {
                     "texto": "x = 4 e y = 2"
                 },
                 {
@@ -1065,9 +1068,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "x = 3 e y = 3"
-                },
-                {
-                    "texto": "x = 5 e y = 1"
                 }
             ],
             "explicacao": "Subtraindo a segunda equação da primeira: 2x = 8, então x = 4. Substituindo, y = 2."
@@ -1094,9 +1094,6 @@ const questoesNivel2 = {
             "pergunta": "Quais são as raízes de x² + 2x - 15 = 0?",
             "alternativas": [
                 {
-                    "texto": "3 e -5"
-                },
-                {
                     "texto": "-3 e 5"
                 },
                 {
@@ -1104,6 +1101,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "-1 e 15"
+                },
+                {
+                    "texto": "3 e -5"
                 }
             ],
             "explicacao": "Fatorando: (x + 5)(x - 3) = 0. Assim, x = -5 ou x = 3."
@@ -1112,16 +1112,16 @@ const questoesNivel2 = {
             "pergunta": "Resolva o sistema: 2x + y = 11 e x - y = 1.",
             "alternativas": [
                 {
-                    "texto": "x = 4 e y = 3"
-                },
-                {
-                    "texto": "x = 3 e y = 5"
-                },
-                {
                     "texto": "x = 5 e y = 1"
                 },
                 {
                     "texto": "x = 6 e y = -1"
+                },
+                {
+                    "texto": "x = 4 e y = 3"
+                },
+                {
+                    "texto": "x = 3 e y = 5"
                 }
             ],
             "explicacao": "Somando as equações: 3x = 12, então x = 4. Substituindo, y = 3."
@@ -1130,6 +1130,9 @@ const questoesNivel2 = {
             "pergunta": "Simplifique (3x² - 12x) ÷ 3x, considerando x diferente de zero.",
             "alternativas": [
                 {
+                    "texto": "x² - 4"
+                },
+                {
                     "texto": "x - 4"
                 },
                 {
@@ -1137,9 +1140,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "3x - 12"
-                },
-                {
-                    "texto": "x² - 4"
                 }
             ],
             "explicacao": "Dividindo cada termo por 3x: 3x²/3x - 12x/3x = x - 4."
@@ -1168,16 +1168,16 @@ const questoesNivel2 = {
             "pergunta": "Um triângulo retângulo tem catetos de 9 cm e 12 cm. Qual é a hipotenusa?",
             "alternativas": [
                 {
-                    "texto": "15 cm"
-                },
-                {
-                    "texto": "18 cm"
-                },
-                {
                     "texto": "21 cm"
                 },
                 {
                     "texto": "13 cm"
+                },
+                {
+                    "texto": "15 cm"
+                },
+                {
+                    "texto": "18 cm"
                 }
             ],
             "explicacao": "Pelo teorema de Pitágoras: h² = 9² + 12² = 81 + 144 = 225. Logo h = 15 cm."
@@ -1186,6 +1186,9 @@ const questoesNivel2 = {
             "pergunta": "Qual é o comprimento da circunferência de raio 7 cm?",
             "alternativas": [
                 {
+                    "texto": "21π cm"
+                },
+                {
                     "texto": "14π cm"
                 },
                 {
@@ -1193,9 +1196,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "49π cm"
-                },
-                {
-                    "texto": "21π cm"
                 }
             ],
             "explicacao": "C = 2πr = 2 × π × 7 = 14π cm."
@@ -1222,9 +1222,6 @@ const questoesNivel2 = {
             "pergunta": "Um cilindro tem raio 3 cm e altura 10 cm. Qual é seu volume?",
             "alternativas": [
                 {
-                    "texto": "90π cm³"
-                },
-                {
                     "texto": "30π cm³"
                 },
                 {
@@ -1232,6 +1229,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "300π cm³"
+                },
+                {
+                    "texto": "90π cm³"
                 }
             ],
             "explicacao": "V = πr²h = π × 9 × 10 = 90π cm³."
@@ -1240,16 +1240,16 @@ const questoesNivel2 = {
             "pergunta": "Um prisma possui área da base de 24 cm² e altura de 7 cm. Qual é seu volume?",
             "alternativas": [
                 {
-                    "texto": "168 cm³"
-                },
-                {
-                    "texto": "31 cm³"
-                },
-                {
                     "texto": "96 cm³"
                 },
                 {
                     "texto": "144 cm³"
+                },
+                {
+                    "texto": "168 cm³"
+                },
+                {
+                    "texto": "31 cm³"
                 }
             ],
             "explicacao": "O volume do prisma é área da base × altura: 24 × 7 = 168 cm³."
@@ -1258,6 +1258,9 @@ const questoesNivel2 = {
             "pergunta": "Um cone tem raio 3 cm e altura 12 cm. Qual é seu volume?",
             "alternativas": [
                 {
+                    "texto": "27π cm³"
+                },
+                {
                     "texto": "36π cm³"
                 },
                 {
@@ -1265,9 +1268,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "12π cm³"
-                },
-                {
-                    "texto": "27π cm³"
                 }
             ],
             "explicacao": "V = πr²h/3 = π × 9 × 12 ÷ 3 = 36π cm³."
@@ -1294,9 +1294,6 @@ const questoesNivel2 = {
             "pergunta": "Um triângulo isósceles tem lados iguais de 13 cm e base de 10 cm. Qual é sua área?",
             "alternativas": [
                 {
-                    "texto": "60 cm²"
-                },
-                {
                     "texto": "65 cm²"
                 },
                 {
@@ -1304,6 +1301,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "120 cm²"
+                },
+                {
+                    "texto": "60 cm²"
                 }
             ],
             "explicacao": "A altura divide a base em dois segmentos de 5 cm. Pelo teorema de Pitágoras, h = 12 cm. A área é 10 × 12 ÷ 2 = 60 cm²."
@@ -1312,16 +1312,16 @@ const questoesNivel2 = {
             "pergunta": "Um triângulo retângulo tem hipotenusa 13 cm e um cateto 5 cm. Qual é o outro cateto?",
             "alternativas": [
                 {
-                    "texto": "12 cm"
-                },
-                {
-                    "texto": "10 cm"
-                },
-                {
                     "texto": "8 cm"
                 },
                 {
                     "texto": "14 cm"
+                },
+                {
+                    "texto": "12 cm"
+                },
+                {
+                    "texto": "10 cm"
                 }
             ],
             "explicacao": "Pelo teorema de Pitágoras: outro cateto² = 13² - 5² = 169 - 25 = 144. Logo, 12 cm."
@@ -1330,6 +1330,9 @@ const questoesNivel2 = {
             "pergunta": "Qual é a distância entre os pontos (1, 2) e (7, 10) no plano cartesiano?",
             "alternativas": [
                 {
+                    "texto": "14"
+                },
+                {
                     "texto": "10"
                 },
                 {
@@ -1337,9 +1340,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "12"
-                },
-                {
-                    "texto": "14"
                 }
             ],
             "explicacao": "A distância é √[(7 - 1)² + (10 - 2)²] = √(36 + 64) = √100 = 10."
@@ -1350,9 +1350,6 @@ const questoesNivel2 = {
             "pergunta": "Simplifique 2⁵ × 2³.",
             "alternativas": [
                 {
-                    "texto": "256"
-                },
-                {
                     "texto": "64"
                 },
                 {
@@ -1360,6 +1357,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "512"
+                },
+                {
+                    "texto": "256"
                 }
             ],
             "explicacao": "Na multiplicação de potências de mesma base, somamos os expoentes: 2⁸ = 256."
@@ -1368,16 +1368,16 @@ const questoesNivel2 = {
             "pergunta": "Qual é o valor de (3²)³?",
             "alternativas": [
                 {
-                    "texto": "729"
-                },
-                {
-                    "texto": "243"
-                },
-                {
                     "texto": "81"
                 },
                 {
                     "texto": "36"
+                },
+                {
+                    "texto": "729"
+                },
+                {
+                    "texto": "243"
                 }
             ],
             "explicacao": "Na potência de potência, multiplicamos os expoentes: 3⁶ = 729."
@@ -1386,6 +1386,9 @@ const questoesNivel2 = {
             "pergunta": "Qual é a raiz quadrada de 196?",
             "alternativas": [
                 {
+                    "texto": "16"
+                },
+                {
                     "texto": "14"
                 },
                 {
@@ -1393,9 +1396,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "13"
-                },
-                {
-                    "texto": "16"
                 }
             ],
             "explicacao": "Como 14 × 14 = 196, a raiz quadrada é 14."
@@ -1422,9 +1422,6 @@ const questoesNivel2 = {
             "pergunta": "Qual é a raiz cúbica de 216?",
             "alternativas": [
                 {
-                    "texto": "6"
-                },
-                {
                     "texto": "8"
                 },
                 {
@@ -1432,6 +1429,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "12"
+                },
+                {
+                    "texto": "6"
                 }
             ],
             "explicacao": "6³ = 6 × 6 × 6 = 216."
@@ -1440,16 +1440,16 @@ const questoesNivel2 = {
             "pergunta": "Escreva 0,00045 em notação científica.",
             "alternativas": [
                 {
-                    "texto": "4,5 × 10⁻⁴"
-                },
-                {
-                    "texto": "4,5 × 10⁴"
-                },
-                {
                     "texto": "45 × 10⁻⁴"
                 },
                 {
                     "texto": "0,45 × 10⁻³"
+                },
+                {
+                    "texto": "4,5 × 10⁻⁴"
+                },
+                {
+                    "texto": "4,5 × 10⁴"
                 }
             ],
             "explicacao": "Movemos a vírgula quatro casas para a direita, obtendo 4,5. Portanto, o expoente é -4."
@@ -1458,6 +1458,9 @@ const questoesNivel2 = {
             "pergunta": "Qual é o valor de 2⁻³?",
             "alternativas": [
                 {
+                    "texto": "8"
+                },
+                {
                     "texto": "1/8"
                 },
                 {
@@ -1465,9 +1468,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "1/6"
-                },
-                {
-                    "texto": "8"
                 }
             ],
             "explicacao": "Expoente negativo indica o inverso: 2⁻³ = 1/2³ = 1/8."
@@ -1494,9 +1494,6 @@ const questoesNivel2 = {
             "pergunta": "Calcule 4³ ÷ 2⁴.",
             "alternativas": [
                 {
-                    "texto": "4"
-                },
-                {
                     "texto": "2"
                 },
                 {
@@ -1504,6 +1501,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "16"
+                },
+                {
+                    "texto": "4"
                 }
             ],
             "explicacao": "4³ = 64 e 2⁴ = 16. Então 64 ÷ 16 = 4."
@@ -1512,16 +1512,16 @@ const questoesNivel2 = {
             "pergunta": "Calcule 3² + 2√121.",
             "alternativas": [
                 {
-                    "texto": "31"
-                },
-                {
-                    "texto": "25"
-                },
-                {
                     "texto": "33"
                 },
                 {
                     "texto": "29"
+                },
+                {
+                    "texto": "31"
+                },
+                {
+                    "texto": "25"
                 }
             ],
             "explicacao": "3² = 9 e √121 = 11. Logo, 9 + 2 × 11 = 31."
@@ -1550,9 +1550,6 @@ const questoesNivel2 = {
             "pergunta": "Ao lançar dois dados comuns, qual é a probabilidade de a soma ser 7?",
             "alternativas": [
                 {
-                    "texto": "1/6"
-                },
-                {
                     "texto": "1/12"
                 },
                 {
@@ -1560,6 +1557,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "1/3"
+                },
+                {
+                    "texto": "1/6"
                 }
             ],
             "explicacao": "Há 6 pares que somam 7 entre 36 resultados possíveis. Assim, 6/36 = 1/6."
@@ -1568,16 +1568,16 @@ const questoesNivel2 = {
             "pergunta": "Qual é a média dos números 4, 6, 8, 10 e 12?",
             "alternativas": [
                 {
-                    "texto": "8"
-                },
-                {
-                    "texto": "7"
-                },
-                {
                     "texto": "9"
                 },
                 {
                     "texto": "10"
+                },
+                {
+                    "texto": "8"
+                },
+                {
+                    "texto": "7"
                 }
             ],
             "explicacao": "A soma é 40. Dividindo por 5 valores, a média é 8."
@@ -1586,6 +1586,9 @@ const questoesNivel2 = {
             "pergunta": "Se 6 alunos tiraram nota 7 e 4 alunos tiraram nota 9, qual é a média da turma?",
             "alternativas": [
                 {
+                    "texto": "8,2"
+                },
+                {
                     "texto": "7,8"
                 },
                 {
@@ -1593,9 +1596,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "7,5"
-                },
-                {
-                    "texto": "8,2"
                 }
             ],
             "explicacao": "A média ponderada é (6 × 7 + 4 × 9) ÷ 10 = 78 ÷ 10 = 7,8."
@@ -1622,9 +1622,6 @@ const questoesNivel2 = {
             "pergunta": "Ao lançar um dado, qual é a probabilidade de sair um número que não seja primo?",
             "alternativas": [
                 {
-                    "texto": "1/2"
-                },
-                {
                     "texto": "1/3"
                 },
                 {
@@ -1632,6 +1629,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "1/6"
+                },
+                {
+                    "texto": "1/2"
                 }
             ],
             "explicacao": "Os resultados não primos são 1, 4 e 6. São 3 casos em 6: 3/6 = 1/2."
@@ -1640,16 +1640,16 @@ const questoesNivel2 = {
             "pergunta": "Os valores de um conjunto vão de 18 a 43. Qual é a amplitude?",
             "alternativas": [
                 {
-                    "texto": "25"
-                },
-                {
-                    "texto": "24"
-                },
-                {
                     "texto": "26"
                 },
                 {
                     "texto": "61"
+                },
+                {
+                    "texto": "25"
+                },
+                {
+                    "texto": "24"
                 }
             ],
             "explicacao": "A amplitude é o maior menos o menor: 43 - 18 = 25."
@@ -1658,6 +1658,9 @@ const questoesNivel2 = {
             "pergunta": "Em uma turma de 60 estudantes, 18 participam de um clube. Qual percentual isso representa?",
             "alternativas": [
                 {
+                    "texto": "36%"
+                },
+                {
                     "texto": "30%"
                 },
                 {
@@ -1665,9 +1668,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "25%"
-                },
-                {
-                    "texto": "36%"
                 }
             ],
             "explicacao": "18 ÷ 60 × 100 = 30%."
@@ -1694,9 +1694,6 @@ const questoesNivel2 = {
             "pergunta": "Uma pesquisa registrou frequências 5, 8, 12 e 15. Qual é a frequência total?",
             "alternativas": [
                 {
-                    "texto": "40"
-                },
-                {
                     "texto": "35"
                 },
                 {
@@ -1704,6 +1701,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "45"
+                },
+                {
+                    "texto": "40"
                 }
             ],
             "explicacao": "Somamos as frequências: 5 + 8 + 12 + 15 = 40."
@@ -1714,6 +1714,9 @@ const questoesNivel2 = {
             "pergunta": "Um produto de R$ 240 recebe desconto de 10% e depois acréscimo de 15% sobre o novo preço. Qual é o valor final?",
             "alternativas": [
                 {
+                    "texto": "R$ 276,00"
+                },
+                {
                     "texto": "R$ 248,40"
                 },
                 {
@@ -1721,9 +1724,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "R$ 240,00"
-                },
-                {
-                    "texto": "R$ 276,00"
                 }
             ],
             "explicacao": "Após o desconto: 240 × 0,9 = 216. Com acréscimo: 216 × 1,15 = R$ 248,40."
@@ -1750,9 +1750,6 @@ const questoesNivel2 = {
             "pergunta": "Resolva o sistema 3x + 2y = 18 e x + y = 7.",
             "alternativas": [
                 {
-                    "texto": "x = 4 e y = 3"
-                },
-                {
                     "texto": "x = 3 e y = 4"
                 },
                 {
@@ -1760,6 +1757,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "x = 2 e y = 5"
+                },
+                {
+                    "texto": "x = 4 e y = 3"
                 }
             ],
             "explicacao": "Da segunda equação, y = 7 - x. Substituindo: 3x + 14 - 2x = 18, então x = 4 e y = 3."
@@ -1768,16 +1768,16 @@ const questoesNivel2 = {
             "pergunta": "Resolva x/2 + 3/4 = 5/2.",
             "alternativas": [
                 {
-                    "texto": "7/2"
-                },
-                {
-                    "texto": "5/2"
-                },
-                {
                     "texto": "3/2"
                 },
                 {
                     "texto": "7/4"
+                },
+                {
+                    "texto": "7/2"
+                },
+                {
+                    "texto": "5/2"
                 }
             ],
             "explicacao": "Subtraindo 3/4: x/2 = 10/4 - 3/4 = 7/4. Multiplicando por 2: x = 7/2."
@@ -1786,6 +1786,9 @@ const questoesNivel2 = {
             "pergunta": "Um retângulo tem lados 9 cm e 12 cm. Qual é a diagonal?",
             "alternativas": [
                 {
+                    "texto": "13 cm"
+                },
+                {
                     "texto": "15 cm"
                 },
                 {
@@ -1793,9 +1796,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "21 cm"
-                },
-                {
-                    "texto": "13 cm"
                 }
             ],
             "explicacao": "Pelo teorema de Pitágoras: d² = 9² + 12² = 225. Logo d = 15 cm."
@@ -1822,9 +1822,6 @@ const questoesNivel2 = {
             "pergunta": "Dois triângulos semelhantes têm lados correspondentes na razão 3:5. Se um lado do menor mede 12 cm, quanto mede o correspondente no maior?",
             "alternativas": [
                 {
-                    "texto": "20 cm"
-                },
-                {
                     "texto": "15 cm"
                 },
                 {
@@ -1832,6 +1829,9 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "24 cm"
+                },
+                {
+                    "texto": "20 cm"
                 }
             ],
             "explicacao": "O fator de ampliação é 5/3. Então 12 × 5/3 = 20 cm."
@@ -1840,16 +1840,16 @@ const questoesNivel2 = {
             "pergunta": "Simplifique (x² - 9)/(x - 3), com x diferente de 3.",
             "alternativas": [
                 {
-                    "texto": "x + 3"
-                },
-                {
-                    "texto": "x - 3"
-                },
-                {
                     "texto": "x² + 3"
                 },
                 {
                     "texto": "x + 9"
+                },
+                {
+                    "texto": "x + 3"
+                },
+                {
+                    "texto": "x - 3"
                 }
             ],
             "explicacao": "Fatorando o numerador: (x - 3)(x + 3). Cancelando x - 3, resta x + 3."
@@ -1858,6 +1858,9 @@ const questoesNivel2 = {
             "pergunta": "Uma função linear passa pela origem e por (4, 18). Qual é sua expressão?",
             "alternativas": [
                 {
+                    "texto": "f(x) = x + 14"
+                },
+                {
                     "texto": "f(x) = 4,5x"
                 },
                 {
@@ -1865,9 +1868,6 @@ const questoesNivel2 = {
                 },
                 {
                     "texto": "f(x) = 4x + 18"
-                },
-                {
-                    "texto": "f(x) = x + 14"
                 }
             ],
             "explicacao": "O coeficiente angular é 18/4 = 4,5. Como passa pela origem, f(x) = 4,5x."
@@ -2933,7 +2933,7 @@ function registrarAcessoFaseNivel2(numeroFase) {
 
     const nomeFase = dadosFase
         ? dadosFase.nome
-        : "Fundamentos";
+        : "Praticando";
 
     registrarUltimaAtividade(
         "nivel2_fase_" + numeroFase,
