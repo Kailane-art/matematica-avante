@@ -229,8 +229,11 @@ const paginasProtegidas = new Set([
     "divisao.html"
 ]);
 
-const paginaAtual = window.location.pathname.split("/").pop() || "index.html";
-
+const caminhoAtual = window.location.pathname.replace(/\/+$/, "");
+const nomePaginaAtual = caminhoAtual.split("/").pop() || "index.html";
+const paginaAtual = nomePaginaAtual.endsWith(".html")
+    ? nomePaginaAtual
+    : `${nomePaginaAtual}.html`;
 if (paginasProtegidas.has(paginaAtual)) {
 
     (async function(){
