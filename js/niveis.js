@@ -3710,6 +3710,76 @@ function configurarEventosNivel1() {
 
 
 // =====================================================
+// RETOMAR REVISÃO NÃO CONCLUÍDA
+// =====================================================
+
+async function restaurarRevisaoAtivaNivel1() {
+
+    const { data: revisao, error: erroRevisao } = await supabaseClient
+        .from("user_phase_review_sessions")
+        .select("id, phase_number, review_number, completed")
+        .eq("level_number", 1)
+        .eq("completed", false)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+    if (erroRevisao) throw erroRevisao;
+    if (!revisao) return false;
+
+    const { data: respostasRevisao, error: erroRespostas } =
+        await supabaseClient
+            .from("user_phase_review_answers")
+            .select("question_number, selected_option_id, is_correct")
+            .eq("session_id", revisao.id)
+            .order("question_number", { ascending: true });
+
+    if (erroRespostas) throw erroRespostas;
+
+    faseAtual = Number(revisao.phase_number);
+    idSessaoRevisao = revisao.id;
+    modoRevisao = true;
+    faseFinalizada = false;
+    respostaEmEnvio = false;
+
+    respostas = {};
+    alternativasSelecionadas = {};
+
+    (respostasRevisao || []).forEach(function(resposta) {
+        const numero = Number(resposta.question_number);
+        respostas[numero] = resposta.is_correct === true;
+        alternativasSelecionadas[numero] = resposta.selected_option_id;
+    });
+
+    const primeiraNaoRespondida = Array.from(
+        { length: TOTAL_QUESTOES },
+        function(_, indice) { return indice + 1; }
+    ).find(function(numero) {
+        return respostas[numero] === undefined;
+    });
+
+    questaoAtual = primeiraNaoRespondida || TOTAL_QUESTOES;
+    inicioFase = Date.now();
+
+    const areaQuestao = document.getElementById("areaQuestao");
+    const resultado = document.getElementById("resultadoFase");
+    const areaErro = document.getElementById("explicacaoErro");
+
+    if (areaQuestao) areaQuestao.hidden = false;
+    if (resultado) resultado.hidden = true;
+    if (areaErro) {
+        areaErro.hidden = true;
+        areaErro.textContent = "";
+    }
+
+    atualizarInformacoesFase();
+    mostrarQuestao();
+
+    return true;
+}
+
+
+// =====================================================
 // INICIALIZAÇÃO DO NÍVEL 1
 // =====================================================
 
@@ -3739,7 +3809,18 @@ async function inicializarNivel1() {
     }
 
     atualizarListaFases();
-    iniciarFase(faseAtual);
+
+    let revisaoRestaurada = false;
+
+    try {
+        revisaoRestaurada = await restaurarRevisaoAtivaNivel1();
+    } catch (erro) {
+        console.error("Não foi possível retomar a revisão em andamento:", erro);
+    }
+
+    if (!revisaoRestaurada) {
+        iniciarFase(faseAtual);
+    }
 
     if (typeof atualizarIcones === "function") {
         atualizarIcones();
