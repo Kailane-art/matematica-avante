@@ -391,6 +391,106 @@ Sair
 </div>
 
 
+<!-- JANELA DE EDIÇÃO DO PERFIL -->
+
+<div id="modalEditarPerfil" class="modal-editar-perfil" hidden>
+
+    <div
+        class="conteudo-modal-perfil"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tituloEditarPerfil"
+    >
+
+        <h2 id="tituloEditarPerfil">
+            Editar perfil
+        </h2>
+
+        <form id="formEditarPerfil">
+
+            <label for="editarNome">
+                Nome de exibição
+            </label>
+
+            <input
+                type="text"
+                id="editarNome"
+                maxlength="50"
+                required
+            >
+
+            <label for="editarUsername">
+                Nome de usuário
+            </label>
+
+            <input
+                type="text"
+                id="editarUsername"
+                minlength="3"
+                maxlength="20"
+                pattern="[a-zA-Z0-9_]{3,20}"
+                required
+            >
+
+            <small>
+                De 3 a 20 caracteres. Use letras, números ou _.
+                Só pode ser alterado uma vez a cada 7 dias.
+            </small>
+
+            <label for="editarBio">
+                Bio
+            </label>
+
+            <textarea
+                id="editarBio"
+                maxlength="150"
+                rows="4"
+                placeholder="Conte um pouco sobre você..."
+            ></textarea>
+
+            <small>
+                Máximo de 150 caracteres.
+            </small>
+
+            <label for="editarLink">
+                Link
+            </label>
+
+            <input
+                type="url"
+                id="editarLink"
+                placeholder="https://..."
+            >
+
+            <p
+                id="mensagemEditarPerfil"
+                aria-live="polite"
+            ></p>
+
+            <div class="acoes-modal-perfil">
+
+                <button
+                    type="button"
+                    id="fecharModalEditarPerfil"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    id="salvarPerfil"
+                >
+                    Salvar alterações
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+    
 </section>
 
 <script src="js/script.js"></script> 
