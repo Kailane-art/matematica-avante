@@ -672,7 +672,7 @@ const usernameContaProfessor =
 
 async function carregarIdentificacaoContaProfessor() {
 
-    if (!window.supabaseClient || !campoEmailContaProfessor || !usernameContaProfessor) {
+    if (typeof supabaseClient === "undefined" || !supabaseClient || !campoEmailContaProfessor || !usernameContaProfessor) {
         campoEmailContaProfessor.value = "";
         usernameContaProfessor.textContent = "Indisponível";
         return;
