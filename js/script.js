@@ -1578,6 +1578,7 @@ async function carregarIndicadoresUsuario() {
 
         const [
             resultadoQuestoes,
+            resultadoTaxaAcertos,
             resultadoDias,
             resultadoUltimaAtividade
         ] = await Promise.all([
@@ -1585,6 +1586,11 @@ async function carregarIndicadoresUsuario() {
             supabaseClient
                 .from("user_question_attempts")
                 .select("id", { count: "exact", head: true })
+                .eq("user_id", user.id),
+
+            supabaseClient
+                .from("user_question_attempts")
+                .select("is_correct")
                 .eq("user_id", user.id),
 
             supabaseClient
@@ -1602,6 +1608,7 @@ async function carregarIndicadoresUsuario() {
         ]);
 
         if (resultadoQuestoes.error) throw resultadoQuestoes.error;
+        if (resultadoTaxaAcertos.error) throw resultadoTaxaAcertos.error;
         if (resultadoDias.error) throw resultadoDias.error;
         if (resultadoUltimaAtividade.error) {
             throw resultadoUltimaAtividade.error;
@@ -1614,6 +1621,24 @@ async function carregarIndicadoresUsuario() {
         if (elementoQuestoes) {
             elementoQuestoes.textContent =
                 resultadoQuestoes.count || 0;
+        }
+
+        const elementoTaxaAcertos = document.getElementById(
+            "taxaAcertosResumo"
+        );
+
+        if (elementoTaxaAcertos) {
+            const tentativas = resultadoTaxaAcertos.data || [];
+            const totalRespostas = tentativas.length;
+            const totalAcertos = tentativas.filter(function(tentativa) {
+                return tentativa.is_correct === true;
+            }).length;
+
+            const taxaAcertos = totalRespostas > 0
+                ? Math.round((totalAcertos / totalRespostas) * 100)
+                : 0;
+
+            elementoTaxaAcertos.textContent = taxaAcertos + "%";
         }
 
         diasEstudoSincronizados = (resultadoDias.data || [])
@@ -1743,6 +1768,7 @@ if (conteudoAtual) {
 
 if (
     document.getElementById("questoesRespondidasPerfil") ||
+    document.getElementById("taxaAcertosResumo") ||
     document.getElementById("sequenciaEstudosPerfil") ||
     document.getElementById("diasSequencia") ||
     document.getElementById("ultimaAtividade")
