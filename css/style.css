@@ -3093,3 +3093,7 @@ html.verificando-sessao::before {
     font-size: 17px;
     font-weight: 600;
 } 
+html.verificando-sessao:has(body.modo-escuro)::before {
+    background: #0b1d3a;
+    color: #e5e7eb;
+} 
