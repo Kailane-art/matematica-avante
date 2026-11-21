@@ -124,6 +124,10 @@ Identidade
 Nome do aluno
 </h3>
 
+<p id="usernamePerfil" class="username-perfil" hidden></p>
+
+<p id="bioPerfil" class="bio-perfil" hidden></p>
+
 
 
 
@@ -876,12 +880,37 @@ async function carregarAvatarDaConta() {
 
         const { data: perfil, error } = await supabaseClient
             .from("profiles")
-            .select("avatar_path, username, display_name, tipo_usuario")
+            .select("avatar_path, username, display_name, bio, tipo_usuario")
             .eq("id", user.id)
             .single();
 
         if (error || !perfil) {
             throw error || new Error("Não foi possível carregar os dados do perfil.");
+        }
+
+        // Atualiza os dados de identidade diretamente do perfil salvo.
+        const elementoNomePerfil = document.getElementById("nomeUsuario");
+        const elementoUsername = document.getElementById("usernamePerfil");
+        const elementoBio = document.getElementById("bioPerfil");
+
+        if (elementoNomePerfil) {
+            elementoNomePerfil.textContent = perfil.display_name || "Usuário";
+        }
+
+        if (elementoUsername) {
+            elementoUsername.textContent = perfil.username
+                ? "@" + perfil.username
+                : "";
+            elementoUsername.hidden = !perfil.username;
+        }
+
+        if (elementoBio) {
+            elementoBio.textContent = perfil.bio || "";
+            elementoBio.hidden = !perfil.bio;
+        }
+
+        if (perfil.display_name) {
+            localStorage.setItem("nomeUsuario", perfil.display_name);
         }
 
         // Atualiza o tipo exibido usando o valor atual do banco,
