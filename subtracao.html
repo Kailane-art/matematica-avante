@@ -1,4 +1,5 @@
-content = r'''<!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="pt-BR" class="verificando-sessao">
 <head>
     <meta charset="UTF-8">
@@ -641,8 +642,3 @@ content = r'''<!DOCTYPE html>
 </body>
 
 </html>
-'''
-path = "/mnt/data/subtracao.html"
-with open(path, "w", encoding="utf-8") as f:
-    f.write(content)
-print(f"Arquivo criado: {path}\nLinhas: {len(content.splitlines())}\nBytes: {len(content.encode('utf-8'))}")
