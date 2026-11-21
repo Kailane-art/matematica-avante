@@ -2911,3 +2911,168 @@ header svg {
         font-size: 22px;
     }
 }
+
+/* =====================================================
+   MODAL DE EDIÇÃO DO PERFIL
+===================================================== */
+
+.modal-editar-perfil {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.65);
+    overflow-y: auto;
+}
+
+.modal-editar-perfil[hidden] {
+    display: none !important;
+}
+
+.conteudo-modal-perfil {
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px;
+    border-radius: 18px;
+    background: #ffffff;
+    color: #333333;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.conteudo-modal-perfil h2 {
+    margin: 0 0 24px;
+    color: #1E3A8A;
+    font-size: 24px;
+    text-align: center;
+}
+
+.conteudo-modal-perfil form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.conteudo-modal-perfil label {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333333;
+}
+
+.conteudo-modal-perfil input,
+.conteudo-modal-perfil textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #1f2937;
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.conteudo-modal-perfil input:focus,
+.conteudo-modal-perfil textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.conteudo-modal-perfil textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.conteudo-modal-perfil small {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.acoes-modal-perfil {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.acoes-modal-perfil button {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #1E3A8A;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.acoes-modal-perfil button:hover {
+    background: #294ec5;
+}
+
+.acoes-modal-perfil button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#mensagemEditarPerfil {
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* MODO ESCURO */
+
+.modo-escuro .conteudo-modal-perfil {
+    background: #13294b;
+    color: #e5e7eb;
+}
+
+.modo-escuro .conteudo-modal-perfil h2 {
+    color: #FFD54F;
+}
+
+.modo-escuro .conteudo-modal-perfil label {
+    color: #e5e7eb;
+}
+
+.modo-escuro .conteudo-modal-perfil input,
+.modo-escuro .conteudo-modal-perfil textarea {
+    background: #0b1d3a;
+    border-color: #29456f;
+    color: white;
+}
+
+.modo-escuro .conteudo-modal-perfil input:focus,
+.modo-escuro .conteudo-modal-perfil textarea:focus {
+    border-color: #FFD54F;
+}
+
+.modo-escuro .conteudo-modal-perfil small {
+    color: #cbd5e1;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 500px) {
+    .conteudo-modal-perfil {
+        padding: 22px 18px;
+    }
+
+    .acoes-modal-perfil {
+        flex-direction: column-reverse;
+    }
+
+    .acoes-modal-perfil button {
+        width: 100%;
+    }
+    }
