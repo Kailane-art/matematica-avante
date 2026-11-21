@@ -1799,6 +1799,11 @@ const conteudosRastreaveis = {
     "divisao.html": {
         chave: "divisao",
         nome: "Divisão"
+    },
+
+    "nivel2.html": {
+        chave: "nivel2",
+        nome: "Nível 2"
     }
 
 };
