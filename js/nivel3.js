@@ -128,13 +128,13 @@ const questoesNivel3 = {
             "pergunta": "Simplifique a expressão: 2√50 − √8 + √18.",
             "alternativas": [
                 {
-                    "texto": "10√2"
+                    "texto": "11√2"
                 },
                 {
                     "texto": "9√2"
                 },
                 {
-                    "texto": "11√2"
+                    "texto": "10√2"
                 },
                 {
                     "texto": "8√2"
