@@ -21,6 +21,26 @@
 <body>
 
 
+<!-- NOTIFICAÇÃO DE NÍVEL BLOQUEADO -->
+<div id="notificacaoNivelBloqueado" class="notificacao-nivel-bloqueado" hidden>
+    <div class="notificacao-nivel-icone">
+        <i data-lucide="lock-keyhole"></i>
+    </div>
+    <div class="notificacao-nivel-conteudo">
+        <strong id="tituloNotificacaoNivel">Nível bloqueado</strong>
+        <p id="mensagemNotificacaoNivel">
+            Você ainda não cumpriu os requisitos para acessar este nível.
+        </p>
+    </div>
+    <div class="notificacao-nivel-acoes">
+        <button type="button" id="fecharNotificacaoNivel" class="botao-fechar-nivel" aria-label="Fechar notificação">
+            <i data-lucide="x"></i>
+        </button>
+    </div>
+</div>
+
+
+
 <header class="cabecalho-nivel">
 
     <button id="voltarPagina" type="button" class="icon-button">
