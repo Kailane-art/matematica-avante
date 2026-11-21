@@ -144,18 +144,17 @@
 
                 <div class="alternativas">
 
-                    <button onclick="responderQuestaoAdicao(1, false, this)">
-                        12
-                    </button>
+     <button data-option-id="a" onclick="responderQuestaoAdicao(1, 'a', this)" disabled>
+    12
+</button>
 
-                    <button onclick="responderQuestaoAdicao(1, true, this)">
-                        13
-                    </button>
+<button data-option-id="b" onclick="responderQuestaoAdicao(1, 'b', this)" disabled>
+    13
+</button>
 
-                    <button onclick="responderQuestaoAdicao(1, false, this)">
-                        14
-                    </button>
-
+<button data-option-id="c" onclick="responderQuestaoAdicao(1, 'c', this)" disabled>
+    14
+</button> 
                 </div>
 
             </div>
@@ -171,18 +170,17 @@
 
                 <div class="alternativas">
 
-                    <button onclick="responderQuestaoAdicao(2, false, this)">
-                        18
-                    </button>
+     <button data-option-id="a" onclick="responderQuestaoAdicao(2, 'a', this)" disabled>
+    18
+</button>
 
-                    <button onclick="responderQuestaoAdicao(2, true, this)">
-                        19
-                    </button>
+<button data-option-id="b" onclick="responderQuestaoAdicao(2, 'b', this)" disabled>
+    19
+</button>
 
-                    <button onclick="responderQuestaoAdicao(2, false, this)">
-                        20
-                    </button>
-
+<button data-option-id="c" onclick="responderQuestaoAdicao(2, 'c', this)" disabled>
+    20
+</button>
                 </div>
 
             </div>
@@ -198,17 +196,17 @@
 
                 <div class="alternativas">
 
-                    <button onclick="responderQuestaoAdicao(3, true, this)">
-                        40
-                    </button>
+          <button data-option-id="a" onclick="responderQuestaoAdicao(3, 'a', this)" disabled>
+    40
+</button>
 
-                    <button onclick="responderQuestaoAdicao(3, false, this)">
-                        38
-                    </button>
+<button data-option-id="b" onclick="responderQuestaoAdicao(3, 'b', this)" disabled>
+    38
+</button>
 
-                    <button onclick="responderQuestaoAdicao(3, false, this)">
-                        42
-                    </button>
+<button data-option-id="c" onclick="responderQuestaoAdicao(3, 'c', this)" disabled>
+    42
+</button> 
 
                 </div>
 
@@ -225,17 +223,17 @@
 
                 <div class="alternativas">
 
-                    <button onclick="responderQuestaoAdicao(4, false, this)">
-                        62
-                    </button>
+           <button data-option-id="a" onclick="responderQuestaoAdicao(4, 'a', this)" disabled>
+    62
+</button>
 
-                    <button onclick="responderQuestaoAdicao(4, true, this)">
-                        63
-                    </button>
+<button data-option-id="b" onclick="responderQuestaoAdicao(4, 'b', this)" disabled>
+    63
+</button>
 
-                    <button onclick="responderQuestaoAdicao(4, false, this)">
-                        64
-                    </button>
+<button data-option-id="c" onclick="responderQuestaoAdicao(4, 'c', this)" disabled>
+    64
+</button> 
 
                 </div>
 
@@ -252,17 +250,17 @@
 
                 <div class="alternativas">
 
-                    <button onclick="responderQuestaoAdicao(5, false, this)">
-                        163
-                    </button>
+         <button data-option-id="a" onclick="responderQuestaoAdicao(5, 'a', this)" disabled>
+    163
+</button>
 
-                    <button onclick="responderQuestaoAdicao(5, false, this)">
-                        172
-                    </button>
+<button data-option-id="b" onclick="responderQuestaoAdicao(5, 'b', this)" disabled>
+    172
+</button>
 
-                    <button onclick="responderQuestaoAdicao(5, true, this)">
-                        173
-                    </button>
+<button data-option-id="c" onclick="responderQuestaoAdicao(5, 'c', this)" disabled>
+    173
+</button> 
 
                 </div>
 
@@ -317,191 +315,363 @@
 
         const CHAVE_XP_ADICAO = "questoesAdicaoComXP";
 
-        let acertosAdicao = 0;
+    
+let acertosAdicao = 0;
+let questoesRespondidasAdicao = [];
+let xpTotalAdicao = 0;
+let carregamentoAdicaoConcluido = false;
 
-        let questoesRespondidasAdicao = [];
 
-        let xpGanhoAdicao = 0;
+// Atualizar pontuação.
+
+function atualizarPontuacaoAdicao() {
+
+    document.getElementById("pontuacao").textContent =
+        "Pontuação: " + acertosAdicao + "/5";
+
+}
 
 
-        // Carregar questões que já concederam XP.
+// Atualizar XP exibido.
 
-        function obterQuestoesComXPAdicao() {
+function atualizarXPAdicao() {
 
-            try {
+    document.getElementById("xpTotalAdicao").textContent =
+        xpTotalAdicao;
 
-                const dados = JSON.parse(
-                    localStorage.getItem(CHAVE_XP_ADICAO) || "[]"
-                );
+}
 
-                return Array.isArray(dados) ? dados : [];
 
-            } catch (erro) {
+// Exibir resultado.
 
-                console.error(
-                    "Erro ao carregar o progresso da adição:",
-                    erro
-                );
+function mostrarResultadoAdicao(texto) {
 
-                return [];
+    document.getElementById("resultado").textContent = texto;
+
+}
+
+
+// Bloquear ou liberar os botões de uma questão.
+
+function bloquearBotoesAdicao(numero, bloquear) {
+
+    const questao = document.querySelector(
+        '.questao[data-numero="' + numero + '"]'
+    );
+
+    if (!questao) return;
+
+    questao.querySelectorAll("button").forEach(function(botao) {
+
+        botao.disabled = bloquear;
+
+        if (bloquear) {
+            botao.classList.add("resposta-bloqueada");
+        }
+
+    });
+
+}
+
+
+// Aplicar uma tentativa já registrada no banco.
+
+function aplicarTentativaAdicao(numero, tentativa) {
+
+    if (questoesRespondidasAdicao.includes(numero)) {
+        return;
+    }
+
+    questoesRespondidasAdicao.push(numero);
+
+    bloquearBotoesAdicao(numero, true);
+
+    const questao = document.querySelector(
+        '.questao[data-numero="' + numero + '"]'
+    );
+
+    const botaoSelecionado = questao.querySelector(
+        '[data-option-id="' + tentativa.selected_option_id + '"]'
+    );
+
+    if (tentativa.is_correct) {
+
+        acertosAdicao++;
+
+    }
+
+    if (botaoSelecionado) {
+
+        botaoSelecionado.classList.add(
+            tentativa.is_correct
+                ? "resposta-correta"
+                : "resposta-errada"
+        );
+
+    }
+
+    atualizarPontuacaoAdicao();
+
+}
+
+
+// Atualizar mensagem de conclusão.
+
+function verificarConclusaoAdicao() {
+
+    if (questoesRespondidasAdicao.length !== 5) {
+        return;
+    }
+
+    if (acertosAdicao === 5) {
+
+        mostrarResultadoAdicao(
+            "Parabéns! Você acertou todas as questões!"
+        );
+
+    } else {
+
+        mostrarResultadoAdicao(
+            "Atividade concluída! Você acertou " +
+            acertosAdicao + " de 5 questões."
+        );
+
+    }
+
+}
+
+
+// Carregar XP e tentativas anteriores.
+
+async function carregarEstadoAdicao() {
+
+    try {
+
+        if (!supabaseClient) {
+            throw new Error("Conexão com o Supabase indisponível.");
+        }
+
+        const {
+            data: { user },
+            error: erroUsuario
+        } = await supabaseClient.auth.getUser();
+
+        if (erroUsuario || !user) {
+            throw new Error("Sessão não autenticada.");
+        }
+
+        const [resultadoXP, resultadoTentativas] = await Promise.all([
+
+            supabaseClient
+                .from("user_progress")
+                .select("total_xp")
+                .eq("user_id", user.id)
+                .maybeSingle(),
+
+            supabaseClient
+                .from("user_question_attempts")
+                .select("question_id, selected_option_id, is_correct")
+                .eq("user_id", user.id)
+                .eq("activity_type", "adicao")
+
+        ]);
+
+        if (resultadoXP.error) {
+            throw resultadoXP.error;
+        }
+
+        if (resultadoTentativas.error) {
+            throw resultadoTentativas.error;
+        }
+
+        xpTotalAdicao = Number(
+            resultadoXP.data?.total_xp || 0
+        );
+
+        resultadoTentativas.data.forEach(function(tentativa) {
+
+            const numero = Number(tentativa.question_id);
+
+            if (
+                Number.isInteger(numero) &&
+                numero >= 1 &&
+                numero <= 5
+            ) {
+
+                aplicarTentativaAdicao(numero, tentativa);
+
+            }
+
+        });
+
+        atualizarPontuacaoAdicao();
+        atualizarXPAdicao();
+
+        for (let numero = 1; numero <= 5; numero++) {
+
+            if (!questoesRespondidasAdicao.includes(numero)) {
+
+                bloquearBotoesAdicao(numero, false);
 
             }
 
         }
 
+        carregamentoAdicaoConcluido = true;
 
-        // Atualizar pontuação.
+        if (questoesRespondidasAdicao.length > 0) {
 
-        function atualizarPontuacaoAdicao() {
-
-            const pontuacao = document.getElementById("pontuacao");
-
-            pontuacao.textContent =
-                "Pontuação: " + acertosAdicao + "/5";
-
-        }
-
-
-        // Atualizar XP exibido.
-
-        function atualizarXPAdicao() {
-
-            document.getElementById("xpTotalAdicao").textContent =
-                obterXP();
-
-        }
-
-
-        // Exibir resultado.
-
-        function mostrarResultadoAdicao(texto) {
-
-            document.getElementById("resultado").textContent = texto;
-
-        }
-
-
-        // Responder questão.
-
-        function responderQuestaoAdicao(numero, correta, botao) {
-
-            if (questoesRespondidasAdicao.includes(numero)) {
-
-                return;
-
-            }
-
-
-            questoesRespondidasAdicao.push(numero);
-
-
-            const questao = document.querySelector(
-                '.questao[data-numero="' + numero + '"]'
+            mostrarResultadoAdicao(
+                "Seu progresso anterior foi carregado."
             );
 
-
-            const botoes = questao.querySelectorAll("button");
-
-
-            botoes.forEach(function(item) {
-
-                item.disabled = true;
-
-                item.classList.add("resposta-bloqueada");
-
-            });
-
-
-            if (typeof registrarEstudoHoje === "function") {
-
-                registrarEstudoHoje();
-
-            }
-
-
-            if (correta) {
-
-                acertosAdicao++;
-
-                botao.classList.add("resposta-correta");
-
-
-                const questoesComXP = obterQuestoesComXPAdicao();
-
-                const identificador = String(numero);
-
-
-                if (!questoesComXP.includes(identificador)) {
-
-                    questoesComXP.push(identificador);
-
-                    localStorage.setItem(
-                        CHAVE_XP_ADICAO,
-                        JSON.stringify(questoesComXP)
-                    );
-
-                    adicionarXP(10);
-
-                    xpGanhoAdicao += 10;
-
-                    mostrarResultadoAdicao(
-                        "Resposta correta! Você ganhou 10 XP."
-                    );
-
-                } else {
-
-                    mostrarResultadoAdicao(
-                        "Resposta correta! Você já recebeu XP por esta questão."
-                    );
-
-                }
-
-            } else {
-
-                botao.classList.add("resposta-errada");
-
-                mostrarResultadoAdicao(
-                    "Resposta incorreta. Continue estudando!"
-                );
-
-            }
-
-
-            atualizarPontuacaoAdicao();
-
-            atualizarXPAdicao();
-
-
-            if (questoesRespondidasAdicao.length === 5) {
-
-                if (acertosAdicao === 5) {
-
-                    mostrarResultadoAdicao(
-                        "Parabéns! Você acertou todas as questões!"
-                    );
-
-                } else {
-
-                    mostrarResultadoAdicao(
-                        "Atividade concluída! Você acertou " +
-                        acertosAdicao + " de 5 questões."
-                    );
-
-                }
-
-            }
-
         }
 
+        verificarConclusaoAdicao();
 
-        // Mostrar XP atual ao abrir a página.
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar progresso da adição:",
+            erro
+        );
+
+        mostrarResultadoAdicao(
+            "Não foi possível carregar seu progresso. Atualize a página e tente novamente."
+        );
+
+    }
+
+}
+
+
+// Responder questão usando o Supabase.
+
+async function responderQuestaoAdicao(numero, optionId, botao) {
+
+    if (
+        !carregamentoAdicaoConcluido ||
+        questoesRespondidasAdicao.includes(numero)
+    ) {
+        return;
+    }
+
+    const questao = document.querySelector(
+        '.questao[data-numero="' + numero + '"]'
+    );
+
+    if (!questao) return;
+
+    bloquearBotoesAdicao(numero, true);
+
+    mostrarResultadoAdicao("Registrando sua resposta...");
+
+    try {
+
+        const { data, error } = await supabaseClient.rpc(
+            "submit_operation_answer",
+            {
+                p_activity_type: "adicao",
+                p_question_id: String(numero),
+                p_option_id: optionId
+            }
+        );
+
+        if (error) {
+            throw error;
+        }
+
+        if (!data) {
+            throw new Error("O banco não retornou um resultado.");
+        }
+
+        xpTotalAdicao = Number(data.total_xp || 0);
 
         atualizarXPAdicao();
 
+        if (data.already_answered) {
 
-        // Atualizar ícones.
+            const { data: tentativa, error: erroTentativa } =
+                await supabaseClient
+                    .from("user_question_attempts")
+                    .select("question_id, selected_option_id, is_correct")
+                    .eq("activity_type", "adicao")
+                    .eq("question_id", String(numero))
+                    .maybeSingle();
 
-        lucide.createIcons();
+            if (erroTentativa) {
+                throw erroTentativa;
+            }
+
+            if (tentativa) {
+
+                aplicarTentativaAdicao(numero, tentativa);
+
+            } else {
+
+                questoesRespondidasAdicao.push(numero);
+
+            }
+
+            mostrarResultadoAdicao(
+                "Esta questão já foi respondida anteriormente."
+            );
+
+            verificarConclusaoAdicao();
+
+            return;
+        }
+
+        const tentativaAtual = {
+            selected_option_id: optionId,
+            is_correct: data.correct
+        };
+
+        aplicarTentativaAdicao(numero, tentativaAtual);
+
+        if (data.correct) {
+
+            mostrarResultadoAdicao(
+                "Resposta correta! Você ganhou " +
+                data.xp_awarded + " XP."
+            );
+
+        } else {
+
+            mostrarResultadoAdicao(
+                "Resposta incorreta. Continue estudando!"
+            );
+
+        }
+
+        verificarConclusaoAdicao();
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao registrar resposta da adição:",
+            erro
+        );
+
+        bloquearBotoesAdicao(numero, false);
+
+        mostrarResultadoAdicao(
+            "Não foi possível registrar sua resposta. Tente novamente."
+        );
+
+    }
+
+}
+
+
+// Inicializar a página.
+
+carregarEstadoAdicao();
+
+
+// Atualizar ícones.
+
+lucide.createIcons();
 
     </script>
 
