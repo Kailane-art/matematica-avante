@@ -3097,3 +3097,55 @@ html.verificando-sessao:has(body.modo-escuro)::before {
     background: #0b1d3a;
     color: #e5e7eb;
 } 
+
+
+/* =====================================================
+   AÇÕES — PÁGINA DE PROFESSORES
+   ===================================================== */
+
+.acoes-professores {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 0 auto 42px;
+}
+
+.botao-acao-professores {
+    min-height: 48px;
+    padding: 13px 22px;
+    border: none;
+    border-radius: 12px;
+    background: #4169E1;
+    color: white;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(30, 58, 138, 0.16);
+    transition: 0.25s;
+}
+
+.botao-acao-professores:hover {
+    background: #294ec5;
+    transform: translateY(-2px);
+    box-shadow: 0 9px 20px rgba(30, 58, 138, 0.22);
+}
+
+.botao-acao-professores:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+    .acoes-professores {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 11px;
+        margin-bottom: 35px;
+    }
+
+    .botao-acao-professores {
+        width: 100%;
+    }
+}
