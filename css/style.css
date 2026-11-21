@@ -3076,3 +3076,424 @@ header svg {
         width: 100%;
     }
     }
+// =====================================================
+// EDIÇÃO DO PERFIL - SUPABASE
+// =====================================================
+
+const botaoEditarPerfil =
+    document.getElementById("botaoEditarPerfil");
+
+const modalEditarPerfil =
+    document.getElementById("modalEditarPerfil");
+
+const fecharModalEditarPerfil =
+    document.getElementById("fecharModalEditarPerfil");
+
+const formEditarPerfil =
+    document.getElementById("formEditarPerfil");
+
+const mensagemEditarPerfil =
+    document.getElementById("mensagemEditarPerfil");
+
+const campoEditarNome =
+    document.getElementById("editarNome");
+
+const campoEditarUsername =
+    document.getElementById("editarUsername");
+
+const campoEditarBio =
+    document.getElementById("editarBio");
+
+const campoEditarLink =
+    document.getElementById("editarLink");
+
+const botaoSalvarPerfil =
+    document.getElementById("salvarPerfil");
+
+
+// Mostrar mensagens no modal
+
+function mostrarMensagemEditarPerfil(
+    mensagem,
+    erro = false
+) {
+
+    mensagemEditarPerfil.textContent =
+        mensagem;
+
+    mensagemEditarPerfil.style.color =
+        erro ? "#dc2626" : "#16a34a";
+
+}
+
+
+// Abrir modal e carregar dados do banco
+
+async function abrirModalEditarPerfil() {
+
+    modalEditarPerfil.hidden = false;
+
+    formEditarPerfil.reset();
+
+    mostrarMensagemEditarPerfil(
+        "Carregando seus dados..."
+    );
+
+    botaoSalvarPerfil.disabled = true;
+
+    try {
+
+        if (!supabaseClient) {
+            throw new Error(
+                "A conexão com o banco não está disponível."
+            );
+        }
+
+        const {
+            data: { user },
+            error: erroUsuario
+        } = await supabaseClient.auth.getUser();
+
+        if (erroUsuario || !user) {
+            throw new Error(
+                "Sua sessão expirou. Faça login novamente."
+            );
+        }
+
+        const { data, error } = await supabaseClient
+            .from("profiles")
+            .select(
+                "display_name, username, bio, link, username_changed_at"
+            )
+            .eq("id", user.id)
+            .single();
+
+        if (error || !data) {
+            throw new Error(
+                "Não foi possível carregar seu perfil."
+            );
+        }
+
+        campoEditarNome.value =
+            data.display_name || "";
+
+        campoEditarUsername.value =
+            data.username || "";
+
+        campoEditarBio.value =
+            data.bio || "";
+
+        campoEditarLink.value =
+            data.link || "";
+
+        mostrarMensagemEditarPerfil("");
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar perfil:",
+            erro
+        );
+
+        mostrarMensagemEditarPerfil(
+            erro.message,
+            true
+        );
+
+    } finally {
+
+        botaoSalvarPerfil.disabled = false;
+
+    }
+
+}
+
+
+// Fechar modal
+
+function fecharModalPerfil() {
+
+    modalEditarPerfil.hidden = true;
+
+    formEditarPerfil.reset();
+
+    mostrarMensagemEditarPerfil("");
+
+}
+
+
+if (botaoEditarPerfil && modalEditarPerfil) {
+
+    botaoEditarPerfil.addEventListener(
+        "click",
+        abrirModalEditarPerfil
+    );
+
+}
+
+
+if (fecharModalEditarPerfil) {
+
+    fecharModalEditarPerfil.addEventListener(
+        "click",
+        fecharModalPerfil
+    );
+
+}
+
+
+// Fechar clicando fora da janela
+
+if (modalEditarPerfil) {
+
+    modalEditarPerfil.addEventListener(
+        "click",
+        function(evento) {
+
+            if (evento.target === modalEditarPerfil) {
+                fecharModalPerfil();
+            }
+
+        }
+    );
+
+}
+
+
+// Fechar usando a tecla ESC
+
+document.addEventListener(
+    "keydown",
+    function(evento) {
+
+        if (
+            evento.key === "Escape" &&
+            modalEditarPerfil &&
+            !modalEditarPerfil.hidden
+        ) {
+
+            fecharModalPerfil();
+
+        }
+
+    }
+);
+
+
+// Salvar alterações no Supabase
+
+if (formEditarPerfil) {
+
+    formEditarPerfil.addEventListener(
+        "submit",
+        async function(evento) {
+
+            evento.preventDefault();
+
+            const nome =
+                campoEditarNome.value.trim();
+
+            const username =
+                campoEditarUsername.value
+                    .trim()
+                    .toLowerCase();
+
+            const bio =
+                campoEditarBio.value.trim();
+
+            const link =
+                campoEditarLink.value.trim();
+
+
+            if (!nome || nome.length > 50) {
+
+                mostrarMensagemEditarPerfil(
+                    "O nome deve ter entre 1 e 50 caracteres.",
+                    true
+                );
+
+                return;
+
+            }
+
+
+            if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+
+                mostrarMensagemEditarPerfil(
+                    "O nome de usuário deve ter de 3 a 20 caracteres, usando apenas letras, números ou _.",
+                    true
+                );
+
+                return;
+
+            }
+
+
+            if (bio.length > 150) {
+
+                mostrarMensagemEditarPerfil(
+                    "A bio pode ter no máximo 150 caracteres.",
+                    true
+                );
+
+                return;
+
+            }
+
+
+            if (
+                link &&
+                !/^https?:\/\/.+/i.test(link)
+            ) {
+
+                mostrarMensagemEditarPerfil(
+                    "Informe um link válido começando com https:// ou http://.",
+                    true
+                );
+
+                return;
+
+            }
+
+
+            botaoSalvarPerfil.disabled = true;
+
+            mostrarMensagemEditarPerfil(
+                "Salvando alterações..."
+            );
+
+
+            try {
+
+                const {
+                    data: { user },
+                    error: erroUsuario
+                } = await supabaseClient.auth.getUser();
+
+                if (erroUsuario || !user) {
+                    throw new Error(
+                        "Sua sessão expirou. Faça login novamente."
+                    );
+                }
+
+
+                const { data: perfilAtual, error: erroPerfil } =
+                    await supabaseClient
+                        .from("profiles")
+                        .select("username")
+                        .eq("id", user.id)
+                        .single();
+
+
+                if (erroPerfil || !perfilAtual) {
+                    throw new Error(
+                        "Não foi possível verificar seu perfil atual."
+                    );
+                }
+
+
+                const alteracoes = {
+
+                    display_name: nome,
+
+                    bio: bio,
+
+                    link: link
+
+                };
+
+
+                if (username !== perfilAtual.username) {
+
+                    alteracoes.username = username;
+
+                }
+
+
+                const { error } = await supabaseClient
+                    .from("profiles")
+                    .update(alteracoes)
+                    .eq("id", user.id);
+
+
+                if (error) {
+
+                    if (
+                        error.code === "23505"
+                    ) {
+
+                        throw new Error(
+                            "Esse nome de usuário já está sendo utilizado."
+                        );
+
+                    }
+
+                    if (
+                        error.message &&
+                        error.message.toLowerCase().includes("7 dias")
+                    ) {
+
+                        throw new Error(
+                            "Você só pode alterar o nome de usuário uma vez a cada 7 dias."
+                        );
+
+                    }
+
+                    throw error;
+
+                }
+
+
+                // Atualizar dados locais de exibição
+
+                localStorage.setItem(
+                    "nomeUsuario",
+                    nome
+                );
+
+
+                const elementoNome =
+                    document.getElementById("nomeUsuario");
+
+                if (elementoNome) {
+
+                    elementoNome.textContent =
+                        nome;
+
+                }
+
+
+                mostrarMensagemEditarPerfil(
+                    "Perfil atualizado com sucesso!"
+                );
+
+
+                setTimeout(
+                    fecharModalPerfil,
+                    1200
+                );
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao salvar perfil:",
+                    erro
+                );
+
+                mostrarMensagemEditarPerfil(
+                    erro.message ||
+                    "Não foi possível salvar as alterações.",
+                    true
+                );
+
+            } finally {
+
+                botaoSalvarPerfil.disabled = false;
+
+            }
+
+        }
+    );
+
+}
