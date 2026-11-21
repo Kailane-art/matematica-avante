@@ -791,3 +791,346 @@ body.pagina-premium {
         padding: 28px 15px;
     }
   }
+
+/* ========================================
+   NOVA IDENTIDADE PREMIUM
+   Cristal azul + detalhes em ouro âmbar
+======================================== */
+
+:root {
+    --ouro: #f0b94e;
+    --ouro-claro: #ffdc83;
+    --ouro-escuro: #c87928;
+    --creme: #dcecff;
+    --texto: #edf5ff;
+    --texto-suave: #b6cbe5;
+    --borda: rgba(133, 183, 235, 0.24);
+    --branco: #ffffff;
+}
+
+/* FUNDO PRINCIPAL */
+
+body.pagina-premium {
+    background:
+        radial-gradient(ellipse at 15% 8%, rgba(65, 137, 220, 0.22), transparent 38%),
+        radial-gradient(ellipse at 85% 45%, rgba(65, 190, 230, 0.10), transparent 35%),
+        linear-gradient(145deg, #061329, #0a2144 48%, #102f59);
+    color: #edf5ff;
+}
+
+/* CABEÇALHO */
+
+.cabecalho-premium {
+    background: rgba(5, 19, 42, 0.86);
+    border-bottom: 1px solid rgba(126, 180, 238, 0.2);
+}
+
+.marca-premium {
+    color: #f1f7ff;
+}
+
+.marca-premium small {
+    color: #f2bd59;
+}
+
+.marca-icone {
+    background: linear-gradient(135deg, #8bd8ff, #2869c5 55%, #12366d);
+    color: #ffffff;
+    box-shadow: 0 0 22px rgba(75, 157, 239, 0.25);
+}
+
+.voltar-site {
+    color: #c5d9f1 !important;
+}
+
+.voltar-site:hover {
+    color: #ffd078 !important;
+}
+
+/* APRESENTAÇÃO */
+
+.hero-conteudo h1 {
+    color: #f1f7ff;
+}
+
+.hero-conteudo p {
+    color: #bdcfe6;
+}
+
+.etiqueta-premium {
+    color: #f4c66f;
+}
+
+.hero-destaque {
+    border: 1px solid rgba(173, 218, 255, 0.55);
+    background:
+        radial-gradient(circle at 25% 15%, rgba(189, 235, 255, 0.45), transparent 35%),
+        linear-gradient(145deg, #75c9f1, #246ac2 48%, #102d68);
+    box-shadow:
+        0 22px 55px rgba(0, 0, 0, 0.28),
+        inset 0 0 35px rgba(210, 240, 255, 0.12);
+}
+
+.simbolo-premium {
+    border-color: rgba(255, 255, 255, 0.65);
+    background: linear-gradient(145deg, rgba(255,255,255,0.35), rgba(255,255,255,0.08));
+    box-shadow: 0 0 30px rgba(177, 230, 255, 0.2);
+}
+
+/* BOTÕES COM BORDA DOURADA GRADIENTE */
+
+.botao-dourado {
+    border: 2px solid transparent;
+    background:
+        linear-gradient(135deg, #123765, #0a2347) padding-box,
+        linear-gradient(120deg, #ffe18a, #d97724, #f8c45e, #fff0b4) border-box;
+    color: #ffffff !important;
+    box-shadow: 0 7px 22px rgba(0, 0, 0, 0.2);
+}
+
+.botao-dourado:hover {
+    background:
+        linear-gradient(135deg, #1b4c83, #10315c) padding-box,
+        linear-gradient(120deg, #fff0b4, #ed963b, #ffda75) border-box;
+    box-shadow: 0 0 25px rgba(231, 169, 69, 0.2);
+}
+
+/* TÍTULOS DAS SEÇÕES */
+
+.titulo-secao h2 {
+    color: #edf5ff;
+}
+
+.titulo-secao p {
+    color: #b6cbe5;
+}
+
+.titulo-secao > span {
+    color: #f2c36b;
+}
+
+/* CARTÕES DE PLANOS */
+
+.card-plano {
+    border: 1px solid rgba(125, 177, 232, 0.25);
+    background: linear-gradient(145deg, #142f53, #0c2342);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.plano-destaque {
+    border: 2px solid transparent;
+    background:
+        linear-gradient(145deg, #194477, #102b50) padding-box,
+        linear-gradient(135deg, #ffe18a, #d97724, #f6c65f) border-box;
+    box-shadow:
+        0 16px 40px rgba(0, 0, 0, 0.25),
+        0 0 25px rgba(75, 145, 220, 0.12);
+}
+
+.plano-identificacao h3 {
+    color: #f1f7ff;
+}
+
+.plano-icone {
+    background: linear-gradient(145deg, #254e7e, #15345d);
+    color: #9edbff;
+}
+
+.descricao-plano {
+    color: #b6cbe5;
+}
+
+.preco-plano strong {
+    color: #ffffff;
+}
+
+.preco-plano span,
+.preco-anual {
+    color: #b6cbe5;
+}
+
+.lista-beneficios {
+    border-top-color: rgba(145, 187, 230, 0.2);
+}
+
+.lista-beneficios li {
+    color: #d6e5f7;
+}
+
+.lista-beneficios svg {
+    color: #f3c46b;
+}
+
+.selo-plano {
+    background: linear-gradient(120deg, #f5d58a, #d9943b);
+    color: #38240d;
+}
+
+/* BOTÃO DO PLANO GRATUITO */
+
+.botao-plano-gratuito {
+    border: 1px solid rgba(147, 193, 239, 0.35);
+    background: linear-gradient(135deg, #1d4775, #12345d);
+    color: #edf5ff !important;
+}
+
+.botao-plano-gratuito:hover {
+    background: linear-gradient(135deg, #285c91, #194477);
+}
+
+/* BOTÃO PREMIUM */
+
+.botao-assinar-premium {
+    border: 2px solid transparent;
+    background:
+        linear-gradient(135deg, #173e6b, #102b4e) padding-box,
+        linear-gradient(120deg, #ffe18a, #d97724, #f8c45e) border-box;
+    color: #ffffff !important;
+}
+
+.aviso-assinatura {
+    color: #b6cbe5;
+}
+
+/* CARTÕES DE BENEFÍCIOS */
+
+.card-beneficio,
+.card-personalizacao {
+    border-color: rgba(125, 177, 232, 0.24);
+    background: linear-gradient(145deg, #142f53, #0c2342);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+}
+
+.card-beneficio:hover,
+.card-personalizacao:hover {
+    box-shadow: 0 15px 32px rgba(0, 0, 0, 0.24);
+}
+
+.icone-beneficio {
+    background: linear-gradient(145deg, #285c91, #15345d);
+    color: #a9e3ff;
+}
+
+.card-beneficio h3,
+.card-personalizacao h3 {
+    color: #f1f7ff;
+}
+
+.card-beneficio p,
+.card-personalizacao p {
+    color: #b6cbe5;
+}
+
+/* NÍVEIS 4 E 5 */
+
+.conteudo-niveis {
+    border: 1px solid rgba(130, 190, 240, 0.35);
+    background:
+        radial-gradient(circle at top right, rgba(100, 190, 255, 0.13), transparent 45%),
+        linear-gradient(135deg, #143b69, #0b2343);
+}
+
+.conteudo-niveis > p {
+    color: #c2d7ef;
+}
+
+.card-nivel {
+    border: 1px solid rgba(239, 190, 98, 0.45);
+    background: linear-gradient(145deg, #194477, #102b50);
+}
+
+.card-nivel h3 {
+    color: #ffd47b;
+}
+
+.card-nivel p {
+    color: #c5d9f1;
+}
+
+/* TABELA DE COMPARAÇÃO */
+
+.tabela-container {
+    border-color: rgba(125, 177, 232, 0.25);
+    background: #102947;
+}
+
+.tabela-planos th,
+.tabela-planos td {
+    border-bottom-color: rgba(145, 187, 230, 0.17);
+    color: #d8e7f8;
+}
+
+.tabela-planos th {
+    background: #1b416c;
+    color: #ffdc91;
+}
+
+.tabela-planos tr:last-child td {
+    border-bottom: 0;
+}
+
+/* PERGUNTAS FREQUENTES */
+
+.item-faq {
+    border-color: rgba(125, 177, 232, 0.24);
+    background: linear-gradient(145deg, #142f53, #0c2342);
+}
+
+.item-faq summary {
+    color: #edf5ff;
+}
+
+.item-faq summary svg {
+    color: #f2c36b;
+}
+
+.item-faq p {
+    color: #b6cbe5;
+}
+
+/* CHAMADA FINAL */
+
+.chamada-premium {
+    border: 1px solid transparent;
+    background:
+        linear-gradient(135deg, #1b4c83, #102c55 55%, #174b79) padding-box,
+        linear-gradient(120deg, #ffe18a, #d97724, #f8c45e) border-box;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+    color: #f1f7ff;
+}
+
+.icone-chamada {
+    background: rgba(180, 224, 255, 0.18);
+    color: #ffda82;
+}
+
+.chamada-premium p {
+    color: #c5d9f1;
+}
+
+.chamada-premium .botao-dourado {
+    background:
+        linear-gradient(135deg, #102b50, #173e6b) padding-box,
+        linear-gradient(120deg, #ffe18a, #d97724, #f8c45e) border-box;
+    color: #ffffff !important;
+}
+
+/* RODAPÉ */
+
+.rodape-premium {
+    border-top-color: rgba(125, 177, 232, 0.2);
+    background: rgba(5, 19, 42, 0.9);
+}
+
+.rodape-premium strong {
+    color: #eaf4ff;
+}
+
+.rodape-premium span,
+.rodape-premium a {
+    color: #b6cbe5;
+}
+
+.rodape-premium a:hover {
+    color: #ffd078;
+}
