@@ -394,26 +394,69 @@ if(mensagemInicio && nomeUsuario){
 
 
 const avatarInicio = document.getElementById("avatarInicio");
-
-const fotoSalva = localStorage.getItem("fotoPerfil");
-
-
-
-if(avatarInicio && fotoSalva){
-
-
-    avatarInicio.src = fotoSalva;
-
-
-}
 const avatarPadrao = document.getElementById("avatarPadrao");
 
+// A foto agora é carregada do Storage, vinculada à conta do usuário.
+async function carregarAvatarInicio() {
 
-if(fotoSalva && avatarPadrao){
+    if (!supabaseClient || !avatarInicio) {
+        return;
+    }
 
-    avatarPadrao.style.display = "none";
+    try {
 
-} 
+        const {
+            data: { user },
+            error: erroUsuario
+        } = await supabaseClient.auth.getUser();
+
+        if (erroUsuario || !user) {
+            return;
+        }
+
+        const { data: perfil, error } = await supabaseClient
+            .from("profiles")
+            .select("avatar_path")
+            .eq("id", user.id)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        if (!perfil || !perfil.avatar_path) {
+            return;
+        }
+
+        const { data } = supabaseClient
+            .storage
+            .from("avatars")
+            .getPublicUrl(perfil.avatar_path);
+
+        avatarInicio.onload = function() {
+            if (avatarPadrao) {
+                avatarPadrao.style.display = "none";
+            }
+        };
+
+        avatarInicio.onerror = function() {
+            avatarInicio.src = "";
+            if (avatarPadrao) {
+                avatarPadrao.style.display = "";
+            }
+        };
+
+        avatarInicio.src = data.publicUrl + "?v=" + Date.now();
+
+    } catch (erro) {
+
+        console.error("Não foi possível carregar a foto na página inicial:", erro);
+
+    }
+
+}
+
+carregarAvatarInicio();
 
 
 </script>
