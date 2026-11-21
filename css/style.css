@@ -3473,11 +3473,26 @@ html.verificando-sessao:has(body.modo-escuro)::before {
 }
 
 /* Identidade do usuário no perfil */
+.identidade #nomeUsuario {
+    display: block !important;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.identidade #nomeUsuarioTexto,
 .identidade .username-perfil {
-    display: block;
-    margin-top: 2px;
+    display: block !important;
+}
+
+.identidade #nomeUsuarioTexto {
+    line-height: 1.2;
+}
+
+.identidade .username-perfil {
+    margin-top: 1px;
     font-size: 13px;
     font-weight: 400;
+    line-height: 1.2;
     opacity: 0.55;
     letter-spacing: 0.2px;
 }
