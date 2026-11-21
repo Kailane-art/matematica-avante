@@ -248,10 +248,11 @@ if (paginasProtegidas.has(paginaAtual)) {
             const { data: { user }, error } =
                 await supabaseClient.auth.getUser();
 
-            if (error || !user) {
-                window.location.replace("index.html");
-            }
-
+      if (error || !user) {
+    window.location.replace("index.html");
+} else {
+    document.documentElement.classList.remove("verificando-sessao");
+}
         } catch (erro) {
 
             console.error("Erro ao verificar sessão:", erro);
