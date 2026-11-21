@@ -308,10 +308,8 @@ body.pagina-premium {
 
 .plano-destaque {
     border: 2px solid transparent;
-    background:
-        linear-gradient(145deg, #194477, #102b50) padding-box,
-        linear-gradient(135deg, #ffe18a, #d97724, #f6c65f) border-box;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25), 0 0 25px rgba(75, 145, 220, 0.12);
+  background: #194477;
+   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25), 0 0 25px rgba(75, 145, 220, 0.12);
 }
 
 .plano-identificacao {
