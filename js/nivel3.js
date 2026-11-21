@@ -331,7 +331,7 @@ const questoesNivel3 = {
                     "texto": "12"
                 },
                 {
-                    "texto": "12"
+                    "texto": "10"
                 },
                 {
                     "texto": "16"
@@ -370,7 +370,7 @@ const questoesNivel3 = {
                     "texto": "276"
                 },
                 {
-                    "texto": "300"
+                    "texto": "288"
                 },
                 {
                     "texto": "312"
@@ -844,7 +844,7 @@ const questoesNivel3 = {
                     "texto": "f(x)=x²−8x+12"
                 },
                 {
-                    "texto": "f(x)=−2x²+16x−24"
+                    "texto": "f(x)=−x²+8x−12"
                 },
                 {
                     "texto": "f(x)=2x²−8x+24"
@@ -1101,7 +1101,7 @@ const questoesNivel3 = {
                     "texto": "6"
                 },
                 {
-                    "texto": "8"
+                    "texto": "9"
                 }
             ],
             "explicacao": "(x+y)²=34+30=64, logo |x+y|=8."
