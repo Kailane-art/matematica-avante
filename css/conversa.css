@@ -117,3 +117,73 @@
 }
 .modo-escuro .conversa-menu-mensagem button:hover { background:#214d78; }
 .modo-escuro .conversa-menu-mensagem button.perigosa { color:#fda4af; }
+
+/* CARTÃO DE SOLICITAÇÃO PARA PROFESSOR */
+.conversa-mensagem-solicitacao {
+    max-width:min(92%,680px);
+    padding:14px;
+    padding-right:14px;
+    border-color:#bfd2f3;
+    background:#f8fbff;
+}
+.conversa-mensagem-solicitacao .conversa-texto {
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    line-height:1.55;
+}
+.conversa-acoes-solicitacao {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:12px;
+    padding-top:11px;
+    border-top:1px solid #d7e3f5;
+    color:#64748b;
+    font-size:12px;
+}
+.conversa-botoes-decisao {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+.conversa-decisao-botao {
+    min-height:36px;
+    padding:8px 13px;
+    border:0;
+    border-radius:9px;
+    color:#fff;
+    font:inherit;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+.conversa-decisao-botao.aprovar { background:#15803d; }
+.conversa-decisao-botao.reprovar { background:#dc2626; }
+.conversa-decisao-botao.analise { background:#b7791f; }
+.conversa-decisao-botao:disabled {
+    opacity:.55;
+    cursor:wait;
+}
+.conversa-status-solicitacao {
+    display:block;
+    font-size:12px;
+    font-weight:800;
+}
+.conversa-status-solicitacao.em-analise { color:#a16207; }
+.conversa-status-solicitacao.finalizada { color:#166534; }
+.modo-escuro .conversa-mensagem-solicitacao {
+    background:#13294b;
+    border-color:#365985;
+}
+.modo-escuro .conversa-acoes-solicitacao {
+    border-color:#365985;
+    color:#cbd5e1;
+}
+.modo-escuro .conversa-status-solicitacao.em-analise { color:#facc15; }
+.modo-escuro .conversa-status-solicitacao.finalizada { color:#86efac; }
+@media(max-width:520px) {
+    .conversa-mensagem-solicitacao { max-width:96%; }
+    .conversa-botoes-decisao { gap:6px; }
+    .conversa-decisao-botao { flex:1 1 auto; }
+}
+
