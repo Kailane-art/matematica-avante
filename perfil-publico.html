@@ -209,6 +209,9 @@ async function configurarBotaoAmizade(idPerfil) {
 
                     await configurarBotaoAmizade(idPerfil);
                     mensagem.textContent = "Solicitação de amizade enviada!";
+                    if (window.maPushNotifications) {
+                        window.maPushNotifications.enviarEvento("friend_request", { recipient_id: idPerfil });
+                    }
                 };
             }
         }
