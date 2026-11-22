@@ -79,16 +79,26 @@
     }
 
     async function desvincularDispositivo() {
-        if (!suportado || !cliente()) return true;
-        const user = await usuarioAtual();
+        if (!suportado) return true;
+        let user = null;
+        try {
+            if (cliente()) user = await usuarioAtual();
+        } catch (e) {
+            console.warn("Sessão indisponível durante a limpeza da inscrição push:", e);
+        }
+
         const registro = await navigator.serviceWorker.getRegistration("service-worker.js");
         const inscricao = registro ? await registro.pushManager.getSubscription() : null;
         if (!inscricao) return true;
-        const { error } = await supabaseClient.rpc("unregister_push_subscription", {
-            p_endpoint: inscricao.endpoint
-        });
+
+        if (user) {
+            const { error } = await supabaseClient.rpc("unregister_push_subscription", {
+                p_endpoint: inscricao.endpoint
+            });
+            if (error) console.warn("Não foi possível remover a inscrição do banco ao sair:", error);
+        }
+
         await inscricao.unsubscribe();
-        if (error) console.warn("Não foi possível remover a inscrição do banco ao sair:", error);
         return true;
     }
 
