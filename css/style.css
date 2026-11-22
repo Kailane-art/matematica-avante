@@ -3871,3 +3871,10 @@ body.pagina-perfil-publico .card-perfil.identidade {
     color: #FFD54F !important;
 }
 
+
+
+/* PERFIL PÚBLICO — PEQUENO ESPAÇAMENTO ENTRE AS INFORMAÇÕES */
+body.pagina-perfil-publico .identidade > p {
+    margin: 3px 0;
+    line-height: 1.35;
+}
