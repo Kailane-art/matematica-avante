@@ -3713,3 +3713,19 @@ html.verificando-sessao:has(body.modo-escuro)::before {
 .modo-escuro .acoes-perfil-publico p {
     color: #cbd5e1;
 }
+
+
+/* PERFIL PÚBLICO — RESPEITAR O ATRIBUTO HIDDEN DO AVATAR */
+body.pagina-perfil-publico #fotoPerfilPublico[hidden],
+body.pagina-perfil-publico #iconeAvatarPublico[hidden] {
+    display: none !important;
+}
+
+body.pagina-perfil-publico #fotoPerfilPublico:not([hidden]) {
+    display: block;
+    flex: 0 0 100%;
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
