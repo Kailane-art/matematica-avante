@@ -11,6 +11,7 @@
     const botaoEnviar = document.getElementById("enviarMensagem");
     let usuarioAtual = null;
     let conversaId = null;
+    let contatoId = null;
     let canalMensagens = null;
     const mensagensRenderizadas = new Set();
 
@@ -51,11 +52,10 @@
     }
 
     async function carregarMensagens() {
-        const { data, error } = await supabaseClient
-            .from("messages")
-            .select("id, conversation_id, sender_id, body, created_at")
-            .eq("conversation_id", conversaId)
-            .order("created_at", { ascending: true });
+        const { data, error } = await supabaseClient.rpc(
+            "get_conversation_messages",
+            { p_contact_id: contatoId }
+        );
 
         if (error) throw error;
         lista.replaceChildren();
@@ -98,19 +98,16 @@
         const amizade = (contatos || []).find(item => item.contact_id === perfil.id && item.friendship_status === "accepted");
         if (!amizade) throw new Error("Só é possível conversar com pessoas que são suas amigas.");
 
-        const low = usuarioAtual.id < perfil.id ? usuarioAtual.id : perfil.id;
-        const high = usuarioAtual.id < perfil.id ? perfil.id : usuarioAtual.id;
-        const { data: conversa, error: conversaErro } = await supabaseClient
-            .from("conversations")
-            .select("id")
-            .eq("user_low", low)
-            .eq("user_high", high)
-            .maybeSingle();
+        contatoId = perfil.id;
+        const { data: idConversa, error: conversaErro } = await supabaseClient.rpc(
+            "get_friend_conversation_id",
+            { p_contact_id: contatoId }
+        );
 
         if (conversaErro) throw conversaErro;
-        if (!conversa) throw new Error("A conversa não está disponível. Verifique se a amizade continua ativa.");
+        if (!idConversa) throw new Error("A conversa não está disponível. Verifique se a amizade continua ativa.");
 
-        conversaId = conversa.id;
+        conversaId = idConversa;
         nomeContato.textContent = perfil.display_name || "Usuário";
         usernameContato.textContent = "@" + perfil.username;
 
@@ -145,10 +142,9 @@
         if (!body || !conversaId || !usuarioAtual || botaoEnviar.disabled) return;
 
         botaoEnviar.disabled = true;
-        const { error } = await supabaseClient.from("messages").insert({
-            conversation_id: conversaId,
-            sender_id: usuarioAtual.id,
-            body: body
+        const { error } = await supabaseClient.rpc("send_chat_message", {
+            p_contact_id: contatoId,
+            p_body: body
         });
 
         botaoEnviar.disabled = false;
