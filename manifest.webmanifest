@@ -6,5 +6,13 @@
   "display": "standalone",
   "background_color": "#f4f8ff",
   "theme_color": "#1e3a8a",
-  "lang": "pt-BR"
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }
