@@ -301,8 +301,35 @@
                 const conversa = itensPorConversa.get(mensagem.conversation_id);
 
                 if (!conversa) {
-                    // Uma primeira mensagem pode criar uma conversa que ainda não está na lista.
-                    atualizarListaConversas(amigosDaLista);
+                    // Se o amigo iniciou uma conversa, já temos o contato pelo remetente.
+                    const contatoRemetente = amigosDaLista.find(
+                        item => item.contact_id === mensagem.sender_id
+                    );
+
+                    if (contatoRemetente && mensagem.sender_id !== usuarioAtualId) {
+                        const elemento = criarItemConversa(
+                            contatoRemetente,
+                            mensagem.body,
+                            true,
+                            mensagem.conversation_id
+                        );
+
+                        itensPorConversa.set(mensagem.conversation_id, {
+                            contato: contatoRemetente,
+                            element: elemento,
+                            previa: mensagem.body,
+                            naoLida: true
+                        });
+
+                        listaConversas.prepend(elemento);
+                        listaConversas.hidden = false;
+                        estadoVazioConversas.hidden = true;
+                        atualizarIcones();
+                    } else {
+                        // Para uma mensagem enviada pelo próprio usuário em uma conversa nova,
+                        // consulta o banco para descobrir qual contato deve ser exibido.
+                        atualizarListaConversas(amigosDaLista);
+                    }
                     return;
                 }
 
