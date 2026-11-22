@@ -1,0 +1,76 @@
+.pagina-configuracoes { min-height: 100vh; background: #f4f8ff; color: #172033; }
+.config-cabecalho { gap: 12px; }
+.config-cabecalho h1 { margin: 0; }
+.config-voltar { width: 42px; height: 42px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: white; background: #0b1d3a; text-decoration: none; flex: 0 0 auto; }
+.config-voltar svg { width: 21px; height: 21px; }
+.config-container { width: min(920px, calc(100% - 32px)); margin: 32px auto 60px; }
+.config-introducao { margin-bottom: 24px; }
+.config-sobrelinha { color: #1e3a8a; font-size: 12px; font-weight: 800; letter-spacing: .12em; }
+.config-introducao h2 { margin: 8px 0; font-size: 28px; color: #172033; }
+.config-introducao p { color: #596579; line-height: 1.6; }
+.config-grupo { background: white; border: 1px solid #dce5f2; border-radius: 16px; padding: 22px; margin: 16px 0; box-shadow: 0 5px 18px rgba(20,45,80,.05); }
+.config-grupo-titulo { display: flex; align-items: flex-start; gap: 13px; padding-bottom: 16px; border-bottom: 1px solid #e8edf5; }
+.config-grupo-titulo > svg { width: 23px; height: 23px; color: #1e3a8a; margin-top: 2px; flex: 0 0 auto; }
+.config-grupo-titulo h2 { font-size: 18px; margin-bottom: 4px; color: #172033; }
+.config-grupo-titulo p { font-size: 13px; color: #68758a; }
+.config-opcao { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; }
+.config-opcao + .config-opcao { border-top: 1px solid #edf1f6; }
+.config-opcao-coluna { display: block; }
+.config-opcao-texto { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.config-opcao-texto strong { font-size: 15px; color: #1c2940; }
+.config-opcao-texto > span { font-size: 13px; color: #68758a; line-height: 1.5; }
+.config-temas { display: flex; gap: 8px; flex: 0 0 auto; }
+.config-tema { display: inline-flex; align-items: center; gap: 7px; border: 1px solid #cbd5e1; background: #f8fafc; color: #26364d; border-radius: 10px; padding: 10px 13px; cursor: pointer; font-weight: 700; }
+.config-tema svg { width: 17px; height: 17px; }
+.config-tema.ativo { border-color: #1e3a8a; background: #e8efff; color: #1e3a8a; box-shadow: inset 0 0 0 1px #1e3a8a; }
+.config-tamanhos { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 8px; margin-top: 15px; }
+.config-tamanhos button { min-height: 76px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; border: 1px solid #d5deea; border-radius: 10px; background: #f8fafc; color: #334155; cursor: pointer; }
+.config-tamanhos button span { font-weight: 800; font-size: 22px; }
+.config-tamanhos button small { font-size: 11px; text-align: center; }
+.config-tamanhos button.ativo { border: 2px solid #1e3a8a; background: #e8efff; color: #1e3a8a; }
+.config-switch { position: relative; width: 48px; height: 28px; flex: 0 0 auto; }
+.config-switch input, .config-permissao input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.config-switch > span, .config-switch-visual { position: absolute; inset: 0; border-radius: 30px; background: #aab5c4; transition: .2s; cursor: pointer; }
+.config-switch > span::before, .config-switch-visual::before { content: ""; position: absolute; width: 20px; height: 20px; left: 4px; top: 4px; border-radius: 50%; background: white; transition: .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.config-switch input:checked + span, .config-permissao input:checked + .config-switch-visual { background: #1e3a8a; }
+.config-switch input:checked + span::before, .config-permissao input:checked + .config-switch-visual::before { transform: translateX(20px); }
+.config-switch input:focus-visible + span, .config-permissao input:focus-visible + .config-switch-visual { outline: 3px solid #93c5fd; outline-offset: 3px; }
+.config-permissoes { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-top: 15px; }
+.config-permissao { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 74px; padding: 12px; border: 1px solid #dce5f2; border-radius: 12px; cursor: pointer; }
+.config-permissao > span:first-child { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.config-permissao > span:first-child > svg { width: 21px; height: 21px; color: #1e3a8a; flex: 0 0 auto; }
+.config-permissao strong, .config-permissao small { display: block; }
+.config-permissao strong { color: #26364d; font-size: 13px; }
+.config-permissao small { color: #748094; font-size: 11px; margin-top: 3px; }
+.config-permissao .config-switch-visual { position: relative; inset: auto; width: 40px; height: 24px; flex: 0 0 auto; }
+.config-permissao .config-switch-visual::before { width: 16px; height: 16px; left: 4px; top: 4px; }
+.config-permissao input:checked + .config-switch-visual::before { transform: translateX(16px); }
+#configIdioma { min-width: 190px; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 9px; background: #fff; color: #26364d; }
+.config-botao-secundario { display: inline-flex; align-items: center; gap: 8px; border: 1px solid #cbd5e1; background: #f8fafc; color: #334155; border-radius: 9px; padding: 10px 13px; cursor: pointer; font-weight: 700; }
+.config-botao-secundario svg { width: 17px; height: 17px; }
+.config-botao-secundario:disabled { opacity: .6; cursor: wait; }
+.config-status { min-height: 24px; margin: 14px 4px; color: #526176; font-size: 13px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.pagina-configuracoes.modo-escuro { background: #0b1d3a; color: #f8fafc; }
+.modo-escuro .config-grupo { background: #13294b; border-color: #29466d; }
+.modo-escuro .config-introducao h2, .modo-escuro .config-grupo-titulo h2, .modo-escuro .config-opcao-texto strong { color: #f8fafc; }
+.modo-escuro .config-introducao p, .modo-escuro .config-grupo-titulo p, .modo-escuro .config-opcao-texto > span, .modo-escuro .config-permissao small { color: #c3d0e3; }
+.modo-escuro .config-grupo-titulo { border-color: #29466d; }
+.modo-escuro .config-opcao + .config-opcao { border-color: #29466d; }
+.modo-escuro .config-tema, .modo-escuro .config-tamanhos button, .modo-escuro .config-botao-secundario, .modo-escuro #configIdioma { background: #0b1d3a; border-color: #456184; color: #f8fafc; }
+.modo-escuro .config-tema.ativo, .modo-escuro .config-tamanhos button.ativo { background: #1d3b6d; border-color: #93c5fd; color: #fff; }
+.modo-escuro .config-permissao { border-color: #456184; }
+.modo-escuro .config-permissao strong { color: #f8fafc; }
+@media (max-width: 680px) {
+    .config-container { width: min(100% - 22px, 560px); margin-top: 22px; }
+    .config-grupo { padding: 16px; }
+    .config-opcao { align-items: flex-start; }
+    .config-temas { flex-direction: column; }
+    .config-tema { justify-content: center; }
+    .config-tamanhos { grid-template-columns: repeat(5,minmax(0,1fr)); gap: 5px; }
+    .config-tamanhos button { min-height: 68px; padding: 5px 2px; }
+    .config-tamanhos button small { font-size: 9px; }
+    .config-permissoes { grid-template-columns: 1fr; }
+    #configIdioma { min-width: 0; max-width: 46%; }
+    .config-botao-secundario { padding: 9px; font-size: 12px; }
+}
