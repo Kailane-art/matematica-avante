@@ -802,3 +802,84 @@ document.addEventListener("keydown", function(event) {
 });
 
 // O botão "Enviar solicitação" permanece sem ação nesta etapa.
+
+// =====================================================
+// ENVIO DA SOLICITAÇÃO DE CADASTRO COMO PROFESSOR
+// =====================================================
+
+const botaoEnviarSolicitacaoProfessor =
+    document.getElementById("enviarSolicitacaoProfessor");
+
+async function enviarSolicitacaoCadastroProfessor() {
+
+    if (!formCadastroProfessor || !botaoEnviarSolicitacaoProfessor) return;
+
+    if (!formCadastroProfessor.checkValidity()) {
+        formCadastroProfessor.reportValidity();
+        return;
+    }
+
+    const especialidadesSelecionadas = Array.from(
+        formCadastroProfessor.querySelectorAll('input[name="especialidades"]:checked')
+    ).map(function(campo) {
+        return campo.value;
+    });
+
+    if (!especialidadesSelecionadas.length) {
+        alert("Selecione pelo menos uma especialidade.");
+        return;
+    }
+
+    if (typeof supabaseClient === "undefined" || !supabaseClient) {
+        alert("Não foi possível conectar ao serviço. Tente novamente.");
+        return;
+    }
+
+    const valorOriginal = botaoEnviarSolicitacaoProfessor.textContent;
+    botaoEnviarSolicitacaoProfessor.disabled = true;
+    botaoEnviarSolicitacaoProfessor.textContent = "Enviando...";
+
+    try {
+
+        const { data, error } = await supabaseClient.rpc("submit_teacher_request", {
+            p_full_name: document.getElementById("nomeCompletoProfessor").value.trim(),
+            p_formation: document.getElementById("formacaoProfessor").value.trim(),
+            p_institution: document.getElementById("instituicaoProfessor").value.trim(),
+            p_specialties: especialidadesSelecionadas,
+            p_phone: document.getElementById("telefoneProfessor").value.trim(),
+            p_other_specialty: document.getElementById("outraEspecialidadeProfessor").value.trim() || null,
+            p_experience: document.getElementById("experienciaProfessor").value.trim() || null,
+            p_other_contact: document.getElementById("outroContatoProfessor").value.trim() || null
+        });
+
+        if (error) throw error;
+
+        formCadastroProfessor.reset();
+        fecharModalCadastroProfessor();
+
+        alert("Sua solicitação foi enviada com sucesso. Você receberá uma atualização quando houver uma decisão.");
+
+        if (data) {
+            console.info("Solicitação de professor registrada:", data);
+        }
+
+    } catch (erro) {
+
+        console.error("Erro ao enviar solicitação de professor:", erro);
+        alert(erro.message || "Não foi possível enviar sua solicitação. Tente novamente.");
+
+    } finally {
+
+        botaoEnviarSolicitacaoProfessor.disabled = false;
+        botaoEnviarSolicitacaoProfessor.textContent = valorOriginal;
+
+    }
+}
+
+if (botaoEnviarSolicitacaoProfessor) {
+    botaoEnviarSolicitacaoProfessor.addEventListener(
+        "click",
+        enviarSolicitacaoCadastroProfessor
+    );
+}
+
