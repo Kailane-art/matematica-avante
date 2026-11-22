@@ -305,9 +305,19 @@
         const resumo = "Acertos: você " + dados.my_correct_count + " × " + dados.opponent_correct_count +
             " adversário. Tempo: " + formatarTempo(dados.my_time_ms) + " × " +
             formatarTempo(dados.opponent_time_ms) + ".";
+        const xpRecebido = Number(dados.my_xp_awarded || 0);
+        const textoXp = xpRecebido === 10
+            ? "Você recebeu +10 XP: +5 pela participação e +5 pela vitória."
+            : xpRecebido === 5
+                ? (empate
+                    ? "Você recebeu +5 XP pela participação no empate."
+                    : "Você recebeu +5 XP pela participação.")
+                : "O XP será exibido quando a partida for concluída pelos dois participantes.";
+
         resultadoPartida.replaceChildren(
             elemento("h3", "", titulo),
             elemento("p", "", resumo),
+            elemento("p", "desafio-resultado-xp", textoXp),
             elemento("p", "", "A classificação semanal de desafios considera as vitórias concluídas.")
         );
         if (intervaloRelogio) window.clearInterval(intervaloRelogio);
