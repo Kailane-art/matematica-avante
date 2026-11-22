@@ -45,6 +45,7 @@ const botaoModo = document.getElementById("modoEscuro");
 
 
 const preferenciaTemaDispositivo = window.matchMedia("(prefers-color-scheme: dark)");
+const paginaLogin = (window.location.pathname.replace(/\\/+$/, "").split("/").pop() || "index.html") === "index.html";
 
 function aplicarTemaGlobal(preferencia) {
     const temaEscuro = preferencia === "escuro" ||
@@ -53,11 +54,16 @@ function aplicarTemaGlobal(preferencia) {
     document.body.classList.toggle("modo-escuro", temaEscuro);
 }
 
-const temaSalvo = localStorage.getItem("tema") || "dispositivo";
+const temaSalvo = paginaLogin
+    ? "dispositivo"
+    : (localStorage.getItem("tema") || "dispositivo");
 aplicarTemaGlobal(temaSalvo);
 
 preferenciaTemaDispositivo.addEventListener("change", function(evento) {
-    if ((localStorage.getItem("tema") || "dispositivo") === "dispositivo") {
+    if (
+        paginaLogin ||
+        (localStorage.getItem("tema") || "dispositivo") === "dispositivo"
+    ) {
         document.body.classList.toggle("modo-escuro", evento.matches);
     }
 });
@@ -271,9 +277,11 @@ async function carregarPreferenciasGlobais() {
         if (error) throw error;
         if (!data) return;
 
-        localStorage.setItem("tema", data.theme);
+        if (!paginaLogin) {
+            localStorage.setItem("tema", data.theme);
+            aplicarTemaGlobal(data.theme);
+        }
         localStorage.setItem("tamanhoTexto", String(data.text_size));
-        aplicarTemaGlobal(data.theme);
         aplicarTamanhoTextoGlobal(data.text_size);
     } catch (erro) {
         console.error("Não foi possível carregar as preferências globais:", erro);
