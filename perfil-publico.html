@@ -396,7 +396,7 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
             botaoReativar.hidden = false;
             botaoRetirarSuspensao.hidden = true;
         } else if (restricao?.restriction_type === "temporary_suspension") {
-            estado.textContent = "Conta suspensa até " +
+            estado.textContent = "Conta suspensa por " + restricao.duration_days + " dia(s), até " +
                 new Date(restricao.expires_at).toLocaleString("pt-BR");
             botaoSuspender.hidden = true;
             botaoBanir.hidden = false;
