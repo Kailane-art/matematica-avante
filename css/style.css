@@ -4321,3 +4321,62 @@ body {
     }
 }
 
+
+
+/* Títulos selecionáveis exibidos nos perfis. */
+.identidade .titulo-estudante-dedicado,
+.selo-perfil-publico.titulo-estudante-dedicado {
+    color: #b7791f !important;
+    font-weight: 800;
+}
+
+.identidade .titulo-estrategista-matematico,
+.selo-perfil-publico.titulo-estrategista-matematico {
+    color: #2563a8 !important;
+    font-weight: 800;
+}
+
+.identidade .titulo-guardiao-constancia,
+.selo-perfil-publico.titulo-guardiao-constancia {
+    color: #a16207 !important;
+    font-weight: 800;
+}
+
+.modo-escuro .identidade .titulo-estudante-dedicado,
+.modo-escuro .selo-perfil-publico.titulo-estudante-dedicado {
+    color: #fbbf24 !important;
+}
+
+.modo-escuro .identidade .titulo-estrategista-matematico,
+.modo-escuro .selo-perfil-publico.titulo-estrategista-matematico {
+    color: #93c5fd !important;
+}
+
+.modo-escuro .identidade .titulo-guardiao-constancia,
+.modo-escuro .selo-perfil-publico.titulo-guardiao-constancia {
+    color: #facc15 !important;
+}
+
+.conteudo-modal-perfil select {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #1f2937;
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+}
+
+.conteudo-modal-perfil select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.modo-escuro .conteudo-modal-perfil select {
+    border-color: #29456f;
+    background: #0b1d3a;
+    color: #f1f5f9;
+}
