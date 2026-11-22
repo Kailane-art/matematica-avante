@@ -4125,3 +4125,9 @@ body.pagina-perfil-publico #seloPerfilPublico {
 .modo-escuro .conteudo-painel-admin-perfil { background: #13294b; color: #f1f5f9; }
 .modo-escuro .cabecalho-painel-admin-perfil h2 { color: #bfdbfe; }
 .modo-escuro .estado-admin-perfil, .modo-escuro #mensagemAdminPerfil { color: #cbd5e1; }
+
+
+/* Escala global de texto escolhida nas configurações. */
+body {
+    zoom: var(--escala-texto, 1);
+}
