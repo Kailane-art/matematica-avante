@@ -82,9 +82,44 @@ async function configurarBotaoAmizade(idPerfil) {
 
         const relacao = (data || []).find(item => item.contact_id === idPerfil);
 
+        botao.onclick = null;
+
         if (relacao?.friendship_status === "accepted") {
-            botao.innerHTML = '<i data-lucide="user-check"></i> Vocês são amigos';
-            botao.disabled = true;
+            botao.innerHTML = '<i data-lucide="user-minus"></i> Encerrar amizade';
+            botao.disabled = false;
+            botao.onclick = async function() {
+                const confirmar = window.confirm(
+                    "Tem certeza de que deseja encerrar esta amizade? Vocês terão 15 dias para restabelecê-la. Durante esse período, o chat ficará bloqueado."
+                );
+
+                if (!confirmar) return;
+
+                botao.disabled = true;
+                mensagem.textContent = "Encerrando amizade...";
+
+                const { data: prazo, error: encerramentoErro } = await supabaseClient.rpc(
+                    "end_friendship",
+                    { p_contact_id: idPerfil }
+                );
+
+                if (encerramentoErro) {
+                    mensagem.textContent = encerramentoErro.message || "Não foi possível encerrar a amizade.";
+                    botao.disabled = false;
+                    return;
+                }
+
+                botao.innerHTML = '<i data-lucide="user-minus"></i> Amizade encerrada';
+                botao.disabled = true;
+
+                const dataLimite = prazo ? new Date(prazo) : null;
+                mensagem.textContent = dataLimite
+                    ? "Amizade encerrada. Vocês podem restabelecê-la até " +
+                      dataLimite.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" }) +
+                      ". O histórico será excluído após esse prazo."
+                    : "Amizade encerrada. O prazo de recuperação é de 15 dias.";
+
+                if (window.lucide) lucide.createIcons();
+            };
         } else if (relacao?.friendship_status === "pending" && relacao.request_direction === "sent") {
             botao.innerHTML = '<i data-lucide="clock-3"></i> Solicitação enviada';
             botao.disabled = true;
