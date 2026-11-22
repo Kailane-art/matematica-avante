@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafios - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/desafios.css?v=20261122-desafios1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+    <header class="cabecalho-desafios">
+        <button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar">
+            <i data-lucide="arrow-left"></i>
+        </button>
+        <h1>Desafios</h1>
+        <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+            <i data-lucide="menu"></i>
+        </button>
+    </header>
+
+    <main class="desafios-container">
+        <section class="desafios-introducao">
+            <div class="desafios-introducao-icone"><i data-lucide="swords"></i></div>
+            <div>
+                <h2>Desafie seus amigos</h2>
+                <p>Resolva as mesmas 10 questões que seu amigo, na mesma ordem, e veja quem consegue mais acertos.</p>
+            </div>
+        </section>
+
+        <section class="desafio-regras">
+            <div><i data-lucide="list-checks"></i><span>10 questões por partida</span></div>
+            <div><i data-lucide="timer"></i><span>Tempo usado como desempate</span></div>
+            <div><i data-lucide="calendar-clock"></i><span>Até 3 partidas por dia contra o mesmo amigo</span></div>
+        </section>
+
+        <section class="desafio-card" id="painelCriarDesafio">
+            <div class="desafio-card-cabecalho">
+                <div>
+                    <h2>Convidar amigo</h2>
+                    <p>Escolha um amigo e o conteúdo da disputa.</p>
+                </div>
+                <span class="desafio-icone-cabecalho"><i data-lucide="user-plus"></i></span>
+            </div>
+            <form id="formCriarDesafio" class="desafio-formulario">
+                <label for="amigoDesafio">Amigo</label>
+                <select id="amigoDesafio" required>
+                    <option value="">Carregando amigos...</option>
+                </select>
+
+                <label for="conteudoDesafio">Conteúdo</label>
+                <select id="conteudoDesafio" required>
+                    <option value="operacoes">Operações básicas</option>
+                    <option value="fracoes">Frações</option>
+                    <option value="porcentagem">Porcentagem</option>
+                    <option value="equacoes">Equações</option>
+                    <option value="geometria">Geometria plana</option>
+                </select>
+
+                <p class="desafio-observacao">O convite expira em 10 minutos. Questões difíceis não entram nessas disputas.</p>
+                <button type="submit" id="botaoEnviarConvite" class="desafio-botao-principal">
+                    <i data-lucide="send"></i><span>Enviar convite</span>
+                </button>
+            </form>
+            <p id="estadoCriarDesafio" class="desafio-mensagem" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="desafio-card">
+            <div class="desafio-card-cabecalho">
+                <div>
+                    <h2>Convites e partidas</h2>
+                    <p>Convites recebidos, enviados e disputas em andamento.</p>
+                </div>
+                <button type="button" id="botaoAtualizarDesafios" class="desafio-botao-icone" aria-label="Atualizar convites">
+                    <i data-lucide="refresh-cw"></i>
+                </button>
+            </div>
+            <div id="listaConvitesRecebidos" class="desafio-lista">
+                <p class="desafio-estado-vazio">Carregando convites...</p>
+            </div>
+            <div id="listaConvitesEnviados" class="desafio-lista"></div>
+            <div id="listaPartidasAtivas" class="desafio-lista"></div>
+        </section>
+
+        <section class="desafio-card desafio-partida" id="painelPartida" hidden>
+            <div class="desafio-partida-topo">
+                <div>
+                    <span class="desafio-etiqueta">PARTIDA EM ANDAMENTO</span>
+                    <h2 id="tituloPartida">Desafio</h2>
+                </div>
+                <span class="desafio-temporizador" id="tempoPartida">00:00</span>
+            </div>
+            <div class="desafio-progresso">
+                <div class="desafio-progresso-texto">
+                    <span id="progressoTexto">Questão 1 de 10</span>
+                    <span id="placarPartida">0 × 0</span>
+                </div>
+                <div class="desafio-progresso-trilho"><span id="progressoBarra"></span></div>
+            </div>
+            <div id="areaQuestao" class="desafio-area-questao"></div>
+            <p id="estadoPartida" class="desafio-mensagem" role="status" aria-live="polite"></p>
+            <div id="resultadoPartida" class="desafio-resultado" hidden></div>
+        </section>
+    </main>
+
+    <div id="fundoMenu"></div>
+    <nav id="menuLateral" aria-label="Menu principal">
+        <h2>Menu</h2>
+        <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+        <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+        <a href="rankings.html" class="menu-item"><i data-lucide="trophy"></i><span>Rankings</span></a>
+        <a href="desafios.html" class="menu-item"><i data-lucide="swords"></i><span>Desafios</span></a>
+        <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+        <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+        <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+        <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+        <a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+        <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+        <a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a>
+    </nav>
+
+    <script src="js/script.js"></script>
+    <script src="js/desafios.js?v=20261122-desafios1"></script>
+    <script>if (window.lucide) window.lucide.createIcons();</script>
+</body>
+</html>
