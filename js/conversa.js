@@ -545,7 +545,7 @@
         if (!body || !conversaId || !usuarioAtual || botaoEnviar.disabled) return;
 
         botaoEnviar.disabled = true;
-        const { error } = await supabaseClient.rpc("send_chat_message", {
+        const { data: messageId, error } = await supabaseClient.rpc("send_chat_message", {
             p_contact_id: contatoId,
             p_body: body
         });
@@ -564,6 +564,10 @@
 
         campo.value = "";
         campo.focus();
+
+        if (window.maPushNotifications && messageId) {
+            window.maPushNotifications.enviarEvento("message", { message_id: messageId });
+        }
     });
 
     window.addEventListener("beforeunload", function () {
