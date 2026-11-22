@@ -316,6 +316,16 @@ window.addEventListener("ma:status-online-configurado", function(evento) {
     alterarPreferenciaPresencaOnline(evento.detail?.enabled);
 });
 
+window.addEventListener("storage", function(evento) {
+    const chaveEsperada = usuarioPresencaOnlineId
+        ? "ma:showOnlineStatus:" + usuarioPresencaOnlineId
+        : null;
+
+    if (chaveEsperada && evento.key === chaveEsperada) {
+        alterarPreferenciaPresencaOnline(evento.newValue !== "false");
+    }
+});
+
 async function iniciarPresencaOnlineGlobal() {
     if (!supabaseClient || paginaLogin || canalPresencaOnline) return;
 
