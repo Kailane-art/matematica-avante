@@ -296,8 +296,15 @@
         carregandoHistorico = true;
         mensagensPendentes = [];
 
+        await supabaseClient.realtime.setAuth();
         canalMensagens = supabaseClient
-            .channel("conversa-" + conversaId)
+            .channel("conversation:" + conversaId, { config: { private: true } })
+            .on("broadcast", {
+                event: "message_deleted"
+            }, payload => {
+                const dados = payload.payload || payload;
+                if (dados.message_id) removerMensagemDaTela(dados.message_id);
+            })
             .on("postgres_changes", {
                 event: "INSERT",
                 schema: "public",
