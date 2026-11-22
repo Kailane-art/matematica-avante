@@ -36,6 +36,7 @@
 .modo-escuro.pagina-conversa { background:#0b1d3a; }
 .modo-escuro .conversa-cabecalho { background:#13294b; border-color:#29456f; }
 .modo-escuro .conversa-identidade-dados h1 { color:#e2e8f0; }
+.modo-escuro .conversa-identidade-dados .conversa-nome-link { color:#ffffff; }
 .modo-escuro .conversa-identidade-dados span { color:#a9bdd8; }
 .modo-escuro .conversa-mensagem.recebida { background:#13294b; color:#e2e8f0; border-color:#29456f; }
 .modo-escuro .conversa-mensagem.enviada { background:#214d78; color:#f0f7ff; }
