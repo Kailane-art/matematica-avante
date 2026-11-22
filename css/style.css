@@ -1258,6 +1258,34 @@ header svg {
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
 }
 
+.botao-desafio-diario {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 54px;
+    padding: 16px;
+    margin: 0 0 30px;
+    border: 0;
+    border-radius: 15px;
+    background: #4169e1;
+    color: #ffffff !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+}
+
+.botao-desafio-diario:hover {
+    opacity: 0.9;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
 #desafiosDiarios {
     display: block;
     width: 100%;
