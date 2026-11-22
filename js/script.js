@@ -266,19 +266,31 @@ function lerUltimasPresencas() {
 function publicarPresencaOnline() {
     const estado = canalPresencaOnline ? canalPresencaOnline.presenceState() : {};
     const ativos = new Set();
+    const ocultos = new Set();
 
     Object.values(estado).forEach(function(sessoes) {
         (sessoes || []).forEach(function(sessao) {
-            if (sessao && sessao.user_id) ativos.add(sessao.user_id);
+            if (!sessao || !sessao.user_id) return;
+
+            if (sessao.show_online_status === false) {
+                ocultos.add(sessao.user_id);
+            } else {
+                ativos.add(sessao.user_id);
+            }
         });
     });
 
     const agora = Date.now();
     const ultimasPresencas = lerUltimasPresencas();
 
+    // A preferência de privacidade deve ocultar o usuário imediatamente.
+    ocultos.forEach(function(usuarioId) {
+        delete ultimasPresencas[usuarioId];
+    });
+
     // Quando alguém sai do site, inicia a tolerância de 60 segundos.
     presencaOnlineAtivos.forEach(function(usuarioId) {
-        if (!ativos.has(usuarioId)) {
+        if (!ativos.has(usuarioId) && !ocultos.has(usuarioId)) {
             ultimasPresencas[usuarioId] = agora;
         }
     });
@@ -351,13 +363,10 @@ async function alterarPreferenciaPresencaOnline(ativa) {
     if (!canalPresencaOnline || !presencaOnlineConectada) return;
 
     try {
-        if (presencaOnlineHabilitada) {
-            await canalPresencaOnline.track({
-                user_id: usuarioPresencaOnlineId
-            });
-        } else {
-            await canalPresencaOnline.untrack();
-        }
+        await canalPresencaOnline.track({
+            user_id: usuarioPresencaOnlineId,
+            show_online_status: presencaOnlineHabilitada
+        });
         publicarPresencaOnline();
     } catch (erro) {
         console.error("Não foi possível atualizar a presença online:", erro);
