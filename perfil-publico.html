@@ -74,6 +74,31 @@
 
     </section>
 
+    <div id="painelAdministrativoPerfil" class="painel-admin-perfil" hidden>
+        <section class="conteudo-painel-admin-perfil" role="dialog" aria-modal="true" aria-labelledby="tituloPainelAdminPerfil">
+            <div class="cabecalho-painel-admin-perfil">
+                <h2 id="tituloPainelAdminPerfil">Informações administrativas</h2>
+                <button id="fecharPainelAdminPerfil" type="button" aria-label="Fechar">×</button>
+            </div>
+            <p id="estadoAdminPerfil" class="estado-admin-perfil" role="status"></p>
+            <div id="acoesAdminPerfil" class="acoes-admin-perfil">
+                <button id="botaoSuspenderConta" type="button">Suspender conta</button>
+                <button id="botaoBanirConta" type="button">Banir conta</button>
+                <button id="botaoRebaixarProfessor" type="button" hidden>Mudar professor para aluno</button>
+                <button id="botaoReativarConta" type="button" hidden>Reativar conta</button>
+            </div>
+            <form id="formSuspensaoAdmin" class="form-suspensao-admin" hidden>
+                <label for="diasSuspensaoAdmin">Quantidade de dias da suspensão</label>
+                <input id="diasSuspensaoAdmin" name="dias" type="number" min="1" max="3650" step="1" inputmode="numeric" placeholder="Ex.: 7" required>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarSuspensaoAdmin" type="submit">Confirmar</button>
+                    <button id="cancelarSuspensaoAdmin" type="button">Cancelar</button>
+                </div>
+            </form>
+            <p id="mensagemAdminPerfil" role="status" aria-live="polite"></p>
+        </section>
+    </div>
+
 </main>
 
 <script src="js/script.js"></script>
@@ -318,6 +343,184 @@ async function configurarFavoritoPerfil(idPerfil, idUsuarioAtual, ehProprioPerfi
     }
 }
 
+
+async function executarAcaoAdministrativaPerfil(action, extras = {}) {
+    const { data, error } = await supabaseClient.functions.invoke("account-admin", {
+        body: {
+            action,
+            target_user_id: perfilPublicoAtual?.id,
+            ...extras
+        }
+    });
+    if (error) throw error;
+    if (data?.error) throw new Error(data.error);
+    return data;
+}
+
+async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
+    const botao = document.getElementById("botaoInformacaoAdminPerfil");
+    const painel = document.getElementById("painelAdministrativoPerfil");
+    const estado = document.getElementById("estadoAdminPerfil");
+    const mensagem = document.getElementById("mensagemAdminPerfil");
+    const formSuspensao = document.getElementById("formSuspensaoAdmin");
+    const campoDias = document.getElementById("diasSuspensaoAdmin");
+    const botaoRebaixar = document.getElementById("botaoRebaixarProfessor");
+    const botaoReativar = document.getElementById("botaoReativarConta");
+    const botaoSuspender = document.getElementById("botaoSuspenderConta");
+    const botaoBanir = document.getElementById("botaoBanirConta");
+
+    if (!botao || !painel || !usuarioAtualEhDev || ehProprioPerfil || !perfilPublicoAtual?.id) {
+        if (botao) botao.hidden = true;
+        return;
+    }
+
+    botao.hidden = false;
+    botaoRebaixar.hidden = perfilPublicoAtual.tipo_usuario !== "professor";
+    mensagem.textContent = "";
+    estado.textContent = "Verificando situação da conta...";
+
+    try {
+        const resultado = await executarAcaoAdministrativaPerfil("status");
+        const restricao = resultado.restriction;
+        if (restricao?.restriction_type === "pending_deletion") {
+            estado.textContent = "Conta banida. Prazo para reativação até " +
+                new Date(restricao.expires_at).toLocaleString("pt-BR");
+            botaoSuspender.hidden = true;
+            botaoBanir.hidden = true;
+            botaoRebaixar.hidden = true;
+            botaoReativar.hidden = false;
+        } else if (restricao?.restriction_type === "temporary_suspension") {
+            estado.textContent = "Conta suspensa até " +
+                new Date(restricao.expires_at).toLocaleString("pt-BR");
+            botaoSuspender.hidden = false;
+            botaoBanir.hidden = false;
+            botaoReativar.hidden = true;
+        } else {
+            estado.textContent = "Nenhuma restrição administrativa ativa.";
+            botaoSuspender.hidden = false;
+            botaoBanir.hidden = false;
+            botaoReativar.hidden = true;
+        }
+    } catch (erro) {
+        console.error("Erro ao consultar situação administrativa:", erro);
+        estado.textContent = "Não foi possível consultar a situação da conta.";
+        botao.hidden = true;
+        return;
+    }
+
+    botao.onclick = function() {
+        painel.hidden = false;
+        formSuspensao.hidden = true;
+        mensagem.textContent = "";
+    };
+
+    document.getElementById("fecharPainelAdminPerfil").onclick = function() {
+        painel.hidden = true;
+    };
+
+    document.getElementById("cancelarSuspensaoAdmin").onclick = function() {
+        formSuspensao.hidden = true;
+        campoDias.value = "";
+        mensagem.textContent = "";
+    };
+
+    botaoSuspender.onclick = function() {
+        formSuspensao.hidden = false;
+        campoDias.value = "";
+        campoDias.focus();
+        mensagem.textContent = "";
+    };
+
+    formSuspensao.onsubmit = async function(evento) {
+        evento.preventDefault();
+        const dias = Number(campoDias.value);
+        if (!Number.isSafeInteger(dias) || dias < 1 || dias > 3650) {
+            mensagem.textContent = "Informe um número inteiro entre 1 e 3650 dias.";
+            return;
+        }
+        const confirmar = window.confirm("Confirmar suspensão desta conta por " + dias + " dia(s)?");
+        if (!confirmar) return;
+        const confirmarBotao = document.getElementById("confirmarSuspensaoAdmin");
+        confirmarBotao.disabled = true;
+        mensagem.textContent = "Aplicando suspensão...";
+        try {
+            const resultado = await executarAcaoAdministrativaPerfil("suspend", { days: dias });
+            estado.textContent = "Conta suspensa até " + new Date(resultado.expires_at).toLocaleString("pt-BR");
+            mensagem.textContent = "Suspensão aplicada.";
+            formSuspensao.hidden = true;
+            botaoSuspender.hidden = false;
+            botaoBanir.hidden = false;
+            botaoReativar.hidden = true;
+            campoDias.value = "";
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível suspender a conta.";
+        } finally {
+            confirmarBotao.disabled = false;
+        }
+    };
+
+    botaoBanir.onclick = async function() {
+        if (!window.confirm("Banir esta conta? Ela ficará bloqueada e poderá ser reativada por uma conta DEV durante 30 dias. Depois disso, será excluída definitivamente e o e-mail ficará bloqueado permanentemente.")) return;
+        botaoBanir.disabled = true;
+        mensagem.textContent = "Banindo conta...";
+        try {
+            const resultado = await executarAcaoAdministrativaPerfil("ban");
+            estado.textContent = "Conta banida. Prazo para reativação até " +
+                new Date(resultado.expires_at).toLocaleString("pt-BR");
+            mensagem.textContent = "Conta banida e prazo de recuperação iniciado.";
+            botaoSuspender.hidden = true;
+            botaoBanir.hidden = true;
+            botaoRebaixar.hidden = true;
+            botaoReativar.hidden = false;
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível banir a conta.";
+        } finally {
+            botaoBanir.disabled = false;
+        }
+    };
+
+    botaoRebaixar.onclick = async function() {
+        if (perfilPublicoAtual?.tipo_usuario !== "professor") return;
+        if (!window.confirm("Mudar esta conta de professor para aluno?")) return;
+        botaoRebaixar.disabled = true;
+        mensagem.textContent = "Atualizando tipo de conta...";
+        try {
+            await executarAcaoAdministrativaPerfil("demote");
+            perfilPublicoAtual.tipo_usuario = "aluno";
+            document.getElementById("tipoPerfilPublico").textContent = "Aluno";
+            botaoRebaixar.hidden = true;
+            mensagem.textContent = "A conta agora é do tipo aluno.";
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível alterar o tipo da conta.";
+        } finally {
+            botaoRebaixar.disabled = false;
+        }
+    };
+
+    botaoReativar.onclick = async function() {
+        if (!window.confirm("Reativar esta conta?")) return;
+        botaoReativar.disabled = true;
+        mensagem.textContent = "Reativando conta...";
+        try {
+            await executarAcaoAdministrativaPerfil("restore");
+            estado.textContent = "Conta reativada. Nenhuma restrição administrativa ativa.";
+            mensagem.textContent = "Conta reativada com sucesso.";
+            botaoSuspender.hidden = false;
+            botaoBanir.hidden = false;
+            botaoReativar.hidden = true;
+            botaoRebaixar.hidden = perfilPublicoAtual.tipo_usuario !== "professor";
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível reativar a conta.";
+        } finally {
+            botaoReativar.disabled = false;
+        }
+    };
+
+    painel.addEventListener("click", function(evento) {
+        if (evento.target === painel) painel.hidden = true;
+    });
+}
+
 async function carregarPerfilPublico() {
 
     const status = document.getElementById("statusPerfilPublico");
@@ -413,6 +616,7 @@ async function carregarPerfilPublico() {
         }
 
         await configurarFavoritoPerfil(perfil.id, sessaoAtual?.user?.id, ehProprioPerfil);
+        await configurarPainelAdministrativoPerfil(ehProprioPerfil);
         bio.textContent = perfil.bio || "Este usuário ainda não adicionou uma bio.";
 
         if (perfil.avatar_path) {
