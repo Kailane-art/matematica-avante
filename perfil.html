@@ -566,7 +566,7 @@ async function carregarProgressoFasesPerfil() {
         const { data: fases, error } = await supabaseClient
             .from("user_level_progress")
             .select("level_number, phase_number, completed")
-            .in("level_number", [1, 2, 3, 4])
+            .in("level_number", [1, 2, 3, 4, 5])
             .eq("completed", true);
 
         if (error) {
@@ -931,27 +931,36 @@ async function carregarAvatarDaConta() {
 
         const elementoSeloRotulo = document.getElementById("seloContaRotulo");
         const elementoSeloNome = document.getElementById("seloContaNome");
-
         const elementoSeloIcone = document.getElementById("seloContaIcone");
-
-        if (perfil.tipo_usuario === "dev") {
-            if (elementoSeloIcone) {
-                elementoSeloIcone.textContent = "⚡";
+        let concluiuNivel5 = false;
+        try {
+            const { data: fasesN5, error: erroFasesN5 } = await supabaseClient
+                .from("user_level_progress")
+                .select("phase_number")
+                .eq("level_number", 5)
+                .eq("completed", true);
+            if (erroFasesN5) throw erroFasesN5;
+            concluiuNivel5 = new Set((fasesN5 || []).map(f => Number(f.phase_number))).size >= 10;
+        } catch (erroTituloN5) {
+            console.error("Não foi possível verificar o título do Nível 5:", erroTituloN5);
+        }
+        if (concluiuNivel5) {
+            if (elementoSeloIcone) elementoSeloIcone.textContent = "🏆";
+            if (elementoSeloRotulo) elementoSeloRotulo.textContent = "Título:";
+            if (elementoSeloNome) {
+                elementoSeloNome.textContent = "Mestre da Matemática";
+                elementoSeloNome.classList.remove("selo-dev-nome");
             }
-            if (elementoSeloRotulo) {
-                elementoSeloRotulo.textContent = "Selo:";
-            }
+        } else if (perfil.tipo_usuario === "dev") {
+            if (elementoSeloIcone) elementoSeloIcone.textContent = "⚡";
+            if (elementoSeloRotulo) elementoSeloRotulo.textContent = "Selo:";
             if (elementoSeloNome) {
                 elementoSeloNome.textContent = "Coração da Matrix";
                 elementoSeloNome.classList.add("selo-dev-nome");
             }
         } else {
-            if (elementoSeloIcone) {
-                elementoSeloIcone.textContent = "💎";
-            }
-            if (elementoSeloRotulo) {
-                elementoSeloRotulo.textContent = " Selo Premium:";
-            }
+            if (elementoSeloIcone) elementoSeloIcone.textContent = "💎";
+            if (elementoSeloRotulo) elementoSeloRotulo.textContent = " Selo Premium:";
             if (elementoSeloNome) {
                 elementoSeloNome.textContent = "Não possui";
                 elementoSeloNome.classList.remove("selo-dev-nome");
