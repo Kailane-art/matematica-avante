@@ -634,7 +634,7 @@
             if (error) throw error;
 
             const contatos = data || [];
-            const amigos = contatos.filter(item => item.friendship_status === "accepted" || item.friendship_status === "dev_contact");
+            const amigos = contatos.filter(item => item.friendship_status === "accepted");
             await atualizarListaConversas(amigos);
             const recebidas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "received");
             const enviadas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "sent");
