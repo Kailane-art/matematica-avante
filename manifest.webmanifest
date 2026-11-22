@@ -1,0 +1,10 @@
+{
+  "name": "Matemática Avante",
+  "short_name": "Matemática Avante",
+  "start_url": "./inicio.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f8ff",
+  "theme_color": "#1e3a8a",
+  "lang": "pt-BR"
+}
