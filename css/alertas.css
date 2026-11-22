@@ -51,3 +51,14 @@
  .alertas-compositor-rodape { align-items:flex-start; flex-direction:column; }
  .alertas-compositor-rodape button { width:100%; justify-content:center; }
 }
+
+.alertas-card { margin:14px 0; padding:18px; border:1px solid #dce5f2; border-radius:13px; background:#fff; }
+.alertas-card-topo { display:flex; align-items:center; color:#3158c9; margin-bottom:10px; }
+.alertas-card-topo svg { width:20px; height:20px; }
+.alertas-card-mensagem { margin:0; color:#243247; font-size:15px; line-height:1.65; white-space:pre-wrap; overflow-wrap:anywhere; }
+.alertas-card-rodape { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:16px; padding-top:11px; border-top:1px solid #e8edf5; }
+.alertas-card-rodape small { color:#718096; font-size:11px; }
+.modo-escuro .alertas-card { background:#102442; border-color:#29466d; }
+.modo-escuro .alertas-card-mensagem { color:#edf4ff; }
+.modo-escuro .alertas-card-rodape { border-color:#29466d; }
+.modo-escuro .alertas-card-rodape small { color:#bdcce0; }
