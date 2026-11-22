@@ -217,6 +217,7 @@
                     return;
                 }
 
+                await carregarFavoritosUsuario();
                 criarResultadoPerfil(perfil);
 
             } catch (erro) {
@@ -444,14 +445,6 @@
     async function atualizarListaConversas(amigos) {
         if (!listaConversas || !estadoVazioConversas) return;
         amigosDaLista = amigos;
-
-        if (!amigos.length) {
-            itensPorConversa.clear();
-            listaConversas.replaceChildren();
-            listaConversas.hidden = true;
-            estadoVazioConversas.hidden = false;
-            return;
-        }
 
         if (recarregandoConversas) {
             recargaPendente = true;
