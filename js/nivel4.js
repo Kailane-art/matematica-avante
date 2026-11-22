@@ -15,7 +15,7 @@ const CHAVE_PROGRESSO = "progressoNiveis";
 
 
 // =====================================================
-// CONFIGURAÇÃO DAS FASES — NÍVEL 3
+// CONFIGURAÇÃO DAS FASES — NÍVEL 4
 // =====================================================
 //
 // Todas as fases e questões deste nível têm dificuldade difícil.
@@ -76,7 +76,7 @@ const fasesNivel4 = {
 
 
 // =====================================================
-// BANCO DE QUESTÕES — NÍVEL 3
+// BANCO DE QUESTÕES — NÍVEL 4
 // =====================================================
 //
 // Cada fase terá exatamente 10 questões, todas difíceis.
