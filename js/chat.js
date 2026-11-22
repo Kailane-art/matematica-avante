@@ -222,6 +222,62 @@
     const listaAmigos = document.getElementById("listaAmigosChat");
     const listaSolicitacoes = document.getElementById("listaSolicitacoesChat");
     const badgeNotificacoes = document.getElementById("notificacoesChatBadge");
+    const listaConversas = document.getElementById("listaConversas");
+    const estadoVazioConversas = document.getElementById("estadoVazioConversas");
+
+    function abrirConversa(contato) {
+        window.location.href = "conversa.html?usuario=" + encodeURIComponent(contato.username);
+    }
+
+    function criarItemConversa(contato) {
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = "chat-conversa-item";
+        item.addEventListener("click", () => abrirConversa(contato));
+
+        const avatar = document.createElement("div");
+        avatar.className = "chat-avatar";
+        const icone = document.createElement("i");
+        icone.setAttribute("data-lucide", "user-round");
+        avatar.appendChild(icone);
+
+        if (contato.avatar_path && supabaseClient) {
+            const url = supabaseClient.storage.from("avatars").getPublicUrl(contato.avatar_path).data.publicUrl;
+            const foto = document.createElement("img");
+            foto.src = url;
+            foto.alt = "";
+            avatar.replaceChildren(foto);
+        }
+
+        const dados = document.createElement("span");
+        dados.className = "chat-conversa-dados";
+        const nome = document.createElement("strong");
+        nome.textContent = contato.display_name || "Usuário";
+        const username = document.createElement("small");
+        username.textContent = "@" + contato.username;
+        dados.append(nome, username);
+
+        const aviao = document.createElement("i");
+        aviao.setAttribute("data-lucide", "send");
+        aviao.className = "chat-conversa-aviao";
+
+        item.append(avatar, dados, aviao);
+        return item;
+    }
+
+    function atualizarListaConversas(amigos) {
+        if (!listaConversas || !estadoVazioConversas) return;
+        if (!amigos.length) {
+            listaConversas.hidden = true;
+            estadoVazioConversas.hidden = false;
+            return;
+        }
+
+        listaConversas.replaceChildren(...amigos.map(criarItemConversa));
+        listaConversas.hidden = false;
+        estadoVazioConversas.hidden = true;
+        atualizarIcones();
+    }
 
     function estadoPainel(container, icone, titulo, descricao) {
         if (!container) return;
@@ -305,7 +361,14 @@
             status.textContent = "Pendente";
             item.append(status, perfil);
         } else {
-            item.append(perfil);
+            const conversar = document.createElement("button");
+            conversar.type = "button";
+            conversar.className = "chat-botao-aviao";
+            conversar.setAttribute("aria-label", "Conversar com " + (contato.display_name || contato.username));
+            conversar.title = "Enviar mensagem";
+            conversar.innerHTML = '<i data-lucide="send"></i>';
+            conversar.addEventListener("click", () => abrirConversa(contato));
+            item.append(perfil, conversar);
         }
 
         return item;
@@ -323,6 +386,7 @@
 
             const contatos = data || [];
             const amigos = contatos.filter(item => item.friendship_status === "accepted");
+            atualizarListaConversas(amigos);
             const recebidas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "received");
             const enviadas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "sent");
 
