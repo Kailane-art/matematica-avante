@@ -201,3 +201,188 @@
     .desafio-questao { padding: 15px; }
     .desafio-questao h3 { font-size: 15px; }
 }
+
+/* Identidade visual azul Royal da página de desafios */
+.desafio-card {
+    background: #4169e1;
+    border: 1px solid #3159c7;
+    box-shadow: 0 10px 26px rgba(30, 58, 138, .16);
+    color: #fff;
+}
+.desafio-card-cabecalho h2,
+.desafio-partida-topo h2 {
+    color: #fff;
+}
+.desafio-card-cabecalho p,
+.desafio-observacao,
+.desafio-mensagem,
+.desafio-etiqueta {
+    color: #e3ebff;
+}
+.desafio-icone-cabecalho,
+.desafio-botao-icone {
+    background: rgba(255, 255, 255, .17);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .2);
+}
+.desafio-botao-icone:hover {
+    background: rgba(255, 255, 255, .27);
+}
+.desafio-botao-principal,
+.desafio-acao {
+    background: #102a63;
+    color: #fff;
+    box-shadow: 0 3px 9px rgba(8, 25, 62, .2);
+    transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.desafio-botao-principal:hover:not(:disabled),
+.desafio-acao:hover:not(:disabled) {
+    background: #091d49;
+    box-shadow: 0 5px 13px rgba(8, 25, 62, .28);
+    transform: translateY(-1px);
+}
+.desafio-acao-secundaria {
+    background: #dce7ff;
+    color: #17336f;
+    box-shadow: none;
+}
+.desafio-acao-secundaria:hover:not(:disabled) {
+    background: #c8d8ff;
+}
+.desafio-acao-perigo {
+    background: #ffe3e3;
+    color: #922b36;
+    box-shadow: none;
+}
+.desafio-acao-perigo:hover:not(:disabled) {
+    background: #ffd0d0;
+}
+.desafio-convite {
+    background: #315dcc;
+    border-color: rgba(255, 255, 255, .2);
+}
+.desafio-convite-nome {
+    color: #fff;
+}
+.desafio-convite-detalhe {
+    color: #e0e9ff;
+}
+.desafio-estado-vazio {
+    background: rgba(13, 39, 101, .28);
+    color: #f0f4ff;
+}
+.desafio-temporizador {
+    background: #dce7ff;
+    color: #17336f;
+}
+.desafio-progresso-texto {
+    color: #f0f4ff;
+}
+.desafio-progresso-trilho {
+    background: rgba(12, 37, 98, .38);
+}
+.desafio-progresso-trilho span {
+    background: #fff;
+}
+.desafio-questao {
+    background: #315dcc;
+    border-color: rgba(255, 255, 255, .22);
+}
+.desafio-questao-topo {
+    color: #e0e9ff;
+}
+.desafio-questao h3 {
+    color: #fff;
+}
+.desafio-opcao {
+    border-color: #d5e1ff;
+    background: #f8faff;
+    color: #1e315c;
+}
+.desafio-opcao:hover:not(:disabled) {
+    border-color: #102a63;
+    background: #e7eeff;
+}
+.desafio-resultado {
+    background: #dce7ff;
+    color: #17336f;
+}
+.desafio-resultado p {
+    color: #354d7b;
+}
+.desafio-formulario label {
+    color: #f5f7ff;
+}
+.desafio-formulario select {
+    border-color: #c7d6ff;
+}
+.desafio-botao-principal:focus-visible,
+.desafio-acao:focus-visible,
+.desafio-botao-icone:focus-visible,
+.desafio-formulario select:focus-visible,
+.desafio-opcao:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+}
+
+/* Ajustes para manter contraste no tema escuro */
+.modo-escuro .desafio-card {
+    background: #244da8;
+    border-color: #3d65bd;
+    color: #f8faff;
+}
+.modo-escuro .desafio-card-cabecalho h2,
+.modo-escuro .desafio-partida-topo h2,
+.modo-escuro .desafio-convite-nome,
+.modo-escuro .desafio-questao h3 {
+    color: #fff;
+}
+.modo-escuro .desafio-card-cabecalho p,
+.modo-escuro .desafio-observacao,
+.modo-escuro .desafio-mensagem,
+.modo-escuro .desafio-etiqueta,
+.modo-escuro .desafio-convite-detalhe,
+.modo-escuro .desafio-questao-topo,
+.modo-escuro .desafio-progresso-texto {
+    color: #e0e9ff;
+}
+.modo-escuro .desafio-icone-cabecalho,
+.modo-escuro .desafio-botao-icone {
+    background: rgba(255, 255, 255, .14);
+    border-color: rgba(255, 255, 255, .18);
+    color: #fff;
+}
+.modo-escuro .desafio-convite,
+.modo-escuro .desafio-questao {
+    background: #1d428f;
+    border-color: #4169b8;
+}
+.modo-escuro .desafio-estado-vazio {
+    background: rgba(8, 25, 62, .4);
+    color: #e0e9ff;
+}
+.modo-escuro .desafio-formulario label {
+    color: #f5f7ff;
+}
+.modo-escuro .desafio-temporizador,
+.modo-escuro .desafio-resultado {
+    background: #dce7ff;
+    color: #17336f;
+}
+.modo-escuro .desafio-resultado p {
+    color: #354d7b;
+}
+.modo-escuro .desafio-botao-principal,
+.modo-escuro .desafio-acao {
+    background: #081b45;
+    color: #fff;
+}
+.modo-escuro .desafio-acao-secundaria {
+    background: #dce7ff;
+    color: #17336f;
+}
+.modo-escuro .desafio-acao-perigo {
+    background: #ffe3e3;
+    color: #922b36;
+}
+
