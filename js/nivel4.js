@@ -2054,7 +2054,7 @@ let idSessaoRevisao = null;
 
 
 // =====================================================
-// CARREGAR PROGRESSO DO NÍVEL 3 NO SUPABASE
+// CARREGAR PROGRESSO DO NÍVEL 4 NO SUPABASE
 // =====================================================
 
 async function carregarProgressoBancoNivel4() {
@@ -4184,7 +4184,7 @@ async function restaurarRevisaoAtivaNivel4() {
 
 
 // =====================================================
-// INICIALIZAÇÃO DO NÍVEL 3
+// INICIALIZAÇÃO DO NÍVEL 4
 // =====================================================
 
 async function inicializarNivel4() {
