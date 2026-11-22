@@ -14,6 +14,8 @@
     let contatoId = null;
     let canalMensagens = null;
     const mensagensRenderizadas = new Set();
+    let carregandoHistorico = false;
+    let mensagensPendentes = [];
 
     function mostrarEstado(texto, erro) {
         estado.textContent = texto;
@@ -119,7 +121,8 @@
             avatarContato.replaceChildren(foto);
         }
 
-        await carregarMensagens();
+        carregandoHistorico = true;
+        mensagensPendentes = [];
 
         canalMensagens = supabaseClient
             .channel("conversa-" + conversaId)
@@ -128,12 +131,23 @@
                 schema: "public",
                 table: "messages",
                 filter: "conversation_id=eq." + conversaId
-            }, payload => renderizarMensagem(payload.new))
+            }, payload => {
+                if (carregandoHistorico) {
+                    mensagensPendentes.push(payload.new);
+                } else {
+                    renderizarMensagem(payload.new);
+                }
+            })
             .subscribe(status => {
                 if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
                     console.error("Não foi possível conectar as atualizações em tempo real:", status);
                 }
             });
+
+        await carregarMensagens();
+        carregandoHistorico = false;
+        mensagensPendentes.forEach(renderizarMensagem);
+        mensagensPendentes = [];
     }
 
     formulario.addEventListener("submit", async function (event) {
