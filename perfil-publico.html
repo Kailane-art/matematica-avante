@@ -50,11 +50,11 @@
         </p>
 
         <div id="acoesPerfilPublico" class="acoes-perfil-publico" hidden>
-            <button id="botaoAdicionarAmizade" type="button" disabled>
+            <button id="botaoAdicionarAmizade" type="button">
                 <i data-lucide="user-round-plus"></i>
                 Adicionar amizade
             </button>
-            <p>O envio de solicitações de amizade estará disponível em breve.</p>
+            <p id="mensagemAmizadePerfil" role="status" aria-live="polite"></p>
         </div>
 
         <p id="statusPerfilPublico" role="status" aria-live="polite"></p>
@@ -66,6 +66,93 @@
 <script src="js/script.js"></script>
 
 <script>
+
+
+async function configurarBotaoAmizade(idPerfil) {
+    const botao = document.getElementById("botaoAdicionarAmizade");
+    const mensagem = document.getElementById("mensagemAmizadePerfil");
+    if (!botao || !supabaseClient) return;
+
+    botao.disabled = true;
+    botao.innerHTML = '<i data-lucide="loader-circle"></i> Carregando...';
+    mensagem.textContent = "";
+
+    try {
+        const { data, error } = await supabaseClient.rpc("get_chat_contacts");
+        if (error) throw error;
+
+        const relacao = (data || []).find(item => item.contact_id === idPerfil);
+
+        if (relacao?.friendship_status === "accepted") {
+            botao.innerHTML = '<i data-lucide="user-check"></i> Vocês são amigos';
+            botao.disabled = true;
+        } else if (relacao?.friendship_status === "pending" && relacao.request_direction === "sent") {
+            botao.innerHTML = '<i data-lucide="clock-3"></i> Solicitação enviada';
+            botao.disabled = true;
+        } else if (relacao?.friendship_status === "pending" && relacao.request_direction === "received") {
+            botao.innerHTML = '<i data-lucide="user-round-check"></i> Aceitar solicitação';
+            botao.disabled = false;
+            botao.onclick = async function() {
+                await responderAmizade(relacao.request_id, true);
+            };
+        } else {
+            botao.innerHTML = '<i data-lucide="user-round-plus"></i> Adicionar amizade';
+            botao.disabled = false;
+            botao.onclick = async function() {
+                botao.disabled = true;
+                mensagem.textContent = "Enviando solicitação...";
+                const { error: envioErro } = await supabaseClient.rpc("send_friend_request", {
+                    p_recipient_id: idPerfil
+                });
+
+                if (envioErro) {
+                    mensagem.textContent = envioErro.message || "Não foi possível enviar a solicitação.";
+                    botao.disabled = false;
+                    return;
+                }
+
+                mensagem.textContent = "Solicitação de amizade enviada!";
+                await configurarBotaoAmizade(idPerfil);
+            };
+        }
+    } catch (erro) {
+        console.error("Erro ao consultar amizade:", erro);
+        botao.innerHTML = '<i data-lucide="user-round-plus"></i> Adicionar amizade';
+        botao.disabled = false;
+        mensagem.textContent = "Não foi possível carregar o estado da amizade.";
+    }
+
+    if (window.lucide) lucide.createIcons();
+}
+
+async function responderAmizade(idSolicitacao, aceitar) {
+    const botao = document.getElementById("botaoAdicionarAmizade");
+    const mensagem = document.getElementById("mensagemAmizadePerfil");
+    botao.disabled = true;
+
+    const { error } = await supabaseClient.rpc("respond_friend_request", {
+        p_request_id: idSolicitacao,
+        p_accept: aceitar
+    });
+
+    if (error) {
+        mensagem.textContent = error.message || "Não foi possível responder à solicitação.";
+        botao.disabled = false;
+        return;
+    }
+
+    mensagem.textContent = aceitar ? "Agora vocês são amigos!" : "Solicitação recusada.";
+    const perfilId = new URLSearchParams(window.location.search).get("usuario");
+    await carregarEstadoAmizadeAtual();
+}
+
+async function carregarEstadoAmizadeAtual() {
+    const nomeUsuario = new URLSearchParams(window.location.search).get("usuario");
+    const { data, error } = await supabaseClient.rpc("get_public_profile", { p_username: nomeUsuario });
+    if (error) return;
+    const perfil = Array.isArray(data) ? data[0] : data;
+    if (perfil) await configurarBotaoAmizade(perfil.id);
+}
 
 async function carregarPerfilPublico() {
 
@@ -112,8 +199,9 @@ async function carregarPerfilPublico() {
         const ehProprioPerfil = sessaoAtual?.user?.id === perfil.id;
         const acoesPerfil = document.getElementById("acoesPerfilPublico");
 
-        if (acoesPerfil && !ehProprioPerfil) {
+        if (acoesPerfil && !ehProprioPerfil && sessaoAtual?.user) {
             acoesPerfil.hidden = false;
+            await configurarBotaoAmizade(perfil.id);
         }
         username.textContent = "@" + perfil.username;
         tipo.textContent =
@@ -131,20 +219,12 @@ async function carregarPerfilPublico() {
 
             foto.onload = function() {
                 foto.hidden = false;
-
-                const iconeAtual = document.getElementById("iconeAvatarPublico");
-                if (iconeAtual) {
-                    iconeAtual.hidden = true;
-                }
+                foto.parentElement.classList.add("com-foto");
             };
 
             foto.onerror = function() {
                 foto.hidden = true;
-
-                const iconeAtual = document.getElementById("iconeAvatarPublico");
-                if (iconeAtual) {
-                    iconeAtual.hidden = false;
-                }
+                foto.parentElement.classList.remove("com-foto");
             };
 
             foto.src = imagem.publicUrl + "?v=" + Date.now();
