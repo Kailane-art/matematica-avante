@@ -12,6 +12,7 @@
     let usuarioAtual = null;
     let conversaId = null;
     let contatoId = null;
+    let somenteLeitura = false;
     let canalMensagens = null;
     const mensagensRenderizadas = new Set();
     const mensagensOcultasPendentes = new Set();
@@ -161,43 +162,47 @@
         horario.dateTime = mensagem.created_at;
         horario.textContent = formatarHorario(mensagem.created_at);
 
-        const botaoAcoes = document.createElement("button");
-        botaoAcoes.type = "button";
-        botaoAcoes.className = "conversa-acoes-botao";
-        botaoAcoes.setAttribute("aria-label", "Opções da mensagem");
-        botaoAcoes.textContent = "⋯";
+        if (somenteLeitura) {
+            item.append(texto, horario);
+        } else {
+            const botaoAcoes = document.createElement("button");
+            botaoAcoes.type = "button";
+            botaoAcoes.className = "conversa-acoes-botao";
+            botaoAcoes.setAttribute("aria-label", "Opções da mensagem");
+            botaoAcoes.textContent = "⋯";
 
-        const menu = document.createElement("div");
-        menu.className = "conversa-menu-mensagem";
-        menu.hidden = true;
+            const menu = document.createElement("div");
+            menu.className = "conversa-menu-mensagem";
+            menu.hidden = true;
 
-        botaoAcoes.addEventListener("click", function(event) {
-            event.stopPropagation();
-            const abrir = menu.hidden;
-            lista.querySelectorAll(".conversa-menu-mensagem").forEach(outro => outro.hidden = true);
-            menu.hidden = !abrir;
-        });
-
-        function adicionarAcao(rotulo, acao, perigosa) {
-            const botao = document.createElement("button");
-            botao.type = "button";
-            botao.textContent = rotulo;
-            if (perigosa) botao.classList.add("perigosa");
-            botao.addEventListener("click", function(event) {
+            botaoAcoes.addEventListener("click", function(event) {
                 event.stopPropagation();
-                menu.hidden = true;
-                if (acao === "todos" && !window.confirm("Apagar esta mensagem para você e para o outro usuário?")) return;
-                executarAcaoMensagem(mensagem, item, acao);
+                const abrir = menu.hidden;
+                lista.querySelectorAll(".conversa-menu-mensagem").forEach(outro => outro.hidden = true);
+                menu.hidden = !abrir;
             });
-            menu.appendChild(botao);
-        }
 
-        if (mensagem.sender_id === usuarioAtual.id) {
-            adicionarAcao("Apagar para todos", "todos", true);
-        }
-        adicionarAcao("Apagar para mim", "mim", false);
+            function adicionarAcao(rotulo, acao, perigosa) {
+                const botao = document.createElement("button");
+                botao.type = "button";
+                botao.textContent = rotulo;
+                if (perigosa) botao.classList.add("perigosa");
+                botao.addEventListener("click", function(event) {
+                    event.stopPropagation();
+                    menu.hidden = true;
+                    if (acao === "todos" && !window.confirm("Apagar esta mensagem para você e para o outro usuário?")) return;
+                    executarAcaoMensagem(mensagem, item, acao);
+                });
+                menu.appendChild(botao);
+            }
 
-        item.append(texto, horario, botaoAcoes, menu);
+            if (mensagem.sender_id === usuarioAtual.id) {
+                adicionarAcao("Apagar para todos", "todos", true);
+            }
+            adicionarAcao("Apagar para mim", "mim", false);
+
+            item.append(texto, horario, botaoAcoes, menu);
+        }
         lista.appendChild(item);
         atualizarIndicadorVisto();
         rolarParaFim();
@@ -276,12 +281,6 @@
             .maybeSingle();
         if (erroPerfilAtual) throw erroPerfilAtual;
 
-        const amizade = (contatos || []).find(item => item.contact_id === perfil.id && item.friendship_status === "accepted");
-        const podeConversarSemAmizade = perfil.tipo_usuario === "dev" || perfilAtual?.tipo_usuario === "dev";
-        if (!amizade && !podeConversarSemAmizade) {
-            throw new Error("Só é possível conversar com amizades formadas ou com a conta DEV.");
-        }
-
         contatoId = perfil.id;
         const { data: idConversa, error: conversaErro } = await supabaseClient.rpc(
             "get_friend_conversation_id",
@@ -289,9 +288,23 @@
         );
 
         if (conversaErro) throw conversaErro;
-        if (!idConversa) throw new Error("A conversa não está disponível. Verifique se a amizade continua ativa.");
+        if (!idConversa) throw new Error("A conversa não está disponível.");
 
         conversaId = idConversa;
+
+        const { data: leituraRestrita, error: erroLeituraRestrita } = await supabaseClient.rpc(
+            "get_chat_conversation_read_only",
+            { p_contact_id: contatoId }
+        );
+        if (erroLeituraRestrita) throw erroLeituraRestrita;
+
+        somenteLeitura = Boolean(leituraRestrita);
+        if (somenteLeitura) {
+            campo.disabled = true;
+            botaoEnviar.disabled = true;
+            campo.placeholder = "Somente leitura durante o prazo de recuperação";
+            campo.setAttribute("aria-label", "Conversa em modo de leitura durante o prazo de recuperação");
+        }
         nomeContato.textContent = perfil.display_name || "Usuário";
         usernameContato.textContent = "@" + perfil.username;
 
