@@ -610,9 +610,22 @@ if (formLogin) {
 
             console.error("Erro no login:", erro);
 
-            mostrarMensagemAutenticacao(
-                "Email ou senha incorretos, ou sua conta ainda não foi confirmada."
-            );
+            const codigoErro = String(erro?.code || "").toLowerCase();
+            const mensagemErro = String(erro?.message || "").toLowerCase();
+            const contaBanida =
+                codigoErro === "user_banned" ||
+                mensagemErro.includes("banned") ||
+                mensagemErro.includes("banido");
+
+            if (contaBanida) {
+                mostrarMensagemAutenticacao(
+                    "Esta conta foi banida. Existe um prazo de recuperação de até 30 dias a partir do banimento. A reativação depende da decisão da equipe DEV do Matemática Avante."
+                );
+            } else {
+                mostrarMensagemAutenticacao(
+                    "Email ou senha incorretos, ou sua conta ainda não foi confirmada."
+                );
+            }
 
         } finally {
 
