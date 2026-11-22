@@ -8,8 +8,14 @@
     const campoPesquisa = document.getElementById("pesquisaEstudante");
     const resultadosPesquisa = document.getElementById("resultadosPesquisa");
     const ajudaPesquisa = document.querySelector(".ranking-ajuda-pesquisa");
+    const listaRankingDesafios = document.getElementById("listaRankingDesafios");
+    const statusRankingDesafios = document.getElementById("statusRankingDesafios");
+    const campoPesquisaDesafios = document.getElementById("pesquisaRankingDesafios");
+    const resultadosPesquisaDesafios = document.getElementById("resultadosRankingDesafios");
+    const ajudaPesquisaDesafios = document.getElementById("ajudaPesquisaRankingDesafios");
 
     let temporizadorPesquisa = null;
+    let temporizadorPesquisaDesafios = null;
 
     function criarElemento(tag, classe, texto) {
         const elemento = document.createElement(tag);
@@ -149,6 +155,97 @@
         }
     }
 
+    function criarLinhaRankingDesafios(item) {
+        const linha = criarElemento("li", "ranking-item");
+        const posicao = criarElemento("span", "ranking-posicao", String(item.position) + "º");
+        const identidade = criarElemento("div", "ranking-identidade");
+        identidade.append(
+            criarElemento("span", "ranking-nome", item.display_name || "Estudante"),
+            criarElemento("span", "ranking-username", "@" + (item.username || ""))
+        );
+        const vitorias = criarElemento("span", "ranking-pontuacao",
+            Number(item.weekly_wins || 0) + (Number(item.weekly_wins || 0) === 1 ? " vitória" : " vitórias")
+        );
+        linha.append(posicao, identidade, vitorias);
+        return linha;
+    }
+
+    async function consultarRankingDesafios(pesquisa) {
+        if (typeof supabaseClient === "undefined" || !supabaseClient) {
+            throw new Error("Não foi possível conectar ao ranking de desafios.");
+        }
+        const { data, error } = await supabaseClient.rpc(
+            "get_weekly_friend_challenge_ranking",
+            { p_search: pesquisa || null }
+        );
+        if (error) throw error;
+        return data;
+    }
+
+    async function carregarRankingDesafios() {
+        try {
+            const dados = await consultarRankingDesafios(null);
+            atualizarPeriodo(dados);
+            listaRankingDesafios.replaceChildren();
+
+            if (!Array.isArray(dados.top3) || dados.top3.length === 0) {
+                statusRankingDesafios.textContent = "Ainda não há vitórias registradas nesta semana.";
+            } else {
+                statusRankingDesafios.textContent = dados.my_position
+                    ? "Sua posição nesta semana: " + dados.my_position + "º lugar."
+                    : "Confira os três estudantes com mais vitórias nesta semana.";
+                dados.top3.forEach(item => listaRankingDesafios.appendChild(criarLinhaRankingDesafios(item)));
+            }
+
+            if (!dados.my_position && (!dados.top3 || dados.top3.length === 0)) {
+                statusRankingDesafios.textContent = "As disputas ainda não tiveram resultados concluídos nesta semana.";
+            }
+        } catch (erro) {
+            console.error("Erro ao carregar o ranking de desafios:", erro);
+            statusRankingDesafios.textContent = "Não foi possível carregar o ranking de desafios.";
+        }
+    }
+
+    async function pesquisarRankingDesafios(termo) {
+        if (termo.length < 2) {
+            resultadosPesquisaDesafios.replaceChildren();
+            ajudaPesquisaDesafios.textContent = "Digite pelo menos 2 caracteres para pesquisar.";
+            return;
+        }
+        ajudaPesquisaDesafios.textContent = "Pesquisando...";
+        try {
+            const dados = await consultarRankingDesafios(termo);
+            resultadosPesquisaDesafios.replaceChildren();
+            const itens = dados.search_results || [];
+            if (!itens.length) {
+                resultadosPesquisaDesafios.appendChild(
+                    criarElemento("p", "ranking-status", "Nenhum estudante encontrado.")
+                );
+            } else {
+                itens.forEach(item => {
+                    const linha = criarElemento("div", "ranking-resultado-item");
+                    const identidade = criarElemento("div", "ranking-identidade");
+                    identidade.append(
+                        criarElemento("span", "ranking-nome", item.display_name || "Estudante"),
+                        criarElemento("span", "ranking-username", "@" + (item.username || ""))
+                    );
+                    const posicao = item.position
+                        ? criarElemento("span", "ranking-resultado-posicao", item.position + "º lugar · " + item.weekly_wins + " vitórias")
+                        : criarElemento("span", "ranking-resultado-sem-pontos", "Sem vitórias nesta semana");
+                    linha.append(identidade, posicao);
+                    resultadosPesquisaDesafios.appendChild(linha);
+                });
+            }
+            ajudaPesquisaDesafios.textContent = "Resultados da semana atual.";
+        } catch (erro) {
+            console.error("Erro ao pesquisar no ranking de desafios:", erro);
+            resultadosPesquisaDesafios.replaceChildren(
+                criarElemento("p", "ranking-status", "Não foi possível realizar a pesquisa.")
+            );
+            ajudaPesquisaDesafios.textContent = "Falha na pesquisa.";
+        }
+    }
+
     if (campoPesquisa) {
         campoPesquisa.addEventListener("input", function () {
             window.clearTimeout(temporizadorPesquisa);
@@ -160,5 +257,16 @@
         });
     }
 
+    if (campoPesquisaDesafios) {
+        campoPesquisaDesafios.addEventListener("input", function () {
+            window.clearTimeout(temporizadorPesquisaDesafios);
+            const termo = campoPesquisaDesafios.value.trim();
+            temporizadorPesquisaDesafios = window.setTimeout(function () {
+                pesquisarRankingDesafios(termo);
+            }, 350);
+        });
+    }
+
     carregarRankingInicial();
+    carregarRankingDesafios();
 })();
