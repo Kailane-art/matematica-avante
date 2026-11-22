@@ -14,6 +14,7 @@
     let contatoId = null;
     let canalMensagens = null;
     const mensagensRenderizadas = new Set();
+    const mensagensOcultasPendentes = new Set();
     let carregandoHistorico = false;
     let mensagensPendentes = [];
 
@@ -105,6 +106,7 @@
     }
 
     function removerMensagemDaTela(id) {
+        mensagensOcultasPendentes.add(id);
         const item = lista.querySelector('[data-message-id="' + id + '"]');
         if (item) item.remove();
         mensagensRenderizadas.delete(id);
@@ -139,7 +141,7 @@
     }
 
     function renderizarMensagem(mensagem) {
-        if (!mensagem || mensagensRenderizadas.has(mensagem.id)) return;
+        if (!mensagem || mensagensRenderizadas.has(mensagem.id) || mensagensOcultasPendentes.has(mensagem.id)) return;
         mensagensRenderizadas.add(mensagem.id);
         mensagensPorId.set(mensagem.id, mensagem);
 
