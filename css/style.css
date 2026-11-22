@@ -3751,3 +3751,14 @@ body.pagina-perfil-publico .avatar-area.com-foto #fotoPerfilPublico:not([hidden]
     object-fit: cover;
     object-position: center;
 }
+
+
+.acoes-perfil-publico button {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.acoes-perfil-publico button:disabled {
+    cursor: default;
+    opacity: 0.72;
+}
