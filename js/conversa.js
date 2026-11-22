@@ -64,12 +64,19 @@
 
     function formatarTempoVisto(data) {
         const minutos = Math.max(0, Math.floor((Date.now() - new Date(data).getTime()) / 60000));
-        if (minutos < 60) return "Visto";
+
+        if (minutos < 30) return "Visto";
+
+        if (minutos < 60) {
+            return "Visto há " + minutos + " min";
+        }
+
         const horas = Math.floor(minutos / 60);
         const minutosRestantes = minutos % 60;
+
         return minutosRestantes === 0
             ? "Visto há " + horas + "h"
-            : "Visto há " + horas + ":" + String(minutosRestantes).padStart(2, "0");
+            : "Visto há " + horas + "h " + minutosRestantes + "min";
     }
 
     function atualizarIndicadorVisto() {
@@ -499,7 +506,8 @@
         await carregarMensagens();
         await marcarConversaComoLida();
         await carregarUltimaLeituraContato();
-        intervaloRecibo = window.setInterval(atualizarIndicadorVisto, 60000);
+        // Atualiza o texto com frequência para acompanhar a mudança de minuto.
+        intervaloRecibo = window.setInterval(atualizarIndicadorVisto, 15000);
         carregandoHistorico = false;
         const recebeuDuranteCarregamento = mensagensPendentes.some(
             mensagem => mensagem.sender_id !== usuarioAtual.id
