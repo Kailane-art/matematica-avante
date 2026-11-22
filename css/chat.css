@@ -214,8 +214,14 @@
 }
 
 .chat-resultado-dados strong {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
     color: #1e293b;
     font-size: 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-wrap: normal;
 }
 
 .chat-resultado-dados span {
@@ -548,11 +554,12 @@
     }
 
     .chat-resultado-card {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
     }
 
     .chat-link-perfil {
-        margin-left: 62px;
+        flex: 0 0 auto;
+        margin-left: 0;
     }
 }
 
