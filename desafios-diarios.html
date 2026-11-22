@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafios diários - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/desafios-diarios.css?v=20261122-v1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+    <header class="cabecalho-desafios">
+        <button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar">
+            <i data-lucide="arrow-left"></i>
+        </button>
+        <div class="titulo-cabecalho-desafios">
+            <span>Matemática Avante</span>
+            <h1>Desafios diários</h1>
+        </div>
+        <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+            <i data-lucide="menu"></i>
+        </button>
+    </header>
+
+    <main class="pagina-desafios-diarios">
+        <section class="introducao-desafios">
+            <span class="selo-desafios"><i data-lucide="calendar-check"></i> NOVOS DESAFIOS TODOS OS DIAS</span>
+            <h2>Seu desafio de hoje!</h2>
+            <p>Três questões sorteadas para testar seus conhecimentos. A dificuldade é surpresa.</p>
+            <strong id="dataDesafios" class="data-desafios">Carregando data...</strong>
+        </section>
+
+        <section class="resumo-desafios" aria-live="polite">
+            <div class="resumo-desafio-item">
+                <span>Questões concluídas</span>
+                <strong id="progressoDesafios">0/3</strong>
+            </div>
+            <div class="resumo-desafio-item">
+                <span>XP conquistado hoje</span>
+                <strong id="xpDesafiosHoje">0/80 XP</strong>
+            </div>
+            <div class="barra-progresso-desafios" role="progressbar" aria-label="Progresso dos desafios" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0">
+                <div id="barraProgressoDesafios"></div>
+            </div>
+        </section>
+
+        <div id="mensagemDesafios" class="mensagem-desafios" role="status">
+            Carregando os desafios do dia...
+        </div>
+
+        <section id="listaDesafios" class="lista-desafios" aria-label="Questões dos desafios diários"></section>
+
+        <section class="bonus-desafios" id="bonusDesafios">
+            <div class="bonus-desafios-icone"><i data-lucide="trophy"></i></div>
+            <div>
+                <h2>Bônus de conclusão</h2>
+                <p>Acerte as três questões e receba mais <strong>20 XP</strong>.</p>
+                <span id="statusBonusDesafios">Bônus disponível ao concluir os três desafios.</span>
+            </div>
+        </section>
+    </main>
+
+    <div id="fundoMenu"></div>
+    <nav id="menuLateral" aria-label="Menu principal">
+        <h2>Menu</h2>
+        <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+        <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+        <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+        <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+        <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+        <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+        <a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+        <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+        <a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a>
+    </nav>
+
+    <script src="js/script.js"></script>
+    <script src="js/notificacoes-push.js"></script>
+    <script src="js/desafios-diarios.js?v=20261122-v1"></script>
+</body>
+</html>
