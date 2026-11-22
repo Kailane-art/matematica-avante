@@ -594,7 +594,7 @@
             };
             avatar.replaceChildren(foto);
         }
-        if (window.atualizarIndicadorPresenca) {
+        if (tipo === "friend" && window.atualizarIndicadorPresenca) {
             window.atualizarIndicadorPresenca(avatar, contato.contact_id);
         }
 
