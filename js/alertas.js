@@ -132,10 +132,14 @@ document.addEventListener("DOMContentLoaded", async function() {
                 if (avisoPublicacao) avisoPublicacao.textContent = "Publicando o alerta e criando as notificações...";
 
                 try {
-                    const { error } = await supabaseClient.rpc("publish_global_alert", {
+                    const { data: alertId, error } = await supabaseClient.rpc("publish_global_alert", {
                         p_message: mensagem
                     });
                     if (error) throw error;
+
+                    if (window.maPushNotifications && alertId) {
+                        await window.maPushNotifications.enviarEvento("alert", { alert_id: alertId });
+                    }
 
                     campoMensagem.value = "";
                     if (avisoPublicacao) avisoPublicacao.textContent = "Alerta publicado e enviado aos usuários.";
