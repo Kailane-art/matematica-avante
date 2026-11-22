@@ -802,3 +802,97 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+/* NOTIFICAÇÕES ADMINISTRATIVAS */
+.chat-lista-notificacoes {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    padding-top:14px;
+}
+.chat-notificacao-item {
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px;
+    border:1px solid #e1e8f2;
+    border-radius:14px;
+    background:#fff;
+    color:#1e293b;
+    text-align:left;
+    cursor:pointer;
+    transition:background .18s, border-color .18s;
+}
+.chat-notificacao-item:hover {
+    background:#f8faff;
+    border-color:#8eacee;
+}
+.chat-notificacao-item.nao-lida {
+    border-left:4px solid #4169e1;
+    background:#f5f8ff;
+}
+.chat-notificacao-icone {
+    width:40px;
+    height:40px;
+    flex:0 0 40px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:#e8efff;
+    color:#3158c9;
+}
+.chat-notificacao-icone svg,
+.chat-notificacao-seta {
+    width:20px;
+    height:20px;
+}
+.chat-notificacao-dados {
+    min-width:0;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+.chat-notificacao-dados strong {
+    color:#1e293b;
+    font-size:13px;
+}
+.chat-notificacao-dados span {
+    color:#475569;
+    font-size:12px;
+}
+.chat-notificacao-dados small {
+    color:#64748b;
+    font-size:10px;
+}
+.chat-notificacao-seta {
+    flex:0 0 20px;
+    color:#64748b;
+}
+.chat-notificacao-item:disabled {
+    opacity:.65;
+    cursor:wait;
+}
+.modo-escuro .chat-notificacao-item {
+    border-color:#29456f;
+    background:#13294b;
+    color:#e2e8f0;
+}
+.modo-escuro .chat-notificacao-item:hover,
+.modo-escuro .chat-notificacao-item.nao-lida {
+    background:#1a365e;
+}
+.modo-escuro .chat-notificacao-dados strong {
+    color:#f1f5f9;
+}
+.modo-escuro .chat-notificacao-dados span,
+.modo-escuro .chat-notificacao-dados small,
+.modo-escuro .chat-notificacao-seta {
+    color:#cbd5e1;
+}
+.modo-escuro .chat-notificacao-icone {
+    background:#1d3b6d;
+    color:#dbeafe;
+}
+
