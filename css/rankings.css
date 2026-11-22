@@ -1,0 +1,507 @@
+/* Página Rankings */
+.rankings-container {
+    width: min(100% - 32px, 900px);
+    margin: 28px auto 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.rankings-introducao {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px;
+    background: #e8efff;
+    border: 1px solid #d7e3ff;
+    border-radius: 18px;
+}
+
+.rankings-introducao-icone {
+    width: 54px;
+    height: 54px;
+    flex: 0 0 54px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: #1e3a8a;
+    color: #fff;
+}
+
+.rankings-introducao-icone svg {
+    width: 28px;
+    height: 28px;
+}
+
+.rankings-introducao h2 {
+    margin-bottom: 5px;
+    color: #17336f;
+    font-size: 21px;
+}
+
+.rankings-introducao p {
+    color: #4b5d7c;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.ranking-card {
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 7px 20px rgba(15, 35, 70, 0.07);
+}
+
+.ranking-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.ranking-titulo-grupo {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+}
+
+.ranking-icone {
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+}
+
+.ranking-icone svg {
+    width: 24px;
+    height: 24px;
+}
+
+.ranking-icone-individual {
+    background: #e8efff;
+    color: #1e3a8a;
+}
+
+.ranking-icone-desafios {
+    background: #e8f5ee;
+    color: #16834f;
+}
+
+.ranking-titulo-grupo h2 {
+    color: #1e3a8a;
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.ranking-titulo-grupo p {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.ranking-periodo {
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: #edf2ff;
+    color: #244780;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.ranking-legenda-periodo {
+    margin: 17px 0 12px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.ranking-status {
+    padding: 13px 14px;
+    margin: 12px 0;
+    border-radius: 12px;
+    background: #f4f7fc;
+    color: #53647d;
+    font-size: 14px;
+}
+
+.ranking-status:empty {
+    display: none;
+}
+
+.ranking-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-height: 68px;
+    padding: 12px 14px;
+    border: 1px solid #e8edf5;
+    border-radius: 14px;
+    background: #fff;
+}
+
+.ranking-item:nth-child(1) {
+    background: #fffaf0;
+    border-color: #f2dfae;
+}
+
+.ranking-item:nth-child(2) {
+    background: #f7f9fc;
+}
+
+.ranking-posicao {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #edf2f7;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.ranking-item:nth-child(1) .ranking-posicao {
+    background: #f3d477;
+    color: #654b08;
+}
+
+.ranking-item:nth-child(2) .ranking-posicao {
+    background: #dce3ec;
+    color: #465468;
+}
+
+.ranking-item:nth-child(3) .ranking-posicao {
+    background: #e9c4a5;
+    color: #704323;
+}
+
+.ranking-identidade {
+    min-width: 0;
+    flex: 1;
+}
+
+.ranking-nome {
+    display: block;
+    overflow: hidden;
+    color: #1e293b;
+    font-size: 15px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ranking-username {
+    display: block;
+    margin-top: 3px;
+    overflow: hidden;
+    color: #718096;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ranking-pontuacao {
+    flex: 0 0 auto;
+    color: #1e3a8a;
+    font-size: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.ranking-vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    padding: 30px 18px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 15px;
+    background: #f8fafc;
+    text-align: center;
+}
+
+.ranking-vazio-icone {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #e8efff;
+    color: #1e3a8a;
+}
+
+.ranking-vazio-icone svg {
+    width: 24px;
+    height: 24px;
+}
+
+.ranking-vazio h3 {
+    color: #263b60;
+    font-size: 16px;
+}
+
+.ranking-vazio p {
+    max-width: 440px;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.ranking-pesquisa {
+    margin-top: 23px;
+    padding-top: 19px;
+    border-top: 1px solid #e8edf5;
+}
+
+.ranking-pesquisa label {
+    display: block;
+    margin-bottom: 9px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.ranking-campo-pesquisa {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: #fff;
+    color: #64748b;
+}
+
+.ranking-campo-pesquisa:focus-within {
+    border-color: #2d5da8;
+    box-shadow: 0 0 0 3px rgba(45, 93, 168, 0.12);
+}
+
+.ranking-campo-pesquisa svg {
+    width: 19px;
+    height: 19px;
+    flex: 0 0 19px;
+}
+
+.ranking-campo-pesquisa input {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #1e293b;
+    font: inherit;
+    font-size: 14px;
+}
+
+.ranking-campo-pesquisa input::placeholder {
+    color: #94a3b8;
+}
+
+.ranking-campo-pesquisa input:disabled {
+    cursor: not-allowed;
+}
+
+.ranking-ajuda-pesquisa {
+    margin-top: 7px;
+    color: #718096;
+    font-size: 12px;
+}
+
+.ranking-resultados {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.ranking-resultado-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #f4f7fc;
+}
+
+.ranking-resultado-posicao {
+    flex: 0 0 auto;
+    color: #1e3a8a;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.ranking-resultado-sem-pontos {
+    color: #64748b;
+    font-size: 12px;
+    text-align: right;
+}
+
+.modo-escuro .rankings-introducao {
+    background: #132d50;
+    border-color: #24466f;
+}
+
+.modo-escuro .rankings-introducao h2,
+.modo-escuro .ranking-titulo-grupo h2 {
+    color: #e6efff;
+}
+
+.modo-escuro .rankings-introducao p,
+.modo-escuro .ranking-titulo-grupo p,
+.modo-escuro .ranking-legenda-periodo,
+.modo-escuro .ranking-ajuda-pesquisa {
+    color: #b8c7dc;
+}
+
+.modo-escuro .ranking-card {
+    background: #13294b;
+    border-color: #294568;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.18);
+}
+
+.modo-escuro .ranking-periodo {
+    background: #203e67;
+    color: #dbeafe;
+}
+
+.modo-escuro .ranking-status,
+.modo-escuro .ranking-resultado-item {
+    background: #1a365d;
+    color: #d6e2f2;
+}
+
+.modo-escuro .ranking-item {
+    background: #172f52;
+    border-color: #2b4668;
+}
+
+.modo-escuro .ranking-item:nth-child(1) {
+    background: #3b3422;
+    border-color: #77602a;
+}
+
+.modo-escuro .ranking-item:nth-child(2) {
+    background: #20334d;
+}
+
+.modo-escuro .ranking-nome {
+    color: #f1f5f9;
+}
+
+.modo-escuro .ranking-username,
+.modo-escuro .ranking-resultado-sem-pontos {
+    color: #b8c7dc;
+}
+
+.modo-escuro .ranking-pontuacao,
+.modo-escuro .ranking-resultado-posicao {
+    color: #bcd5ff;
+}
+
+.modo-escuro .ranking-pesquisa {
+    border-top-color: #294568;
+}
+
+.modo-escuro .ranking-pesquisa label {
+    color: #e2e8f0;
+}
+
+.modo-escuro .ranking-campo-pesquisa {
+    background: #102441;
+    border-color: #3a5578;
+    color: #b8c7dc;
+}
+
+.modo-escuro .ranking-campo-pesquisa input {
+    color: #f8fafc;
+}
+
+.modo-escuro .ranking-vazio {
+    background: #102441;
+    border-color: #3a5578;
+}
+
+.modo-escuro .ranking-vazio h3 {
+    color: #e2e8f0;
+}
+
+.modo-escuro .ranking-vazio p {
+    color: #b8c7dc;
+}
+
+@media (max-width: 600px) {
+    .rankings-container {
+        width: min(100% - 22px, 900px);
+        margin-top: 18px;
+        gap: 16px;
+    }
+
+    .rankings-introducao {
+        padding: 17px;
+        gap: 12px;
+    }
+
+    .rankings-introducao-icone {
+        width: 46px;
+        height: 46px;
+        flex-basis: 46px;
+    }
+
+    .rankings-introducao h2 {
+        font-size: 18px;
+    }
+
+    .rankings-introducao p {
+        font-size: 13px;
+    }
+
+    .ranking-card {
+        padding: 17px 14px;
+        border-radius: 17px;
+    }
+
+    .ranking-cabecalho {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .ranking-titulo-grupo h2 {
+        font-size: 18px;
+    }
+
+    .ranking-periodo {
+        margin-left: 59px;
+    }
+
+    .ranking-item {
+        gap: 10px;
+        padding: 11px;
+    }
+
+    .ranking-nome {
+        font-size: 14px;
+    }
+
+    .ranking-pontuacao {
+        font-size: 13px;
+    }
+}
