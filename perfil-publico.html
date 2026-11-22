@@ -406,9 +406,11 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
         }
     } catch (erro) {
         console.error("Erro ao consultar situação administrativa:", erro);
-        estado.textContent = "Não foi possível consultar a situação da conta.";
-        botao.hidden = true;
-        return;
+        estado.textContent = "Não foi possível consultar a situação da conta. As ações administrativas continuam disponíveis.";
+        botaoSuspender.hidden = false;
+        botaoBanir.hidden = false;
+        botaoReativar.hidden = true;
+        botaoRebaixar.hidden = perfilPublicoAtual.tipo_usuario !== "professor";
     }
 
     botao.onclick = function() {
