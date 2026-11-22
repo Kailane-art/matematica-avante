@@ -1,0 +1,203 @@
+/* Página Desafios */
+.desafios-container {
+    width: min(100% - 32px, 900px);
+    margin: 26px auto 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.desafios-introducao {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px;
+    background: #e8efff;
+    border: 1px solid #d7e3ff;
+    border-radius: 18px;
+}
+.desafios-introducao-icone {
+    width: 54px;
+    height: 54px;
+    flex: 0 0 54px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: #1e3a8a;
+    color: #fff;
+}
+.desafios-introducao-icone svg { width: 28px; height: 28px; }
+.desafios-introducao h2 { margin-bottom: 5px; color: #17336f; font-size: 21px; }
+.desafios-introducao p { color: #4b5d7c; font-size: 14px; line-height: 1.5; }
+.desafio-regras {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+.desafio-regras > div {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 58px;
+    padding: 12px;
+    border: 1px solid #dce5f2;
+    border-radius: 13px;
+    background: #fff;
+    color: #40536f;
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.35;
+}
+.desafio-regras svg { width: 19px; height: 19px; flex: 0 0 19px; color: #1e3a8a; }
+.desafio-card {
+    padding: 23px;
+    border: 1px solid #e0e7f0;
+    border-radius: 19px;
+    background: #fff;
+    box-shadow: 0 7px 20px rgba(15, 35, 70, .06);
+}
+.desafio-card-cabecalho, .desafio-partida-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+.desafio-card-cabecalho h2, .desafio-partida-topo h2 { color: #1e3a8a; font-size: 19px; }
+.desafio-card-cabecalho p { margin-top: 4px; color: #64748b; font-size: 13px; }
+.desafio-icone-cabecalho, .desafio-botao-icone {
+    width: 43px;
+    height: 43px;
+    flex: 0 0 43px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 13px;
+    background: #e8efff;
+    color: #1e3a8a;
+}
+.desafio-botao-icone { cursor: pointer; }
+.desafio-formulario { display: grid; gap: 9px; margin-top: 20px; }
+.desafio-formulario label { margin-top: 5px; color: #334155; font-size: 13px; font-weight: 750; }
+.desafio-formulario select {
+    width: 100%;
+    min-height: 47px;
+    padding: 0 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 11px;
+    background: #fff;
+    color: #1e293b;
+    font: inherit;
+    font-size: 14px;
+}
+.desafio-observacao { margin: 4px 0 7px; color: #718096; font-size: 12px; line-height: 1.5; }
+.desafio-botao-principal, .desafio-acao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 45px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 11px;
+    background: #1e3a8a;
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 750;
+    cursor: pointer;
+}
+.desafio-botao-principal:disabled, .desafio-acao:disabled { opacity: .55; cursor: not-allowed; }
+.desafio-botao-principal svg, .desafio-acao svg { width: 17px; height: 17px; }
+.desafio-mensagem { min-height: 0; margin-top: 10px; color: #52647d; font-size: 13px; line-height: 1.5; }
+.desafio-mensagem:empty { display: none; }
+.desafio-lista { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+.desafio-estado-vazio { padding: 16px; border-radius: 12px; background: #f5f7fb; color: #718096; font-size: 13px; text-align: center; }
+.desafio-convite {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px;
+    border: 1px solid #e4eaf2;
+    border-radius: 13px;
+    background: #fbfcfe;
+}
+.desafio-convite-info { min-width: 0; flex: 1; }
+.desafio-convite-nome { display: block; color: #1e293b; font-size: 14px; font-weight: 750; }
+.desafio-convite-detalhe { display: block; margin-top: 4px; color: #718096; font-size: 12px; line-height: 1.45; }
+.desafio-convite-acoes { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+.desafio-acao { min-height: 36px; padding: 7px 11px; font-size: 12px; }
+.desafio-acao-secundaria { background: #e8edf5; color: #334155; }
+.desafio-acao-perigo { background: #fff0f0; color: #a83232; }
+.desafio-etiqueta { display: inline-block; margin-bottom: 6px; color: #64748b; font-size: 10px; font-weight: 850; letter-spacing: .08em; }
+.desafio-temporizador { padding: 8px 11px; border-radius: 10px; background: #edf2ff; color: #1e3a8a; font-size: 15px; font-weight: 850; font-variant-numeric: tabular-nums; }
+.desafio-progresso { margin: 20px 0; }
+.desafio-progresso-texto { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 8px; color: #53647d; font-size: 12px; font-weight: 700; }
+.desafio-progresso-trilho { height: 8px; overflow: hidden; border-radius: 99px; background: #e8edf5; }
+.desafio-progresso-trilho span { display: block; width: 0; height: 100%; border-radius: inherit; background: #1e3a8a; transition: width .2s ease; }
+.desafio-questao {
+    padding: 19px;
+    border: 1px solid #e1e8f1;
+    border-radius: 15px;
+    background: #fbfcff;
+}
+.desafio-questao-topo { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 12px; color: #64748b; font-size: 11px; font-weight: 750; }
+.desafio-questao h3 { margin-bottom: 17px; color: #1e293b; font-size: 17px; line-height: 1.5; }
+.desafio-opcoes { display: grid; gap: 9px; }
+.desafio-opcao {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px solid #d6deea;
+    border-radius: 11px;
+    background: #fff;
+    color: #334155;
+    font: inherit;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+}
+.desafio-opcao:hover:not(:disabled) { border-color: #4569a8; background: #f2f6ff; }
+.desafio-opcao:disabled { cursor: default; opacity: .85; }
+.desafio-opcao-correta { border-color: #25965d; background: #e9f8ef; color: #17633e; }
+.desafio-opcao-incorreta { border-color: #d94c4c; background: #fff0f0; color: #9c2929; }
+.desafio-feedback { margin-top: 12px; font-size: 13px; font-weight: 700; line-height: 1.5; }
+.desafio-resultado { margin-top: 17px; padding: 18px; border-radius: 14px; background: #edf4ff; color: #1e3a8a; text-align: center; }
+.desafio-resultado h3 { margin-bottom: 7px; font-size: 20px; }
+.desafio-resultado p { color: #405779; font-size: 13px; line-height: 1.5; }
+.modo-escuro .desafios-introducao { background: #132d50; border-color: #24466f; }
+.modo-escuro .desafios-introducao h2, .modo-escuro .desafio-card-cabecalho h2, .modo-escuro .desafio-partida-topo h2 { color: #e6efff; }
+.modo-escuro .desafios-introducao p, .modo-escuro .desafio-card-cabecalho p { color: #b8c7dc; }
+.modo-escuro .desafio-regras > div, .modo-escuro .desafio-card { background: #13294b; border-color: #294568; color: #d6e2f2; }
+.modo-escuro .desafio-regras svg { color: #bcd5ff; }
+.modo-escuro .desafio-formulario label { color: #e2e8f0; }
+.modo-escuro .desafio-formulario select { background: #102441; border-color: #3a5578; color: #f8fafc; }
+.modo-escuro .desafio-observacao, .modo-escuro .desafio-mensagem { color: #b8c7dc; }
+.modo-escuro .desafio-icone-cabecalho, .modo-escuro .desafio-botao-icone { background: #203e67; color: #dbeafe; }
+.modo-escuro .desafio-estado-vazio { background: #102441; color: #b8c7dc; }
+.modo-escuro .desafio-convite { background: #172f52; border-color: #2b4668; }
+.modo-escuro .desafio-convite-nome, .modo-escuro .desafio-questao h3 { color: #f1f5f9; }
+.modo-escuro .desafio-convite-detalhe, .modo-escuro .desafio-questao-topo { color: #b8c7dc; }
+.modo-escuro .desafio-temporizador { background: #203e67; color: #dbeafe; }
+.modo-escuro .desafio-progresso-texto { color: #b8c7dc; }
+.modo-escuro .desafio-progresso-trilho { background: #294568; }
+.modo-escuro .desafio-questao { background: #102441; border-color: #294568; }
+.modo-escuro .desafio-opcao { background: #172f52; border-color: #3a5578; color: #e2e8f0; }
+.modo-escuro .desafio-opcao-correta { background: #17432f; border-color: #25965d; color: #d8f7e5; }
+.modo-escuro .desafio-opcao-incorreta { background: #4a252a; border-color: #d94c4c; color: #ffe1e1; }
+.modo-escuro .desafio-resultado { background: #203e67; color: #e6efff; }
+.modo-escuro .desafio-resultado p { color: #c5d6ef; }
+@media (max-width: 620px) {
+    .desafios-container { width: min(100% - 22px, 900px); margin-top: 17px; gap: 14px; }
+    .desafios-introducao { padding: 17px; gap: 12px; }
+    .desafios-introducao-icone { width: 46px; height: 46px; flex-basis: 46px; }
+    .desafios-introducao h2 { font-size: 18px; }
+    .desafios-introducao p { font-size: 13px; }
+    .desafio-regras { grid-template-columns: 1fr; gap: 7px; }
+    .desafio-regras > div { min-height: 44px; }
+    .desafio-card { padding: 17px 14px; }
+    .desafio-convite { align-items: stretch; flex-direction: column; }
+    .desafio-convite-acoes { justify-content: flex-start; }
+    .desafio-partida-topo { align-items: flex-start; }
+    .desafio-questao { padding: 15px; }
+    .desafio-questao h3 { font-size: 15px; }
+}
