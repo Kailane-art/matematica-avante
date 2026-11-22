@@ -249,6 +249,7 @@ const paginasProtegidas = new Set([
     "nivel1.html",
     "nivel2.html",
     "nivel3.html",
+    "nivel4.html",
     "adicao.html",
     "subtracao.html",
     "multiplicacao.html",
@@ -1847,6 +1848,11 @@ const conteudosRastreaveis = {
     "nivel3.html": {
         chave: "nivel3",
         nome: "Nível 3"
+    },
+
+    "nivel4.html": {
+        chave: "nivel4",
+        nome: "Nível 4"
     }
 
 };
@@ -2783,7 +2789,7 @@ if (botaoFecharNotificacaoNivel) {
         const notificacao = document.getElementById("notificacaoNivelBloqueado");
         if (notificacao) notificacao.hidden = true;
 
-        if (paginaAtual === "nivel2.html" || paginaAtual === "nivel3.html") {
+        if (paginaAtual === "nivel2.html" || paginaAtual === "nivel3.html" || paginaAtual === "nivel4.html") {
             window.location.replace("atividades.html");
         }
     });
