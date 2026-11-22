@@ -127,6 +127,14 @@ function renderizarDesafiosDiarios() {
             botao.disabled = questao.completed === true ||
                 questaoEmEnvio === questao.id;
 
+            if (questao.last_option_id === alternativa.id) {
+                botao.classList.add(
+                    questao.last_answer_correct === true
+                        ? "resposta-correta"
+                        : "resposta-incorreta"
+                );
+            }
+
             botao.addEventListener("click", function() {
                 responderDesafioDiario(questao, alternativa, botao);
             });
@@ -217,6 +225,17 @@ async function responderDesafioDiario(questao, alternativa, botao) {
         }
 
         await carregarDesafiosDiarios();
+
+        const questaoAtualizada = estadoDesafiosDiarios.questions.find(
+            function(item) {
+                return item.id === questao.id;
+            }
+        );
+
+        if (questaoAtualizada) {
+            questaoAtualizada.last_option_id = alternativa.id;
+            questaoAtualizada.last_answer_correct = resultado.data?.correct === true;
+        }
 
         mensagemDesafios.classList.remove("erro");
 
