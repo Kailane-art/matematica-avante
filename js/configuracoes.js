@@ -92,6 +92,10 @@
 
             if (error) throw error;
             if (Object.prototype.hasOwnProperty.call(alteracoes, "show_online_status")) {
+                localStorage.setItem(
+                    "ma:showOnlineStatus:" + user.id,
+                    String(configuracoes.show_online_status)
+                );
                 window.dispatchEvent(new CustomEvent("ma:status-online-configurado", {
                     detail: { enabled: configuracoes.show_online_status }
                 }));
