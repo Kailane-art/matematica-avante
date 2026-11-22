@@ -429,6 +429,9 @@
             foto.alt = "";
             avatarContato.replaceChildren(foto);
         }
+        if (window.atualizarIndicadorPresenca) {
+            window.atualizarIndicadorPresenca(avatarContato, contatoId);
+        }
 
         carregandoHistorico = true;
         mensagensPendentes = [];
