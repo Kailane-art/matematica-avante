@@ -74,6 +74,10 @@
         aba.addEventListener("click", function() {
             const secao = aba.dataset.secaoChat;
 
+            if (secao === "solicitacoes" || secao === "amigos") {
+                carregarContatosChat();
+            }
+
             abasPainel.forEach(function(item) {
                 const ativa = item === aba;
                 item.classList.toggle("ativa", ativa);
@@ -280,17 +284,21 @@
             const aceitar = document.createElement("button");
             aceitar.type = "button";
             aceitar.className = "chat-aceitar-solicitacao";
-            aceitar.textContent = "Aceitar";
+            aceitar.setAttribute("aria-label", "Aceitar solicitação de amizade");
+            aceitar.title = "Aceitar";
+            aceitar.innerHTML = '<i data-lucide="check"></i>';
             aceitar.addEventListener("click", () => responderSolicitacaoChat(contato.request_id, true));
 
             const recusar = document.createElement("button");
             recusar.type = "button";
             recusar.className = "chat-recusar-solicitacao";
-            recusar.textContent = "Recusar";
+            recusar.setAttribute("aria-label", "Recusar solicitação de amizade");
+            recusar.title = "Recusar";
+            recusar.innerHTML = '<i data-lucide="x"></i>';
             recusar.addEventListener("click", () => responderSolicitacaoChat(contato.request_id, false));
 
             acoes.append(aceitar, recusar);
-            item.append(acoes, perfil);
+            item.append(perfil, acoes);
         } else if (tipo === "sent") {
             const status = document.createElement("span");
             status.className = "chat-status-solicitacao";
@@ -352,6 +360,17 @@
             if (badgeNotificacoes) {
                 badgeNotificacoes.hidden = recebidas.length === 0;
                 badgeNotificacoes.textContent = recebidas.length ? String(recebidas.length) : "";
+            }
+
+            if (recebidas.length) {
+                abasPainel.forEach(function(aba) {
+                    const ativa = aba.dataset.secaoChat === "solicitacoes";
+                    aba.classList.toggle("ativa", ativa);
+                    aba.setAttribute("aria-pressed", String(ativa));
+                });
+                conteudosPainel.forEach(function(conteudo) {
+                    conteudo.hidden = conteudo.dataset.conteudoChat !== "solicitacoes";
+                });
             }
 
             atualizarIcones();
