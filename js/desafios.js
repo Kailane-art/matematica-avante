@@ -370,6 +370,11 @@
         await atualizarPainel();
         if (intervaloAtualizacao) window.clearInterval(intervaloAtualizacao);
         intervaloAtualizacao = window.setInterval(atualizarPainel, 5000);
+
+        const desafioSolicitado = new URLSearchParams(window.location.search).get("desafio");
+        if (desafioSolicitado && /^[0-9a-f-]{36}$/i.test(desafioSolicitado)) {
+            await abrirPartida(desafioSolicitado);
+        }
     }
 
     form.addEventListener("submit", criarDesafio);
