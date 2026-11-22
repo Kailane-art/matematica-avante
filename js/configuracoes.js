@@ -10,7 +10,9 @@
     };
 
     const padrao = {
-        theme: localStorage.getItem("tema") === "escuro" ? "escuro" : "claro",
+        theme: ["claro", "escuro", "dispositivo"].includes(localStorage.getItem("tema"))
+            ? localStorage.getItem("tema")
+            : "claro",
         text_size: Math.min(5, Math.max(1, Number(localStorage.getItem("tamanhoTexto") || 3))),
         site_notifications_enabled: true,
         allow_friend_requests_from_student: true,
@@ -29,14 +31,26 @@
         status.classList.toggle("erro", Boolean(erro));
     }
 
+    const preferenciaDispositivo = window.matchMedia("(prefers-color-scheme: dark)");
+
     function aplicarTema(tema) {
-        document.body.classList.toggle("modo-escuro", tema === "escuro");
+        const temaEscuro = tema === "escuro" ||
+            (tema === "dispositivo" && preferenciaDispositivo.matches);
+
+        document.body.classList.toggle("modo-escuro", temaEscuro);
         localStorage.setItem("tema", tema);
+
         document.querySelectorAll("[data-theme-choice]").forEach(botao => {
             botao.classList.toggle("ativo", botao.dataset.themeChoice === tema);
             botao.setAttribute("aria-pressed", String(botao.dataset.themeChoice === tema));
         });
     }
+
+    preferenciaDispositivo.addEventListener("change", function(evento) {
+        if (configuracoes.theme === "dispositivo") {
+            document.body.classList.toggle("modo-escuro", evento.matches);
+        }
+    });
 
     function aplicarTamanho(tamanho) {
         const valor = Math.min(5, Math.max(1, Number(tamanho) || 3));
