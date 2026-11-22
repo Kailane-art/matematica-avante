@@ -142,66 +142,64 @@
         removerMensagemDaTela(mensagem.id);
     }
 
-    function renderizarAcoesSolicitacaoProfessor(requestId, container) {
+    async function renderizarAcoesSolicitacaoProfessor(requestId, container) {
         container.replaceChildren();
 
-        const { data: status, error } = supabaseClient.rpc(
+        const { data: estadoAtual, error } = await supabaseClient.rpc(
             "get_teacher_request_status",
             { p_request_id: requestId }
-        ).then(resultado => resultado);
+        );
 
-        Promise.resolve({ data: status, error }).then(function(resultado) {
-            if (resultado.error) {
-                container.textContent = "Não foi possível verificar o estado desta solicitação.";
-                return;
-            }
+        if (error) {
+            container.textContent = "Não foi possível verificar o estado desta solicitação.";
+            console.error("Erro ao consultar estado da solicitação:", error);
+            return;
+        }
 
-            const estadoAtual = resultado.data;
-            const rotulos = {
-                pendente: "Aguardando análise",
-                em_analise: "Em análise",
-                aprovada: "Solicitação aprovada",
-                rejeitada: "Solicitação reprovada"
-            };
+        const rotulos = {
+            pendente: "Aguardando análise",
+            em_analise: "Em análise",
+            aprovada: "Solicitação aprovada",
+            rejeitada: "Solicitação reprovada"
+        };
 
-            if (estadoAtual === "aprovada" || estadoAtual === "rejeitada") {
-                const finalizada = document.createElement("strong");
-                finalizada.className = "conversa-status-solicitacao finalizada";
-                finalizada.textContent = rotulos[estadoAtual];
-                container.appendChild(finalizada);
-                return;
-            }
+        if (estadoAtual === "aprovada" || estadoAtual === "rejeitada") {
+            const finalizada = document.createElement("strong");
+            finalizada.className = "conversa-status-solicitacao finalizada";
+            finalizada.textContent = rotulos[estadoAtual];
+            container.appendChild(finalizada);
+            return;
+        }
 
-            if (estadoAtual === "em_analise") {
-                const emAnalise = document.createElement("strong");
-                emAnalise.className = "conversa-status-solicitacao em-analise";
-                emAnalise.textContent = rotulos.em_analise;
-                container.appendChild(emAnalise);
-            }
+        if (estadoAtual === "em_analise") {
+            const emAnalise = document.createElement("strong");
+            emAnalise.className = "conversa-status-solicitacao em-analise";
+            emAnalise.textContent = rotulos.em_analise;
+            container.appendChild(emAnalise);
+        }
 
-            const botoes = document.createElement("div");
-            botoes.className = "conversa-botoes-decisao";
+        const botoes = document.createElement("div");
+        botoes.className = "conversa-botoes-decisao";
 
-            function adicionarBotao(rotulo, decisao, classe) {
-                const botao = document.createElement("button");
-                botao.type = "button";
-                botao.className = "conversa-decisao-botao " + classe;
-                botao.textContent = rotulo;
-                botao.addEventListener("click", function() {
-                    executarDecisaoSolicitacaoProfessor(requestId, decisao, container);
-                });
-                botoes.appendChild(botao);
-            }
+        function adicionarBotao(rotulo, decisao, classe) {
+            const botao = document.createElement("button");
+            botao.type = "button";
+            botao.className = "conversa-decisao-botao " + classe;
+            botao.textContent = rotulo;
+            botao.addEventListener("click", function() {
+                executarDecisaoSolicitacaoProfessor(requestId, decisao, container);
+            });
+            botoes.appendChild(botao);
+        }
 
-            adicionarBotao("Aprovar", "aprovar", "aprovar");
-            adicionarBotao("Reprovar", "reprovar", "reprovar");
+        adicionarBotao("Aprovar", "aprovar", "aprovar");
+        adicionarBotao("Reprovar", "reprovar", "reprovar");
 
-            if (estadoAtual === "pendente") {
-                adicionarBotao("Em análise", "analise", "analise");
-            }
+        if (estadoAtual === "pendente") {
+            adicionarBotao("Em análise", "analise", "analise");
+        }
 
-            container.appendChild(botoes);
-        });
+        container.appendChild(botoes);
     }
 
     async function executarDecisaoSolicitacaoProfessor(requestId, decisao, container) {
