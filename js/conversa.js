@@ -269,8 +269,18 @@
         const perfil = Array.isArray(perfilData) ? perfilData[0] : perfilData;
         if (!perfil || perfil.id === usuarioAtual.id) throw new Error("Perfil não encontrado.");
 
+        const { data: perfilAtual, error: erroPerfilAtual } = await supabaseClient
+            .from("profiles")
+            .select("tipo_usuario")
+            .eq("id", usuarioAtual.id)
+            .maybeSingle();
+        if (erroPerfilAtual) throw erroPerfilAtual;
+
         const amizade = (contatos || []).find(item => item.contact_id === perfil.id && item.friendship_status === "accepted");
-        if (!amizade) throw new Error("Só é possível conversar com pessoas que são suas amigas.");
+        const podeConversarSemAmizade = perfil.tipo_usuario === "dev" || perfilAtual?.tipo_usuario === "dev";
+        if (!amizade && !podeConversarSemAmizade) {
+            throw new Error("Só é possível conversar com amizades formadas ou com a conta DEV.");
+        }
 
         contatoId = perfil.id;
         const { data: idConversa, error: conversaErro } = await supabaseClient.rpc(
