@@ -783,10 +783,12 @@
             ]);
 
             if (resultadoAlertas.error) throw resultadoAlertas.error;
-            if (resultadoProfessor.error) throw resultadoProfessor.error;
+            if (resultadoProfessor.error) {
+                console.warn("Não foi possível carregar as notificações administrativas:", resultadoProfessor.error);
+            }
 
             notificacoesAlertas = resultadoAlertas.data || [];
-            notificacoesProfessor = resultadoProfessor.data || [];
+            notificacoesProfessor = resultadoProfessor.error ? [] : (resultadoProfessor.data || []);
             quantidadeAlertasNaoLidos = notificacoesAlertas.filter(item => !item.read_at).length;
             quantidadeNotificacoesProfessorNaoLidas =
                 notificacoesProfessor.filter(item => !item.read_at).length;
