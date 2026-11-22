@@ -132,6 +132,27 @@ if (menuLateral && !menuLateral.querySelector('a[href="rankings.html"]')) {
     }
 }
 
+// Adiciona Desafios a todos os menus laterais existentes, sem duplicar links.
+if (menuLateral && !menuLateral.querySelector('a[href="desafios.html"]')) {
+    const linkDesafios = document.createElement("a");
+    linkDesafios.href = "desafios.html";
+    linkDesafios.className = "menu-item";
+    linkDesafios.innerHTML = '<i data-lucide="swords"></i><span>Desafios</span>';
+
+    const linkRankingsExistente = menuLateral.querySelector('a[href="rankings.html"]');
+    if (linkRankingsExistente) {
+        linkRankingsExistente.insertAdjacentElement("afterend", linkDesafios);
+    } else {
+        const tituloMenu = menuLateral.querySelector("h2");
+        if (tituloMenu) tituloMenu.insertAdjacentElement("afterend", linkDesafios);
+        else menuLateral.appendChild(linkDesafios);
+    }
+
+    if (window.lucide && typeof window.lucide.createIcons === "function") {
+        window.lucide.createIcons();
+    }
+}
+
 const fundoMenu = document.getElementById("fundoMenu");
 
 // Torna navegável a opção Configurações nos menus laterais existentes.
@@ -514,6 +535,7 @@ carregarPreferenciasGlobais();
 const paginasProtegidas = new Set([
     "inicio.html",
     "rankings.html",
+    "desafios.html",
     "perfil.html",
     "perfil-publico.html",
     "chat.html",
