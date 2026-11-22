@@ -226,15 +226,20 @@
     const estadoVazioConversas = document.getElementById("estadoVazioConversas");
     let canalListaMensagens = null;
     let amigosDaLista = [];
+    let usuarioAtualId = null;
+    let recarregandoConversas = false;
+    let recargaPendente = false;
+    const itensPorConversa = new Map();
 
     function abrirConversa(contato) {
         window.location.href = "conversa.html?usuario=" + encodeURIComponent(contato.username);
     }
 
-    function criarItemConversa(contato, previa, naoLida) {
+    function criarItemConversa(contato, previa, naoLida, conversaId) {
         const item = document.createElement("button");
         item.type = "button";
         item.className = "chat-conversa-item";
+        item.dataset.conversationId = conversaId;
         item.addEventListener("click", () => abrirConversa(contato));
 
         const avatar = document.createElement("div");
@@ -262,54 +267,99 @@
         ultimaMensagem.textContent = previa || "Conversa iniciada";
         dados.append(nome, username, ultimaMensagem);
 
-        let indicador;
-        if (naoLida) {
-            indicador = document.createElement("span");
-            indicador.className = "chat-conversa-nao-lida";
-            indicador.setAttribute("aria-label", "Mensagem não lida");
-            indicador.title = "Nova mensagem";
-        } else {
-            indicador = document.createElement("i");
-            indicador.setAttribute("data-lucide", "send");
-            indicador.className = "chat-conversa-aviao";
-        }
-
+        const indicador = criarIndicadorConversa(naoLida);
         item.append(avatar, dados, indicador);
         return item;
+    }
+
+    function criarIndicadorConversa(naoLida) {
+        if (naoLida) {
+            const bolinha = document.createElement("span");
+            bolinha.className = "chat-conversa-nao-lida";
+            bolinha.setAttribute("aria-label", "Mensagem não lida");
+            bolinha.title = "Nova mensagem";
+            return bolinha;
+        }
+
+        const aviao = document.createElement("i");
+        aviao.setAttribute("data-lucide", "send");
+        aviao.className = "chat-conversa-aviao";
+        return aviao;
+    }
+
+    function iniciarAtualizacoesEmTempoReal(usuarioId) {
+        if (canalListaMensagens || !usuarioId) return;
+
+        canalListaMensagens = supabaseClient
+            .channel("lista-conversas-" + usuarioId)
+            .on("postgres_changes", {
+                event: "INSERT",
+                schema: "public",
+                table: "messages"
+            }, payload => {
+                const mensagem = payload.new;
+                const conversa = itensPorConversa.get(mensagem.conversation_id);
+
+                if (!conversa) {
+                    // Uma primeira mensagem pode criar uma conversa que ainda não está na lista.
+                    atualizarListaConversas(amigosDaLista);
+                    return;
+                }
+
+                conversa.previa = mensagem.body;
+                if (mensagem.sender_id !== usuarioAtualId) {
+                    conversa.naoLida = true;
+                }
+
+                const previa = conversa.element.querySelector(".chat-conversa-previa");
+                if (previa) previa.textContent = mensagem.body;
+
+                const indicadorAtual = conversa.element.lastElementChild;
+                const novoIndicador = criarIndicadorConversa(conversa.naoLida);
+                if (indicadorAtual) {
+                    indicadorAtual.replaceWith(novoIndicador);
+                } else {
+                    conversa.element.appendChild(novoIndicador);
+                }
+
+                // Atualiza e move a conversa para o topo sem esperar outra consulta ao banco.
+                listaConversas.prepend(conversa.element);
+                if (!conversa.naoLida) atualizarIcones();
+            })
+            .subscribe(status => {
+                if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+                    console.error("Não foi possível atualizar a lista de conversas em tempo real:", status);
+                }
+            });
     }
 
     async function atualizarListaConversas(amigos) {
         if (!listaConversas || !estadoVazioConversas) return;
         amigosDaLista = amigos;
+
         if (!amigos.length) {
+            itensPorConversa.clear();
+            listaConversas.replaceChildren();
             listaConversas.hidden = true;
             estadoVazioConversas.hidden = false;
             return;
         }
 
-        try {
-            const { data: sessao } = await supabaseClient.auth.getUser();
-            const usuarioId = sessao?.user?.id;
-            if (!usuarioId) throw new Error("Sessão não encontrada.");
+        if (recarregandoConversas) {
+            recargaPendente = true;
+            return;
+        }
 
-            if (!canalListaMensagens) {
-                canalListaMensagens = supabaseClient
-                    .channel("lista-conversas-" + usuarioId)
-                    .on("postgres_changes", {
-                        event: "INSERT",
-                        schema: "public",
-                        table: "messages"
-                    }, async () => {
-                        if (amigosDaLista.length) {
-                            await atualizarListaConversas(amigosDaLista);
-                        }
-                    })
-                    .subscribe(status => {
-                        if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
-                            console.error("Não foi possível atualizar a lista de conversas em tempo real:", status);
-                        }
-                    });
+        recarregandoConversas = true;
+        try {
+            if (!usuarioAtualId) {
+                const { data: sessao, error: erroSessao } = await supabaseClient.auth.getUser();
+                if (erroSessao) throw erroSessao;
+                usuarioAtualId = sessao?.user?.id;
             }
+            if (!usuarioAtualId) throw new Error("Sessão não encontrada.");
+
+            iniciarAtualizacoesEmTempoReal(usuarioAtualId);
 
             const { data: conversas, error: erroConversas } = await supabaseClient.rpc("get_chat_conversations");
             if (erroConversas) throw erroConversas;
@@ -318,6 +368,7 @@
                 .map(conversa => {
                     const contato = amigos.find(item => item.contact_id === conversa.contact_id);
                     return contato ? {
+                        conversaId: conversa.conversation_id,
                         contato,
                         previa: conversa.last_message,
                         naoLida: Boolean(conversa.has_unread)
@@ -325,15 +376,32 @@
                 })
                 .filter(Boolean);
 
+            itensPorConversa.clear();
+
             if (!contatosComMensagem.length) {
+                listaConversas.replaceChildren();
                 listaConversas.hidden = true;
                 estadoVazioConversas.hidden = false;
                 return;
             }
 
-            listaConversas.replaceChildren(
-                ...contatosComMensagem.map(item => criarItemConversa(item.contato, item.previa, item.naoLida))
-            );
+            const elementos = contatosComMensagem.map(item => {
+                const elemento = criarItemConversa(
+                    item.contato,
+                    item.previa,
+                    item.naoLida,
+                    item.conversaId
+                );
+                itensPorConversa.set(item.conversaId, {
+                    contato: item.contato,
+                    element: elemento,
+                    previa: item.previa,
+                    naoLida: item.naoLida
+                });
+                return elemento;
+            });
+
+            listaConversas.replaceChildren(...elementos);
             listaConversas.hidden = false;
             estadoVazioConversas.hidden = true;
             atualizarIcones();
@@ -341,6 +409,12 @@
             console.error("Erro ao carregar lista de conversas:", erro);
             listaConversas.hidden = true;
             estadoVazioConversas.hidden = false;
+        } finally {
+            recarregandoConversas = false;
+            if (recargaPendente) {
+                recargaPendente = false;
+                atualizarListaConversas(amigosDaLista);
+            }
         }
     }
 
