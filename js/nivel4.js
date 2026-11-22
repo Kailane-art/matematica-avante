@@ -100,7 +100,7 @@ const fasesNivel4 = {
 // automaticamente pelo sistema.
 // =====================================================
 
-const questoesNivel4 = {
+const questoesNivel4 ={
     "1": [
         {
             "pergunta": "Resolva √(3x+1)=x−1, considerando x≥1.",
@@ -122,41 +122,41 @@ const questoesNivel4 = {
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Calcule (√75−√12)².",
-            "alternativas": [
-                {
-                    "texto": "27"
-                },
-                {
-                    "texto": "9"
-                },
-                {
-                    "texto": "18"
-                },
-                {
-                    "texto": "36"
-                }
-            ],
-            "explicacao": "PASSO A PASSO:\n√75=5√3 e √12=2√3. A diferença é 3√3; ao quadrado, (3√3)²=9×3=27.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
-            "dificuldade": "Difícil"
-        },
-        {
-            "pergunta": "Se 2^(x+1)+2^x=48, determine x.",
+            "pergunta": "Calcule √(7+4√3)+√(7−4√3).",
             "alternativas": [
                 {
                     "texto": "4"
                 },
                 {
-                    "texto": "3"
+                    "texto": "2√3"
                 },
                 {
-                    "texto": "5"
+                    "texto": "2"
                 },
                 {
-                    "texto": "6"
+                    "texto": "2+√3"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nColoque 2^x em evidência: 2×2^x+2^x=3×2^x=48. Logo 2^x=16=2⁴ e x=4.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nObserve que 7+4√3=(2+√3)² e 7−4√3=(2−√3)². Como 2−√3 é positivo, as raízes são 2+√3 e 2−√3. Somando, os radicais se cancelam e o resultado é 4.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
+            "dificuldade": "Difícil"
+        },
+        {
+            "pergunta": "Resolva 4^x−5·2^x+4=0.",
+            "alternativas": [
+                {
+                    "texto": "x=0 ou x=2"
+                },
+                {
+                    "texto": "x=1 ou x=2"
+                },
+                {
+                    "texto": "x=−1 ou x=2"
+                },
+                {
+                    "texto": "x=0 ou x=4"
+                }
+            ],
+            "explicacao": "PASSO A PASSO:\nFaça t=2^x, com t>0. Como 4^x=(2^x)², temos t²−5t+4=0=(t−1)(t−4). Assim t=1 ou 4, isto é, 2^x=2⁰ ou 2². Logo x=0 ou x=2.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
@@ -179,22 +179,22 @@ const questoesNivel4 = {
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Racionalize 6/(√5+√2).",
+            "pergunta": "Simplifique 1/(√5−√2)+1/(√5+√2).",
             "alternativas": [
                 {
-                    "texto": "2(√5−√2)"
+                    "texto": "2√5/3"
                 },
                 {
-                    "texto": "2(√5+√2)"
+                    "texto": "√5/3"
                 },
                 {
-                    "texto": "6(√5−√2)"
+                    "texto": "2√2/3"
                 },
                 {
-                    "texto": "√5−√2"
+                    "texto": "√5"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nMultiplique pelo conjugado √5−√2. O denominador vira 5−2=3; então 6(√5−√2)/3=2(√5−√2).\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nUse o denominador comum conjugado: [(√5+√2)+(√5−√2)]/[(√5−√2)(√5+√2)]. O numerador fica 2√5 e o denominador 5−2=3. Resultado: 2√5/3.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
@@ -679,22 +679,22 @@ const questoesNivel4 = {
     ],
     "4": [
         {
-            "pergunta": "Calcule a distância entre P(−2,3) e Q(4,−5).",
+            "pergunta": "Um ponto P=(t,0), no eixo x, é equidistante de A(−2,3) e B(4,−1). Determine t.",
             "alternativas": [
                 {
-                    "texto": "10"
+                    "texto": "1/3"
                 },
                 {
-                    "texto": "8"
+                    "texto": "1/2"
                 },
                 {
-                    "texto": "12"
+                    "texto": "−1/3"
                 },
                 {
-                    "texto": "√80"
+                    "texto": "2/3"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nA distância é √[(4+2)²+(−5−3)²]=√(36+64)=10.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nIguale as distâncias ao quadrado: (t+2)²+3²=(t−4)²+(0+1)². Desenvolvendo: t²+4t+13=t²−8t+17. Então 12t=4 e t=1/3. Igualar os quadrados evita trabalhar com duas raízes quadradas.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
@@ -774,22 +774,22 @@ const questoesNivel4 = {
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Determine o ponto médio de A(−4,7) e B(8,−5).",
+            "pergunta": "O ponto P divide internamente A(−4,7) e B(8,−5) na razão AP:PB=2:1. Determine a distância de P à origem.",
             "alternativas": [
                 {
-                    "texto": "(2,1)"
+                    "texto": "√17"
                 },
                 {
-                    "texto": "(4,2)"
+                    "texto": "√13"
                 },
                 {
-                    "texto": "(−2,6)"
+                    "texto": "5"
                 },
                 {
-                    "texto": "(6,−1)"
+                    "texto": "√20"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nFaça a média de cada coordenada: x=(−4+8)/2=2 e y=(7−5)/2=1. O ponto médio é (2,1).\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nPela fórmula da divisão interna, P=(1·A+2·B)/3. Assim x=(−4+16)/3=4 e y=(7−10)/3=−1. A distância à origem é √(4²+(−1)²)=√17. A razão 2:1 significa que P fica duas partes a partir de A e uma de B.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
@@ -928,60 +928,60 @@ const questoesNivel4 = {
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Um ângulo inscrito intercepta um arco de 110°. Qual é sua medida?",
+            "pergunta": "Duas secantes partem de um ponto externo e interceptam a circunferência. Os arcos maior e menor entre os pontos de interseção medem 170° e 50°. Determine o ângulo externo formado.",
             "alternativas": [
                 {
-                    "texto": "55°"
+                    "texto": "60°"
                 },
                 {
                     "texto": "110°"
                 },
                 {
-                    "texto": "70°"
+                    "texto": "85°"
                 },
                 {
-                    "texto": "220°"
+                    "texto": "120°"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nO ângulo inscrito mede a metade do arco correspondente: 110°/2=55°. O ângulo central seria 110°.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nO ângulo externo formado por duas secantes mede metade da diferença entre os arcos interceptados. Então (170°−50°)/2=120°/2=60°. Não use a soma dos arcos, propriedade aplicada a outros casos.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Uma coroa circular tem raio externo 10 cm e interno 6 cm. Calcule sua área.",
+            "pergunta": "Uma coroa circular tem raio externo 10 cm e área 64π cm². Determine o raio interno.",
             "alternativas": [
                 {
-                    "texto": "64π cm²"
+                    "texto": "6 cm"
                 },
                 {
-                    "texto": "100π cm²"
+                    "texto": "8 cm"
                 },
                 {
-                    "texto": "36π cm²"
+                    "texto": "4 cm"
                 },
                 {
-                    "texto": "16π cm²"
+                    "texto": "√36/2 cm"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nSubtraia a área interna da externa: π×10²−π×6²=π(100−36)=64π cm².\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nA área da coroa é π(R²−r²). Substituindo: 64π=π(100−r²). Divida por π: 64=100−r², então r²=36 e r=6 cm. O raio é positivo, por isso descartamos −6.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "A bissetriz divide o lado oposto na razão 2:3. Se esse lado mede 25 cm, quais são os segmentos?",
+            "pergunta": "Uma bissetriz divide um triângulo em dois triângulos de áreas na razão 2:3. Se a área total é 150 cm², determine a área da menor parte.",
             "alternativas": [
                 {
-                    "texto": "10 cm e 15 cm"
+                    "texto": "60 cm²"
                 },
                 {
-                    "texto": "8 cm e 17 cm"
+                    "texto": "75 cm²"
                 },
                 {
-                    "texto": "12 cm e 13 cm"
+                    "texto": "90 cm²"
                 },
                 {
-                    "texto": "5 cm e 20 cm"
+                    "texto": "50 cm²"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nA razão tem cinco partes. Cada parte vale 25/5=5 cm. Os segmentos medem 10 cm e 15 cm.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nA razão total tem 2+3=5 partes. Cada parte vale 150/5=30 cm². A menor região corresponde a duas partes: 2×30=60 cm². A área deve ser dividida proporcionalmente à razão, não igualmente.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
@@ -1042,43 +1042,43 @@ const questoesNivel4 = {
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Um setor circular tem raio 10 cm e ângulo central 72°. Calcule sua área.",
+            "pergunta": "Um setor circular tem raio 12 cm e comprimento de arco 8π cm. Determine sua área.",
             "alternativas": [
                 {
-                    "texto": "20π cm²"
+                    "texto": "48π cm²"
                 },
                 {
-                    "texto": "25π cm²"
+                    "texto": "24π cm²"
                 },
                 {
-                    "texto": "10π cm²"
+                    "texto": "36π cm²"
                 },
                 {
-                    "texto": "40π cm²"
+                    "texto": "96π cm²"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nO setor corresponde a 72/360=1/5 do círculo. A área total é 100π; a área do setor é 20π cm².\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nA área de um setor pode ser calculada por A=(r·s)/2, em que s é o comprimento do arco. Substituindo: A=(12×8π)/2=48π cm². Assim não é necessário descobrir o ângulo central.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         }
     ],
     "6": [
         {
-            "pergunta": "Um cone reto tem raio 3 cm e altura 12 cm. Determine seu volume.",
+            "pergunta": "Um cone reto tem raio 5 cm e geratriz 13 cm. Determine seu volume.",
             "alternativas": [
                 {
-                    "texto": "36π cm³"
+                    "texto": "100π cm³"
                 },
                 {
-                    "texto": "108π cm³"
+                    "texto": "125π cm³"
                 },
                 {
-                    "texto": "12π cm³"
+                    "texto": "150π cm³"
                 },
                 {
-                    "texto": "27π cm³"
+                    "texto": "75π cm³"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nO volume do cone é V=πr²h/3. Substituindo: π×9×12/3=36π cm³.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nA altura, o raio e a geratriz formam um triângulo retângulo. h²+5²=13², então h²=144 e h=12 cm. Agora use V=πr²h/3=π×25×12/3=100π cm³. O erro comum é usar a geratriz como se fosse a altura.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
@@ -1177,22 +1177,22 @@ const questoesNivel4 = {
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Um paralelepípedo retângulo tem dimensões 3 cm, 4 cm e 12 cm. Determine sua diagonal espacial.",
+            "pergunta": "Um paralelepípedo retângulo tem arestas 3 cm, 4 cm e x cm. Sua diagonal espacial mede 13 cm. Determine x.",
             "alternativas": [
-                {
-                    "texto": "13 cm"
-                },
                 {
                     "texto": "12 cm"
                 },
                 {
-                    "texto": "15 cm"
+                    "texto": "10 cm"
                 },
                 {
-                    "texto": "√161 cm"
+                    "texto": "11 cm"
+                },
+                {
+                    "texto": "9 cm"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nA diagonal satisfaz d²=3²+4²+12²=169. Logo d=13 cm.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nPelo teorema de Pitágoras no espaço: 3²+4²+x²=13². Então 9+16+x²=169, x²=144 e x=12 cm. Como uma dimensão é positiva, usamos a raiz positiva.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
@@ -1255,22 +1255,22 @@ const questoesNivel4 = {
     ],
     "7": [
         {
-            "pergunta": "Uma PG tem primeiro termo 3 e razão 2. Determine o oitavo termo.",
+            "pergunta": "Uma PG positiva tem a₃=12 e a₆=96. Determine a soma dos oito primeiros termos.",
             "alternativas": [
                 {
+                    "texto": "765"
+                },
+                {
+                    "texto": "510"
+                },
+                {
+                    "texto": "1.020"
+                },
+                {
                     "texto": "384"
-                },
-                {
-                    "texto": "192"
-                },
-                {
-                    "texto": "768"
-                },
-                {
-                    "texto": "256"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nUse aₙ=a₁·r^(n−1). Assim a₈=3×2⁷=384.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nDividindo a₆ por a₃: r³=96/12=8, então r=2. Como a₃=a₁r², a₁=12/4=3. A soma é S₈=3(2⁸−1)/(2−1)=3×255=765.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
@@ -1388,22 +1388,22 @@ const questoesNivel4 = {
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Uma PG tem termos 2, 6, 18, 54 e 162. Calcule a soma.",
+            "pergunta": "Uma PG tem primeiro termo 4 e razão 3. Determine a soma dos seis primeiros termos.",
             "alternativas": [
                 {
-                    "texto": "242"
+                    "texto": "1.456"
                 },
                 {
-                    "texto": "240"
+                    "texto": "1.092"
                 },
                 {
-                    "texto": "244"
+                    "texto": "728"
                 },
                 {
-                    "texto": "486"
+                    "texto": "1.820"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nSome os termos: 2+6+18+54+162=242. Pela fórmula da PG, S₅=2(3⁵−1)/(3−1)=242.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nUse S₆=a₁(r⁶−1)/(r−1). Substituindo: 4(3⁶−1)/(3−1)=4×728/2=1.456. O expoente 6 conta a quantidade de termos, não o último índice menos um.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
@@ -1753,22 +1753,22 @@ const questoesNivel4 = {
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Resolva |2x−1|<5.",
+            "pergunta": "Resolva |x−2|+|x+1|=5.",
             "alternativas": [
                 {
-                    "texto": "−2<x<3"
+                    "texto": "x=−2 ou x=3"
                 },
                 {
-                    "texto": "x<−2 ou x>3"
+                    "texto": "x=−3 ou x=2"
                 },
                 {
-                    "texto": "−3<x<2"
+                    "texto": "x=−1 ou x=4"
                 },
                 {
-                    "texto": "−2≤x≤3"
+                    "texto": "x=−2 ou x=2"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nEscreva −5<2x−1<5. Somando 1 e dividindo por 2: −2<x<3. As extremidades não entram.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nSepare pelos pontos críticos −1 e 2. Se x≤−1: (2−x)+(−x−1)=1−2x=5, então x=−2. Se x≥2: (x−2)+(x+1)=2x−1=5, então x=3. No intervalo entre −1 e 2, a soma vale 3, portanto não há solução ali.\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
@@ -1907,22 +1907,22 @@ const questoesNivel4 = {
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Um trapézio tem bases 10 cm e 18 cm e altura 7 cm. Qual a soma das áreas dos dois triângulos formados por uma diagonal?",
+            "pergunta": "Um trapézio tem bases paralelas de 10 cm e 18 cm e altura 7 cm. As diagonais se cruzam. Determine a área do triângulo menor formado junto à base de 10 cm.",
             "alternativas": [
                 {
-                    "texto": "98 cm²"
+                    "texto": "12,5 cm²"
                 },
                 {
-                    "texto": "126 cm²"
+                    "texto": "17,5 cm²"
                 },
                 {
-                    "texto": "70 cm²"
+                    "texto": "25 cm²"
                 },
                 {
-                    "texto": "196 cm²"
+                    "texto": "35 cm²"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nOs dois triângulos formam o trapézio inteiro. Sua área é (B+b)h/2=(18+10)×7/2=98 cm².\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nA interseção das diagonais divide a altura na razão das bases. A distância da base menor até o cruzamento é 7×10/(10+18)=2,5 cm. A área do triângulo menor é base×altura/2=10×2,5/2=12,5 cm².\n\nCOMO EVITAR O ERRO:\nOrganize as etapas antes de calcular e confira se a resposta atende a todas as condições do problema.",
             "dificuldade": "Difícil"
         },
         {
