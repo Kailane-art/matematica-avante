@@ -249,21 +249,73 @@ let presencaOnlineConectada = false;
 
 window.maPresencaOnline = new Set();
 
+const TEMPO_TOLERANCIA_PRESENCA = 60 * 1000;
+const CHAVE_ULTIMA_PRESENCA = "ma:presenca-ultima-atividade";
+let presencaOnlineAtivos = new Set();
+
+function lerUltimasPresencas() {
+    try {
+        const dados = JSON.parse(localStorage.getItem(CHAVE_ULTIMA_PRESENCA) || "{}");
+        return dados && typeof dados === "object" && !Array.isArray(dados) ? dados : {};
+    } catch (erro) {
+        console.warn("Não foi possível ler o histórico temporário de presença:", erro);
+        return {};
+    }
+}
+
 function publicarPresencaOnline() {
     const estado = canalPresencaOnline ? canalPresencaOnline.presenceState() : {};
-    const ids = new Set();
+    const ativos = new Set();
 
     Object.values(estado).forEach(function(sessoes) {
         (sessoes || []).forEach(function(sessao) {
-            if (sessao && sessao.user_id) ids.add(sessao.user_id);
+            if (sessao && sessao.user_id) ativos.add(sessao.user_id);
         });
     });
 
-    window.maPresencaOnline = ids;
+    const agora = Date.now();
+    const ultimasPresencas = lerUltimasPresencas();
+
+    // Quando alguém sai do site, inicia a tolerância de 60 segundos.
+    presencaOnlineAtivos.forEach(function(usuarioId) {
+        if (!ativos.has(usuarioId)) {
+            ultimasPresencas[usuarioId] = agora;
+        }
+    });
+
+    // Enquanto a pessoa continua conectada, renova sua última atividade.
+    ativos.forEach(function(usuarioId) {
+        ultimasPresencas[usuarioId] = agora;
+    });
+
+    const visiveis = new Set(ativos);
+    Object.entries(ultimasPresencas).forEach(function([usuarioId, ultimaAtividade]) {
+        const timestamp = Number(ultimaAtividade);
+
+        if (!Number.isFinite(timestamp) || agora - timestamp >= TEMPO_TOLERANCIA_PRESENCA) {
+            delete ultimasPresencas[usuarioId];
+            return;
+        }
+
+        visiveis.add(usuarioId);
+    });
+
+    presencaOnlineAtivos = ativos;
+    window.maPresencaOnline = visiveis;
+
+    try {
+        localStorage.setItem(CHAVE_ULTIMA_PRESENCA, JSON.stringify(ultimasPresencas));
+    } catch (erro) {
+        console.warn("Não foi possível salvar o histórico temporário de presença:", erro);
+    }
+
     window.dispatchEvent(new CustomEvent("ma:presenca-atualizada", {
-        detail: { userIds: Array.from(ids) }
+        detail: { userIds: Array.from(visiveis) }
     }));
 }
+
+// Renova a presença observada e remove os estados que ultrapassaram 60 segundos.
+setInterval(publicarPresencaOnline, 15000);
 
 function aplicarPresencaNoAvatar(elemento) {
     if (!elemento || !elemento.dataset.presenceUserId) return;
