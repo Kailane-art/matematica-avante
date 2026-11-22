@@ -563,7 +563,7 @@ async function carregarProgressoFasesPerfil() {
         const { data: fases, error } = await supabaseClient
             .from("user_level_progress")
             .select("level_number, phase_number, completed")
-            .in("level_number", [1, 2, 3])
+            .in("level_number", [1, 2, 3, 4])
             .eq("completed", true);
 
         if (error) {
@@ -574,7 +574,7 @@ async function carregarProgressoFasesPerfil() {
             return fase.completed === true;
         }).length;
 
-        const totalFasesAtuais = 30;
+        const totalFasesAtuais = 50;
 
         const porcentagemEvolucao = Math.min(
             100,
@@ -597,7 +597,7 @@ async function carregarProgressoFasesPerfil() {
 
         console.error("Não foi possível carregar o progresso das fases:", erro);
 
-        if (elementoFases) elementoFases.textContent = "— / 30";
+        if (elementoFases) elementoFases.textContent = "— / 50";
         if (elementoEvolucao) elementoEvolucao.textContent = "—";
         if (barraEvolucao) barraEvolucao.style.width = "0%";
 
