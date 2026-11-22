@@ -3695,8 +3695,29 @@ html.verificando-sessao:has(body.modo-escuro)::before {
     font-family: inherit;
     font-size: 15px;
     font-weight: 700;
+    cursor: pointer;
+    opacity: 1;
+}
+
+.acoes-perfil-publico button:disabled {
     cursor: not-allowed;
-    opacity: 0.72;
+    opacity: 0.65;
+}
+
+.acoes-perfil-publico .botao-encerrar-amizade {
+    background: #dc2626;
+}
+
+.acoes-perfil-publico .botao-encerrar-amizade:hover:not(:disabled) {
+    background: #b91c1c;
+}
+
+.acoes-perfil-publico .botao-conversar-perfil {
+    background: #0f766e;
+}
+
+.acoes-perfil-publico button[hidden] {
+    display: none !important;
 }
 
 .acoes-perfil-publico button svg {
