@@ -619,7 +619,7 @@ if (formLogin) {
 
             if (contaBanida) {
                 mostrarMensagemAutenticacao(
-                    "Esta conta foi banida. Existe um prazo de recuperação de até 30 dias a partir do banimento. A reativação depende da decisão da equipe DEV do Matemática Avante."
+                    "Não é possível fazer login nesta conta. Entre em contato com a equipe do Matemática Avante para obter mais informações."
                 );
             } else {
                 mostrarMensagemAutenticacao(
