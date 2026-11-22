@@ -198,3 +198,63 @@
 .conversa-status-solicitacao.rejeitada { color:#b91c1c; }
 .modo-escuro .conversa-status-solicitacao.aprovada { color:#86efac; }
 .modo-escuro .conversa-status-solicitacao.rejeitada { color:#fda4af; }
+
+
+/* CARTÃO DE CONVITE PARA DESAFIO ENTRE AMIGOS */
+.conversa-mensagem.conversa-mensagem-desafio {
+    max-width:min(92%,680px);
+    padding:14px;
+    padding-right:14px;
+    border-color:#b9d0f0;
+    background:#f4f8ff;
+}
+.conversa-mensagem-desafio .conversa-texto {
+    white-space:pre-wrap;
+    line-height:1.55;
+}
+.conversa-acoes-desafio {
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    margin-top:12px;
+    padding-top:11px;
+    border-top:1px solid #d7e3f5;
+    color:#64748b;
+    font-size:12px;
+}
+.conversa-desafio-botoes { display:flex; flex-wrap:wrap; gap:8px; }
+.conversa-desafio-botao {
+    min-height:36px;
+    padding:8px 13px;
+    border:0;
+    border-radius:9px;
+    background:#1e3a8a;
+    color:#fff;
+    font:inherit;
+    font-size:12px;
+    font-weight:750;
+    cursor:pointer;
+}
+.conversa-desafio-botao.aceitar { background:#15803d; }
+.conversa-desafio-botao.recusar { background:#e8edf5; color:#334155; }
+.conversa-desafio-botao:disabled { opacity:.55; cursor:wait; }
+.conversa-status-desafio { display:block; color:#1e3a8a; font-size:12px; font-weight:800; }
+.modo-escuro .conversa-mensagem.conversa-mensagem-desafio {
+    background:#13294b;
+    border-color:#365985;
+}
+.modo-escuro .conversa-acoes-desafio {
+    border-color:#365985;
+    color:#cbd5e1;
+}
+.modo-escuro .conversa-desafio-botao.recusar {
+    background:#294568;
+    color:#e2e8f0;
+}
+.modo-escuro .conversa-status-desafio { color:#bcd5ff; }
+@media(max-width:520px) {
+    .conversa-mensagem.conversa-mensagem-desafio { max-width:96%; }
+    .conversa-desafio-botoes { gap:6px; }
+    .conversa-desafio-botao { flex:1 1 auto; }
+}
