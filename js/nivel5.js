@@ -83,8 +83,8 @@ function makeQ([pergunta, resposta, passo]) {
         alternativas: opcoes.map(function(numero) {
             return { texto: String(numero) };
         }),
-        explicacao: "PASSO A PASSO:\\n" + passo +
-            "\\n\\nCOMO EVITAR O ERRO:\\nConfira as condições, mantenha as unidades e valide o resultado na expressão original.",
+        explicacao: "PASSO A PASSO:\n" + passo +
+            "\n\nCOMO EVITAR O ERRO:\nConfira as condições, mantenha as unidades e valide o resultado na expressão original.",
         dificuldade: "Difícil"
     };
 }
