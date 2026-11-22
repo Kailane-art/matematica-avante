@@ -1244,7 +1244,7 @@ header svg {
     border-radius: 15px;
     font-size: 18px;
     cursor: pointer;
-    margin-bottom: 30px;
+    margin-bottom: 12px;
     background-color: #4169e1;
     color: white;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -1252,9 +1252,26 @@ header svg {
     transition: 0.3s;
 }
 
-#continuarEstudando:hover {
+#continuarEstudando:hover,
+#desafiosDiarios:hover {
     opacity: 0.9;
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+#desafiosDiarios {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    background-color: #4169e1;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
 }
 
 .atalhos {
