@@ -1,654 +1,305 @@
 // =====================================================
 // MATEMÁTICA AVANTE
-// SISTEMA DE PROFESSORES
-// =====================================================
-
-
-// =====================================================
-// BANCO DE PROFESSORES
-// =====================================================
-//
-// Por enquanto não existem professores cadastrados.
-//
-// Futuramente cada professor poderá ter:
-//
-// {
-//     id: 1,
-//     nome: "Nome do Professor",
-//     foto: "caminho/da/foto.jpg",
-//     especialidade: "Álgebra",
-//     avaliacao: 4.9,
-//     quantidadeAlunos: 128,
-//     nivelEnsino: "Básico e Intermediário",
-//     descricao: "Descrição do professor.",
-//     perfil: "professor-nome.html"
-// }
-//
+// CATÁLOGO E PESQUISA DE PROFESSORES
 // =====================================================
 
 const professores = [];
+let professoresEmDestaque = [];
 
+const campoPesquisaProfessor = document.getElementById("campoPesquisaProfessor");
+const estadoVazioProfessores = document.getElementById("estadoVazioProfessores");
+const nenhumProfessorEncontrado = document.getElementById("nenhumProfessorEncontrado");
+const listaCardsProfessores = document.getElementById("listaCardsProfessores");
 
-// =====================================================
-// ELEMENTOS DA PÁGINA
-// =====================================================
+const painelResultadosProfessores = document.getElementById("painelResultadosProfessores");
+const fecharResultadosProfessores = document.getElementById("fecharResultadosProfessores");
+const tituloResultadosProfessores = document.getElementById("tituloResultadosProfessores");
+const listaCompletaProfessores = document.getElementById("listaCompletaProfessores");
+const estadoPesquisaCompletaVazia = document.getElementById("estadoPesquisaCompletaVazia");
 
-const campoPesquisaProfessor =
-    document.getElementById(
-        "campoPesquisaProfessor"
-    );
+function normalizarTextoProfessor(valor) {
+    return String(valor || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleLowerCase("pt-BR")
+        .trim();
+}
 
+function embaralharProfessores(lista) {
+    const resultado = [...lista];
 
-const estadoVazioProfessores =
-    document.getElementById(
-        "estadoVazioProfessores"
-    );
+    for (let i = resultado.length - 1; i > 0; i--) {
+        const indice = Math.floor(Math.random() * (i + 1));
+        [resultado[i], resultado[indice]] = [resultado[indice], resultado[i]];
+    }
 
+    return resultado;
+}
 
-const nenhumProfessorEncontrado =
-    document.getElementById(
-        "nenhumProfessorEncontrado"
-    );
-
-
-const listaCardsProfessores =
-    document.getElementById(
-        "listaCardsProfessores"
-    );
-
-
-// =====================================================
-// MOSTRAR ESTADO VAZIO
-// =====================================================
-
-function mostrarEstadoVazioProfessores() {
-
+function atualizarEstadoListaProfessores(lista, termoPesquisado) {
     if (estadoVazioProfessores) {
-
-        estadoVazioProfessores.hidden =
-            false;
-
+        estadoVazioProfessores.hidden = professores.length > 0 || Boolean(termoPesquisado);
     }
 
     if (nenhumProfessorEncontrado) {
-
-        nenhumProfessorEncontrado.hidden =
-            true;
-
+        nenhumProfessorEncontrado.hidden = !termoPesquisado || lista.length > 0;
     }
-
 }
 
+function criarCardProfessor(professor) {
+    const card = document.createElement("article");
+    card.className = "card-professor";
 
-// =====================================================
-// MOSTRAR "NENHUM PROFESSOR ENCONTRADO"
-// =====================================================
+    const resumo = document.createElement("div");
+    resumo.className = "professor-resumo";
 
-function mostrarNenhumProfessorEncontrado() {
-
-    if (estadoVazioProfessores) {
-
-        estadoVazioProfessores.hidden =
-            true;
-
-    }
-
-    if (nenhumProfessorEncontrado) {
-
-        nenhumProfessorEncontrado.hidden =
-            false;
-
-    }
-
-}
-
-
-// =====================================================
-// RENDERIZAR PROFESSORES
-// =====================================================
-
-function renderizarProfessores(
-    lista
-) {
-
-    if (!listaCardsProfessores) {
-
-        return;
-
-    }
-
-
-    listaCardsProfessores.innerHTML =
-        "";
-
-
-    if (!lista.length) {
-
-        if (professores.length === 0) {
-
-            mostrarEstadoVazioProfessores();
-
-        } else {
-
-            mostrarNenhumProfessorEncontrado();
-
-        }
-
-        return;
-
-    }
-
-
-    if (estadoVazioProfessores) {
-
-        estadoVazioProfessores.hidden =
-            true;
-
-    }
-
-
-    if (nenhumProfessorEncontrado) {
-
-        nenhumProfessorEncontrado.hidden =
-            true;
-
-    }
-
-
-    lista.forEach(
-        function(professor) {
-
-            const card =
-                criarCardProfessor(
-                    professor
-                );
-
-
-            listaCardsProfessores.appendChild(
-                card
-            );
-
-        }
-    );
-
-
-    atualizarIcones();
-
-}
-
-
-// =====================================================
-// CRIAR CARD DO PROFESSOR
-// =====================================================
-
-function criarCardProfessor(
-    professor
-) {
-
-    const card =
-        document.createElement(
-            "article"
-        );
-
-
-    card.className =
-        "card-professor";
-
-
-    const resumo =
-        document.createElement(
-            "div"
-        );
-
-
-    resumo.className =
-        "professor-resumo";
-
-
-    const avatar =
-        document.createElement(
-            "div"
-        );
-
-
-    avatar.className =
-        "professor-avatar";
-
+    const avatar = document.createElement("div");
+    avatar.className = "professor-avatar";
 
     if (professor.foto) {
-
-        const imagem =
-            document.createElement(
-                "img"
-            );
-
-
-        imagem.src =
-            professor.foto;
-
-
-        imagem.alt =
-            "Foto de " +
-            professor.nome;
-
-
-        avatar.appendChild(
-            imagem
-        );
-
+        const imagem = document.createElement("img");
+        imagem.src = professor.foto;
+        imagem.alt = "Foto de " + professor.nome;
+        imagem.loading = "lazy";
+        avatar.appendChild(imagem);
     } else {
-
-        const icone =
-            document.createElement(
-                "i"
-            );
-
-
-        icone.setAttribute(
-            "data-lucide",
-            "user-round"
-        );
-
-
-        avatar.appendChild(
-            icone
-        );
-
+        const icone = document.createElement("i");
+        icone.setAttribute("data-lucide", "user-round");
+        avatar.appendChild(icone);
     }
 
+    const identidade = document.createElement("div");
+    identidade.className = "professor-identidade";
 
-    const identidade =
-        document.createElement(
-            "div"
-        );
+    const nome = document.createElement("h3");
+    nome.textContent = professor.nome || "Professor";
 
+    const username = document.createElement("span");
+    username.textContent = professor.username ? "@" + professor.username : "Professor";
 
-    identidade.className =
-        "professor-identidade";
+    identidade.append(nome, username);
 
+    const iconeExpandir = document.createElement("i");
+    iconeExpandir.className = "professor-expandir";
+    iconeExpandir.setAttribute("data-lucide", "chevron-down");
 
-    const nome =
-        document.createElement(
-            "h3"
-        );
+    resumo.append(avatar, identidade, iconeExpandir);
 
+    const detalhes = document.createElement("div");
+    detalhes.className = "professor-detalhes";
 
-    nome.textContent =
-        professor.nome;
-
-
-    const especialidade =
-        document.createElement(
-            "span"
-        );
-
-
-    especialidade.textContent =
-        professor.especialidade;
-
-
-    identidade.appendChild(
-        nome
-    );
-
-    identidade.appendChild(
-        especialidade
-    );
-
-
-    const iconeExpandir =
-        document.createElement(
-            "i"
-        );
-
-
-    iconeExpandir.className =
-        "professor-expandir";
-
-
-    iconeExpandir.setAttribute(
-        "data-lucide",
-        "chevron-down"
-    );
-
-
-    resumo.appendChild(
-        avatar
-    );
-
-    resumo.appendChild(
-        identidade
-    );
-
-    resumo.appendChild(
-        iconeExpandir
-    );
-
-
-    const detalhes =
-        document.createElement(
-            "div"
-        );
-
-
-    detalhes.className =
-        "professor-detalhes";
-
-
-    const informacoes =
-        document.createElement(
-            "div"
-        );
-
-
-    informacoes.className =
-        "informacoes-professor";
-
-
-    adicionarInformacao(
-        informacoes,
-        "Avaliação",
-        professor.avaliacao !== undefined
-            ? "⭐ " + professor.avaliacao
-            : null
-    );
-
-
-    adicionarInformacao(
-        informacoes,
-        "Alunos",
-        professor.quantidadeAlunos !== undefined
-            ? professor.quantidadeAlunos
-            : null
-    );
-
-
-    adicionarInformacao(
-        informacoes,
-        "Nível de ensino",
-        professor.nivelEnsino
-    );
-
-
-    adicionarInformacao(
-        informacoes,
-        "Especialidade",
-        professor.especialidade
-    );
-
-
-    if (professor.descricao) {
-
-        const descricao =
-            document.createElement(
-                "p"
-            );
-
-
-        descricao.textContent =
-            professor.descricao;
-
-
-        descricao.style.marginBottom =
-            "18px";
-
-
-        detalhes.appendChild(
-            descricao
-        );
-
+    if (professor.formacao) {
+        adicionarInformacao(detalhes, "Formação", professor.formacao);
     }
 
-
-    detalhes.appendChild(
-        informacoes
-    );
-
-
-    if (professor.perfil) {
-
-        const link =
-            document.createElement(
-                "a"
-            );
-
-
-        link.href =
-            professor.perfil;
-
-
-        link.className =
-            "botao-ver-perfil";
-
-
-        link.innerHTML = `
-            <i data-lucide="user-round"></i>
-            <span>Ver perfil</span>
-        `;
-
-
-        detalhes.appendChild(
-            link
-        );
-
+    if (professor.especialidades.length) {
+        adicionarInformacao(detalhes, "Especialidades", professor.especialidades.join(", "));
     }
 
+    if (professor.bio) {
+        const descricao = document.createElement("p");
+        descricao.className = "descricao-professor";
+        descricao.textContent = professor.bio;
+        detalhes.appendChild(descricao);
+    }
 
-    card.appendChild(
-        resumo
-    );
+    const link = document.createElement("a");
+    link.href = "perfil-publico.html?usuario=" + encodeURIComponent(professor.username);
+    link.className = "botao-ver-perfil";
+    link.innerHTML = '<i data-lucide="user-round"></i><span>Ver perfil</span>';
+    detalhes.appendChild(link);
 
-    card.appendChild(
-        detalhes
-    );
+    card.append(resumo, detalhes);
 
-
-    card.addEventListener(
-        "click",
-        function(event) {
-
-            if (
-                event.target.closest(
-                    ".botao-ver-perfil"
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            card.classList.toggle(
-                "aberto"
-            );
-
-        }
-    );
-
+    card.addEventListener("click", function(event) {
+        if (event.target.closest(".botao-ver-perfil")) return;
+        card.classList.toggle("aberto");
+    });
 
     return card;
-
 }
 
+function adicionarInformacao(container, titulo, valor) {
+    if (!valor) return;
 
-// =====================================================
-// ADICIONAR INFORMAÇÃO AO CARD
-// =====================================================
+    const bloco = document.createElement("div");
+    bloco.className = "informacao-professor";
 
-function adicionarInformacao(
-    container,
-    titulo,
-    valor
-) {
+    const nome = document.createElement("span");
+    nome.textContent = titulo;
 
-    if (
-        valor === undefined ||
-        valor === null ||
-        valor === ""
-    ) {
+    const valorElemento = document.createElement("strong");
+    valorElemento.textContent = valor;
 
-        return;
+    bloco.append(nome, valorElemento);
+    container.appendChild(bloco);
+}
 
+function renderizarProfessores(lista, opcoes = {}) {
+    if (!listaCardsProfessores) return;
+
+    const limite = Number.isInteger(opcoes.limite) ? opcoes.limite : lista.length;
+    const visiveis = lista.slice(0, limite);
+    listaCardsProfessores.replaceChildren();
+
+    atualizarEstadoListaProfessores(lista, opcoes.termo || "");
+
+    visiveis.forEach(function(professor) {
+        listaCardsProfessores.appendChild(criarCardProfessor(professor));
+    });
+
+    if (opcoes.mostrarMais && lista.length > visiveis.length) {
+        const mais = document.createElement("p");
+        mais.className = "mais-professores";
+        mais.textContent = "mais...";
+        listaCardsProfessores.appendChild(mais);
     }
 
-
-    const bloco =
-        document.createElement(
-            "div"
-        );
-
-
-    bloco.className =
-        "informacao-professor";
-
-
-    const nome =
-        document.createElement(
-            "span"
-        );
-
-
-    nome.textContent =
-        titulo;
-
-
-    const valorElemento =
-        document.createElement(
-            "strong"
-        );
-
-
-    valorElemento.textContent =
-        valor;
-
-
-    bloco.appendChild(
-        nome
-    );
-
-    bloco.appendChild(
-        valorElemento
-    );
-
-
-    container.appendChild(
-        bloco
-    );
-
+    if (window.atualizarIcones) atualizarIcones();
 }
-
-
-// =====================================================
-// PESQUISAR PROFESSORES
-// =====================================================
 
 function pesquisarProfessores() {
-
-    const termo =
-        campoPesquisaProfessor
-            ? campoPesquisaProfessor.value
-                .trim()
-                .toLowerCase()
-            : "";
-
+    const termoOriginal = campoPesquisaProfessor ? campoPesquisaProfessor.value.trim() : "";
+    const termo = normalizarTextoProfessor(termoOriginal);
 
     if (!termo) {
-
-        renderizarProfessores(
-            professores
-        );
-
-        return;
-
+        renderizarProfessores(professoresEmDestaque);
+        return [];
     }
 
+    const resultados = professores.filter(function(professor) {
+        return normalizarTextoProfessor(professor.nome).startsWith(termo);
+    });
 
-    const resultados =
-        professores.filter(
-            function(professor) {
+    renderizarProfessores(resultados, {
+        limite: 3,
+        mostrarMais: true,
+        termo: termoOriginal
+    });
 
-                const nome =
-                    String(
-                        professor.nome || ""
-                    ).toLowerCase();
-
-
-                const especialidade =
-                    String(
-                        professor.especialidade || ""
-                    ).toLowerCase();
-
-
-                const materias =
-                    Array.isArray(
-                        professor.materias
-                    )
-                        ? professor.materias
-                            .join(" ")
-                            .toLowerCase()
-                        : "";
-
-
-                return (
-                    nome.includes(termo) ||
-                    especialidade.includes(termo) ||
-                    materias.includes(termo)
-                );
-
-            }
-        );
-
-
-    renderizarProfessores(
-        resultados
-    );
-
+    return resultados;
 }
 
+function abrirPainelResultadosProfessores(resultados, termo) {
+    if (!painelResultadosProfessores || !listaCompletaProfessores) return;
 
-// =====================================================
-// EVENTO DA PESQUISA
-// =====================================================
+    tituloResultadosProfessores.textContent =
+        'Professores encontrados para "' + termo + '" (' + resultados.length + ')';
 
-if (
-    campoPesquisaProfessor
-) {
+    listaCompletaProfessores.replaceChildren();
 
-    campoPesquisaProfessor.addEventListener(
-        "input",
-        pesquisarProfessores
-    );
+    if (estadoPesquisaCompletaVazia) {
+        estadoPesquisaCompletaVazia.hidden = resultados.length > 0;
+    }
 
+    resultados.forEach(function(professor) {
+        listaCompletaProfessores.appendChild(criarCardProfessor(professor));
+    });
 
-    campoPesquisaProfessor.addEventListener(
-        "keydown",
-        function(event) {
+    painelResultadosProfessores.hidden = false;
+    document.body.style.overflow = "hidden";
 
-            if (
-                event.key === "Enter"
-            ) {
+    if (window.atualizarIcones) atualizarIcones();
+}
 
-                event.preventDefault();
+function fecharPainelResultadosProfessores() {
+    if (!painelResultadosProfessores) return;
+    painelResultadosProfessores.hidden = true;
+    document.body.style.overflow = "";
+}
 
-                pesquisarProfessores();
+async function carregarProfessores() {
+    if (!listaCardsProfessores) return;
 
+    if (typeof supabaseClient === "undefined" || !supabaseClient) {
+        console.error("Supabase indisponível ao carregar professores.");
+        mostrarEstadoVazioProfessores();
+        return;
+    }
+
+    try {
+        const { data, error } = await supabaseClient.rpc("get_public_teacher_profiles");
+        if (error) throw error;
+
+        const registros = Array.isArray(data) ? data : [];
+
+        professores.splice(0, professores.length, ...registros.map(function(perfil) {
+            let foto = null;
+
+            if (perfil.avatar_path) {
+                const resultado = supabaseClient.storage
+                    .from("avatars")
+                    .getPublicUrl(perfil.avatar_path);
+                foto = resultado.data?.publicUrl || null;
             }
 
+            return {
+                id: perfil.id,
+                nome: perfil.display_name || perfil.username || "Professor",
+                username: perfil.username || "",
+                foto: foto,
+                bio: perfil.bio || "",
+                formacao: perfil.formation || "",
+                especialidades: Array.isArray(perfil.specialties) ? perfil.specialties : []
+            };
+        }));
+
+        professoresEmDestaque = embaralharProfessores(professores).slice(0, 10);
+        renderizarProfessores(professoresEmDestaque);
+    } catch (erro) {
+        console.error("Erro ao carregar catálogo de professores:", erro);
+        if (estadoVazioProfessores) {
+            estadoVazioProfessores.hidden = false;
+            const titulo = estadoVazioProfessores.querySelector("h3");
+            const texto = estadoVazioProfessores.querySelector("p");
+            if (titulo) titulo.textContent = "Não foi possível carregar os professores";
+            if (texto) texto.textContent = "Verifique sua conexão e tente novamente.";
         }
-    );
+        if (nenhumProfessorEncontrado) nenhumProfessorEncontrado.hidden = true;
+    }
+}
 
-}  
+if (campoPesquisaProfessor) {
+    campoPesquisaProfessor.addEventListener("input", pesquisarProfessores);
+
+    campoPesquisaProfessor.addEventListener("keydown", function(event) {
+        if (event.key !== "Enter") return;
+
+        event.preventDefault();
+        const termo = campoPesquisaProfessor.value.trim();
+        if (!termo) return;
+
+        const resultados = pesquisarProfessores();
+        abrirPainelResultadosProfessores(resultados, termo);
+    });
+}
+
+if (fecharResultadosProfessores) {
+    fecharResultadosProfessores.addEventListener("click", fecharPainelResultadosProfessores);
+}
+
+if (painelResultadosProfessores) {
+    painelResultadosProfessores.addEventListener("click", function(event) {
+        if (event.target === painelResultadosProfessores) fecharPainelResultadosProfessores();
+    });
+}
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape" && painelResultadosProfessores && !painelResultadosProfessores.hidden) {
+        fecharPainelResultadosProfessores();
+    }
+});
+
+function mostrarEstadoVazioProfessores() {
+    if (estadoVazioProfessores) estadoVazioProfessores.hidden = false;
+    if (nenhumProfessorEncontrado) nenhumProfessorEncontrado.hidden = true;
+}
+
+carregarProfessores();
+
+
 // =====================================================
-// INICIALIZAÇÃO
-// =====================================================
-
-renderizarProfessores(
-    professores
-);   
-
-
-// =====================================================
-// MODAL DE CADASTRO COMO PROFESSOR
+// 
 // =====================================================
 
 const botaoAbrirCadastroProfessor =
