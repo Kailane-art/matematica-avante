@@ -75,6 +75,20 @@ const fasesNivel5 = {
 };
 
 
+function makeQ([pergunta, resposta, passo]) {
+    const valor = Number(resposta);
+    const opcoes = [valor, valor + 1, valor - 1, valor + 2];
+    return {
+        pergunta: pergunta,
+        alternativas: opcoes.map(function(numero) {
+            return { texto: String(numero) };
+        }),
+        explicacao: "PASSO A PASSO:\\n" + passo +
+            "\\n\\nCOMO EVITAR O ERRO:\\nConfira as condições, mantenha as unidades e valide o resultado na expressão original.",
+        dificuldade: "Difícil"
+    };
+}
+
 const dadosQuestoesNivel5 = {
     "1": [
         [
