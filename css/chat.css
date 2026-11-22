@@ -669,3 +669,51 @@
     background: #29456f;
     color: #e5e7eb;
 }
+
+
+/* AÇÕES DE SOLICITAÇÃO COM ÍCONES */
+.chat-acoes-solicitacao {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 7px;
+    margin-left: auto;
+}
+
+.chat-acoes-solicitacao button {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.chat-acoes-solicitacao button svg {
+    width: 19px;
+    height: 19px;
+    stroke-width: 2.7;
+}
+
+.chat-aceitar-solicitacao {
+    background: #16a34a;
+    color: #fff;
+}
+
+.chat-recusar-solicitacao {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.chat-contato-item .chat-contato-perfil {
+    flex-shrink: 0;
+    margin-left: 2px;
+}
+
+.modo-escuro .chat-recusar-solicitacao {
+    background: #7f1d1d;
+    color: #fff;
+}
