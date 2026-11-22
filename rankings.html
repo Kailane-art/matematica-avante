@@ -89,25 +89,26 @@
 
             <p class="ranking-legenda-periodo">Período: domingo a sábado · Top 3</p>
 
-            <div class="ranking-vazio ranking-vazio-desafios">
-                <span class="ranking-vazio-icone">
-                    <i data-lucide="swords"></i>
-                </span>
-                <h3>As disputas ainda não começaram</h3>
-                <p>O ranking será atualizado quando o sistema de desafios entre amigos estiver disponível.</p>
+            <div id="statusRankingDesafios" class="ranking-status" role="status" aria-live="polite">
+                Carregando ranking de desafios...
             </div>
+            <ol id="listaRankingDesafios" class="ranking-lista" aria-label="Três estudantes com mais vitórias"></ol>
 
-            <div class="ranking-pesquisa ranking-pesquisa-indisponivel">
-                <label for="pesquisaRankingDesafios">Encontre sua posição</label>
+            <div class="ranking-pesquisa">
+                <label for="pesquisaRankingDesafios">Encontre sua posição ou procure outro estudante</label>
                 <div class="ranking-campo-pesquisa">
                     <i data-lucide="search"></i>
                     <input
                         id="pesquisaRankingDesafios"
                         type="search"
-                        placeholder="Pesquisa disponível após o lançamento dos desafios"
-                        disabled
+                        placeholder="Nome ou @usuário"
+                        minlength="2"
+                        maxlength="50"
+                        autocomplete="off"
                     >
                 </div>
+                <p id="ajudaPesquisaRankingDesafios" class="ranking-ajuda-pesquisa">Digite pelo menos 2 caracteres para pesquisar.</p>
+                <div id="resultadosRankingDesafios" class="ranking-resultados" aria-live="polite"></div>
             </div>
         </section>
     </main>
