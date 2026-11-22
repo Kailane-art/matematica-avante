@@ -325,6 +325,9 @@
             foto.alt = "";
             avatar.replaceChildren(foto);
         }
+        if (window.atualizarIndicadorPresenca) {
+            window.atualizarIndicadorPresenca(avatar, contato.contact_id);
+        }
 
         const dados = document.createElement("span");
         dados.className = "chat-conversa-dados";
@@ -590,6 +593,9 @@
                 atualizarIcones();
             };
             avatar.replaceChildren(foto);
+        }
+        if (window.atualizarIndicadorPresenca) {
+            window.atualizarIndicadorPresenca(avatar, contato.contact_id);
         }
 
         const dados = document.createElement("div");
