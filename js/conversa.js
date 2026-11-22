@@ -244,6 +244,13 @@
 
             container.replaceChildren();
             if (data === "accepted" && aceitar) {
+                const { data: messageId, error: messageError } = await supabaseClient.rpc("send_chat_message", {
+                    p_contact_id: contatoId,
+                    p_body: "Aceitei seu convite para o desafio de matemática. A partida já começou!"
+                });
+                if (!messageError && window.maPushNotifications && messageId) {
+                    await window.maPushNotifications.enviarEvento("message", { message_id: messageId });
+                }
                 const aviso = document.createElement("strong");
                 aviso.className = "conversa-status-desafio";
                 aviso.textContent = "Desafio aceito. A partida começou.";
