@@ -12,7 +12,7 @@
     const padrao = {
         theme: ["claro", "escuro", "dispositivo"].includes(localStorage.getItem("tema"))
             ? localStorage.getItem("tema")
-            : "claro",
+            : "dispositivo",
         text_size: Math.min(5, Math.max(1, Number(localStorage.getItem("tamanhoTexto") || 3))),
         site_notifications_enabled: true,
         allow_friend_requests_from_student: true,
