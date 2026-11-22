@@ -4131,3 +4131,22 @@ body.pagina-perfil-publico #seloPerfilPublico {
 body {
     zoom: var(--escala-texto, 1);
 }
+
+
+/* Aviso inicial de notificações push. */
+.ma-push-overlay { position: fixed; inset: 0; z-index: 10050; display: flex; align-items: center; justify-content: center; padding: 18px; background: rgba(8, 20, 40, .68); }
+.ma-push-dialog { width: min(100%, 420px); padding: 25px; border: 1px solid #d8e2f0; border-radius: 18px; background: #fff; color: #172033; box-shadow: 0 22px 70px rgba(0,0,0,.28); text-align: center; }
+.ma-push-icone { width: 54px; height: 54px; margin: 0 auto 12px; display: grid; place-items: center; border-radius: 50%; background: #e8efff; font-size: 25px; }
+.ma-push-dialog h2 { margin: 0 0 10px; color: #1e3a8a; font-size: 21px; }
+.ma-push-dialog p { color: #526176; font-size: 14px; line-height: 1.55; }
+.ma-push-status { min-height: 18px; }
+.ma-push-acoes { display: flex; gap: 10px; margin-top: 18px; }
+.ma-push-acoes button { flex: 1; min-height: 44px; border: 0; border-radius: 10px; padding: 10px 14px; font: inherit; font-weight: 700; cursor: pointer; }
+.ma-push-permitir { background: #1e3a8a; color: #fff; }
+.ma-push-negar { background: #e8edf4; color: #26364d; }
+.ma-push-acoes button:disabled { opacity: .6; cursor: wait; }
+.modo-escuro .ma-push-dialog { background: #13294b; border-color: #29466d; color: #f8fafc; }
+.modo-escuro .ma-push-dialog h2 { color: #bfdbfe; }
+.modo-escuro .ma-push-dialog p { color: #c3d0e3; }
+.modo-escuro .ma-push-negar { background: #29466d; color: #f8fafc; }
+@media (max-width: 480px) { .ma-push-dialog { padding: 21px 18px; } }
