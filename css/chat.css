@@ -597,6 +597,15 @@
     font-size: 13px;
 }
 
+.chat-favorito-estrela {
+    display: inline-block;
+    margin-left: 5px;
+    color: #eab308;
+    font-size: 14px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
 .chat-contato-dados span {
     margin-top: 3px;
     color: #64748b;
