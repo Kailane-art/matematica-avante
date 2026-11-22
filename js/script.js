@@ -53,11 +53,11 @@ function aplicarTemaGlobal(preferencia) {
     document.body.classList.toggle("modo-escuro", temaEscuro);
 }
 
-const temaSalvo = localStorage.getItem("tema") || "claro";
+const temaSalvo = localStorage.getItem("tema") || "dispositivo";
 aplicarTemaGlobal(temaSalvo);
 
 preferenciaTemaDispositivo.addEventListener("change", function(evento) {
-    if ((localStorage.getItem("tema") || "claro") === "dispositivo") {
+    if ((localStorage.getItem("tema") || "dispositivo") === "dispositivo") {
         document.body.classList.toggle("modo-escuro", evento.matches);
     }
 });
