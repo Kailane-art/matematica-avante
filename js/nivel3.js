@@ -2585,6 +2585,7 @@ function mostrarQuestao() {
     const textoQuestao = document.getElementById("textoQuestao");
     const alternativas = document.getElementById("alternativas");
     const explicacao = document.getElementById("explicacaoErro");
+    const rotuloDificuldade = document.getElementById("dificuldadeQuestao");
 
     if (!textoQuestao || !alternativas) return;
 
@@ -2602,11 +2603,22 @@ function mostrarQuestao() {
         textoQuestao.textContent =
             "As questões desta fase serão adicionadas em breve.";
         alternativas.innerHTML = "";
+        if (rotuloDificuldade) {
+            rotuloDificuldade.hidden = true;
+            rotuloDificuldade.textContent = "";
+        }
         atualizarBotoesNavegacao();
         return;
     }
 
     textoQuestao.textContent = questao.pergunta;
+
+    if (rotuloDificuldade) {
+        rotuloDificuldade.textContent = questao.dificuldade || "Médio";
+        rotuloDificuldade.dataset.dificuldade =
+            questao.dificuldade === "Difícil" ? "dificil" : "medio";
+        rotuloDificuldade.hidden = false;
+    }
     alternativas.innerHTML = "";
 
     // O ID é definido pela ordem original antes do embaralhamento.
