@@ -237,6 +237,133 @@ if (window.supabase && window.supabase.createClient) {
     );
 }
 
+/* ================================================
+   PRESENÇA ONLINE GLOBAL
+   Supabase Realtime Presence, sem persistir status no banco.
+================================================ */
+
+let canalPresencaOnline = null;
+let usuarioPresencaOnlineId = null;
+let presencaOnlineHabilitada = true;
+let presencaOnlineConectada = false;
+
+window.maPresencaOnline = new Set();
+
+function publicarPresencaOnline() {
+    const estado = canalPresencaOnline ? canalPresencaOnline.presenceState() : {};
+    const ids = new Set();
+
+    Object.values(estado).forEach(function(sessoes) {
+        (sessoes || []).forEach(function(sessao) {
+            if (sessao && sessao.user_id) ids.add(sessao.user_id);
+        });
+    });
+
+    window.maPresencaOnline = ids;
+    window.dispatchEvent(new CustomEvent("ma:presenca-atualizada", {
+        detail: { userIds: Array.from(ids) }
+    }));
+}
+
+function aplicarPresencaNoAvatar(elemento) {
+    if (!elemento || !elemento.dataset.presenceUserId) return;
+
+    const online = window.maPresencaOnline.has(elemento.dataset.presenceUserId);
+    let indicador = elemento.querySelector(".chat-status-online");
+
+    if (online && !indicador) {
+        indicador = document.createElement("span");
+        indicador.className = "chat-status-online";
+        indicador.setAttribute("role", "img");
+        indicador.setAttribute("aria-label", "Usuário online");
+        indicador.title = "Online";
+        elemento.appendChild(indicador);
+    } else if (!online && indicador) {
+        indicador.remove();
+    }
+}
+
+window.atualizarIndicadorPresenca = function(elemento, usuarioId) {
+    if (!elemento || !usuarioId) return;
+    elemento.dataset.presenceUserId = usuarioId;
+    aplicarPresencaNoAvatar(elemento);
+};
+
+window.addEventListener("ma:presenca-atualizada", function() {
+    document.querySelectorAll(".chat-avatar[data-presence-user-id]").forEach(aplicarPresencaNoAvatar);
+});
+
+async function alterarPreferenciaPresencaOnline(ativa) {
+    presencaOnlineHabilitada = ativa !== false;
+
+    if (!canalPresencaOnline || !presencaOnlineConectada) return;
+
+    try {
+        if (presencaOnlineHabilitada) {
+            await canalPresencaOnline.track({
+                user_id: usuarioPresencaOnlineId
+            });
+        } else {
+            await canalPresencaOnline.untrack();
+        }
+        publicarPresencaOnline();
+    } catch (erro) {
+        console.error("Não foi possível atualizar a presença online:", erro);
+    }
+}
+
+window.addEventListener("ma:status-online-configurado", function(evento) {
+    alterarPreferenciaPresencaOnline(evento.detail?.enabled);
+});
+
+async function iniciarPresencaOnlineGlobal() {
+    if (!supabaseClient || paginaLogin || canalPresencaOnline) return;
+
+    try {
+        const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+        if (erroUsuario || !user) return;
+
+        usuarioPresencaOnlineId = user.id;
+
+        const { data: preferencias, error: erroPreferencias } = await supabaseClient
+            .from("user_settings")
+            .select("show_online_status")
+            .eq("user_id", user.id)
+            .maybeSingle();
+
+        if (erroPreferencias) throw erroPreferencias;
+        presencaOnlineHabilitada = preferencias?.show_online_status !== false;
+
+        await supabaseClient.realtime.setAuth();
+
+        canalPresencaOnline = supabaseClient.channel("matematica-avante-online", {
+            config: {
+                private: true,
+                presence: { key: user.id }
+            }
+        });
+
+        canalPresencaOnline
+            .on("presence", { event: "sync" }, publicarPresencaOnline)
+            .on("presence", { event: "join" }, publicarPresencaOnline)
+            .on("presence", { event: "leave" }, publicarPresencaOnline)
+            .subscribe(async function(status) {
+                if (status === "SUBSCRIBED") {
+                    presencaOnlineConectada = true;
+                    await alterarPreferenciaPresencaOnline(presencaOnlineHabilitada);
+                    publicarPresencaOnline();
+                } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+                    presencaOnlineConectada = false;
+                    console.error("Não foi possível conectar a presença online:", status);
+                }
+            });
+    } catch (erro) {
+        console.error("Não foi possível iniciar a presença online:", erro);
+    }
+}
+
+iniciarPresencaOnlineGlobal();
+
 function aplicarTamanhoTextoGlobal(tamanho) {
     const escalas = { 1: "0.88", 2: "0.94", 3: "1", 4: "1.08", 5: "1.16" };
     const valor = Math.min(5, Math.max(1, Number(tamanho) || 3));
