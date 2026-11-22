@@ -76,6 +76,8 @@
 
             if (secao === "solicitacoes" || secao === "amigos") {
                 carregarContatosChat();
+            } else if (secao === "notificacoes") {
+                carregarNotificacoesChat();
             }
 
             abasPainel.forEach(function(item) {
@@ -234,6 +236,7 @@
 
     const listaAmigos = document.getElementById("listaAmigosChat");
     const listaSolicitacoes = document.getElementById("listaSolicitacoesChat");
+    const listaNotificacoes = document.getElementById("listaNotificacoesChat");
     const badgeNotificacoes = document.getElementById("notificacoesChatBadge");
     const listaConversas = document.getElementById("listaConversas");
     const estadoVazioConversas = document.getElementById("estadoVazioConversas");
@@ -241,6 +244,10 @@
     let amigosDaLista = [];
     let usuarioAtualId = null;
     let tipoUsuarioAtual = null;
+    let quantidadeSolicitacoesRecebidas = 0;
+    let quantidadeNotificacoesProfessorNaoLidas = 0;
+    let notificacoesProfessor = [];
+    let canalNotificacoesProfessor = null;
     let recarregandoConversas = false;
     let recargaPendente = false;
     const itensPorConversa = new Map();
@@ -621,6 +628,164 @@
         return item;
     }
 
+    function atualizarBadgeNotificacoes() {
+        if (!badgeNotificacoes) return;
+
+        const total = quantidadeSolicitacoesRecebidas + quantidadeNotificacoesProfessorNaoLidas;
+        badgeNotificacoes.hidden = total === 0;
+        badgeNotificacoes.textContent = total ? String(total) : "";
+    }
+
+    function formatarDataNotificacao(data) {
+        if (!data) return "";
+        return new Date(data).toLocaleString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    }
+
+    async function carregarNotificacoesChat() {
+        if (!listaNotificacoes) return;
+
+        if (tipoUsuarioAtual !== "dev") {
+            quantidadeNotificacoesProfessorNaoLidas = 0;
+            notificacoesProfessor = [];
+            estadoPainel(
+                listaNotificacoes,
+                "bell",
+                "Nenhuma notificação nova",
+                "Quando houver avisos destinados à sua conta, eles aparecerão aqui."
+            );
+            atualizarBadgeNotificacoes();
+            return;
+        }
+
+        estadoPainel(listaNotificacoes, "loader-circle", "Carregando notificações...");
+
+        try {
+            const { data, error } = await supabaseClient.rpc("get_teacher_request_notifications");
+            if (error) throw error;
+
+            notificacoesProfessor = data || [];
+            quantidadeNotificacoesProfessorNaoLidas =
+                notificacoesProfessor.filter(item => !item.read_at).length;
+
+            if (!notificacoesProfessor.length) {
+                estadoPainel(
+                    listaNotificacoes,
+                    "bell",
+                    "Nenhuma notificação por enquanto",
+                    "Novas solicitações de cadastro como professor aparecerão aqui."
+                );
+            } else {
+                const fragmento = document.createDocumentFragment();
+
+                notificacoesProfessor.forEach(function(notificacao) {
+                    const item = document.createElement("button");
+                    item.type = "button";
+                    item.className = "chat-notificacao-item";
+                    if (!notificacao.read_at) item.classList.add("nao-lida");
+
+                    const icone = document.createElement("span");
+                    icone.className = "chat-notificacao-icone";
+                    const desenho = document.createElement("i");
+                    desenho.setAttribute("data-lucide", "graduation-cap");
+                    icone.appendChild(desenho);
+
+                    const dados = document.createElement("span");
+                    dados.className = "chat-notificacao-dados";
+
+                    const titulo = document.createElement("strong");
+                    titulo.textContent = "Nova solicitação";
+
+                    const autor = document.createElement("span");
+                    autor.textContent = "Por @" + (notificacao.candidate_username || "usuário");
+
+                    const data = document.createElement("small");
+                    data.textContent = formatarDataNotificacao(notificacao.created_at);
+
+                    dados.append(titulo, autor, data);
+
+                    const seta = document.createElement("i");
+                    seta.setAttribute("data-lucide", "chevron-right");
+                    seta.className = "chat-notificacao-seta";
+
+                    item.append(icone, dados, seta);
+
+                    item.addEventListener("click", async function() {
+                        item.disabled = true;
+
+                        try {
+                            if (!notificacao.read_at) {
+                                const { error: erroLeitura } = await supabaseClient.rpc(
+                                    "mark_teacher_request_notification_read",
+                                    { p_notification_id: notificacao.notification_id }
+                                );
+                                if (erroLeitura) throw erroLeitura;
+                            }
+                        } catch (erro) {
+                            console.error("Não foi possível marcar a notificação como lida:", erro);
+                        }
+
+                        window.location.href =
+                            "conversa.html?usuario=" +
+                            encodeURIComponent(notificacao.candidate_username);
+                    });
+
+                    fragmento.appendChild(item);
+                });
+
+                listaNotificacoes.replaceChildren(fragmento);
+                atualizarIcones();
+            }
+
+            atualizarBadgeNotificacoes();
+
+        } catch (erro) {
+            console.error("Erro ao carregar notificações administrativas:", erro);
+            estadoPainel(
+                listaNotificacoes,
+                "alert-circle",
+                "Não foi possível carregar as notificações",
+                "Tente novamente em instantes."
+            );
+        }
+
+        return quantidadeNotificacoesProfessorNaoLidas;
+    }
+
+    async function iniciarRealtimeNotificacoesProfessor(usuarioId) {
+        if (!usuarioId || tipoUsuarioAtual !== "dev" || canalNotificacoesProfessor) return;
+
+        await supabaseClient.realtime.setAuth();
+
+        canalNotificacoesProfessor = supabaseClient
+            .channel("user:" + usuarioId + ":teacher-notifications", { config: { private: true } })
+            .on("postgres_changes", {
+                event: "INSERT",
+                schema: "public",
+                table: "teacher_request_notifications",
+                filter: "recipient_id=eq." + usuarioId
+            }, function() {
+                carregarNotificacoesChat();
+            })
+            .on("postgres_changes", {
+                event: "UPDATE",
+                schema: "public",
+                table: "teacher_request_notifications",
+                filter: "recipient_id=eq." + usuarioId
+            }, function() {
+                carregarNotificacoesChat();
+            })
+            .subscribe(function(status) {
+                if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+                    console.error("Não foi possível atualizar notificações em tempo real:", status);
+                }
+            });
+    }
+
     async function carregarContatosChat() {
         if (!supabaseClient) return;
 
@@ -629,6 +794,7 @@
 
         try {
             await carregarFavoritosUsuario();
+            await iniciarRealtimeNotificacoesProfessor(usuarioAtualId);
 
             const { data, error } = await supabaseClient.rpc("get_chat_contacts");
             if (error) throw error;
@@ -638,6 +804,8 @@
             await atualizarListaConversas(amigos);
             const recebidas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "received");
             const enviadas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "sent");
+            quantidadeSolicitacoesRecebidas = recebidas.length;
+            await carregarNotificacoesChat();
 
             if (listaAmigos) {
                 if (!amigos.length) {
@@ -670,19 +838,21 @@
                 }
             }
 
-            if (badgeNotificacoes) {
-                badgeNotificacoes.hidden = recebidas.length === 0;
-                badgeNotificacoes.textContent = recebidas.length ? String(recebidas.length) : "";
-            }
+            atualizarBadgeNotificacoes();
 
-            if (recebidas.length) {
+            const secaoComNovidades =
+                tipoUsuarioAtual === "dev" && quantidadeNotificacoesProfessorNaoLidas > 0
+                    ? "notificacoes"
+                    : (recebidas.length ? "solicitacoes" : null);
+
+            if (secaoComNovidades) {
                 abasPainel.forEach(function(aba) {
-                    const ativa = aba.dataset.secaoChat === "solicitacoes";
+                    const ativa = aba.dataset.secaoChat === secaoComNovidades;
                     aba.classList.toggle("ativa", ativa);
                     aba.setAttribute("aria-pressed", String(ativa));
                 });
                 conteudosPainel.forEach(function(conteudo) {
-                    conteudo.hidden = conteudo.dataset.conteudoChat !== "solicitacoes";
+                    conteudo.hidden = conteudo.dataset.conteudoChat !== secaoComNovidades;
                 });
             }
 
