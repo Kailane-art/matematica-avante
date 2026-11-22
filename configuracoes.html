@@ -6,6 +6,7 @@
     <meta name="theme-color" content="#1E3A8A">
     <title>Configurações - Matemática Avante</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.webmanifest>
     <link rel="stylesheet" href="css/configuracoes.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -52,6 +53,10 @@
             <div class="config-opcao">
                 <div class="config-opcao-texto"><strong>Notificações do site</strong><span>Ative para receber avisos e atualizações dentro do Matemática Avante.</span></div>
                 <label class="config-switch"><input id="configNotificacoes" type="checkbox"><span></span><b class="sr-only">Ativar notificações do site</b></label>
+            </div>
+            <div class="config-opcao">
+                <div class="config-opcao-texto"><strong>Notificações no dispositivo</strong><span>Receba mensagens, solicitações e comunicados na barra de notificações do celular ou computador, mesmo com o site fechado.</span></div>
+                <label class="config-switch"><input id="configPushNotifications" type="checkbox"><span></span><b class="sr-only">Ativar notificações no dispositivo</b></label>
             </div>
         </section>
 
@@ -110,6 +115,7 @@
     </aside>
 
     <script src="js/script.js"></script>
+    <script src="js/notificacoes-push.js"></script>
     <script src="js/configuracoes.js"></script>
 </body>
 </html>
