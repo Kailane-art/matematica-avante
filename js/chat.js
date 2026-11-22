@@ -287,11 +287,17 @@
         return aviao;
     }
 
-    function iniciarAtualizacoesEmTempoReal(usuarioId) {
+    async function iniciarAtualizacoesEmTempoReal(usuarioId) {
         if (canalListaMensagens || !usuarioId) return;
 
+        await supabaseClient.realtime.setAuth();
         canalListaMensagens = supabaseClient
-            .channel("lista-conversas-" + usuarioId)
+            .channel("user:" + usuarioId + ":chat", { config: { private: true } })
+            .on("broadcast", {
+                event: "message_deleted"
+            }, () => {
+                atualizarListaConversas(amigosDaLista);
+            })
             .on("postgres_changes", {
                 event: "INSERT",
                 schema: "public",
@@ -403,7 +409,7 @@
             }
             if (!usuarioAtualId) throw new Error("Sessão não encontrada.");
 
-            iniciarAtualizacoesEmTempoReal(usuarioAtualId);
+            await iniciarAtualizacoesEmTempoReal(usuarioAtualId);
 
             const { data: conversas, error: erroConversas } = await supabaseClient.rpc("get_chat_conversations");
             if (erroConversas) throw erroConversas;
