@@ -72,11 +72,31 @@
         }
 
         const horas = Math.floor(minutos / 60);
-        const minutosRestantes = minutos % 60;
 
-        return minutosRestantes === 0
-            ? "Visto há " + horas + "h"
-            : "Visto há " + horas + "h " + minutosRestantes + "min";
+        if (horas < 6) {
+            const minutosRestantes = minutos % 60;
+            return minutosRestantes === 0
+                ? "Visto há " + horas + "h"
+                : "Visto há " + horas + "h " + minutosRestantes + "min";
+        }
+
+        if (horas < 24) {
+            return "Visto há " + horas + "h";
+        }
+
+        const dias = Math.floor(minutos / 1440);
+
+        if (dias < 7) {
+            return "Visto há " + dias + (dias === 1 ? " dia" : " dias");
+        }
+
+        if (dias < 30) {
+            const semanas = Math.floor(dias / 7);
+            return "Visto há " + semanas + (semanas === 1 ? " semana" : " semanas");
+        }
+
+        const meses = Math.floor(dias / 30);
+        return "Visto há " + meses + (meses === 1 ? " mês" : " meses");
     }
 
     function atualizarIndicadorVisto() {
