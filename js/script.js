@@ -66,18 +66,10 @@ if(botaoModo){
 
 
 
-        if(document.body.classList.contains("modo-escuro")){
-
-
-            localStorage.setItem("tema","escuro");
-
-
-        }else{
-
-
-            localStorage.setItem("tema","claro");
-
-
+        const novoTema = document.body.classList.contains("modo-escuro") ? "escuro" : "claro";
+        localStorage.setItem("tema", novoTema);
+        if (typeof salvarPreferenciaUsuario === "function") {
+            salvarPreferenciaUsuario({ theme: novoTema });
         }
 
 
@@ -120,6 +112,19 @@ const botaoMenu = document.getElementById("botaoMenu");
 const menuLateral = document.getElementById("menuLateral");
 
 const fundoMenu = document.getElementById("fundoMenu");
+
+// Torna navegável a opção Configurações nos menus laterais existentes.
+document.querySelectorAll("#menuLateral .menu-item").forEach(function(item) {
+    const texto = item.querySelector("span")?.textContent.trim().toLowerCase();
+    if (texto !== "configurações" || item.tagName === "A") return;
+
+    const link = document.createElement("a");
+    link.className = item.className;
+    link.href = "configuracoes.html";
+    link.setAttribute("aria-label", "Abrir configurações");
+    while (item.firstChild) link.appendChild(item.firstChild);
+    item.replaceWith(link);
+});
 
 
 
@@ -230,6 +235,57 @@ if (window.supabase && window.supabase.createClient) {
     );
 }
 
+function aplicarTamanhoTextoGlobal(tamanho) {
+    const escalas = { 1: "0.88", 2: "0.94", 3: "1", 4: "1.08", 5: "1.16" };
+    const valor = Math.min(5, Math.max(1, Number(tamanho) || 3));
+    document.documentElement.style.setProperty("--escala-texto", escalas[valor]);
+    document.documentElement.dataset.tamanhoTexto = String(valor);
+}
+
+aplicarTamanhoTextoGlobal(localStorage.getItem("tamanhoTexto") || 3);
+
+async function salvarPreferenciaUsuario(alteracoes) {
+    if (!supabaseClient) return;
+    try {
+        const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+        if (erroUsuario || !user) return;
+        const { error } = await supabaseClient
+            .from("user_settings")
+            .upsert({
+                user_id: user.id,
+                ...alteracoes,
+                updated_at: new Date().toISOString()
+            }, { onConflict: "user_id" });
+        if (error) throw error;
+    } catch (erro) {
+        console.error("Não foi possível sincronizar a preferência:", erro);
+    }
+}
+
+async function carregarPreferenciasGlobais() {
+    if (!supabaseClient) return;
+    try {
+        const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+        if (erroUsuario || !user) return;
+        const { data, error } = await supabaseClient
+            .from("user_settings")
+            .select("theme, text_size")
+            .eq("user_id", user.id)
+            .maybeSingle();
+        if (error) throw error;
+        if (!data) return;
+
+        localStorage.setItem("tema", data.theme);
+        localStorage.setItem("tamanhoTexto", String(data.text_size));
+        document.body.classList.toggle("modo-escuro", data.theme === "escuro");
+        aplicarTamanhoTextoGlobal(data.text_size);
+    } catch (erro) {
+        console.error("Não foi possível carregar as preferências globais:", erro);
+    }
+}
+
+carregarPreferenciasGlobais();
+
 // ================================
 // PROTEÇÃO DE PÁGINAS COM LOGIN
 // ================================
@@ -254,7 +310,8 @@ const paginasProtegidas = new Set([
     "subtracao.html",
     "multiplicacao.html",
     "divisao.html",
-"planos.html"
+    "planos.html",
+    "configuracoes.html"
 ]);
 
 const caminhoAtual = window.location.pathname.replace(/\/+$/, "");
