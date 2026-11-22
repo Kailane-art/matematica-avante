@@ -990,6 +990,9 @@
                 p_accept: aceitar
             });
             if (error) throw error;
+            if (window.maPushNotifications) {
+                await window.maPushNotifications.enviarEvento("friend_response", { request_id: id });
+            }
             await carregarContatosChat();
         } catch (erro) {
             console.error("Erro ao responder solicitação:", erro);
