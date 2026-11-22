@@ -165,7 +165,7 @@
 
         if (estadoAtual === "aprovada" || estadoAtual === "rejeitada") {
             const finalizada = document.createElement("strong");
-            finalizada.className = "conversa-status-solicitacao finalizada";
+            finalizada.className = "conversa-status-solicitacao finalizada " + estadoAtual;
             finalizada.textContent = rotulos[estadoAtual];
             container.appendChild(finalizada);
             return;
