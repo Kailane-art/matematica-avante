@@ -230,6 +230,42 @@
     let recarregandoConversas = false;
     let recargaPendente = false;
     const itensPorConversa = new Map();
+    let perfisFavoritos = new Set();
+
+    async function carregarFavoritosUsuario() {
+        try {
+            const { data: sessao, error: erroSessao } = await supabaseClient.auth.getUser();
+            if (erroSessao) throw erroSessao;
+
+            usuarioAtualId = sessao?.user?.id || null;
+            if (!usuarioAtualId) {
+                perfisFavoritos = new Set();
+                return;
+            }
+
+            const { data, error } = await supabaseClient
+                .from("profile_favorites")
+                .select("profile_id")
+                .eq("user_id", usuarioAtualId);
+
+            if (error) throw error;
+            perfisFavoritos = new Set((data || []).map(item => item.profile_id));
+        } catch (erro) {
+            console.error("Erro ao carregar perfis favoritos:", erro);
+            perfisFavoritos = new Set();
+        }
+    }
+
+    function adicionarEstrelaFavorito(nome, perfilId) {
+        if (!perfisFavoritos.has(perfilId)) return;
+
+        const estrela = document.createElement("span");
+        estrela.className = "chat-favorito-estrela";
+        estrela.textContent = "★";
+        estrela.setAttribute("aria-label", "Perfil favorito");
+        estrela.title = "Perfil favorito";
+        nome.appendChild(estrela);
+    }
 
     function abrirConversa(contato) {
         window.location.href = "conversa.html?usuario=" + encodeURIComponent(contato.username);
@@ -260,6 +296,7 @@
         dados.className = "chat-conversa-dados";
         const nome = document.createElement("strong");
         nome.textContent = contato.display_name || "Usuário";
+        adicionarEstrelaFavorito(nome, contato.contact_id);
         const username = document.createElement("small");
         username.textContent = "@" + contato.username;
         const ultimaMensagem = document.createElement("small");
@@ -511,6 +548,7 @@
         dados.className = "chat-contato-dados";
         const nome = document.createElement("strong");
         nome.textContent = contato.display_name || "Usuário";
+        if (tipo === "friend") adicionarEstrelaFavorito(nome, contato.contact_id);
         const username = document.createElement("span");
         username.textContent = "@" + contato.username;
         dados.append(nome, username);
@@ -570,6 +608,8 @@
         if (listaSolicitacoes) estadoPainel(listaSolicitacoes, "loader-circle", "Carregando solicitações...");
 
         try {
+            await carregarFavoritosUsuario();
+
             const { data, error } = await supabaseClient.rpc("get_chat_contacts");
             if (error) throw error;
 
