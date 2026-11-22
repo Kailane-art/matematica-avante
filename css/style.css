@@ -3922,6 +3922,14 @@ body.pagina-perfil-publico .card-perfil.identidade {
 
 
 
+/* PERFIL PÚBLICO — LINK EXTERNO SEM ROXO */
+body.pagina-perfil-publico #linkPerfilPublico,
+body.pagina-perfil-publico #linkPerfilPublico:visited,
+body.pagina-perfil-publico #linkPerfilPublico:hover,
+body.pagina-perfil-publico #linkPerfilPublico:active {
+    color: #ffffff !important;
+}
+
 /* PERFIL PÚBLICO — PEQUENO ESPAÇAMENTO ENTRE AS INFORMAÇÕES */
 body.pagina-perfil-publico .identidade > p {
     margin: 3px 0;
