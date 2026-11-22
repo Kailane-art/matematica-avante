@@ -217,6 +217,22 @@
     opacity: 0.75;
 }
 
+.alternativa-desafio.resposta-correta,
+.alternativa-desafio.resposta-correta:disabled {
+    border-color: #16834f !important;
+    background: #16834f !important;
+    color: #ffffff !important;
+    opacity: 1;
+}
+
+.alternativa-desafio.resposta-incorreta,
+.alternativa-desafio.resposta-incorreta:disabled {
+    border-color: #c83232 !important;
+    background: #c83232 !important;
+    color: #ffffff !important;
+    opacity: 1;
+}
+
 .alternativa-desafio:focus-visible {
     outline: 3px solid #f2c14e;
     outline-offset: 3px;
