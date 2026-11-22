@@ -543,6 +543,9 @@ async function enviarSolicitacaoCadastroProfessor() {
 
         if (data) {
             console.info("Solicitação de professor registrada:", data);
+            if (window.maPushNotifications) {
+                await window.maPushNotifications.enviarEvento("teacher_request", { request_id: data });
+            }
         }
 
     } catch (erro) {
