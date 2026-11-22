@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1E3A8A">
+    <title>Alertas e Eventos - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/alertas.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="pagina-alertas">
+    <header class="alertas-cabecalho">
+        <a href="inicio.html" class="alertas-voltar" aria-label="Voltar ao início"><i data-lucide="arrow-left"></i></a>
+        <h1>Alertas e Eventos</h1>
+        <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu"><i data-lucide="menu"></i></button>
+    </header>
+
+    <main class="alertas-container">
+        <section class="alertas-introducao">
+            <span class="alertas-sobrelinha">MATEMÁTICA AVANTE</span>
+            <h2>Novidades e comunicados</h2>
+            <p>Acompanhe avisos importantes, novidades e eventos publicados pela equipe da plataforma.</p>
+        </section>
+
+        <section id="areaPublicarAlerta" class="alertas-compositor" hidden aria-labelledby="tituloPublicarAlerta">
+            <div class="alertas-compositor-titulo">
+                <i data-lucide="megaphone"></i>
+                <div>
+                    <h2 id="tituloPublicarAlerta">Publicar novo alerta</h2>
+                    <p>Este espaço é exclusivo para contas DEV.</p>
+                </div>
+            </div>
+            <form id="formNovoAlerta">
+                <label for="mensagemNovoAlerta">Mensagem do comunicado</label>
+                <textarea id="mensagemNovoAlerta" maxlength="2000" rows="5" placeholder="Escreva o comunicado que todos os usuários poderão visualizar..." required></textarea>
+                <div class="alertas-compositor-rodape">
+                    <small>Máximo de 2.000 caracteres.</small>
+                    <button type="submit" disabled><i data-lucide="send"></i> Publicação em preparação</button>
+                </div>
+                <p class="alertas-aviso-etapa">A publicação será ativada quando o banco de dados e as notificações globais forem integrados.</p>
+            </form>
+        </section>
+
+        <section class="alertas-lista" aria-labelledby="tituloListaAlertas">
+            <div class="alertas-lista-cabecalho">
+                <div>
+                    <h2 id="tituloListaAlertas">Comunicados publicados</h2>
+                    <p>Os alertas ficam disponíveis por 15 dias.</p>
+                </div>
+            </div>
+            <div id="listaAlertas">
+                <div class="alertas-vazio">
+                    <span class="alertas-vazio-icone"><i data-lucide="bell-ring"></i></span>
+                    <h3>Nenhum alerta por enquanto</h3>
+                    <p>Quando um comunicado for publicado, ele aparecerá aqui.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="fundoMenu"></div>
+    <aside id="menuLateral" aria-label="Menu principal">
+        <h2>Menu</h2>
+        <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+        <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+        <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+        <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+        <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+        <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+        <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+        <a href="alertas.html" class="menu-item" aria-current="page"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a>
+        <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+    </aside>
+
+    <script src="js/script.js"></script>
+    <script src="js/alertas.js"></script>
+</body>
+</html>
