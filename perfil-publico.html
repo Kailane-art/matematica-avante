@@ -89,6 +89,7 @@
                 <button id="botaoBanirConta" type="button">Banir conta</button>
                 <button id="botaoRebaixarProfessor" type="button" hidden>Mudar professor para aluno</button>
                 <button id="botaoReativarConta" type="button" hidden>Reativar conta</button>
+                <button id="botaoRetirarSuspensao" type="button" hidden>Retirar suspensão</button>
             </div>
             <form id="formSuspensaoAdmin" class="form-suspensao-admin" hidden>
                 <label for="diasSuspensaoAdmin">Quantidade de dias da suspensão</label>
@@ -369,6 +370,7 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
     const campoDias = document.getElementById("diasSuspensaoAdmin");
     const botaoRebaixar = document.getElementById("botaoRebaixarProfessor");
     const botaoReativar = document.getElementById("botaoReativarConta");
+    const botaoRetirarSuspensao = document.getElementById("botaoRetirarSuspensao");
     const botaoSuspender = document.getElementById("botaoSuspenderConta");
     const botaoBanir = document.getElementById("botaoBanirConta");
 
@@ -392,17 +394,20 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
             botaoBanir.hidden = true;
             botaoRebaixar.hidden = true;
             botaoReativar.hidden = false;
+            botaoRetirarSuspensao.hidden = true;
         } else if (restricao?.restriction_type === "temporary_suspension") {
             estado.textContent = "Conta suspensa até " +
                 new Date(restricao.expires_at).toLocaleString("pt-BR");
-            botaoSuspender.hidden = false;
+            botaoSuspender.hidden = true;
             botaoBanir.hidden = false;
             botaoReativar.hidden = true;
+            botaoRetirarSuspensao.hidden = false;
         } else {
             estado.textContent = "Nenhuma restrição administrativa ativa.";
             botaoSuspender.hidden = false;
             botaoBanir.hidden = false;
             botaoReativar.hidden = true;
+            botaoRetirarSuspensao.hidden = true;
         }
     } catch (erro) {
         console.error("Erro ao consultar situação administrativa:", erro);
@@ -410,6 +415,7 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
         botaoSuspender.hidden = false;
         botaoBanir.hidden = false;
         botaoReativar.hidden = true;
+        botaoRetirarSuspensao.hidden = true;
         botaoRebaixar.hidden = perfilPublicoAtual.tipo_usuario !== "professor";
     }
 
@@ -453,9 +459,10 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
             estado.textContent = "Conta suspensa até " + new Date(resultado.expires_at).toLocaleString("pt-BR");
             mensagem.textContent = "Suspensão aplicada.";
             formSuspensao.hidden = true;
-            botaoSuspender.hidden = false;
+            botaoSuspender.hidden = true;
             botaoBanir.hidden = false;
             botaoReativar.hidden = true;
+            botaoRetirarSuspensao.hidden = false;
             campoDias.value = "";
         } catch (erro) {
             mensagem.textContent = erro.message || "Não foi possível suspender a conta.";
@@ -481,6 +488,24 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
             mensagem.textContent = erro.message || "Não foi possível banir a conta.";
         } finally {
             botaoBanir.disabled = false;
+        }
+    };
+
+    botaoRetirarSuspensao.onclick = async function() {
+        if (!window.confirm("Retirar a suspensão desta conta e liberar o login imediatamente?")) return;
+        botaoRetirarSuspensao.disabled = true;
+        mensagem.textContent = "Retirando suspensão...";
+        try {
+            await executarAcaoAdministrativaPerfil("unsuspend");
+            estado.textContent = "Nenhuma restrição administrativa ativa.";
+            mensagem.textContent = "Suspensão retirada. O usuário já pode fazer login.";
+            botaoSuspender.hidden = false;
+            botaoBanir.hidden = false;
+            botaoRetirarSuspensao.hidden = true;
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível retirar a suspensão.";
+        } finally {
+            botaoRetirarSuspensao.disabled = false;
         }
     };
 
@@ -513,6 +538,7 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
             botaoSuspender.hidden = false;
             botaoBanir.hidden = false;
             botaoReativar.hidden = true;
+            botaoRetirarSuspensao.hidden = true;
             botaoRebaixar.hidden = perfilPublicoAtual.tipo_usuario !== "professor";
         } catch (erro) {
             mensagem.textContent = erro.message || "Não foi possível reativar a conta.";
