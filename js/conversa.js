@@ -29,6 +29,28 @@
         return new Date(data).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
     }
 
+    function ajustarBarraAoTeclado() {
+        const viewport = window.visualViewport;
+        if (!viewport) return;
+
+        const alturaLayout = window.innerHeight;
+        const alturaVisivel = viewport.height + viewport.offsetTop;
+        const alturaTeclado = Math.max(0, alturaLayout - alturaVisivel);
+
+        document.documentElement.style.setProperty(
+            "--teclado-inset",
+            alturaTeclado + "px"
+        );
+    }
+
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", ajustarBarraAoTeclado);
+        window.visualViewport.addEventListener("scroll", ajustarBarraAoTeclado);
+        ajustarBarraAoTeclado();
+    } else {
+        window.addEventListener("resize", ajustarBarraAoTeclado);
+    }
+
     function rolarParaFim() {
         lista.scrollTop = lista.scrollHeight;
     }
