@@ -2470,6 +2470,16 @@ const campoEditarBio =
 const campoEditarLink =
     document.getElementById("editarLink");
 
+const campoEditarTituloDestaque =
+    document.getElementById("editarTituloDestaque");
+
+const TITULOS_CONQUISTAS = {
+    estudante_dedicado: "Estudante Dedicado",
+    estrategista_matematico: "Estrategista Matemático",
+    guardiao_constancia: "Guardião da Constância",
+    mestre_matematica: "Mestre da Matemática"
+};
+
 const botaoSalvarPerfil =
     document.getElementById("salvarPerfil");
 
@@ -2548,6 +2558,46 @@ async function abrirModalEditarPerfil() {
 
         campoEditarLink.value =
             data.link || "";
+
+        if (campoEditarTituloDestaque) {
+            const { data: conquistas, error: erroConquistas } = await supabaseClient
+                .from("user_achievements")
+                .select("achievement_key")
+                .eq("user_id", user.id);
+
+            if (erroConquistas) {
+                throw new Error("Não foi possível carregar suas conquistas.");
+            }
+
+            campoEditarTituloDestaque.replaceChildren();
+
+            const opcaoVazia = document.createElement("option");
+            opcaoVazia.value = "";
+            opcaoVazia.textContent = "Não exibir título";
+            campoEditarTituloDestaque.appendChild(opcaoVazia);
+
+            const ordemTitulos = [
+                "mestre_matematica",
+                "estrategista_matematico",
+                "estudante_dedicado",
+                "guardiao_constancia"
+            ];
+
+            ordemTitulos.forEach(function(chave) {
+                const possuiConquista = (conquistas || []).some(function(item) {
+                    return item.achievement_key === chave;
+                });
+
+                if (!possuiConquista) return;
+
+                const opcao = document.createElement("option");
+                opcao.value = chave;
+                opcao.textContent = TITULOS_CONQUISTAS[chave];
+                campoEditarTituloDestaque.appendChild(opcao);
+            });
+
+            campoEditarTituloDestaque.value = data.featured_title || "";
+        }
 
         mostrarMensagemEditarPerfil("");
 
@@ -2761,7 +2811,11 @@ if (formEditarPerfil) {
 
                     bio: bio,
 
-                    link: link
+                    link: link,
+
+                    featured_title: campoEditarTituloDestaque
+                        ? (campoEditarTituloDestaque.value || null)
+                        : null
 
                 };
 
@@ -2841,6 +2895,67 @@ if (formEditarPerfil) {
                     elementoBioPerfil.hidden = !bio;
                 }
 
+                const tituloEscolhido = campoEditarTituloDestaque
+                    ? campoEditarTituloDestaque.value
+                    : "";
+
+                const dadosTitulo = {
+                    estudante_dedicado: {
+                        nome: "Estudante Dedicado",
+                        icone: "🔥",
+                        classe: "titulo-estudante-dedicado"
+                    },
+                    estrategista_matematico: {
+                        nome: "Estrategista Matemático",
+                        icone: "🧠",
+                        classe: "titulo-estrategista-matematico"
+                    },
+                    guardiao_constancia: {
+                        nome: "Guardião da Constância",
+                        icone: "🛡️",
+                        classe: "titulo-guardiao-constancia"
+                    },
+                    mestre_matematica: {
+                        nome: "Mestre da Matemática",
+                        icone: "🏆",
+                        classe: "titulo-nivel5"
+                    }
+                };
+
+                const seloNome = document.getElementById("seloContaNome");
+                const seloIcone = document.getElementById("seloContaIcone");
+                const seloRotulo = document.getElementById("seloContaRotulo");
+
+                if (seloNome) {
+                    seloNome.classList.remove(
+                        "selo-dev-nome",
+                        "titulo-nivel5",
+                        "titulo-estudante-dedicado",
+                        "titulo-estrategista-matematico",
+                        "titulo-guardiao-constancia"
+                    );
+                }
+
+                if (dadosTitulo[tituloEscolhido]) {
+                    const titulo = dadosTitulo[tituloEscolhido];
+                    if (seloNome) {
+                        seloNome.textContent = titulo.nome;
+                        seloNome.classList.add(titulo.classe);
+                    }
+                    if (seloIcone) seloIcone.textContent = titulo.icone;
+                    if (seloRotulo) seloRotulo.textContent = "Título:";
+                } else if (localStorage.getItem("tipoUsuario") === "dev") {
+                    if (seloNome) {
+                        seloNome.textContent = "Coração da Matrix";
+                        seloNome.classList.add("selo-dev-nome");
+                    }
+                    if (seloIcone) seloIcone.textContent = "⚡";
+                    if (seloRotulo) seloRotulo.textContent = "Selo:";
+                } else {
+                    if (seloNome) seloNome.textContent = "Não possui";
+                    if (seloIcone) seloIcone.textContent = "💎";
+                    if (seloRotulo) seloRotulo.textContent = " Selo Premium:";
+                }
 
                 mostrarMensagemEditarPerfil(
                     "Perfil atualizado com sucesso!"
