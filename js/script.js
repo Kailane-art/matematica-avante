@@ -113,6 +113,25 @@ const botaoMenu = document.getElementById("botaoMenu");
 
 const menuLateral = document.getElementById("menuLateral");
 
+// Adiciona Rankings a todos os menus laterais existentes, sem duplicar links.
+if (menuLateral && !menuLateral.querySelector('a[href="rankings.html"]')) {
+    const linkRankings = document.createElement("a");
+    linkRankings.href = "rankings.html";
+    linkRankings.className = "menu-item";
+    linkRankings.innerHTML = '<i data-lucide="trophy"></i><span>Rankings</span>';
+
+    const tituloMenu = menuLateral.querySelector("h2");
+    if (tituloMenu) {
+        tituloMenu.insertAdjacentElement("afterend", linkRankings);
+    } else {
+        menuLateral.appendChild(linkRankings);
+    }
+
+    if (window.lucide && typeof window.lucide.createIcons === "function") {
+        window.lucide.createIcons();
+    }
+}
+
 const fundoMenu = document.getElementById("fundoMenu");
 
 // Torna navegável a opção Configurações nos menus laterais existentes.
@@ -494,6 +513,7 @@ carregarPreferenciasGlobais();
 
 const paginasProtegidas = new Set([
     "inicio.html",
+    "rankings.html",
     "perfil.html",
     "perfil-publico.html",
     "chat.html",
