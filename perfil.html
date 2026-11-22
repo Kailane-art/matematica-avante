@@ -266,7 +266,7 @@ Não possui
 ⭐ XP acumulado:
 
 <span id="xpAcumuladoPerfil">
-    0 XP
+    Carregando...
 </span>
 
 </p>
@@ -692,79 +692,83 @@ if (elementoSequencia) {
 
 } 
     // =====================================================
-// XP ACUMULADO
+// XP ACUMULADO E NÍVEL ATUAL
+// Recupera o valor persistido no Supabase.
+// O localStorage é mantido apenas como cache.
 // =====================================================
 
-const xpAtualPerfil =
-    obterXP();
+async function carregarXPPerfil() {
 
+    const elementoXP = document.getElementById("xpAcumuladoPerfil");
+    const elementoNivel = document.getElementById("nivelResumo");
+    const elementoProximoNivel = document.getElementById("proximoNivelPerfil");
 
-const elementoXP =
-    document.getElementById(
-        "xpAcumuladoPerfil"
-    );
+    if (elementoXP) elementoXP.textContent = "Carregando...";
+    if (elementoNivel) elementoNivel.textContent = "Carregando...";
+    if (elementoProximoNivel) elementoProximoNivel.textContent = "Carregando...";
 
+    try {
 
-if (elementoXP) {
+        if (!supabaseClient) {
+            throw new Error("A conexão com o Supabase não está disponível.");
+        }
 
-    elementoXP.textContent =
-        xpAtualPerfil + " XP";
+        const {
+            data: { user },
+            error: erroUsuario
+        } = await supabaseClient.auth.getUser();
 
-}
-// =====================================================
-// NÍVEL ATUAL
-// =====================================================
+        if (erroUsuario || !user) {
+            throw erroUsuario || new Error("Usuário não autenticado.");
+        }
 
-const informacoesNivel =
-    obterInformacoesNivel(
-        xpAtualPerfil
-    );
+        const { data, error } = await supabaseClient
+            .from("user_progress")
+            .select("total_xp")
+            .eq("user_id", user.id)
+            .maybeSingle();
 
+        if (error) {
+            throw error;
+        }
 
-const elementoNivel =
-    document.getElementById(
-        "nivelResumo"
-    );
+        const xpAtualPerfil = Math.max(0, Number(data?.total_xp) || 0);
 
+        // Mantém o valor local sincronizado, mas não o usa como fonte principal.
+        localStorage.setItem("xpUsuario", String(xpAtualPerfil));
 
-if (elementoNivel) {
+        if (elementoXP) {
+            elementoXP.textContent = xpAtualPerfil + " XP";
+        }
 
-    elementoNivel.textContent =
-        "Nível " +
-        informacoesNivel.nivel;
+        const informacoesNivel = obterInformacoesNivel(xpAtualPerfil);
 
-}
+        if (elementoNivel) {
+            elementoNivel.textContent = "Nível " + informacoesNivel.nivel;
+        }
 
-// =====================================================
-// PROGRESSO PARA O PRÓXIMO NÍVEL
-// =====================================================
+        if (elementoProximoNivel) {
+            elementoProximoNivel.textContent = informacoesNivel.nivelMaximo
+                ? "Nível máximo"
+                : informacoesNivel.xpNoNivel +
+                  " / " +
+                  informacoesNivel.xpNecessario +
+                  " XP";
+        }
 
-const elementoProximoNivel =
-    document.getElementById(
-        "proximoNivelPerfil"
-    );
+    } catch (erro) {
 
+        console.error("Não foi possível carregar o XP do perfil:", erro);
 
-if (elementoProximoNivel) {
-
-    if (
-        informacoesNivel.nivelMaximo
-    ) {
-
-        elementoProximoNivel.textContent =
-            "Nível máximo";
-
-    } else {
-
-        elementoProximoNivel.textContent =
-            informacoesNivel.xpNoNivel +
-            " / " +
-            informacoesNivel.xpNecessario +
-            " XP";
+        if (elementoXP) elementoXP.textContent = "Indisponível";
+        if (elementoNivel) elementoNivel.textContent = "Indisponível";
+        if (elementoProximoNivel) elementoProximoNivel.textContent = "Indisponível";
 
     }
 
 }
+
+carregarXPPerfil();
 
 </script>
 
