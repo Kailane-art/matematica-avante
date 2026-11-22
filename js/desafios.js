@@ -62,7 +62,7 @@
 
         const amigos = (data || []).filter(item =>
             item.friendship_status === "accepted" &&
-            item.tipo_usuario === "aluno" &&
+            ["aluno", "professor"].includes(item.tipo_usuario) &&
             item.contact_id !== usuarioAtual.id
         );
 
@@ -382,8 +382,8 @@
 
         const { data: perfil, error: erroPerfil } = await supabaseClient
             .from("profiles").select("tipo_usuario").eq("id", user.id).single();
-        if (erroPerfil || !perfil || perfil.tipo_usuario !== "aluno") {
-            mostrarMensagem(estadoCriacao, "Os desafios entre amigos estão disponíveis apenas para contas de alunos.", true);
+        if (erroPerfil || !perfil || !["aluno", "professor"].includes(perfil.tipo_usuario)) {
+            mostrarMensagem(estadoCriacao, "Os desafios entre amigos estão disponíveis apenas para contas de alunos e professores.", true);
             form.hidden = true;
             return;
         }
