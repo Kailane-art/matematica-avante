@@ -508,6 +508,7 @@ const paginasProtegidas = new Set([
     "nivel2.html",
     "nivel3.html",
     "nivel4.html",
+    "nivel5.html",
     "adicao.html",
     "subtracao.html",
     "multiplicacao.html",
