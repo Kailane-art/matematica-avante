@@ -10,6 +10,7 @@
     const campo = document.getElementById("campoMensagem");
     const botaoEnviar = document.getElementById("enviarMensagem");
     let usuarioAtual = null;
+    let usuarioAtualEhDev = false;
     let conversaId = null;
     let contatoId = null;
     let somenteLeitura = false;
@@ -141,6 +142,99 @@
         removerMensagemDaTela(mensagem.id);
     }
 
+    function renderizarAcoesSolicitacaoProfessor(requestId, container) {
+        container.replaceChildren();
+
+        const { data: status, error } = supabaseClient.rpc(
+            "get_teacher_request_status",
+            { p_request_id: requestId }
+        ).then(resultado => resultado);
+
+        Promise.resolve({ data: status, error }).then(function(resultado) {
+            if (resultado.error) {
+                container.textContent = "Não foi possível verificar o estado desta solicitação.";
+                return;
+            }
+
+            const estadoAtual = resultado.data;
+            const rotulos = {
+                pendente: "Aguardando análise",
+                em_analise: "Em análise",
+                aprovada: "Solicitação aprovada",
+                rejeitada: "Solicitação reprovada"
+            };
+
+            if (estadoAtual === "aprovada" || estadoAtual === "rejeitada") {
+                const finalizada = document.createElement("strong");
+                finalizada.className = "conversa-status-solicitacao finalizada";
+                finalizada.textContent = rotulos[estadoAtual];
+                container.appendChild(finalizada);
+                return;
+            }
+
+            if (estadoAtual === "em_analise") {
+                const emAnalise = document.createElement("strong");
+                emAnalise.className = "conversa-status-solicitacao em-analise";
+                emAnalise.textContent = rotulos.em_analise;
+                container.appendChild(emAnalise);
+            }
+
+            const botoes = document.createElement("div");
+            botoes.className = "conversa-botoes-decisao";
+
+            function adicionarBotao(rotulo, decisao, classe) {
+                const botao = document.createElement("button");
+                botao.type = "button";
+                botao.className = "conversa-decisao-botao " + classe;
+                botao.textContent = rotulo;
+                botao.addEventListener("click", function() {
+                    executarDecisaoSolicitacaoProfessor(requestId, decisao, container);
+                });
+                botoes.appendChild(botao);
+            }
+
+            adicionarBotao("Aprovar", "aprovar", "aprovar");
+            adicionarBotao("Reprovar", "reprovar", "reprovar");
+
+            if (estadoAtual === "pendente") {
+                adicionarBotao("Em análise", "analise", "analise");
+            }
+
+            container.appendChild(botoes);
+        });
+    }
+
+    async function executarDecisaoSolicitacaoProfessor(requestId, decisao, container) {
+        if (decisao === "aprovar" && !window.confirm("Aprovar esta solicitação e alterar a conta para professor?")) return;
+        if (decisao === "reprovar" && !window.confirm("Reprovar esta solicitação? A conta continuará como aluno.")) return;
+
+        container.querySelectorAll("button").forEach(botao => botao.disabled = true);
+
+        try {
+            const { data, error } = await supabaseClient.rpc("decide_teacher_request", {
+                p_request_id: requestId,
+                p_decision: decisao
+            });
+
+            if (error) throw error;
+
+            renderizarAcoesSolicitacaoProfessor(requestId, container);
+
+            if (data === "em_analise") {
+                window.alert("Solicitação marcada como em análise. O usuário recebeu uma mensagem automática.");
+            } else if (data === "aprovada") {
+                window.alert("Solicitação aprovada. A conta agora é de professor.");
+            } else if (data === "rejeitada") {
+                window.alert("Solicitação reprovada. A conta continua como aluno.");
+            }
+
+        } catch (erro) {
+            console.error("Erro ao decidir solicitação de professor:", erro);
+            window.alert(erro.message || "Não foi possível registrar a decisão.");
+            renderizarAcoesSolicitacaoProfessor(requestId, container);
+        }
+    }
+
     function renderizarMensagem(mensagem) {
         if (!mensagem || mensagensRenderizadas.has(mensagem.id) || mensagensOcultasPendentes.has(mensagem.id)) return;
         mensagensRenderizadas.add(mensagem.id);
@@ -153,16 +247,32 @@
         item.className = "conversa-mensagem " + (mensagem.sender_id === usuarioAtual.id ? "enviada" : "recebida");
         item.dataset.messageId = mensagem.id;
 
-        const texto = document.createElement("span");
+        const marcadorSolicitacao = /^\\[\\[TEACHER_REQUEST:([0-9a-f-]{36})\\]\\]\\r?\\n?/i.exec(mensagem.body || "");
+        const ehSolicitacaoProfessor = Boolean(marcadorSolicitacao);
+
+        const texto = document.createElement(ehSolicitacaoProfessor ? "div" : "span");
         texto.className = "conversa-texto";
-        texto.textContent = mensagem.body;
+        texto.textContent = ehSolicitacaoProfessor
+            ? mensagem.body.slice(marcadorSolicitacao[0].length)
+            : mensagem.body;
 
         const horario = document.createElement("time");
         horario.className = "conversa-horario";
         horario.dateTime = mensagem.created_at;
         horario.textContent = formatarHorario(mensagem.created_at);
 
-        if (somenteLeitura) {
+        if (ehSolicitacaoProfessor) {
+            item.classList.add("conversa-mensagem-solicitacao");
+            item.append(texto, horario);
+
+            if (usuarioAtualEhDev && mensagem.sender_id !== usuarioAtual.id) {
+                const acoes = document.createElement("div");
+                acoes.className = "conversa-acoes-solicitacao";
+                acoes.textContent = "Verificando solicitação...";
+                item.appendChild(acoes);
+                renderizarAcoesSolicitacaoProfessor(marcadorSolicitacao[1], acoes);
+            }
+        } else if (somenteLeitura) {
             item.append(texto, horario);
         } else {
             const botaoAcoes = document.createElement("button");
@@ -262,6 +372,18 @@
         if (erroSessao || !sessao.user) throw new Error("Sua sessão expirou. Entre novamente.");
 
         usuarioAtual = sessao.user;
+
+        const { data: perfilAtual, error: erroPerfilAtual } = await supabaseClient
+            .from("profiles")
+            .select("tipo_usuario")
+            .eq("id", usuarioAtual.id)
+            .single();
+
+        if (erroPerfilAtual || !perfilAtual) {
+            throw new Error("Não foi possível identificar as permissões da sua conta.");
+        }
+
+        usuarioAtualEhDev = perfilAtual.tipo_usuario === "dev";
 
         const { data: perfilData, error: perfilErro } = await supabaseClient.rpc(
             "get_public_profile",
