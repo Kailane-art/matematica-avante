@@ -555,3 +555,117 @@
         margin-left: 62px;
     }
 }
+
+
+/* LISTAS DE AMIGOS E SOLICITAÇÕES */
+.chat-lista-painel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 14px;
+}
+
+.chat-contato-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px;
+    border: 1px solid #e1e8f2;
+    border-radius: 13px;
+    background: #fff;
+}
+
+.chat-contato-item .chat-avatar {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+}
+
+.chat-contato-dados {
+    flex: 1;
+    min-width: 0;
+}
+
+.chat-contato-dados strong,
+.chat-contato-dados span {
+    display: block;
+    overflow-wrap: anywhere;
+}
+
+.chat-contato-dados strong {
+    color: #1e293b;
+    font-size: 13px;
+}
+
+.chat-contato-dados span {
+    margin-top: 3px;
+    color: #64748b;
+    font-size: 11px;
+}
+
+.chat-contato-perfil {
+    color: #3158c9;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.chat-acoes-solicitacao {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.chat-acoes-solicitacao button {
+    padding: 6px 9px;
+    border: 0;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.chat-aceitar-solicitacao {
+    background: #4169e1;
+    color: #fff;
+}
+
+.chat-recusar-solicitacao {
+    background: #eef2f7;
+    color: #475569;
+}
+
+.chat-status-solicitacao {
+    color: #a16207;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.chat-subtitulo-lista {
+    margin: 10px 2px 0;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.modo-escuro .chat-contato-item {
+    background: #13294b;
+    border-color: #29456f;
+}
+
+.modo-escuro .chat-contato-dados strong {
+    color: #f1f5f9;
+}
+
+.modo-escuro .chat-contato-dados span,
+.modo-escuro .chat-subtitulo-lista {
+    color: #cbd5e1;
+}
+
+.modo-escuro .chat-contato-perfil {
+    color: #a9c1ff;
+}
+
+.modo-escuro .chat-recusar-solicitacao {
+    background: #29456f;
+    color: #e5e7eb;
+}
