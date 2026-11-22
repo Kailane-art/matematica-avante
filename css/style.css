@@ -3781,3 +3781,93 @@ body.pagina-perfil-publico .avatar-area #fotoPerfilPublico:not([hidden]) {
     object-fit: cover;
     object-position: center;
 }
+
+
+/* PERFIL PÚBLICO — NÍVEL, SELO E FAVORITOS */
+body.pagina-perfil-publico .card-perfil.identidade {
+    position: relative;
+}
+
+.botao-favorito-perfil {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dbe4f0;
+    border-radius: 50%;
+    background: #f8fafc;
+    color: #64748b;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s, color 0.2s;
+}
+
+.botao-favorito-perfil:hover {
+    transform: scale(1.08);
+    background: #eef3ff;
+    color: #1e3a8a;
+}
+
+.botao-favorito-perfil svg {
+    width: 22px;
+    height: 22px;
+}
+
+.botao-favorito-perfil.favoritado {
+    color: #d97706;
+    background: #fff7df;
+    border-color: #f5d58a;
+}
+
+.botao-favorito-perfil.favoritado svg {
+    fill: currentColor;
+}
+
+.botao-favorito-perfil:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.nivel-perfil-publico {
+    margin-top: -7px;
+    font-weight: 700;
+    color: #1e3a8a !important;
+}
+
+.selo-perfil-publico {
+    margin-top: -5px;
+    font-weight: 700;
+}
+
+.selo-perfil-publico.selo-dev-nome {
+    color: #d4a900 !important;
+}
+
+.modo-escuro .botao-favorito-perfil {
+    background: #1d3b6d;
+    border-color: #365781;
+    color: #e2e8f0;
+}
+
+.modo-escuro .botao-favorito-perfil:hover {
+    background: #29456f;
+    color: #FFD54F;
+}
+
+.modo-escuro .botao-favorito-perfil.favoritado {
+    background: #493b1b;
+    border-color: #8a6a22;
+    color: #FFD54F;
+}
+
+.modo-escuro .nivel-perfil-publico {
+    color: #FFD54F !important;
+}
+
+.modo-escuro .selo-perfil-publico.selo-dev-nome {
+    color: #FFD54F !important;
+}
+
