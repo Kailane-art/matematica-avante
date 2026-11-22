@@ -29,7 +29,6 @@
     <section class="card-perfil identidade">
 
         <div class="avatar-area">
-            <i id="iconeAvatarPublico" data-lucide="user-round"></i>
             <img id="fotoPerfilPublico" src="" alt="Foto do perfil" hidden>
         </div>
 
@@ -162,7 +161,6 @@ async function carregarPerfilPublico() {
     const bio = document.getElementById("bioPerfilPublico");
     const link = document.getElementById("linkPerfilPublico");
     const foto = document.getElementById("fotoPerfilPublico");
-    const icone = document.getElementById("iconeAvatarPublico");
 
     const parametros = new URLSearchParams(window.location.search);
     const nomeUsuario = (parametros.get("usuario") || "").trim();
