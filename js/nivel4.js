@@ -4197,13 +4197,6 @@ async function inicializarNivel4() {
         }
     }
 
-    const acessoNivel = await verificarAcessoNivelProgressivo(4);
-
-    if (!acessoNivel.permitido) {
-        mostrarNotificacaoNivelBloqueado(3, acessoNivel.motivo);
-        return;
-    }
-
     configurarEventosNivel4();
 
     try {
