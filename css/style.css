@@ -1311,7 +1311,7 @@ header svg {
 
 .card-inicio {
     text-decoration: none;
-    padding: 25px;
+    padding: 22px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -1321,7 +1321,7 @@ header svg {
     background-color: #4169e1;
     color: white;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    min-height: 150px;
+    min-height: 140px;
     transition: 0.3s;
 }
 
