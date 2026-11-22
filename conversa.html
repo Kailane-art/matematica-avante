@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1E3A8A">
+    <title>Conversa - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/conversa.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="pagina-chat pagina-conversa">
+    <header class="cabecalho-chat conversa-cabecalho">
+        <a href="chat.html" class="chat-voltar" aria-label="Voltar para conversas"><i data-lucide="arrow-left"></i></a>
+        <div class="conversa-identidade">
+            <div id="avatarContato" class="chat-avatar"><i data-lucide="user-round"></i></div>
+            <div class="conversa-identidade-dados">
+                <h1 id="nomeContato">Carregando...</h1>
+                <span id="usernameContato"></span>
+            </div>
+        </div>
+        <button id="modoEscuro" type="button" class="icon-button" aria-label="Alternar tema"><i data-lucide="moon"></i></button>
+    </header>
+
+    <main class="conversa-container">
+        <div id="estadoConversa" class="conversa-estado" role="status">Carregando conversa...</div>
+        <section id="listaMensagens" class="conversa-mensagens" aria-label="Mensagens da conversa" hidden></section>
+        <form id="formMensagem" class="conversa-formulario" hidden>
+            <textarea id="campoMensagem" rows="1" maxlength="4000" placeholder="Digite uma mensagem..." aria-label="Digite uma mensagem"></textarea>
+            <button id="enviarMensagem" type="submit" aria-label="Enviar mensagem"><i data-lucide="send"></i></button>
+        </form>
+    </main>
+
+    <script src="js/script.js"></script>
+    <script src="js/conversa.js"></script>
+</body>
+</html>
