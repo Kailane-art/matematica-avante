@@ -18,6 +18,7 @@
     function abrirPainel() {
         if (!painel || !fundoPainel || !botaoPainel) return;
 
+        carregarContatosChat();
         painel.classList.add("aberto");
         fundoPainel.classList.add("aberto");
         painel.removeAttribute("inert");
@@ -208,6 +209,173 @@
             }
         });
     }
+
+
+    // =========================================
+    // AMIZADES E SOLICITAÇÕES
+    // =========================================
+
+    const listaAmigos = document.getElementById("listaAmigosChat");
+    const listaSolicitacoes = document.getElementById("listaSolicitacoesChat");
+    const badgeNotificacoes = document.getElementById("notificacoesChatBadge");
+
+    function estadoPainel(container, icone, titulo, descricao) {
+        if (!container) return;
+        const estado = document.createElement("div");
+        estado.className = "chat-estado-painel";
+        const icon = document.createElement("i");
+        icon.setAttribute("data-lucide", icone);
+        const h3 = document.createElement("h3");
+        h3.textContent = titulo;
+        estado.append(icon, h3);
+        if (descricao) {
+            const p = document.createElement("p");
+            p.textContent = descricao;
+            estado.appendChild(p);
+        }
+        container.replaceChildren(estado);
+    }
+
+    function criarItemContato(contato, tipo) {
+        const item = document.createElement("article");
+        item.className = "chat-contato-item";
+
+        const avatar = document.createElement("div");
+        avatar.className = "chat-avatar";
+        const icone = document.createElement("i");
+        icone.setAttribute("data-lucide", "user-round");
+        avatar.appendChild(icone);
+
+        if (contato.avatar_path && supabaseClient) {
+            const publicUrl = supabaseClient.storage.from("avatars").getPublicUrl(contato.avatar_path).data.publicUrl;
+            const foto = document.createElement("img");
+            foto.src = publicUrl;
+            foto.alt = "";
+            foto.onerror = () => {
+                foto.remove();
+                atualizarIcones();
+            };
+            avatar.replaceChildren(foto);
+        }
+
+        const dados = document.createElement("div");
+        dados.className = "chat-contato-dados";
+        const nome = document.createElement("strong");
+        nome.textContent = contato.display_name || "Usuário";
+        const username = document.createElement("span");
+        username.textContent = "@" + contato.username;
+        dados.append(nome, username);
+
+        const perfil = document.createElement("a");
+        perfil.className = "chat-contato-perfil";
+        perfil.href = "perfil-publico.html?usuario=" + encodeURIComponent(contato.username);
+        perfil.textContent = "Perfil";
+
+        item.append(avatar, dados);
+
+        if (tipo === "received") {
+            const acoes = document.createElement("div");
+            acoes.className = "chat-acoes-solicitacao";
+
+            const aceitar = document.createElement("button");
+            aceitar.type = "button";
+            aceitar.className = "chat-aceitar-solicitacao";
+            aceitar.textContent = "Aceitar";
+            aceitar.addEventListener("click", () => responderSolicitacaoChat(contato.request_id, true));
+
+            const recusar = document.createElement("button");
+            recusar.type = "button";
+            recusar.className = "chat-recusar-solicitacao";
+            recusar.textContent = "Recusar";
+            recusar.addEventListener("click", () => responderSolicitacaoChat(contato.request_id, false));
+
+            acoes.append(aceitar, recusar);
+            item.append(acoes, perfil);
+        } else if (tipo === "sent") {
+            const status = document.createElement("span");
+            status.className = "chat-status-solicitacao";
+            status.textContent = "Pendente";
+            item.append(status, perfil);
+        } else {
+            item.append(perfil);
+        }
+
+        return item;
+    }
+
+    async function carregarContatosChat() {
+        if (!supabaseClient) return;
+
+        if (listaAmigos) estadoPainel(listaAmigos, "loader-circle", "Carregando amizades...");
+        if (listaSolicitacoes) estadoPainel(listaSolicitacoes, "loader-circle", "Carregando solicitações...");
+
+        try {
+            const { data, error } = await supabaseClient.rpc("get_chat_contacts");
+            if (error) throw error;
+
+            const contatos = data || [];
+            const amigos = contatos.filter(item => item.friendship_status === "accepted");
+            const recebidas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "received");
+            const enviadas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "sent");
+
+            if (listaAmigos) {
+                if (!amigos.length) {
+                    estadoPainel(listaAmigos, "users", "Você ainda não tem amigos", "Quando alguém aceitar sua solicitação, aparecerá aqui.");
+                } else {
+                    listaAmigos.replaceChildren(...amigos.map(item => criarItemContato(item, "friend")));
+                }
+            }
+
+            if (listaSolicitacoes) {
+                if (!recebidas.length && !enviadas.length) {
+                    estadoPainel(listaSolicitacoes, "user-round-plus", "Nenhuma solicitação por enquanto", "Os pedidos de amizade recebidos e enviados aparecerão aqui.");
+                } else {
+                    const fragmento = document.createDocumentFragment();
+                    if (recebidas.length) {
+                        const tituloRecebidas = document.createElement("h3");
+                        tituloRecebidas.className = "chat-subtitulo-lista";
+                        tituloRecebidas.textContent = "Recebidas";
+                        fragmento.appendChild(tituloRecebidas);
+                        recebidas.forEach(item => fragmento.appendChild(criarItemContato(item, "received")));
+                    }
+                    if (enviadas.length) {
+                        const tituloEnviadas = document.createElement("h3");
+                        tituloEnviadas.className = "chat-subtitulo-lista";
+                        tituloEnviadas.textContent = "Enviadas";
+                        fragmento.appendChild(tituloEnviadas);
+                        enviadas.forEach(item => fragmento.appendChild(criarItemContato(item, "sent")));
+                    }
+                    listaSolicitacoes.replaceChildren(fragmento);
+                }
+            }
+
+            if (badgeNotificacoes) {
+                badgeNotificacoes.hidden = recebidas.length === 0;
+                badgeNotificacoes.textContent = recebidas.length ? String(recebidas.length) : "";
+            }
+
+            atualizarIcones();
+        } catch (erro) {
+            console.error("Erro ao carregar amizades:", erro);
+            estadoPainel(listaAmigos, "alert-circle", "Não foi possível carregar os amigos", "Tente fechar e abrir o painel novamente.");
+            estadoPainel(listaSolicitacoes, "alert-circle", "Não foi possível carregar as solicitações", "Tente novamente em instantes.");
+        }
+    }
+
+    async function responderSolicitacaoChat(id, aceitar) {
+        try {
+            const { error } = await supabaseClient.rpc("respond_friend_request", {
+                p_request_id: id,
+                p_accept: aceitar
+            });
+            if (error) throw error;
+            await carregarContatosChat();
+        } catch (erro) {
+            console.error("Erro ao responder solicitação:", erro);
+            alert(erro.message || "Não foi possível responder à solicitação.");
+        }
+    }
+
 
     if (window.lucide) {
         atualizarIcones();
