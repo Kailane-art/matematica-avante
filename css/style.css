@@ -3729,3 +3729,25 @@ body.pagina-perfil-publico #fotoPerfilPublico:not([hidden]) {
     height: 100%;
     object-fit: cover;
 }
+
+
+/* AVATAR PÚBLICO — FOTO CENTRALIZADA SEM SOBREPOSIÇÃO DO ÍCONE */
+body.pagina-perfil-publico .avatar-area {
+    position: relative;
+}
+
+body.pagina-perfil-publico .avatar-area.com-foto > svg {
+    display: none !important;
+}
+
+body.pagina-perfil-publico .avatar-area.com-foto #fotoPerfilPublico:not([hidden]) {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    flex: none;
+    object-fit: cover;
+    object-position: center;
+}
