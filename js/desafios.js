@@ -27,6 +27,7 @@
     let estadoAtual = null;
     let intervaloAtualizacao = null;
     let intervaloRelogio = null;
+    let inicioRelogioAtual = null;
     let enviandoResposta = false;
     let segundosDecorridos = 0;
 
@@ -191,7 +192,9 @@
     }
 
     function iniciarRelogio(startedAt) {
+        if (intervaloRelogio && inicioRelogioAtual === startedAt) return;
         if (intervaloRelogio) window.clearInterval(intervaloRelogio);
+        inicioRelogioAtual = startedAt;
         const inicio = new Date(startedAt).getTime();
         const atualizar = () => {
             const ms = Math.max(0, Date.now() - inicio);
@@ -296,6 +299,7 @@
             elemento("p", "", "A classificação semanal de desafios considera as vitórias concluídas.")
         );
         if (intervaloRelogio) window.clearInterval(intervaloRelogio);
+        intervaloRelogio = null;
     }
 
     async function atualizarEstadoPartida() {
