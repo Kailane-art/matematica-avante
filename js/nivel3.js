@@ -1468,22 +1468,22 @@ const questoesNivel3 ={
             "dificuldade": "Médio"
         },
         {
-            "pergunta": "Qual é o valor de √(5+2√6) + √(5−2√6)?",
+            "pergunta": "Qual é o valor de √(9+4√5)?",
             "alternativas": [
                 {
-                    "texto": "2√3"
+                    "texto": "√5+2"
                 },
                 {
-                    "texto": "√6"
+                    "texto": "√5−2"
                 },
                 {
-                    "texto": "3"
+                    "texto": "3+2√5"
                 },
                 {
-                    "texto": "2√2"
+                    "texto": "2√5+1"
                 }
             ],
-            "explicacao": "As raízes são √3+√2 e √3−√2; a soma é 2√3.",
+            "explicacao": "Como (√5+2)²=5+4+4√5=9+4√5 e a raiz principal é positiva, o resultado é √5+2.",
             "dificuldade": "Médio"
         },
         {
