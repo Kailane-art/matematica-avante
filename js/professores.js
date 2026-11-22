@@ -305,6 +305,37 @@ carregarProfessores();
 const botaoAbrirCadastroProfessor =
     document.getElementById("abrirCadastroProfessor");
 
+async function configurarVisibilidadeCadastroProfessor() {
+    if (!botaoAbrirCadastroProfessor) return;
+
+    // O botão começa oculto e só é liberado após confirmar o tipo da conta.
+    botaoAbrirCadastroProfessor.hidden = true;
+
+    if (typeof supabaseClient === "undefined" || !supabaseClient) return;
+
+    try {
+        const { data: { user }, error: erroUsuario } =
+            await supabaseClient.auth.getUser();
+
+        if (erroUsuario || !user) return;
+
+        const { data: perfil, error: erroPerfil } = await supabaseClient
+            .from("profiles")
+            .select("tipo_usuario")
+            .eq("id", user.id)
+            .single();
+
+        if (erroPerfil || !perfil) throw erroPerfil || new Error("Perfil não encontrado.");
+
+        botaoAbrirCadastroProfessor.hidden = perfil.tipo_usuario !== "aluno";
+    } catch (erro) {
+        console.error("Não foi possível verificar a permissão para cadastro como professor:", erro);
+        botaoAbrirCadastroProfessor.hidden = true;
+    }
+}
+
+configurarVisibilidadeCadastroProfessor();
+
 const modalCadastroProfessor =
     document.getElementById("modalCadastroProfessor");
 
