@@ -4189,6 +4189,14 @@ async function restaurarRevisaoAtivaNivel4() {
 
 async function inicializarNivel4() {
 
+    if (typeof usuarioTemAcessoPremium === "function") {
+        const acessoPremium = await usuarioTemAcessoPremium();
+        if (!acessoPremium) {
+            window.location.replace("atividades.html");
+            return;
+        }
+    }
+
     const acessoNivel = await verificarAcessoNivelProgressivo(4);
 
     if (!acessoNivel.permitido) {
