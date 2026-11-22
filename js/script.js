@@ -1957,7 +1957,8 @@ const CHAVE_XP = "xpUsuario";
 const XP_POR_ACERTO = 10;
 const XP_BONUS_FASE = 50;
 const XP_POR_NIVEL = 500;
-const NIVEL_MAXIMO = 10;
+const MULTIPLICADOR_XP = localStorage.getItem("tipoUsuario") === "dev" ? 10 : 1;
+const NIVEL_MAXIMO = MULTIPLICADOR_XP === 10 ? 100 : 10;
 
 
 // =====================================================
@@ -2016,7 +2017,7 @@ function adicionarXP(
         obterXP();
 
     const novoXP =
-        xpAtual + quantidade;
+        xpAtual + (quantidade * MULTIPLICADOR_XP);
 
     salvarXP(
         novoXP
@@ -2137,7 +2138,7 @@ function obterInformacoesNivel(
 
             nivel: NIVEL_MAXIMO,
 
-            xpNoNivel: xp - 4500,
+            xpNoNivel: xp - ((NIVEL_MAXIMO - 1) * XP_POR_NIVEL),
 
             xpNecessario:
                 0,
