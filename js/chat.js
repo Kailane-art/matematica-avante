@@ -155,7 +155,19 @@
         link.href = "perfil-publico.html?usuario=" + encodeURIComponent(perfil.username);
         link.textContent = "Ver perfil";
 
-        card.append(avatar, dados, link);
+        const elementosCard = [avatar, dados, link];
+        if (tipoUsuarioAtual === "dev" || perfil.tipo_usuario === "dev") {
+            const conversar = document.createElement("button");
+            conversar.type = "button";
+            conversar.className = "chat-botao-aviao";
+            conversar.setAttribute("aria-label", "Enviar mensagem para " + (perfil.display_name || perfil.username));
+            conversar.title = "Enviar mensagem";
+            conversar.innerHTML = '<i data-lucide="send"></i>';
+            conversar.addEventListener("click", () => abrirConversa(perfil));
+            elementosCard.push(conversar);
+        }
+
+        card.append(...elementosCard);
         resultadoPesquisa.replaceChildren(card);
         areaResultado.hidden = false;
 
@@ -227,6 +239,7 @@
     let canalListaMensagens = null;
     let amigosDaLista = [];
     let usuarioAtualId = null;
+    let tipoUsuarioAtual = null;
     let recarregandoConversas = false;
     let recargaPendente = false;
     const itensPorConversa = new Map();
@@ -242,6 +255,14 @@
                 perfisFavoritos = new Set();
                 return;
             }
+
+            const { data: perfilAtual, error: erroPerfilAtual } = await supabaseClient
+                .from("profiles")
+                .select("tipo_usuario")
+                .eq("id", usuarioAtualId)
+                .maybeSingle();
+            if (erroPerfilAtual) throw erroPerfilAtual;
+            tipoUsuarioAtual = perfilAtual?.tipo_usuario || null;
 
             const { data, error } = await supabaseClient
                 .from("profile_favorites")
@@ -453,8 +474,14 @@
 
             const contatosComMensagem = (conversas || [])
                 .map(conversa => {
-                    const contato = amigos.find(item => item.contact_id === conversa.contact_id);
-                    return contato ? {
+                    const contato = amigos.find(item => item.contact_id === conversa.contact_id) || {
+                        contact_id: conversa.contact_id,
+                        display_name: conversa.display_name,
+                        username: conversa.username,
+                        avatar_path: conversa.avatar_path,
+                        tipo_usuario: conversa.tipo_usuario
+                    };
+                    return contato.username ? {
                         conversaId: conversa.conversation_id,
                         contato,
                         previa: conversa.last_message,
@@ -614,7 +641,7 @@
             if (error) throw error;
 
             const contatos = data || [];
-            const amigos = contatos.filter(item => item.friendship_status === "accepted");
+            const amigos = contatos.filter(item => item.friendship_status === "accepted" || item.friendship_status === "dev_contact");
             await atualizarListaConversas(amigos);
             const recebidas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "received");
             const enviadas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "sent");
