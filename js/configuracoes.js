@@ -2,6 +2,7 @@
     const status = document.getElementById("configStatus");
     const campos = {
         notifications: document.getElementById("configNotificacoes"),
+        push: document.getElementById("configPushNotifications"),
         student: document.getElementById("configAmizadeAluno"),
         teacher: document.getElementById("configAmizadeProfessor"),
         dev: document.getElementById("configAmizadeDev"),
@@ -15,6 +16,8 @@
             : "dispositivo",
         text_size: Math.min(5, Math.max(1, Number(localStorage.getItem("tamanhoTexto") || 3))),
         site_notifications_enabled: true,
+        push_notifications_enabled: false,
+        push_prompt_seen: false,
         allow_friend_requests_from_student: true,
         allow_friend_requests_from_teacher: true,
         allow_friend_requests_from_dev: true,
@@ -68,6 +71,7 @@
         aplicarTema(configuracoes.theme);
         aplicarTamanho(configuracoes.text_size);
         campos.notifications.checked = configuracoes.site_notifications_enabled;
+        campos.push.checked = Boolean(configuracoes.push_notifications_enabled);
         campos.student.checked = configuracoes.allow_friend_requests_from_student;
         campos.teacher.checked = configuracoes.allow_friend_requests_from_teacher;
         campos.dev.checked = configuracoes.allow_friend_requests_from_dev;
@@ -111,6 +115,23 @@
         }
     }
 
+    async function atualizarControlePush() {
+        if (!campos.push) return;
+        if (!window.maPushNotifications || !window.maPushNotifications.suportado()) {
+            campos.push.checked = false;
+            campos.push.disabled = true;
+            return;
+        }
+        try {
+            const inscrito = await window.maPushNotifications.estaRegistradoParaUsuario();
+            campos.push.checked = Boolean(configuracoes.push_notifications_enabled && inscrito);
+            campos.push.disabled = false;
+        } catch (erro) {
+            console.error("Erro ao verificar inscrição push:", erro);
+            campos.push.checked = false;
+        }
+    }
+
     async function carregarConfiguracoes() {
         try {
             const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
@@ -125,6 +146,7 @@
             if (error) throw error;
             if (data) configuracoes = { ...padrao, ...data };
             preencherInterface();
+            await atualizarControlePush();
             mostrarStatus("Suas preferências estão atualizadas.");
         } catch (erro) {
             console.error("Erro ao carregar configurações:", erro);
@@ -142,6 +164,26 @@
     });
 
     campos.notifications.addEventListener("change", () => salvarAlteracoes({ site_notifications_enabled: campos.notifications.checked }));
+    campos.push.addEventListener("change", async function () {
+        const desejaAtivar = campos.push.checked;
+        campos.push.disabled = true;
+        try {
+            if (desejaAtivar) {
+                await window.maPushNotifications.ativar();
+                mostrarStatus("Notificações no dispositivo ativadas.");
+            } else {
+                await window.maPushNotifications.desativar();
+                mostrarStatus("Notificações no dispositivo desativadas.");
+            }
+            await carregarConfiguracoes();
+        } catch (erro) {
+            console.error("Erro ao alterar notificações push:", erro);
+            await atualizarControlePush();
+            mostrarStatus(erro.message || "Não foi possível alterar as notificações do dispositivo.", true);
+        } finally {
+            campos.push.disabled = false;
+        }
+    });
     campos.student.addEventListener("change", () => salvarAlteracoes({ allow_friend_requests_from_student: campos.student.checked }));
     campos.teacher.addEventListener("change", () => salvarAlteracoes({ allow_friend_requests_from_teacher: campos.teacher.checked }));
     campos.dev.addEventListener("change", () => salvarAlteracoes({ allow_friend_requests_from_dev: campos.dev.checked }));
