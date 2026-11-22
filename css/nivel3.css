@@ -816,3 +816,43 @@
     }
 
 }  
+
+
+/* =====================================================
+   CLASSIFICAÇÃO INDIVIDUAL DAS QUESTÕES
+   ===================================================== */
+
+.rotulo-dificuldade-questao {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    margin-bottom: 12px;
+    padding: 6px 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.rotulo-dificuldade-questao[data-dificuldade="medio"] {
+    border-color: #bfdbfe;
+    background: #eff6ff;
+    color: #1d4e89;
+}
+
+.rotulo-dificuldade-questao[data-dificuldade="dificil"] {
+    border-color: #fed7aa;
+    background: #fff7ed;
+    color: #9a3412;
+}
+
+.modo-escuro .rotulo-dificuldade-questao,
+.modo-escuro .rotulo-dificuldade-questao[data-dificuldade="medio"],
+.modo-escuro .rotulo-dificuldade-questao[data-dificuldade="dificil"] {
+    border-color: #475569;
+    background: #1e3a5f;
+    color: #e5e7eb;
+}
