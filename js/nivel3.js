@@ -146,7 +146,7 @@ const questoesNivel3 = {
             "pergunta": "Qual é o valor de (0,00036 × 5 × 10⁶) em notação decimal?",
             "alternativas": [
                 {
-                    "texto": "11√2"
+                    "texto": "1.800"
                 },
                 {
                     "texto": "180"
@@ -564,7 +564,7 @@ const questoesNivel3 = {
             "pergunta": "Resolva: (x−1)/3 + (x+2)/2 = 5.",
             "alternativas": [
                 {
-                    "texto": "x=7"
+                    "texto": "x=26/5"
                 },
                 {
                     "texto": "x=5"
@@ -1020,7 +1020,7 @@ const questoesNivel3 = {
             "pergunta": "Resolva o sistema: 3x+2y=16 e 5x−y=7.",
             "alternativas": [
                 {
-                    "texto": "x=2 e y=5"
+                    "texto": "x=30/13 e y=59/13"
                 },
                 {
                     "texto": "x=3 e y=2"
@@ -1110,7 +1110,7 @@ const questoesNivel3 = {
             "pergunta": "A equação x²−(m+1)x+m=0 possui uma raiz igual a 3. Qual é m?",
             "alternativas": [
                 {
-                    "texto": "m=3 ou m=−2"
+                    "texto": "m=3"
                 },
                 {
                     "texto": "m=2 ou m=−3"
@@ -1346,7 +1346,7 @@ const questoesNivel3 = {
             "pergunta": "Um tronco de cone tem raios 2 cm e 5 cm e altura 4 cm. Qual é o volume?",
             "alternativas": [
                 {
-                    "texto": "28π cm³"
+                    "texto": "52π cm³"
                 },
                 {
                     "texto": "36π cm³"
@@ -1710,7 +1710,7 @@ const questoesNivel3 = {
             "pergunta": "Uma variável tem valores 2, 4 e 6 com frequências 1, 3 e 2. Qual é a média?",
             "alternativas": [
                 {
-                    "texto": "14/3"
+                    "texto": "13/3"
                 },
                 {
                     "texto": "4"
