@@ -247,7 +247,6 @@
     let quantidadeSolicitacoesRecebidas = 0;
     let quantidadeNotificacoesProfessorNaoLidas = 0;
     let notificacoesProfessor = [];
-    let canalNotificacoesProfessor = null;
     let recarregandoConversas = false;
     let recargaPendente = false;
     const itensPorConversa = new Map();
@@ -363,6 +362,22 @@
                 event: "message_deleted"
             }, () => {
                 atualizarListaConversas(amigosDaLista);
+            })
+            .on("postgres_changes", {
+                event: "INSERT",
+                schema: "public",
+                table: "teacher_request_notifications",
+                filter: "recipient_id=eq." + usuarioId
+            }, () => {
+                carregarNotificacoesChat();
+            })
+            .on("postgres_changes", {
+                event: "UPDATE",
+                schema: "public",
+                table: "teacher_request_notifications",
+                filter: "recipient_id=eq." + usuarioId
+            }, () => {
+                carregarNotificacoesChat();
             })
             .on("postgres_changes", {
                 event: "INSERT",
@@ -756,36 +771,6 @@
         return quantidadeNotificacoesProfessorNaoLidas;
     }
 
-    async function iniciarRealtimeNotificacoesProfessor(usuarioId) {
-        if (!usuarioId || tipoUsuarioAtual !== "dev" || canalNotificacoesProfessor) return;
-
-        await supabaseClient.realtime.setAuth();
-
-        canalNotificacoesProfessor = supabaseClient
-            .channel("user:" + usuarioId + ":teacher-notifications", { config: { private: true } })
-            .on("postgres_changes", {
-                event: "INSERT",
-                schema: "public",
-                table: "teacher_request_notifications",
-                filter: "recipient_id=eq." + usuarioId
-            }, function() {
-                carregarNotificacoesChat();
-            })
-            .on("postgres_changes", {
-                event: "UPDATE",
-                schema: "public",
-                table: "teacher_request_notifications",
-                filter: "recipient_id=eq." + usuarioId
-            }, function() {
-                carregarNotificacoesChat();
-            })
-            .subscribe(function(status) {
-                if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
-                    console.error("Não foi possível atualizar notificações em tempo real:", status);
-                }
-            });
-    }
-
     async function carregarContatosChat() {
         if (!supabaseClient) return;
 
@@ -794,7 +779,6 @@
 
         try {
             await carregarFavoritosUsuario();
-            await iniciarRealtimeNotificacoesProfessor(usuarioAtualId);
 
             const { data, error } = await supabaseClient.rpc("get_chat_contacts");
             if (error) throw error;
