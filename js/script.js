@@ -44,38 +44,34 @@ const botaoModo = document.getElementById("modoEscuro");
 
 
 
-const temaSalvo = localStorage.getItem("tema");
+const preferenciaTemaDispositivo = window.matchMedia("(prefers-color-scheme: dark)");
 
+function aplicarTemaGlobal(preferencia) {
+    const temaEscuro = preferencia === "escuro" ||
+        (preferencia === "dispositivo" && preferenciaTemaDispositivo.matches);
 
-
-if(temaSalvo === "escuro"){
-
-    document.body.classList.add("modo-escuro");
-
+    document.body.classList.toggle("modo-escuro", temaEscuro);
 }
 
+const temaSalvo = localStorage.getItem("tema") || "claro";
+aplicarTemaGlobal(temaSalvo);
 
-
+preferenciaTemaDispositivo.addEventListener("change", function(evento) {
+    if ((localStorage.getItem("tema") || "claro") === "dispositivo") {
+        document.body.classList.toggle("modo-escuro", evento.matches);
+    }
+});
 
 if(botaoModo){
-
     botaoModo.addEventListener("click", function(){
-
-
-        document.body.classList.toggle("modo-escuro");
-
-
-
-        const novoTema = document.body.classList.contains("modo-escuro") ? "escuro" : "claro";
+        const novoTema = document.body.classList.contains("modo-escuro") ? "claro" : "escuro";
         localStorage.setItem("tema", novoTema);
+        aplicarTemaGlobal(novoTema);
+
         if (typeof salvarPreferenciaUsuario === "function") {
             salvarPreferenciaUsuario({ theme: novoTema });
         }
-
-
-
     });
-
 }
 
 
@@ -83,7 +79,7 @@ if(botaoModo){
 
 
 // ================================
-// BOTÃO VOLTAR
+// // BOTÃO VOLTAR
 // ================================
 
 const botaoVoltar = document.getElementById("voltarPagina");
@@ -277,7 +273,7 @@ async function carregarPreferenciasGlobais() {
 
         localStorage.setItem("tema", data.theme);
         localStorage.setItem("tamanhoTexto", String(data.text_size));
-        document.body.classList.toggle("modo-escuro", data.theme === "escuro");
+        aplicarTemaGlobal(data.theme);
         aplicarTamanhoTextoGlobal(data.text_size);
     } catch (erro) {
         console.error("Não foi possível carregar as preferências globais:", erro);
