@@ -666,3 +666,9 @@
 .modo-escuro .rankings-introducao p {
     color: #eef3ff;
 }
+
+
+/* Fundo da página Rankings: azul escuro mais vivo no modo escuro. */
+body.pagina-rankings.modo-escuro {
+    background: #12366f;
+}
