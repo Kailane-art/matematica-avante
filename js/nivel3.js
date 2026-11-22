@@ -15,7 +15,7 @@ const CHAVE_PROGRESSO = "progressoNiveis";
 
 
 // =====================================================
-// CONFIGURAÇÃO DAS FASES — NÍVEL 2
+// CONFIGURAÇÃO DAS FASES — NÍVEL 3
 // =====================================================
 //
 // Fases 1 a 5:
@@ -80,7 +80,7 @@ const fasesNivel3 = {
 
 
 // =====================================================
-// BANCO DE QUESTÕES — NÍVEL 2
+// BANCO DE QUESTÕES — NÍVEL 3
 // =====================================================
 //
 // Cada fase terá exatamente 10 questões.
@@ -1958,7 +1958,7 @@ let idSessaoRevisao = null;
 
 
 // =====================================================
-// CARREGAR PROGRESSO DO NÍVEL 1 NO SUPABASE
+// CARREGAR PROGRESSO DO NÍVEL 3 NO SUPABASE
 // =====================================================
 
 async function carregarProgressoBancoNivel3() {
@@ -4076,7 +4076,7 @@ async function restaurarRevisaoAtivaNivel3() {
 
 
 // =====================================================
-// INICIALIZAÇÃO DO NÍVEL 1
+// INICIALIZAÇÃO DO NÍVEL 3
 // =====================================================
 
 async function inicializarNivel3() {
