@@ -218,6 +218,7 @@ const paginasProtegidas = new Set([
     "perfil.html",
     "perfil-publico.html",
     "chat.html",
+    "conversa.html",
     "materias.html",
     "atividades.html",
     "professores.html",
