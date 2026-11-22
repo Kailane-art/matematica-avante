@@ -513,7 +513,8 @@ const paginasProtegidas = new Set([
     "multiplicacao.html",
     "divisao.html",
     "planos.html",
-    "configuracoes.html"
+    "configuracoes.html",
+    "alertas.html"
 ]);
 
 const caminhoAtual = window.location.pathname.replace(/\/+$/, "");
