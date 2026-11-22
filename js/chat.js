@@ -229,7 +229,7 @@
         window.location.href = "conversa.html?usuario=" + encodeURIComponent(contato.username);
     }
 
-    function criarItemConversa(contato) {
+    function criarItemConversa(contato, previa) {
         const item = document.createElement("button");
         item.type = "button";
         item.className = "chat-conversa-item";
@@ -255,7 +255,10 @@
         nome.textContent = contato.display_name || "Usuário";
         const username = document.createElement("small");
         username.textContent = "@" + contato.username;
-        dados.append(nome, username);
+        const ultimaMensagem = document.createElement("small");
+        ultimaMensagem.className = "chat-conversa-previa";
+        ultimaMensagem.textContent = previa || "Conversa iniciada";
+        dados.append(nome, username, ultimaMensagem);
 
         const aviao = document.createElement("i");
         aviao.setAttribute("data-lucide", "send");
@@ -265,7 +268,7 @@
         return item;
     }
 
-    function atualizarListaConversas(amigos) {
+    async function atualizarListaConversas(amigos) {
         if (!listaConversas || !estadoVazioConversas) return;
         if (!amigos.length) {
             listaConversas.hidden = true;
@@ -273,10 +276,64 @@
             return;
         }
 
-        listaConversas.replaceChildren(...amigos.map(criarItemConversa));
-        listaConversas.hidden = false;
-        estadoVazioConversas.hidden = true;
-        atualizarIcones();
+        try {
+            const { data: sessao } = await supabaseClient.auth.getUser();
+            const usuarioId = sessao?.user?.id;
+            if (!usuarioId) throw new Error("Sessão não encontrada.");
+
+            const { data: conversas, error: erroConversas } = await supabaseClient
+                .from("conversations")
+                .select("id, user_low, user_high")
+                .or("user_low.eq." + usuarioId + ",user_high.eq." + usuarioId);
+
+            if (erroConversas) throw erroConversas;
+            const ids = (conversas || []).map(item => item.id);
+
+            if (!ids.length) {
+                listaConversas.hidden = true;
+                estadoVazioConversas.hidden = false;
+                return;
+            }
+
+            const { data: mensagens, error: erroMensagens } = await supabaseClient
+                .from("messages")
+                .select("conversation_id, body, created_at")
+                .in("conversation_id", ids)
+                .order("created_at", { ascending: false });
+
+            if (erroMensagens) throw erroMensagens;
+
+            const ultimas = new Map();
+            (mensagens || []).forEach(item => {
+                if (!ultimas.has(item.conversation_id)) ultimas.set(item.conversation_id, item);
+            });
+
+            const contatosComMensagem = (conversas || [])
+                .map(conversa => {
+                    const contatoId = conversa.user_low === usuarioId ? conversa.user_high : conversa.user_low;
+                    const contato = amigos.find(item => item.contact_id === contatoId);
+                    const ultima = ultimas.get(conversa.id);
+                    return contato && ultima ? { contato, previa: ultima.body } : null;
+                })
+                .filter(Boolean);
+
+            if (!contatosComMensagem.length) {
+                listaConversas.hidden = true;
+                estadoVazioConversas.hidden = false;
+                return;
+            }
+
+            listaConversas.replaceChildren(
+                ...contatosComMensagem.map(item => criarItemConversa(item.contato, item.previa))
+            );
+            listaConversas.hidden = false;
+            estadoVazioConversas.hidden = true;
+            atualizarIcones();
+        } catch (erro) {
+            console.error("Erro ao carregar lista de conversas:", erro);
+            listaConversas.hidden = true;
+            estadoVazioConversas.hidden = false;
+        }
     }
 
     function estadoPainel(container, icone, titulo, descricao) {
@@ -386,7 +443,7 @@
 
             const contatos = data || [];
             const amigos = contatos.filter(item => item.friendship_status === "accepted");
-            atualizarListaConversas(amigos);
+            await atualizarListaConversas(amigos);
             const recebidas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "received");
             const enviadas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "sent");
 
