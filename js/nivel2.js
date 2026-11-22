@@ -18,11 +18,8 @@ const CHAVE_PROGRESSO = "progressoNiveis";
 // CONFIGURAÇÃO DAS FASES — NÍVEL 2
 // =====================================================
 //
-// Fases 1 a 5:
+// Todas as 10 fases:
 // Questões de dificuldade média.
-//
-// Fases 6 a 10:
-// Questões de dificuldade difícil.
 // =====================================================
 
 const fasesNivel2 = {
@@ -31,11 +28,11 @@ const fasesNivel2 = {
     3: { nome: "Equações do 1º grau", descricao: "Equações com incógnitas e propriedades algébricas.", dificuldade: "Médio" },
     4: { nome: "Geometria plana", descricao: "Áreas, perímetros e propriedades de figuras planas.", dificuldade: "Médio" },
     5: { nome: "Funções e estatística", descricao: "Funções, médias e interpretação de dados.", dificuldade: "Médio" },
-    6: { nome: "Sistemas e equações quadráticas", descricao: "Sistemas lineares e equações do 2º grau.", dificuldade: "Difícil" },
-    7: { nome: "Geometria espacial e Pitágoras", descricao: "Volumes, áreas e relações métricas.", dificuldade: "Difícil" },
-    8: { nome: "Potenciação e radiciação", descricao: "Propriedades de potências, raízes e notação científica.", dificuldade: "Difícil" },
-    9: { nome: "Probabilidade e estatística", descricao: "Análise de dados e situações probabilísticas.", dificuldade: "Difícil" },
-    10: { nome: "Desafio integrado", descricao: "Questões avançadas reunindo diferentes conteúdos.", dificuldade: "Difícil" }
+    6: { nome: "Sistemas e equações quadráticas", descricao: "Sistemas lineares e equações do 2º grau.", dificuldade: "Médio" },
+    7: { nome: "Geometria espacial e Pitágoras", descricao: "Volumes, áreas e relações métricas.", dificuldade: "Médio" },
+    8: { nome: "Potenciação e radiciação", descricao: "Propriedades de potências, raízes e notação científica.", dificuldade: "Médio" },
+    9: { nome: "Probabilidade e estatística", descricao: "Análise de dados e situações probabilísticas.", dificuldade: "Médio" },
+    10: { nome: "Desafio integrado", descricao: "Aplicação integrada de diferentes conteúdos em situações de dificuldade média.", dificuldade: "Médio" }
 };
 
 
@@ -995,10 +992,10 @@ const questoesNivel2 = {
             "explicacao": "Somando as equações: 2x = 18, então x = 9. Substituindo: y = 4."
         },
         {
-            "pergunta": "Resolva o sistema: 2x + 3y = 16 e x - y = 2.",
+            "pergunta": "Resolva o sistema: 2x + 3y = 19 e x - y = 2.",
             "alternativas": [
                 {
-                    "texto": "x = 22/5 e y = 12/5"
+                    "texto": "x = 5 e y = 3"
                 },
                 {
                     "texto": "x = 4 e y = 2"
@@ -1010,7 +1007,7 @@ const questoesNivel2 = {
                     "texto": "x = 3 e y = 4"
                 }
             ],
-            "explicacao": "Da segunda equação, x = y + 2. Substituindo: 2(y + 2) + 3y = 16, então 5y = 12. Logo y = 12/5 e x = 22/5."
+            "explicacao": "Da segunda equação, x = y + 2. Substituindo: 2(y + 2) + 3y = 19, então 5y = 15. Logo y = 3 e x = 5."
         },
         {
             "pergunta": "Quais são as raízes de x² - 5x + 6 = 0?",
@@ -1723,22 +1720,22 @@ const questoesNivel2 = {
             "explicacao": "Após o desconto: 240 × 0,9 = 216. Com acréscimo: 216 × 1,15 = R$ 248,40."
         },
         {
-            "pergunta": "A função f(x) = -2x² + 8x + 3 atinge seu valor máximo em qual x?",
+            "pergunta": "A função f(x) = x² + 3x - 4. Qual é o valor de f(2)?",
             "alternativas": [
                 {
-                    "texto": "2"
-                },
-                {
-                    "texto": "-2"
+                    "texto": "6"
                 },
                 {
                     "texto": "4"
                 },
                 {
                     "texto": "8"
+                },
+                {
+                    "texto": "2"
                 }
             ],
-            "explicacao": "A abscissa do vértice é -b/(2a) = -8/[2 × (-2)] = 2."
+            "explicacao": "Substituindo x = 2: f(2) = 2² + 3 × 2 - 4 = 4 + 6 - 4 = 6."
         },
         {
             "pergunta": "Resolva o sistema 3x + 2y = 18 e x + y = 7.",
