@@ -13,7 +13,7 @@
 .conversa-formulario {
     position:fixed;
     left:50%;
-    bottom:calc(24px + env(safe-area-inset-bottom, 0px));
+    bottom:calc(24px + env(safe-area-inset-bottom, 0px) + var(--teclado-inset, 0px));
     transform:translateX(-50%);
     z-index:1000;
     width:min(810px, calc(100% - 20px));
@@ -43,7 +43,7 @@
 @media(max-width:520px) {
     .conversa-container { padding:12px 10px 112px; }
     .conversa-mensagens { padding-bottom:110px; }
-    .conversa-formulario { bottom:calc(24px + env(safe-area-inset-bottom, 0px)); }
+    .conversa-formulario { bottom:calc(24px + env(safe-area-inset-bottom, 0px) + var(--teclado-inset, 0px)); }
     .conversa-mensagem { max-width:88%; }
     .conversa-cabecalho { padding:12px; }
 }
