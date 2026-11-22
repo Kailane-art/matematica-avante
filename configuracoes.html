@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1E3A8A">
+    <title>Configurações - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/configuracoes.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="pagina-configuracoes">
+    <header class="config-cabecalho">
+        <a href="inicio.html" class="config-voltar" aria-label="Voltar ao início"><i data-lucide="arrow-left"></i></a>
+        <h1>Configurações</h1>
+        <button id="modoEscuro" type="button" class="icon-button" aria-label="Alternar tema"><i data-lucide="moon"></i></button>
+        <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu"><i data-lucide="menu"></i></button>
+    </header>
+
+    <main class="config-container">
+        <section class="config-introducao">
+            <span class="config-sobrelinha">PERSONALIZE SUA EXPERIÊNCIA</span>
+            <h2>Configurações do site</h2>
+            <p>Escolha como o Matemática Avante deve funcionar e aparecer enquanto você utiliza a plataforma.</p>
+        </section>
+
+        <section class="config-grupo" aria-labelledby="titulo-aparencia">
+            <div class="config-grupo-titulo"><i data-lucide="palette"></i><div><h2 id="titulo-aparencia">Aparência</h2><p>Personalize a apresentação do site.</p></div></div>
+            <div class="config-opcao">
+                <div class="config-opcao-texto"><strong>Tema</strong><span>Escolha entre o modo claro e o modo escuro.</span></div>
+                <div class="config-temas" role="group" aria-label="Tema do site">
+                    <button type="button" class="config-tema" data-theme-choice="claro"><i data-lucide="sun"></i> Claro</button>
+                    <button type="button" class="config-tema" data-theme-choice="escuro"><i data-lucide="moon"></i> Escuro</button>
+                </div>
+            </div>
+            <div class="config-opcao config-opcao-coluna">
+                <div class="config-opcao-texto"><strong>Tamanho do texto</strong><span>Selecione uma das cinco opções. A alteração será aplicada nas páginas do site.</span></div>
+                <div class="config-tamanhos" role="group" aria-label="Tamanho do texto">
+                    <button type="button" data-text-size="1"><span>A</span><small>Muito pequeno</small></button>
+                    <button type="button" data-text-size="2"><span>A</span><small>Pequeno</small></button>
+                    <button type="button" data-text-size="3"><span>A</span><small>Padrão</small></button>
+                    <button type="button" data-text-size="4"><span>A</span><small>Grande</small></button>
+                    <button type="button" data-text-size="5"><span>A</span><small>Muito grande</small></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="config-grupo" aria-labelledby="titulo-notificacoes">
+            <div class="config-grupo-titulo"><i data-lucide="bell"></i><div><h2 id="titulo-notificacoes">Notificações</h2><p>Controle os avisos exibidos pela plataforma.</p></div></div>
+            <div class="config-opcao">
+                <div class="config-opcao-texto"><strong>Notificações do site</strong><span>Ative para receber avisos e atualizações dentro do Matemática Avante.</span></div>
+                <label class="config-switch"><input id="configNotificacoes" type="checkbox"><span></span><b class="sr-only">Ativar notificações do site</b></label>
+            </div>
+        </section>
+
+        <section class="config-grupo" aria-labelledby="titulo-privacidade">
+            <div class="config-grupo-titulo"><i data-lucide="shield-check"></i><div><h2 id="titulo-privacidade">Privacidade e amizades</h2><p>Defina quem pode interagir com sua conta.</p></div></div>
+            <div class="config-opcao config-opcao-coluna">
+                <div class="config-opcao-texto"><strong>Quem pode enviar solicitações de amizade?</strong><span>Ative os tipos de conta dos quais você aceita solicitações.</span></div>
+                <div class="config-permissoes">
+                    <label class="config-permissao"><span><i data-lucide="graduation-cap"></i><span><strong>Alunos</strong><small>Contas do tipo aluno</small></span></span><input id="configAmizadeAluno" type="checkbox"><span class="config-switch-visual"></span></label>
+                    <label class="config-permissao"><span><i data-lucide="book-open-check"></i><span><strong>Professores</strong><small>Contas do tipo professor</small></span></span><input id="configAmizadeProfessor" type="checkbox"><span class="config-switch-visual"></span></label>
+                    <label class="config-permissao"><span><i data-lucide="code-2"></i><span><strong>DEV</strong><small>Contas de desenvolvedor</small></span></span><input id="configAmizadeDev" type="checkbox"><span class="config-switch-visual"></span></label>
+                </div>
+            </div>
+            <div class="config-opcao">
+                <div class="config-opcao-texto"><strong>Mostrar meu status online</strong><span>Permite que outros usuários vejam quando você estiver online, quando o indicador de presença estiver disponível.</span></div>
+                <label class="config-switch"><input id="configStatusOnline" type="checkbox"><span></span><b class="sr-only">Mostrar meu status online</b></label>
+            </div>
+        </section>
+
+        <section class="config-grupo" aria-labelledby="titulo-idioma">
+            <div class="config-grupo-titulo"><i data-lucide="languages"></i><div><h2 id="titulo-idioma">Idioma</h2><p>Defina o idioma da interface.</p></div></div>
+            <div class="config-opcao">
+                <div class="config-opcao-texto"><strong>Idioma da plataforma</strong><span>Outros idiomas serão disponibilizados quando a tradução de todas as páginas estiver pronta.</span></div>
+                <select id="configIdioma" aria-label="Idioma da plataforma"><option value="pt-BR">Português (Brasil)</option></select>
+            </div>
+        </section>
+
+        <section class="config-grupo" aria-labelledby="titulo-dados">
+            <div class="config-grupo-titulo"><i data-lucide="database"></i><div><h2 id="titulo-dados">Dados e armazenamento</h2><p>Remova arquivos temporários guardados neste navegador.</p></div></div>
+            <div class="config-opcao">
+                <div class="config-opcao-texto"><strong>Limpar cache local</strong><span>Remove caches temporários do site. Sua conta, mensagens e progresso não serão apagados.</span></div>
+                <button id="botaoLimparCache" type="button" class="config-botao-secundario"><i data-lucide="trash-2"></i> Limpar cache</button>
+            </div>
+        </section>
+
+        <p id="configStatus" class="config-status" role="status" aria-live="polite">Carregando suas preferências...</p>
+    </main>
+
+    <div id="fundoMenu"></div>
+    <aside id="menuLateral" aria-label="Menu principal">
+        <h2>Menu</h2>
+        <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+        <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+        <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+        <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+        <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+        <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+        <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+        <a href="configuracoes.html" class="menu-item" aria-current="page"><i data-lucide="settings"></i><span>Configurações</span></a>
+        <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+    </aside>
+
+    <script src="js/script.js"></script>
+    <script src="js/configuracoes.js"></script>
+</body>
+</html>
