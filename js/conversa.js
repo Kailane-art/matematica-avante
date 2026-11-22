@@ -263,23 +263,15 @@
 
         usuarioAtual = sessao.user;
 
-        const [{ data: perfilData, error: perfilErro }, { data: contatos, error: contatosErro }] = await Promise.all([
-            supabaseClient.rpc("get_public_profile", { p_username: username }),
-            supabaseClient.rpc("get_chat_contacts")
-        ]);
+        const { data: perfilData, error: perfilErro } = await supabaseClient.rpc(
+            "get_public_profile",
+            { p_username: username }
+        );
 
         if (perfilErro) throw perfilErro;
-        if (contatosErro) throw contatosErro;
 
         const perfil = Array.isArray(perfilData) ? perfilData[0] : perfilData;
         if (!perfil || perfil.id === usuarioAtual.id) throw new Error("Perfil não encontrado.");
-
-        const { data: perfilAtual, error: erroPerfilAtual } = await supabaseClient
-            .from("profiles")
-            .select("tipo_usuario")
-            .eq("id", usuarioAtual.id)
-            .maybeSingle();
-        if (erroPerfilAtual) throw erroPerfilAtual;
 
         contatoId = perfil.id;
         const { data: idConversa, error: conversaErro } = await supabaseClient.rpc(
