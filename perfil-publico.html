@@ -660,7 +660,24 @@ async function carregarPerfilPublico() {
         }
 
         const selo = document.getElementById("seloPerfilPublico");
-        if (perfil.tipo_usuario === "dev") {
+        let concluiuNivel5 = false;
+        try {
+            const { data: possuiTitulo, error: erroTitulo } = await supabaseClient.rpc(
+                "get_public_profile_has_level5_title",
+                { p_username: nomeUsuario }
+            );
+            if (erroTitulo) throw erroTitulo;
+            concluiuNivel5 = possuiTitulo === true;
+        } catch (erroTituloPublico) {
+            console.warn("Não foi possível verificar o título público do Nível 5:", erroTituloPublico);
+        }
+
+        selo.classList.remove("selo-dev-nome", "titulo-nivel5");
+        if (concluiuNivel5) {
+            selo.textContent = "🏆 Título: Mestre da Matemática";
+            selo.classList.add("titulo-nivel5");
+            selo.hidden = false;
+        } else if (perfil.tipo_usuario === "dev") {
             selo.textContent = "⚡ Selo: Coração da Matrix";
             selo.classList.add("selo-dev-nome");
             selo.hidden = false;
