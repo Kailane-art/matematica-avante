@@ -793,22 +793,22 @@ const questoesNivel4 ={
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Qual é o coeficiente angular de uma reta perpendicular a 2x+3y−6=0?",
+            "pergunta": "Determine a abscissa do ponto em que a reta perpendicular a 3x−2y+5=0, passando por (4,−2), intercepta o eixo x.",
             "alternativas": [
                 {
-                    "texto": "3/2"
+                    "texto": "1"
                 },
                 {
-                    "texto": "−3/2"
+                    "texto": "−1"
                 },
                 {
-                    "texto": "2/3"
+                    "texto": "2"
                 },
                 {
-                    "texto": "−2/3"
+                    "texto": "3"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nIsolando y, obtemos y=−(2/3)x+2. A perpendicular tem o oposto do inverso: 3/2.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nIsolando y na reta dada, seu coeficiente angular é 3/2. A perpendicular tem inclinação −2/3. Pela forma ponto-inclinação: y+2=−(2/3)(x−4), que simplifica para y=−(2/3)x+2/3. No eixo x, y=0; então x=1.\n\nCOMO EVITAR O ERRO:\nTransforme as informações em equações antes de calcular e confira se o resultado atende às condições do enunciado.",
             "dificuldade": "Difícil"
         },
         {
@@ -1677,41 +1677,41 @@ const questoesNivel4 ={
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Resolva log₂(x−1)+log₂(x+1)=3.",
+            "pergunta": "Resolva log₂(x+3)+log₂(x−1)=3, considerando x>1.",
             "alternativas": [
                 {
+                    "texto": "2√3−1"
+                },
+                {
+                    "texto": "2√3+1"
+                },
+                {
+                    "texto": "√3−1"
+                },
+                {
                     "texto": "3"
-                },
-                {
-                    "texto": "−3"
-                },
-                {
-                    "texto": "2"
-                },
-                {
-                    "texto": "4"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nO domínio exige x>1. Juntando os logaritmos: log₂(x²−1)=3, então x²−1=8. As raízes são ±3, mas somente 3 pertence ao domínio.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nJunte os logaritmos: log₂[(x+3)(x−1)]=3. Então (x+3)(x−1)=8, ou x²+2x−11=0. As raízes são −1±2√3. Como x>1, somente x=2√3−1 é válida.\n\nCOMO EVITAR O ERRO:\nTransforme as informações em equações antes de calcular e confira se o resultado atende às condições do enunciado.",
             "dificuldade": "Difícil"
         },
         {
-            "pergunta": "Resolva 5^(2x−1)>125.",
+            "pergunta": "Resolva 4^(x+1)<8^(x−1).",
             "alternativas": [
                 {
-                    "texto": "x>2"
+                    "texto": "x>5"
                 },
                 {
-                    "texto": "x<2"
-                },
-                {
-                    "texto": "x>1"
+                    "texto": "x<5"
                 },
                 {
                     "texto": "x>3"
+                },
+                {
+                    "texto": "x>2"
                 }
             ],
-            "explicacao": "PASSO A PASSO:\nEscreva 125=5³. Como a base 5 é maior que 1, mantenha o sentido: 2x−1>3. Portanto x>2.\n\nCOMO EVITAR O ERRO:\nConfira as condições do enunciado, os sinais e as unidades. Quando houver raízes, logaritmos ou denominadores, valide o resultado na expressão original.",
+            "explicacao": "PASSO A PASSO:\nEscreva tudo na base 2: 2^(2x+2)<2^(3x−3). Como a base 2 é maior que 1, compare os expoentes: 2x+2<3x−3. Isolando x, obtemos x>5.\n\nCOMO EVITAR O ERRO:\nTransforme as informações em equações antes de calcular e confira se o resultado atende às condições do enunciado.",
             "dificuldade": "Difícil"
         },
         {
