@@ -648,3 +648,21 @@
         font-size: 12px;
     }
 }
+
+
+/* Caixa de introdução em Azul Royal */
+.rankings-introducao,
+.modo-escuro .rankings-introducao {
+    background: #4169e1;
+    border: 2px solid #e0ad24;
+}
+
+.rankings-introducao h2,
+.modo-escuro .rankings-introducao h2 {
+    color: #fff;
+}
+
+.rankings-introducao p,
+.modo-escuro .rankings-introducao p {
+    color: #eef3ff;
+}
