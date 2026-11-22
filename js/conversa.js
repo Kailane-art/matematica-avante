@@ -142,12 +142,12 @@
         removerMensagemDaTela(mensagem.id);
     }
 
-    async function renderizarAcoesSolicitacaoProfessor(requestId, container) {
+    async function renderizarAcoesSolicitacaoProfessor(requestId, messageId, container) {
         container.replaceChildren();
 
         const { data: estadoAtual, error } = await supabaseClient.rpc(
             "get_teacher_request_status",
-            { p_request_id: requestId }
+            { p_request_id: requestId, p_message_id: messageId }
         );
 
         if (error) {
@@ -187,7 +187,7 @@
             botao.className = "conversa-decisao-botao " + classe;
             botao.textContent = rotulo;
             botao.addEventListener("click", function() {
-                executarDecisaoSolicitacaoProfessor(requestId, decisao, container);
+                executarDecisaoSolicitacaoProfessor(requestId, messageId, decisao, container);
             });
             botoes.appendChild(botao);
         }
@@ -202,7 +202,7 @@
         container.appendChild(botoes);
     }
 
-    async function executarDecisaoSolicitacaoProfessor(requestId, decisao, container) {
+    async function executarDecisaoSolicitacaoProfessor(requestId, messageId, decisao, container) {
         if (decisao === "aprovar" && !window.confirm("Aprovar esta solicitação e alterar a conta para professor?")) return;
         if (decisao === "reprovar" && !window.confirm("Reprovar esta solicitação? A conta continuará como aluno.")) return;
 
@@ -211,12 +211,13 @@
         try {
             const { data, error } = await supabaseClient.rpc("decide_teacher_request", {
                 p_request_id: requestId,
-                p_decision: decisao
+                p_decision: decisao,
+                p_message_id: messageId
             });
 
             if (error) throw error;
 
-            renderizarAcoesSolicitacaoProfessor(requestId, container);
+            renderizarAcoesSolicitacaoProfessor(requestId, messageId, container);
 
             if (data === "em_analise") {
                 window.alert("Solicitação marcada como em análise. O usuário recebeu uma mensagem automática.");
@@ -229,7 +230,7 @@
         } catch (erro) {
             console.error("Erro ao decidir solicitação de professor:", erro);
             window.alert(erro.message || "Não foi possível registrar a decisão.");
-            renderizarAcoesSolicitacaoProfessor(requestId, container);
+            renderizarAcoesSolicitacaoProfessor(requestId, messageId, container);
         }
     }
 
@@ -268,7 +269,7 @@
                 acoes.className = "conversa-acoes-solicitacao";
                 acoes.textContent = "Verificando solicitação...";
                 item.appendChild(acoes);
-                renderizarAcoesSolicitacaoProfessor(marcadorSolicitacao[1], acoes);
+                renderizarAcoesSolicitacaoProfessor(marcadorSolicitacao[1], mensagem.id, acoes);
             }
         } else if (somenteLeitura) {
             item.append(texto, horario);
