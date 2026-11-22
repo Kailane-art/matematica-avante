@@ -3515,6 +3515,17 @@ html.verificando-sessao:has(body.modo-escuro)::before {
     color: #FFD54F;
 }
 
+.identidade .titulo-nivel5,
+.selo-perfil-publico.titulo-nivel5 {
+    color: #15803d !important;
+    font-weight: 800;
+}
+
+.modo-escuro .identidade .titulo-nivel5,
+.modo-escuro .selo-perfil-publico.titulo-nivel5 {
+    color: #4ade80 !important;
+}
+
 .modo-escuro .identidade h3 {
     color: #f1f5f9;
 }
