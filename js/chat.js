@@ -299,10 +299,14 @@
         window.location.href = "conversa.html?usuario=" + encodeURIComponent(contato.username);
     }
 
-    function formatarPreviaChat(body) {
-        return String(body || "").startsWith("[[TEACHER_REQUEST:")
+    function formatarPreviaChat(body, remetenteId) {
+        const texto = String(body || "").startsWith("[[TEACHER_REQUEST:")
             ? "Nova solicitação para professor"
-            : body;
+            : String(body || "");
+
+        return remetenteId === usuarioAtualId && usuarioAtualId
+            ? "Você: " + texto
+            : texto;
     }
 
     function criarItemConversa(contato, previa, naoLida, conversaId) {
@@ -431,7 +435,7 @@
                     if (contatoRemetente && mensagem.sender_id !== usuarioAtualId) {
                         const elemento = criarItemConversa(
                             contatoRemetente,
-                            formatarPreviaChat(mensagem.body),
+                            formatarPreviaChat(mensagem.body, mensagem.sender_id),
                             true,
                             mensagem.conversation_id
                         );
@@ -439,7 +443,7 @@
                         itensPorConversa.set(mensagem.conversation_id, {
                             contato: contatoRemetente,
                             element: elemento,
-                            previa: formatarPreviaChat(mensagem.body),
+                            previa: formatarPreviaChat(mensagem.body, mensagem.sender_id),
                             naoLida: true
                         });
 
@@ -455,7 +459,7 @@
                     return;
                 }
 
-                conversa.previa = formatarPreviaChat(mensagem.body);
+                conversa.previa = formatarPreviaChat(mensagem.body, mensagem.sender_id);
                 if (mensagem.sender_id !== usuarioAtualId) {
                     conversa.naoLida = true;
                 }
