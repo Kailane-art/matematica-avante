@@ -59,6 +59,14 @@
                 <i data-lucide="user-round-plus"></i>
                 Adicionar amizade
             </button>
+            <button id="botaoEncerrarAmizade" class="botao-encerrar-amizade" type="button" hidden>
+                <i data-lucide="user-round-minus"></i>
+                Encerrar amizade
+            </button>
+            <button id="botaoConversarPerfil" class="botao-conversar-perfil" type="button" hidden>
+                <i data-lucide="send"></i>
+                Conversar
+            </button>
             <p id="mensagemAmizadePerfil" role="status" aria-live="polite"></p>
         </div>
 
@@ -73,13 +81,22 @@
 <script>
 
 
-async function configurarBotaoAmizade(idPerfil) {
-    const botao = document.getElementById("botaoAdicionarAmizade");
-    const mensagem = document.getElementById("mensagemAmizadePerfil");
-    if (!botao || !supabaseClient) return;
+let perfilPublicoAtual = null;
+let usuarioAtualEhDev = false;
 
-    botao.disabled = true;
-    botao.innerHTML = '<i data-lucide="loader-circle"></i> Carregando...';
+async function configurarBotaoAmizade(idPerfil) {
+    const botaoAdicionar = document.getElementById("botaoAdicionarAmizade");
+    const botaoEncerrar = document.getElementById("botaoEncerrarAmizade");
+    const botaoConversar = document.getElementById("botaoConversarPerfil");
+    const mensagem = document.getElementById("mensagemAmizadePerfil");
+
+    if (!botaoAdicionar || !botaoEncerrar || !botaoConversar || !supabaseClient) return;
+
+    botaoAdicionar.hidden = false;
+    botaoAdicionar.disabled = true;
+    botaoAdicionar.innerHTML = '<i data-lucide="loader-circle"></i> Carregando...';
+    botaoEncerrar.hidden = true;
+    botaoConversar.hidden = true;
     mensagem.textContent = "";
 
     try {
@@ -87,20 +104,24 @@ async function configurarBotaoAmizade(idPerfil) {
         if (error) throw error;
 
         const relacao = (data || []).find(item => item.contact_id === idPerfil);
+        const amizadeAtiva = relacao?.friendship_status === "accepted";
+        const podeConversar = amizadeAtiva || usuarioAtualEhDev || perfilPublicoAtual?.tipo_usuario === "dev";
 
-        botao.onclick = null;
+        botaoAdicionar.onclick = null;
+        botaoEncerrar.onclick = null;
+        botaoConversar.onclick = null;
 
-        if (relacao?.friendship_status === "accepted") {
-            botao.innerHTML = '<i data-lucide="user-minus"></i> Encerrar amizade';
-            botao.disabled = false;
-            botao.onclick = async function() {
+        if (amizadeAtiva) {
+            botaoAdicionar.hidden = true;
+            botaoEncerrar.hidden = false;
+            botaoEncerrar.disabled = false;
+            botaoEncerrar.onclick = async function() {
                 const confirmar = window.confirm(
                     "Tem certeza de que deseja encerrar esta amizade? Vocês terão 15 dias para restabelecê-la. Durante esse período, o chat ficará bloqueado."
                 );
-
                 if (!confirmar) return;
 
-                botao.disabled = true;
+                botaoEncerrar.disabled = true;
                 mensagem.textContent = "Encerrando amizade...";
 
                 const { data: prazo, error: encerramentoErro } = await supabaseClient.rpc(
@@ -110,12 +131,11 @@ async function configurarBotaoAmizade(idPerfil) {
 
                 if (encerramentoErro) {
                     mensagem.textContent = encerramentoErro.message || "Não foi possível encerrar a amizade.";
-                    botao.disabled = false;
+                    botaoEncerrar.disabled = false;
                     return;
                 }
 
-                botao.innerHTML = '<i data-lucide="user-minus"></i> Amizade encerrada';
-                botao.disabled = true;
+                await configurarBotaoAmizade(idPerfil);
 
                 const dataLimite = prazo ? new Date(prazo) : null;
                 mensagem.textContent = dataLimite
@@ -123,42 +143,61 @@ async function configurarBotaoAmizade(idPerfil) {
                       dataLimite.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" }) +
                       ". O histórico será excluído após esse prazo."
                     : "Amizade encerrada. O prazo de recuperação é de 15 dias.";
-
-                if (window.lucide) lucide.createIcons();
-            };
-        } else if (relacao?.friendship_status === "pending" && relacao.request_direction === "sent") {
-            botao.innerHTML = '<i data-lucide="clock-3"></i> Solicitação enviada';
-            botao.disabled = true;
-        } else if (relacao?.friendship_status === "pending" && relacao.request_direction === "received") {
-            botao.innerHTML = '<i data-lucide="user-round-check"></i> Aceitar solicitação';
-            botao.disabled = false;
-            botao.onclick = async function() {
-                await responderAmizade(relacao.request_id, true);
             };
         } else {
-            botao.innerHTML = '<i data-lucide="user-round-plus"></i> Adicionar amizade';
-            botao.disabled = false;
-            botao.onclick = async function() {
-                botao.disabled = true;
-                mensagem.textContent = "Enviando solicitação...";
-                const { error: envioErro } = await supabaseClient.rpc("send_friend_request", {
-                    p_recipient_id: idPerfil
-                });
+            botaoEncerrar.hidden = true;
+            botaoAdicionar.hidden = false;
 
-                if (envioErro) {
-                    mensagem.textContent = envioErro.message || "Não foi possível enviar a solicitação.";
-                    botao.disabled = false;
+            if (relacao?.friendship_status === "pending" && relacao.request_direction === "sent") {
+                botaoAdicionar.innerHTML = '<i data-lucide="clock-3"></i> Solicitação enviada';
+                botaoAdicionar.disabled = true;
+            } else if (relacao?.friendship_status === "pending" && relacao.request_direction === "received") {
+                botaoAdicionar.innerHTML = '<i data-lucide="user-round-check"></i> Aceitar solicitação';
+                botaoAdicionar.disabled = false;
+                botaoAdicionar.onclick = async function() {
+                    await responderAmizade(relacao.request_id, true);
+                };
+            } else {
+                botaoAdicionar.innerHTML = '<i data-lucide="user-round-plus"></i> Adicionar amizade';
+                botaoAdicionar.disabled = false;
+                botaoAdicionar.onclick = async function() {
+                    botaoAdicionar.disabled = true;
+                    mensagem.textContent = "Enviando solicitação...";
+                    const { error: envioErro } = await supabaseClient.rpc("send_friend_request", {
+                        p_recipient_id: idPerfil
+                    });
+
+                    if (envioErro) {
+                        mensagem.textContent = envioErro.message || "Não foi possível enviar a solicitação.";
+                        botaoAdicionar.disabled = false;
+                        return;
+                    }
+
+                    await configurarBotaoAmizade(idPerfil);
+                    mensagem.textContent = "Solicitação de amizade enviada!";
+                };
+            }
+        }
+
+        botaoConversar.hidden = !podeConversar;
+        if (podeConversar) {
+            botaoConversar.disabled = false;
+            botaoConversar.onclick = function() {
+                const username = perfilPublicoAtual?.username;
+                if (!username) {
+                    mensagem.textContent = "Não foi possível abrir esta conversa.";
                     return;
                 }
-
-                await configurarBotaoAmizade(idPerfil);
-                mensagem.textContent = "Solicitação de amizade enviada!";
+                window.location.href = "conversa.html?usuario=" + encodeURIComponent(username);
             };
         }
     } catch (erro) {
         console.error("Erro ao consultar amizade:", erro);
-        botao.innerHTML = '<i data-lucide="user-round-plus"></i> Adicionar amizade';
-        botao.disabled = false;
+        botaoAdicionar.hidden = false;
+        botaoAdicionar.innerHTML = '<i data-lucide="user-round-plus"></i> Adicionar amizade';
+        botaoAdicionar.disabled = true;
+        botaoEncerrar.hidden = true;
+        botaoConversar.hidden = true;
         mensagem.textContent = "Não foi possível carregar o estado da amizade.";
     }
 
@@ -190,7 +229,10 @@ async function carregarEstadoAmizadeAtual() {
     const { data, error } = await supabaseClient.rpc("get_public_profile", { p_username: nomeUsuario });
     if (error) return;
     const perfil = Array.isArray(data) ? data[0] : data;
-    if (perfil) await configurarBotaoAmizade(perfil.id);
+    if (perfil) {
+        perfilPublicoAtual = perfil;
+        await configurarBotaoAmizade(perfil.id);
+    }
 }
 
 function atualizarBotaoFavorito(favoritado) {
@@ -318,6 +360,19 @@ async function carregarPerfilPublico() {
 
         const { data: sessaoAtual } = await supabaseClient.auth.getUser();
         const ehProprioPerfil = sessaoAtual?.user?.id === perfil.id;
+        perfilPublicoAtual = perfil;
+        usuarioAtualEhDev = false;
+
+        if (sessaoAtual?.user?.id) {
+            const { data: perfilLogado, error: erroPerfilLogado } = await supabaseClient
+                .from("profiles")
+                .select("tipo_usuario")
+                .eq("id", sessaoAtual.user.id)
+                .maybeSingle();
+            if (erroPerfilLogado) throw erroPerfilLogado;
+            usuarioAtualEhDev = perfilLogado?.tipo_usuario === "dev";
+        }
+
         const acoesPerfil = document.getElementById("acoesPerfilPublico");
 
         if (acoesPerfil && !ehProprioPerfil && sessaoAtual?.user) {
