@@ -281,39 +281,13 @@
             const usuarioId = sessao?.user?.id;
             if (!usuarioId) throw new Error("Sessão não encontrada.");
 
-            const { data: conversas, error: erroConversas } = await supabaseClient
-                .from("conversations")
-                .select("id, user_low, user_high")
-                .or("user_low.eq." + usuarioId + ",user_high.eq." + usuarioId);
-
+            const { data: conversas, error: erroConversas } = await supabaseClient.rpc("get_chat_conversations");
             if (erroConversas) throw erroConversas;
-            const ids = (conversas || []).map(item => item.id);
-
-            if (!ids.length) {
-                listaConversas.hidden = true;
-                estadoVazioConversas.hidden = false;
-                return;
-            }
-
-            const { data: mensagens, error: erroMensagens } = await supabaseClient
-                .from("messages")
-                .select("conversation_id, body, created_at")
-                .in("conversation_id", ids)
-                .order("created_at", { ascending: false });
-
-            if (erroMensagens) throw erroMensagens;
-
-            const ultimas = new Map();
-            (mensagens || []).forEach(item => {
-                if (!ultimas.has(item.conversation_id)) ultimas.set(item.conversation_id, item);
-            });
 
             const contatosComMensagem = (conversas || [])
                 .map(conversa => {
-                    const contatoId = conversa.user_low === usuarioId ? conversa.user_high : conversa.user_low;
-                    const contato = amigos.find(item => item.contact_id === contatoId);
-                    const ultima = ultimas.get(conversa.id);
-                    return contato && ultima ? { contato, previa: ultima.body } : null;
+                    const contato = amigos.find(item => item.contact_id === conversa.contact_id);
+                    return contato ? { contato, previa: conversa.last_message } : null;
                 })
                 .filter(Boolean);
 
