@@ -187,3 +187,8 @@
     .conversa-decisao-botao { flex:1 1 auto; }
 }
 
+
+.conversa-status-solicitacao.aprovada { color:#166534; }
+.conversa-status-solicitacao.rejeitada { color:#b91c1c; }
+.modo-escuro .conversa-status-solicitacao.aprovada { color:#86efac; }
+.modo-escuro .conversa-status-solicitacao.rejeitada { color:#fda4af; }
