@@ -386,3 +386,35 @@
     color: #922b36;
 }
 
+/* Botões em amarelo dourado */
+.desafio-botao-principal,
+.desafio-acao,
+.desafio-acao-secundaria,
+.desafio-acao-perigo,
+.modo-escuro .desafio-botao-principal,
+.modo-escuro .desafio-acao,
+.modo-escuro .desafio-acao-secundaria,
+.modo-escuro .desafio-acao-perigo {
+    background: #e0ad24;
+    color: #172554;
+    border: 1px solid #c99512;
+    box-shadow: 0 3px 9px rgba(8, 25, 62, .18);
+}
+.desafio-botao-principal:hover:not(:disabled),
+.desafio-acao:hover:not(:disabled),
+.desafio-acao-secundaria:hover:not(:disabled),
+.desafio-acao-perigo:hover:not(:disabled),
+.modo-escuro .desafio-botao-principal:hover:not(:disabled),
+.modo-escuro .desafio-acao:hover:not(:disabled),
+.modo-escuro .desafio-acao-secundaria:hover:not(:disabled),
+.modo-escuro .desafio-acao-perigo:hover:not(:disabled) {
+    background: #c99512;
+    color: #111c3b;
+    box-shadow: 0 5px 13px rgba(8, 25, 62, .25);
+    transform: translateY(-1px);
+}
+.desafio-botao-principal:disabled,
+.desafio-acao:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
