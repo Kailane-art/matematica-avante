@@ -353,6 +353,23 @@
                 listaConversas.prepend(conversa.element);
                 if (!conversa.naoLida) atualizarIcones();
             })
+            .on("postgres_changes", {
+                event: "UPDATE",
+                schema: "public",
+                table: "messages"
+            }, payload => {
+                if (payload.new.deleted_at) {
+                    atualizarListaConversas(amigosDaLista);
+                }
+            })
+            .on("postgres_changes", {
+                event: "INSERT",
+                schema: "public",
+                table: "message_hidden",
+                filter: "user_id=eq." + usuarioId
+            }, () => {
+                atualizarListaConversas(amigosDaLista);
+            })
             .subscribe(status => {
                 if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
                     console.error("Não foi possível atualizar a lista de conversas em tempo real:", status);
