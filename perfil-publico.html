@@ -257,6 +257,9 @@ async function responderAmizade(idSolicitacao, aceitar) {
         return;
     }
 
+    if (window.maPushNotifications) {
+        await window.maPushNotifications.enviarEvento("friend_response", { request_id: idSolicitacao });
+    }
     await carregarEstadoAmizadeAtual();
     mensagem.textContent = aceitar ? "Agora vocês são amigos!" : "Solicitação recusada.";
 }
