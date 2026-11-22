@@ -45,7 +45,7 @@ const botaoModo = document.getElementById("modoEscuro");
 
 
 const preferenciaTemaDispositivo = window.matchMedia("(prefers-color-scheme: dark)");
-const paginaLogin = (window.location.pathname.split("/").filter(Boolean).pop() || "index.html") === "index.html";
+const paginaLogin = window.location.pathname.endsWith("/") || window.location.pathname.split("/").pop() === "index.html";
 
 function aplicarTemaGlobal(preferencia) {
     const temaEscuro = preferencia === "escuro" ||
