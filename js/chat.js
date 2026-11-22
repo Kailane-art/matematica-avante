@@ -341,25 +341,51 @@
         ultimaMensagem.textContent = previa || "Conversa iniciada";
         dados.append(nome, username, ultimaMensagem);
 
-        const indicador = criarIndicadorConversa(naoLida);
+        const indicador = criarIndicadorConversa(contato.contact_id, naoLida);
         item.append(avatar, dados, indicador);
         return item;
     }
 
-    function criarIndicadorConversa(naoLida) {
+    function criarIndicadorConversa(contatoId, naoLida) {
+        const indicadores = document.createElement("span");
+        indicadores.className = "chat-conversa-indicadores";
+
+        const status = document.createElement("span");
+        status.className = "chat-conversa-status";
+        status.dataset.presenceUserId = contatoId;
+        atualizarStatusConversa(status);
+        indicadores.appendChild(status);
+
         if (naoLida) {
             const bolinha = document.createElement("span");
             bolinha.className = "chat-conversa-nao-lida";
             bolinha.setAttribute("aria-label", "Mensagem não lida");
             bolinha.title = "Nova mensagem";
-            return bolinha;
+            indicadores.appendChild(bolinha);
         }
 
-        const aviao = document.createElement("i");
-        aviao.setAttribute("data-lucide", "send");
-        aviao.className = "chat-conversa-aviao";
-        return aviao;
+        return indicadores;
     }
+
+    function atualizarStatusConversa(elemento) {
+        if (!elemento || !elemento.dataset.presenceUserId) return;
+
+        const online = Boolean(
+            window.maPresencaOnline &&
+            window.maPresencaOnline.has(elemento.dataset.presenceUserId)
+        );
+
+        elemento.textContent = online ? "Online" : "Offline";
+        elemento.classList.toggle("online", online);
+        elemento.classList.toggle("offline", !online);
+        elemento.setAttribute("aria-label", online ? "Usuário online" : "Usuário offline");
+        elemento.title = online ? "Online" : "Offline";
+    }
+
+    window.addEventListener("ma:presenca-atualizada", function() {
+        document.querySelectorAll(".chat-conversa-status[data-presence-user-id]")
+            .forEach(atualizarStatusConversa);
+    });
 
     async function iniciarAtualizacoesEmTempoReal(usuarioId) {
         if (canalListaMensagens || !usuarioId) return;
@@ -438,7 +464,7 @@
                 if (previa) previa.textContent = conversa.previa;
 
                 const indicadorAtual = conversa.element.lastElementChild;
-                const novoIndicador = criarIndicadorConversa(conversa.naoLida);
+                const novoIndicador = criarIndicadorConversa(conversa.contato.contact_id, conversa.naoLida);
                 if (indicadorAtual) {
                     indicadorAtual.replaceWith(novoIndicador);
                 } else {
