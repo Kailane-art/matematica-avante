@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rankings - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/rankings.css?v=20261122-ranking1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+    <header class="cabecalho-rankings">
+        <button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar">
+            <i data-lucide="arrow-left"></i>
+        </button>
+        <h1>Rankings</h1>
+        <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+            <i data-lucide="menu"></i>
+        </button>
+    </header>
+
+    <main class="rankings-container">
+        <section class="rankings-introducao">
+            <div class="rankings-introducao-icone">
+                <i data-lucide="trophy"></i>
+            </div>
+            <div>
+                <h2>Veja quem está no topo</h2>
+                <p>Acompanhe sua evolução e confira a classificação dos estudantes.</p>
+            </div>
+        </section>
+
+        <section class="ranking-card" aria-labelledby="tituloRankingIndividual">
+            <div class="ranking-cabecalho">
+                <div class="ranking-titulo-grupo">
+                    <span class="ranking-icone ranking-icone-individual">
+                        <i data-lucide="medal"></i>
+                    </span>
+                    <div>
+                        <h2 id="tituloRankingIndividual">Ranking individual</h2>
+                        <p>Classificação por XP conquistado na semana</p>
+                    </div>
+                </div>
+                <span class="ranking-periodo" id="periodoSemanaIndividual">Semana atual</span>
+            </div>
+
+            <p class="ranking-legenda-periodo">Período: domingo a sábado</p>
+
+            <div id="statusRanking" class="ranking-status" role="status" aria-live="polite">
+                Carregando ranking...
+            </div>
+
+            <ol id="listaRankingIndividual" class="ranking-lista" aria-label="Cinco estudantes mais bem colocados"></ol>
+
+            <div class="ranking-pesquisa">
+                <label for="pesquisaEstudante">Encontre sua posição ou procure outro estudante</label>
+                <div class="ranking-campo-pesquisa">
+                    <i data-lucide="search"></i>
+                    <input
+                        id="pesquisaEstudante"
+                        type="search"
+                        placeholder="Nome ou @usuário"
+                        minlength="2"
+                        maxlength="50"
+                        autocomplete="off"
+                    >
+                </div>
+                <p class="ranking-ajuda-pesquisa">Digite pelo menos 2 caracteres para pesquisar.</p>
+                <div id="resultadosPesquisa" class="ranking-resultados" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <section class="ranking-card" aria-labelledby="tituloRankingDesafios">
+            <div class="ranking-cabecalho">
+                <div class="ranking-titulo-grupo">
+                    <span class="ranking-icone ranking-icone-desafios">
+                        <i data-lucide="swords"></i>
+                    </span>
+                    <div>
+                        <h2 id="tituloRankingDesafios">Ranking de desafios</h2>
+                        <p>Classificação por vitórias entre amigos</p>
+                    </div>
+                </div>
+                <span class="ranking-periodo" id="periodoSemanaDesafios">Semana atual</span>
+            </div>
+
+            <p class="ranking-legenda-periodo">Período: domingo a sábado · Top 3</p>
+
+            <div class="ranking-vazio ranking-vazio-desafios">
+                <span class="ranking-vazio-icone">
+                    <i data-lucide="swords"></i>
+                </span>
+                <h3>As disputas ainda não começaram</h3>
+                <p>O ranking será atualizado quando o sistema de desafios entre amigos estiver disponível.</p>
+            </div>
+
+            <div class="ranking-pesquisa ranking-pesquisa-indisponivel">
+                <label for="pesquisaRankingDesafios">Encontre sua posição</label>
+                <div class="ranking-campo-pesquisa">
+                    <i data-lucide="search"></i>
+                    <input
+                        id="pesquisaRankingDesafios"
+                        type="search"
+                        placeholder="Pesquisa disponível após o lançamento dos desafios"
+                        disabled
+                    >
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="fundoMenu"></div>
+    <nav id="menuLateral" aria-label="Menu principal">
+        <h2>Menu</h2>
+        <a href="inicio.html" class="menu-item">
+            <i data-lucide="house"></i><span>Voltar ao início</span>
+        </a>
+        <a href="chat.html" class="menu-item">
+            <i data-lucide="messages-square"></i><span>Chat</span>
+        </a>
+        <a href="rankings.html" class="menu-item">
+            <i data-lucide="trophy"></i><span>Rankings</span>
+        </a>
+        <a href="materias.html" class="menu-item">
+            <i data-lucide="book-open"></i><span>Matérias</span>
+        </a>
+        <a href="atividades.html" class="menu-item">
+            <i data-lucide="clipboard-list"></i><span>Atividades</span>
+        </a>
+        <a href="professores.html" class="menu-item">
+            <i data-lucide="graduation-cap"></i><span>Professores</span>
+        </a>
+        <a href="planos.html" class="menu-item">
+            <i data-lucide="credit-card"></i><span>Planos e Assinaturas</span>
+        </a>
+        <a href="configuracoes.html" class="menu-item">
+            <i data-lucide="settings"></i><span>Configurações</span>
+        </a>
+        <a href="sobre.html" class="menu-item">
+            <i data-lucide="info"></i><span>Sobre</span>
+        </a>
+        <a href="alertas.html" class="menu-item">
+            <i data-lucide="megaphone"></i><span>Alertas e Eventos</span>
+        </a>
+    </nav>
+
+    <script src="js/script.js"></script>
+    <script src="js/rankings.js?v=20261122-ranking1"></script>
+    <script>
+        if (window.lucide) window.lucide.createIcons();
+    </script>
+</body>
+</html>
