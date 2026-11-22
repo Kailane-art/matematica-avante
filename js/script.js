@@ -1,3 +1,24 @@
+// ================================================
+// REDEFINIÇÃO GLOBAL DO PROGRESSO (NOV/2026)
+// Remove dados antigos locais uma única vez em cada navegador.
+// Preserva tema, sessão e identificação do usuário.
+// ================================================
+
+const CHAVE_REDEFINICAO_GLOBAL = "matematicaAvanteProgressoReset20261122";
+
+if (localStorage.getItem(CHAVE_REDEFINICAO_GLOBAL) !== "concluido") {
+    [
+        "xpUsuario",
+        "diasEstudados",
+        "ultimaAtividade",
+        "progressoNiveis"
+    ].forEach(function(chave) {
+        localStorage.removeItem(chave);
+    });
+
+    localStorage.setItem(CHAVE_REDEFINICAO_GLOBAL, "concluido");
+}
+
 // ================================
 // ÍCONES LUCIDE
 // ================================
