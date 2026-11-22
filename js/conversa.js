@@ -34,6 +34,9 @@
         if (!mensagem || mensagensRenderizadas.has(mensagem.id)) return;
         mensagensRenderizadas.add(mensagem.id);
 
+        const avisoVazio = lista.querySelector(".conversa-estado");
+        if (avisoVazio) avisoVazio.remove();
+
         const item = document.createElement("article");
         item.className = "conversa-mensagem " + (mensagem.sender_id === usuarioAtual.id ? "enviada" : "recebida");
         const texto = document.createElement("span");
