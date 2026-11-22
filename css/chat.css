@@ -925,3 +925,36 @@
 .modo-escuro .chat-status-online {
     border-color: #13294b;
 }
+
+
+/* Status online/offline na lista de conversas */
+.chat-conversa-indicadores {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 9px;
+    flex: 0 0 auto;
+    margin-left: auto;
+}
+
+.chat-conversa-status {
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.chat-conversa-status.online {
+    color: #16a34a;
+}
+
+.chat-conversa-status.offline {
+    color: #94a3b8;
+}
+
+.modo-escuro .chat-conversa-status.online {
+    color: #4ade80;
+}
+
+.modo-escuro .chat-conversa-status.offline {
+    color: #94a3b8;
+}
