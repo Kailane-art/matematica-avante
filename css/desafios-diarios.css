@@ -1,0 +1,396 @@
+/* =====================================================
+   DESAFIOS DIÁRIOS — MATEMÁTICA AVANTE
+===================================================== */
+
+.cabecalho-desafios {
+    background: #1E3A8A;
+    min-height: 82px;
+}
+
+.titulo-cabecalho-desafios {
+    flex: 1;
+    text-align: center;
+}
+
+.titulo-cabecalho-desafios span {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.titulo-cabecalho-desafios h1 {
+    margin: 0;
+    font-size: 23px;
+}
+
+.pagina-desafios-diarios {
+    width: min(920px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 38px 0 70px;
+}
+
+.introducao-desafios {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.selo-desafios {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 13px;
+    border-radius: 30px;
+    background: #e8efff;
+    color: #1E3A8A;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.selo-desafios svg {
+    width: 16px;
+    height: 16px;
+}
+
+.introducao-desafios h2 {
+    margin: 18px 0 10px;
+    color: #1E3A8A;
+    font-size: clamp(27px, 5vw, 36px);
+}
+
+.introducao-desafios p {
+    max-width: 600px;
+    margin: 0 auto 13px;
+    color: #5b6472;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.data-desafios {
+    color: #4169E1;
+    font-size: 14px;
+}
+
+.resumo-desafios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 24px;
+    padding: 22px;
+    margin-bottom: 20px;
+    border: 1px solid #dce5f5;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 7px 20px rgba(15, 35, 75, 0.07);
+}
+
+.resumo-desafio-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.resumo-desafio-item span {
+    color: #647084;
+    font-size: 13px;
+}
+
+.resumo-desafio-item strong {
+    color: #1E3A8A;
+    font-size: 23px;
+}
+
+.barra-progresso-desafios {
+    grid-column: 1 / -1;
+    height: 11px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #e6ebf3;
+}
+
+.barra-progresso-desafios div {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: #22A06B;
+    transition: width 0.25s ease;
+}
+
+.mensagem-desafios {
+    min-height: 24px;
+    margin: 14px 0 18px;
+    color: #526174;
+    font-size: 14px;
+    text-align: center;
+}
+
+.mensagem-desafios.erro {
+    color: #b42318;
+}
+
+.lista-desafios {
+    display: grid;
+    gap: 18px;
+}
+
+.card-desafio-diario {
+    padding: 24px;
+    border: 1px solid #dce5f5;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 8px 22px rgba(15, 35, 75, 0.08);
+}
+
+.topo-card-desafio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.identificacao-desafio {
+    color: #1E3A8A;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.dificuldade-desafio {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.dificuldade-desafio.facil {
+    color: #176b45;
+    background: #e2f5e9;
+}
+
+.dificuldade-desafio.medio {
+    color: #8a5a00;
+    background: #fff1cc;
+}
+
+.dificuldade-desafio.dificil {
+    color: #a12d2d;
+    background: #fde5e5;
+}
+
+.pergunta-desafio {
+    margin: 0 0 20px;
+    color: #202b3b;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.55;
+    white-space: pre-line;
+}
+
+.alternativas-desafio {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+}
+
+.alternativa-desafio {
+    min-height: 54px;
+    padding: 12px 15px;
+    border: 1px solid #4169E1;
+    border-radius: 12px;
+    background: #4169E1;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.alternativa-desafio:hover:not(:disabled) {
+    background: #294ec5;
+    transform: translateY(-2px);
+}
+
+.alternativa-desafio:disabled {
+    cursor: default;
+    opacity: 0.75;
+}
+
+.alternativa-desafio:focus-visible {
+    outline: 3px solid #f2c14e;
+    outline-offset: 3px;
+}
+
+.feedback-desafio {
+    margin-top: 17px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.feedback-desafio.correto {
+    border-left: 4px solid #22A06B;
+    background: #e8f7ee;
+    color: #155b3b;
+}
+
+.feedback-desafio.incorreto {
+    border-left: 4px solid #d97706;
+    background: #fff6e5;
+    color: #7c4a03;
+}
+
+.feedback-desafio strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.bonus-desafios {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    padding: 22px;
+    border: 1px solid #ead9a5;
+    border-radius: 18px;
+    background: #fff9e8;
+}
+
+.bonus-desafios-icone {
+    display: grid;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border-radius: 14px;
+    background: #f4d77f;
+    color: #76520b;
+}
+
+.bonus-desafios-icone svg {
+    width: 25px;
+    height: 25px;
+}
+
+.bonus-desafios h2 {
+    margin: 0 0 5px;
+    color: #684b12;
+    font-size: 18px;
+}
+
+.bonus-desafios p {
+    margin: 0 0 5px;
+    color: #765f2d;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.bonus-desafios span {
+    color: #765f2d;
+    font-size: 13px;
+}
+
+.bonus-desafios.conquistado {
+    border-color: #9ed5b6;
+    background: #eaf8ef;
+}
+
+.bonus-desafios.conquistado .bonus-desafios-icone {
+    background: #b9e6ca;
+    color: #176b45;
+}
+
+.bonus-desafios.conquistado h2,
+.bonus-desafios.conquistado p,
+.bonus-desafios.conquistado span {
+    color: #176b45;
+}
+
+.modo-escuro .introducao-desafios h2,
+.modo-escuro .data-desafios,
+.modo-escuro .identificacao-desafio {
+    color: #FFD54F;
+}
+
+.modo-escuro .introducao-desafios p,
+.modo-escuro .mensagem-desafios {
+    color: #d7e0ef;
+}
+
+.modo-escuro .selo-desafios {
+    background: #1d3b6d;
+    color: #FFD54F;
+}
+
+.modo-escuro .resumo-desafios,
+.modo-escuro .card-desafio-diario {
+    border-color: #29456f;
+    background: #13294b;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+}
+
+.modo-escuro .resumo-desafio-item span {
+    color: #c3cee0;
+}
+
+.modo-escuro .resumo-desafio-item strong {
+    color: #FFD54F;
+}
+
+.modo-escuro .barra-progresso-desafios {
+    background: #29456f;
+}
+
+.modo-escuro .pergunta-desafio {
+    color: #ffffff;
+}
+
+.modo-escuro .bonus-desafios {
+    border-color: #705d2d;
+    background: #302b1d;
+}
+
+.modo-escuro .bonus-desafios h2,
+.modo-escuro .bonus-desafios p,
+.modo-escuro .bonus-desafios span {
+    color: #f5d98b;
+}
+
+@media (max-width: 600px) {
+    .pagina-desafios-diarios {
+        width: min(100% - 24px, 920px);
+        padding-top: 27px;
+    }
+
+    .cabecalho-desafios {
+        padding: 14px 12px;
+    }
+
+    .titulo-cabecalho-desafios h1 {
+        font-size: 19px;
+    }
+
+    .resumo-desafios {
+        padding: 17px;
+        gap: 14px;
+    }
+
+    .card-desafio-diario {
+        padding: 18px;
+    }
+
+    .pergunta-desafio {
+        font-size: 17px;
+    }
+
+    .alternativas-desafio {
+        grid-template-columns: 1fr;
+    }
+
+    .bonus-desafios {
+        align-items: flex-start;
+        padding: 17px;
+    }
+}
