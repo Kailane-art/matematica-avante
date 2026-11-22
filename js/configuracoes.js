@@ -91,6 +91,11 @@
                 .upsert({ user_id: user.id, ...configuracoes, updated_at: new Date().toISOString() }, { onConflict: "user_id" });
 
             if (error) throw error;
+            if (Object.prototype.hasOwnProperty.call(alteracoes, "show_online_status")) {
+                window.dispatchEvent(new CustomEvent("ma:status-online-configurado", {
+                    detail: { enabled: configuracoes.show_online_status }
+                }));
+            }
             mostrarStatus("Configurações salvas.");
         } catch (erro) {
             console.error("Erro ao salvar configurações:", erro);
