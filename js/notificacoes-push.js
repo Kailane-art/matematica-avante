@@ -28,9 +28,7 @@
     }
 
     async function ativar() {
-        const user = await usuarioAtual();
         if (!suportado) throw new Error("Este navegador não oferece suporte a notificações push.");
-        const registro = await navigator.serviceWorker.register("service-worker.js");
         let permissao = Notification.permission;
         if (permissao === "default") permissao = await Notification.requestPermission();
         if (permissao !== "granted") {
@@ -39,6 +37,8 @@
                 : "A permissão para notificações não foi concedida.");
         }
 
+        const user = await usuarioAtual();
+        const registro = await navigator.serviceWorker.register("service-worker.js");
         let inscricao = await registro.pushManager.getSubscription();
         if (!inscricao) {
             inscricao = await registro.pushManager.subscribe({
@@ -75,6 +75,20 @@
             }
         }
         await salvarPreferencia(user.id, false, true);
+        return true;
+    }
+
+    async function desvincularDispositivo() {
+        if (!suportado || !cliente()) return true;
+        const user = await usuarioAtual();
+        const registro = await navigator.serviceWorker.getRegistration("service-worker.js");
+        const inscricao = registro ? await registro.pushManager.getSubscription() : null;
+        if (!inscricao) return true;
+        const { error } = await supabaseClient.rpc("unregister_push_subscription", {
+            p_endpoint: inscricao.endpoint
+        });
+        await inscricao.unsubscribe();
+        if (error) console.warn("Não foi possível remover a inscrição do banco ao sair:", error);
         return true;
     }
 
@@ -204,6 +218,7 @@
         suportado: () => suportado,
         ativar,
         desativar,
+        desvincularDispositivo,
         estaRegistradoParaUsuario,
         enviarEvento
     };
