@@ -762,3 +762,11 @@
 .modo-escuro .chat-conversa-item { background: #13294b; border-color: #29456f; color: #e2e8f0; }
 .modo-escuro .chat-conversa-item:hover { background: #1a365e; }
 .modo-escuro .chat-conversa-dados strong { color: #e2e8f0; }
+
+.chat-conversa-previa {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
