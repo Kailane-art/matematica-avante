@@ -3879,7 +3879,11 @@ body.pagina-perfil-publico .identidade > p {
     line-height: 1.35;
 }
 
-/* Pequeno espaço extra entre o tipo de usuário e o nível. */
-body.pagina-perfil-publico #tipoPerfilPublico + #nivelPerfilPublico {
-    margin-top: 5px;
+/* PERFIL PÚBLICO — ESPAÇAMENTO CONTROLADO ENTRE TIPO, NÍVEL E SELO */
+body.pagina-perfil-publico #tipoPerfilPublico,
+body.pagina-perfil-publico #nivelPerfilPublico,
+body.pagina-perfil-publico #seloPerfilPublico {
+    margin: 0;
+    padding: 3px 0;
+    line-height: 1.35;
 }
