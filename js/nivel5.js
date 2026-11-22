@@ -75,40 +75,530 @@ const fasesNivel5 = {
 };
 
 
-function criarQuestaoNivel5(pergunta, resposta, passo) {
-    const valor = Number(resposta);
-    return {
-        pergunta,
-        alternativas: [valor, valor + 1, valor - 1, valor + 2].map(numero => ({ texto: String(numero) })),
-        explicacao: "PASSO A PASSO:\n" + passo +
-            "\n\nCOMO EVITAR O ERRO:\nIdentifique a propriedade adequada, organize os cálculos e confira o resultado nas condições do problema.",
-        dificuldade: "Difícil"
-    };
-}
-const questoesNivel5 = { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [], "7": [], "8": [], "9": [], "10": [] };
-for (let i = 1; i <= 10; i++) {
-    const a=i+2,b=i+6;
-    questoesNivel5["1"].push(criarQuestaoNivel5("As raízes de x² − "+(a+b)+"x + "+(a*b)+" = 0 são positivas. Calcule a soma de seus quadrados.",a*a+b*b,"Pelas relações de Viète, as raízes são "+a+" e "+b+". A soma dos quadrados é "+a+"² + "+b+"² = "+(a*a+b*b)+"."));
-    const x=i+1,A=i+2,B=2*i+1,C=i+3,v=A*x*x-B*x+C;
-    questoesNivel5["2"].push(criarQuestaoNivel5("Dada f(x) = "+A+"x² − "+B+"x + "+C+", determine f("+x+").",v,"Substitua x por "+x+": "+A+"·"+x+"² − "+B+"·"+x+" + "+C+" = "+v+"."));
-    const l1=i+3,l2=i+5,c2=l1*l1+l2*l2-l1*l2;
-    questoesNivel5["3"].push(criarQuestaoNivel5("Dois lados de um triângulo medem "+l1+" e "+l2+" e formam 60°. Determine o quadrado do terceiro lado.",c2,"Pela lei dos cossenos: c²="+l1+"²+"+l2+"²−2·"+l1+"·"+l2+"·cos60°="+c2+"."));
-    const lado=2*i,coef=3*lado*lado/2;
-    questoesNivel5["4"].push(criarQuestaoNivel5("Um hexágono regular tem lado "+lado+". Qual é o coeficiente de √3 em sua área?",coef,"A área é (3√3/2)·lado². Substituindo "+lado+", o coeficiente é 3·"+lado+"²/2="+coef+"."));
-    const triples=[[3,4],[5,12],[8,15],[7,24],[20,21],[9,40],[12,35],[11,60],[28,45],[33,56]];
-    const [dx,dy]=triples[i-1],dist=Math.sqrt(dx*dx+dy*dy);
-    questoesNivel5["5"].push(criarQuestaoNivel5("Dois pontos do plano diferem "+dx+" unidades na horizontal e "+dy+" na vertical. Determine a distância entre eles.",dist,"Pela fórmula da distância: d=√("+dx+"²+"+dy+"²)=√"+(dx*dx+dy*dy)+"="+dist+"."));
-    const raio=i+2,altura=3*i+3,vol=raio*raio*altura;
-    questoesNivel5["6"].push(criarQuestaoNivel5("Um cilindro tem raio "+raio+" e altura "+altura+". Determine o coeficiente de π em seu volume.",vol,"V=πr²h. O coeficiente de π é "+raio+"²·"+altura+"="+vol+"."));
-    const n=i+5,comb=n*(n-1)*(n-2)/6;
-    questoesNivel5["7"].push(criarQuestaoNivel5("Uma comissão de 3 pessoas será escolhida entre "+n+" candidatos. Quantas comissões distintas podem ser formadas?",comb,"A ordem não importa: C("+n+",3)="+n+"·"+(n-1)+"·"+(n-2)+"/6="+comb+"."));
-    const verm=i+3,favor=verm*(verm-1)/2;
-    questoesNivel5["8"].push(criarQuestaoNivel5("Uma urna contém "+verm+" bolas vermelhas e 5 azuis. Duas são retiradas simultaneamente. Quantos pares favoráveis contêm somente bolas vermelhas?",favor,"Escolhemos 2 das "+verm+" vermelhas: C("+verm+",2)="+verm+"·"+(verm-1)+"/2="+favor+"."));
-    const primeiro=i+2,termo=primeiro*Math.pow(2,7);
-    questoesNivel5["9"].push(criarQuestaoNivel5("Em uma PG de primeiro termo "+primeiro+" e razão 2, determine o oitavo termo.",termo,"a₈=a₁·q⁷="+primeiro+"·2⁷="+termo+"."));
-    const ladoA=i+4,ladoB=2*i+4,area=ladoA*ladoB;
-    questoesNivel5["10"].push(criarQuestaoNivel5("Um retângulo tem lados x e x+"+i+". Sua área é "+area+" e x é positivo. Determine x.",ladoA,"Monte x(x+"+i+")="+area+". As raízes são "+ladoA+" e −"+ladoB+". Como x é positivo, x="+ladoA+"."));
-}
+const dadosQuestoesNivel5 = {
+    "1": [
+        [
+            "Resolva x²−13x+40=0 e determine a soma das raízes.",
+            13,
+            "Fatorando: (x−5)(x−8)=0. As raízes são 5 e 8; a soma é 13."
+        ],
+        [
+            "Se x+y=11 e xy=24, calcule x²+y².",
+            73,
+            "Use x²+y²=(x+y)²−2xy=121−48=73."
+        ],
+        [
+            "Resolva 2x²−7x+3=0 e indique a maior raiz.",
+            3,
+            "Δ=49−24=25. As raízes são (7±5)/4, isto é, 3 e 1/2. A maior é 3."
+        ],
+        [
+            "As raízes de x³−6x²+11x−6=0 são 1, 2 e 3. Calcule a soma de seus quadrados.",
+            14,
+            "Some 1²+2²+3²=1+4+9=14."
+        ],
+        [
+            "Resolva |3x−4|=11 e indique a maior solução.",
+            5,
+            "Os casos são 3x−4=11 ou 3x−4=−11. As soluções são 5 e −7/3; a maior é 5."
+        ],
+        [
+            "Resolva √(x+12)=x, considerando x≥0.",
+            4,
+            "Elevando ao quadrado: x+12=x². As raízes são 4 e −3; a condição mantém apenas 4."
+        ],
+        [
+            "Se log₃(x−2)+log₃(x+2)=2, determine x².",
+            13,
+            "Juntando os logaritmos: log₃(x²−4)=2. Então x²−4=9 e x²=13; o domínio exige x>2."
+        ],
+        [
+            "Resolva 2^(x+2)=64.",
+            4,
+            "Como 64=2⁶, x+2=6. Portanto x=4."
+        ],
+        [
+            "Quantos inteiros pertencem ao intervalo solução de x²−9x+20≤0?",
+            2,
+            "Fatorando: (x−4)(x−5)≤0. O intervalo [4,5] contém dois inteiros."
+        ],
+        [
+            "Para qual k a equação x²−(k+3)x+3k=0 possui raízes iguais?",
+            3,
+            "Δ=(k+3)²−12k=(k−3)². Para Δ=0, k=3."
+        ]
+    ],
+    "2": [
+        [
+            "Para f(x)=x²−4x+7, calcule f(5).",
+            12,
+            "Substitua x por 5: 25−20+7=12."
+        ],
+        [
+            "Se f(x)=4x−7, calcule f⁻¹(9).",
+            4,
+            "Resolva 4x−7=9. Assim, x=4."
+        ],
+        [
+            "Se f(x)=2x+1 e g(x)=x²−3, calcule (f∘g)(2).",
+            3,
+            "g(2)=1 e f(1)=3."
+        ],
+        [
+            "Qual é o valor mínimo de f(x)=(x−3)²+5?",
+            5,
+            "O quadrado é não negativo e vale zero em x=3. O mínimo é 5."
+        ],
+        [
+            "Qual é o maior inteiro no domínio de f(x)=√(17−2x)?",
+            8,
+            "17−2x≥0, então x≤8,5. O maior inteiro permitido é 8."
+        ],
+        [
+            "Determine a abscissa do vértice de f(x)=−3x²+12x−7.",
+            2,
+            "xv=−b/(2a)=−12/(−6)=2."
+        ],
+        [
+            "Resolva 5^(x−1)=125.",
+            4,
+            "125=5³, logo x−1=3 e x=4."
+        ],
+        [
+            "Resolva log₂(4x)=5.",
+            8,
+            "4x=2⁵=32, então x=8."
+        ],
+        [
+            "As assíntotas de (3x+2)/(x−4) são x=4 e y=3. Qual é a soma dos valores?",
+            7,
+            "A soma dos valores das assíntotas é 4+3=7."
+        ],
+        [
+            "Quantas raízes reais distintas possui x³−4x²−x+4=0?",
+            3,
+            "Fatorando por agrupamento: (x²−1)(x−4)=(x−1)(x+1)(x−4). São três raízes."
+        ]
+    ],
+    "3": [
+        [
+            "No primeiro quadrante, sen(θ)=5/13. Qual é o numerador de cos(θ)?",
+            12,
+            "Pela identidade fundamental, cosθ=12/13. O numerador é 12."
+        ],
+        [
+            "Dois lados medem 7 e 8 e formam ângulo de 60°. Determine o quadrado do terceiro lado.",
+            57,
+            "Lei dos cossenos: c²=49+64−2·7·8·1/2=57."
+        ],
+        [
+            "Se senθ=3/5 e cosθ=4/5, determine o numerador de sen(2θ).",
+            24,
+            "sen(2θ)=2·3/5·4/5=24/25. O numerador é 24."
+        ],
+        [
+            "Quantas soluções tem 2sen(x)=1 em 0≤x<2π?",
+            2,
+            "senx=1/2 possui duas soluções nesse intervalo: π/6 e 5π/6."
+        ],
+        [
+            "Dois lados de um triângulo medem 10 e formam ângulo de 60°. Qual é o coeficiente de √3 na área?",
+            25,
+            "A=(1/2)·10·10·sen60°=25√3."
+        ],
+        [
+            "Um arco tem raio 9 e ângulo central de 120°. Qual é o coeficiente de π em seu comprimento?",
+            6,
+            "120°=2π/3 rad. O arco mede rθ=9·2π/3=6π."
+        ],
+        [
+            "Um setor tem raio 6 e ângulo de 90°. Qual é o coeficiente de π em sua área?",
+            9,
+            "A=(90/360)·π·36=9π."
+        ],
+        [
+            "Um lado de comprimento 5 está oposto a um ângulo de 30°. Determine o raio da circunferência circunscrita.",
+            5,
+            "Pela lei dos senos, a/senA=2R. Assim, 5/(1/2)=2R e R=5."
+        ],
+        [
+            "Se tgθ=3/4, qual é o numerador de sec²θ?",
+            25,
+            "sec²θ=1+tg²θ=1+9/16=25/16."
+        ],
+        [
+            "Quantas soluções tem cos(x)=0 em 0≤x<2π?",
+            2,
+            "As soluções são π/2 e 3π/2."
+        ]
+    ],
+    "4": [
+        [
+            "Calcule o coeficiente de √3 na área de um hexágono regular de lado 6.",
+            54,
+            "A=(3√3/2)·6²=54√3."
+        ],
+        [
+            "Um setor de raio 10 possui ângulo central de 36°. Qual é o coeficiente de π em sua área?",
+            10,
+            "A=(36/360)·π·100=10π."
+        ],
+        [
+            "Em um quadrilátero cíclico, um ângulo mede 117°. Quanto mede o oposto?",
+            63,
+            "Ângulos opostos de quadrilátero inscrito somam 180°. Logo 63°."
+        ],
+        [
+            "Uma tangente e uma secante partem de um ponto externo. A parte externa mede 4 e a secante inteira 9. Determine a tangente.",
+            6,
+            "Pela potência do ponto, t²=4·9=36. Portanto t=6."
+        ],
+        [
+            "Uma corda está a 5 unidades do centro de uma circunferência de raio 13. Determine seu comprimento.",
+            24,
+            "A metade da corda mede √(13²−5²)=12. A corda inteira mede 24."
+        ],
+        [
+            "Qual é a soma dos ângulos internos de um octógono convexo?",
+            1080,
+            "S=(8−2)·180°=1080°."
+        ],
+        [
+            "Um triângulo possui lados 13, 14 e 15. Calcule sua área.",
+            84,
+            "Pelo método de Heron, s=21 e A=√(21·8·7·6)=84."
+        ],
+        [
+            "Figuras semelhantes têm razão linear 3:2. Qual é o numerador da razão entre as áreas?",
+            9,
+            "A razão entre áreas é o quadrado da razão linear: 9/4."
+        ],
+        [
+            "Um ângulo inscrito intercepta arco de 148°. Qual é sua medida?",
+            74,
+            "O ângulo inscrito mede metade do arco: 74°."
+        ],
+        [
+            "Qual é a medida de cada ângulo externo de um dodecágono regular?",
+            30,
+            "360°/12=30°."
+        ]
+    ],
+    "5": [
+        [
+            "Calcule a distância entre A(2,3) e B(8,11).",
+            10,
+            "d=√(6²+8²)=√100=10."
+        ],
+        [
+            "Qual é a abscissa do ponto médio entre A(−4,7) e B(6,−3)?",
+            1,
+            "xM=(−4+6)/2=1."
+        ],
+        [
+            "Determine o coeficiente angular da reta por (1,2) e (5,14).",
+            3,
+            "m=(14−2)/(5−1)=3."
+        ],
+        [
+            "Uma circunferência tem centro (2,−3) e raio 5. Qual é o módulo do termo constante de sua equação geral?",
+            12,
+            "(x−2)²+(y+3)²=25. Expandindo, o termo constante é −12."
+        ],
+        [
+            "As retas y=2x+1 e y=−x+7 se cruzam. Determine a abscissa da interseção.",
+            2,
+            "2x+1=−x+7, então 3x=6 e x=2."
+        ],
+        [
+            "Calcule a distância do ponto (3,4) à reta 3x+4y−10=0.",
+            3,
+            "d=|9+16−10|/√25=15/5=3."
+        ],
+        [
+            "Qual é a abscissa do eixo de simetria de y=(x−2)²+1?",
+            2,
+            "A forma de vértice indica eixo vertical x=2."
+        ],
+        [
+            "A elipse x²/25+y²/9=1 possui qual comprimento de eixo maior?",
+            10,
+            "O semieixo maior mede √25=5; o eixo mede 10."
+        ],
+        [
+            "Calcule a área do triângulo de vértices (0,0), (6,0) e (2,5).",
+            15,
+            "Base 6 e altura 5: A=6·5/2=15."
+        ],
+        [
+            "Uma circunferência centrada na origem passa por (6,8). Determine o raio.",
+            10,
+            "r=√(6²+8²)=10."
+        ]
+    ],
+    "6": [
+        [
+            "Qual é o coeficiente de π no volume de um cilindro de raio 3 e altura 8?",
+            72,
+            "V=πr²h=π·9·8=72π."
+        ],
+        [
+            "Qual é o coeficiente de π no volume de um cone de raio 3 e altura 12?",
+            36,
+            "V=(1/3)π·9·12=36π."
+        ],
+        [
+            "Qual é o coeficiente de π na área da superfície de uma esfera de raio 6?",
+            144,
+            "A=4πr²=4π·36=144π."
+        ],
+        [
+            "Um cubo tem aresta 4. Qual é o coeficiente de √3 em sua diagonal espacial?",
+            4,
+            "A diagonal espacial é a√3=4√3."
+        ],
+        [
+            "Um prisma tem área da base triangular 12 e comprimento 7. Determine o volume.",
+            84,
+            "V=área da base·comprimento=12·7=84."
+        ],
+        [
+            "Um tronco de cone tem raios 5 e 2 e altura 9. Qual é o coeficiente de π em seu volume?",
+            117,
+            "V=(π·9/3)(25+10+4)=3π·39=117π."
+        ],
+        [
+            "Calcule a área total de um cubo de aresta 5.",
+            150,
+            "A=6·5²=150."
+        ],
+        [
+            "Um paralelepípedo tem dimensões 3, 4 e 12. Determine a diagonal espacial.",
+            13,
+            "d=√(3²+4²+12²)=√169=13."
+        ],
+        [
+            "Qual é o coeficiente de π no volume de uma esfera de raio 3?",
+            36,
+            "V=(4/3)π·27=36π."
+        ],
+        [
+            "Um cilindro tem raio 4 e altura 7. Qual é o coeficiente de π em sua área lateral?",
+            56,
+            "A lateral=2πrh=2π·4·7=56π."
+        ]
+    ],
+    "7": [
+        [
+            "De quantas maneiras é possível escolher 3 pessoas entre 10, sem considerar a ordem?",
+            120,
+            "C(10,3)=10·9·8/6=120."
+        ],
+        [
+            "Quantos anagramas distintos podem ser formados com MATEMA?",
+            180,
+            "São 6 letras, com A e M repetidos duas vezes: 6!/(2!·2!)=180."
+        ],
+        [
+            "Um trajeto exige 6 movimentos à direita e 4 para cima. Quantos caminhos mínimos existem?",
+            210,
+            "Há 10 movimentos e 4 posições para os movimentos verticais: C(10,4)=210."
+        ],
+        [
+            "Quantos códigos de 5 algarismos distintos podem começar por algarismo não nulo?",
+            27216,
+            "Há 9 opções iniciais e depois 9·8·7·6: total 27216."
+        ],
+        [
+            "Uma comissão de 3 pessoas será escolhida entre 8, incluindo uma pessoa específica. Quantos grupos existem?",
+            21,
+            "A pessoa já está incluída; escolha 2 entre as outras 7: C(7,2)=21."
+        ],
+        [
+            "De quantas maneiras 7 pessoas podem sentar-se em uma mesa circular, considerando rotações equivalentes?",
+            720,
+            "Permutação circular: (7−1)!=6!=720."
+        ],
+        [
+            "Escolha 2 pessoas de um grupo de 6 e 1 de outro grupo de 4. Quantas comissões são possíveis?",
+            60,
+            "C(6,2)·C(4,1)=15·4=60."
+        ],
+        [
+            "Oito pessoas ficam em fila, mas duas específicas devem permanecer juntas. Quantas filas existem?",
+            10080,
+            "Trate o par como bloco: 7! arranjos e 2 ordens internas. Total 2·7!=10080."
+        ],
+        [
+            "Quantos números pares de 4 algarismos distintos podem ser formados com 1 a 7?",
+            360,
+            "Unidade: 3 opções pares; demais posições: 6, 5 e 4. Total 3·6·5·4=360."
+        ],
+        [
+            "De quantas maneiras é possível escolher 2 elementos entre 12?",
+            66,
+            "C(12,2)=12·11/2=66."
+        ]
+    ],
+    "8": [
+        [
+            "Dois dados são lançados. A probabilidade da soma 9 é 1/n. Determine n.",
+            9,
+            "Há 4 resultados favoráveis em 36. A fração 4/36 simplifica para 1/9."
+        ],
+        [
+            "Uma urna tem 5 vermelhas e 3 azuis. Duas são retiradas sem reposição. Qual o denominador da probabilidade de ambas vermelhas?",
+            14,
+            "P=(5/8)(4/7)=20/56=5/14."
+        ],
+        [
+            "Uma urna contém 4 verdes e 6 amarelas. Qual o numerador da probabilidade de retirar uma verde, na forma irredutível?",
+            2,
+            "P=4/10=2/5."
+        ],
+        [
+            "Duas moedas honestas são lançadas. A probabilidade de exatamente uma cara é 1/n. Determine n.",
+            2,
+            "Dois dos quatro resultados têm exatamente uma cara: 2/4=1/2."
+        ],
+        [
+            "Quatro tentativas independentes têm probabilidade 1/2 de sucesso. Qual o denominador da probabilidade de exatamente dois sucessos?",
+            8,
+            "P=C(4,2)/2⁴=6/16=3/8."
+        ],
+        [
+            "Em um grupo, 11 pessoas usam óculos, sendo 6 meninas. Sabendo que alguém usa óculos, qual o denominador da probabilidade de ser menina?",
+            11,
+            "O espaço condicionado tem 11 pessoas; a probabilidade é 6/11."
+        ],
+        [
+            "Em um baralho de 52 cartas, 12 são figuras. A probabilidade de retirar figura é 3/n. Determine n.",
+            13,
+            "12/52 simplifica para 3/13."
+        ],
+        [
+            "Dois dados são lançados. Qual o denominador da probabilidade de o produto ser par, na forma irredutível?",
+            4,
+            "O produto é ímpar com probabilidade 9/36=1/4. Logo é par com probabilidade 3/4."
+        ],
+        [
+            "Dois eventos independentes têm probabilidades 2/5 e 1/2. Determine o numerador da probabilidade conjunta.",
+            1,
+            "P=(2/5)(1/2)=1/5."
+        ],
+        [
+            "Uma caixa tem 5 bolas vermelhas e 5 pretas. Duas são retiradas. Qual o denominador da probabilidade de serem da mesma cor?",
+            9,
+            "Favoráveis: 2·C(5,2)=20; totais C(10,2)=45. Simplificando, 4/9."
+        ]
+    ],
+    "9": [
+        [
+            "Em uma PA com primeiro termo 7 e razão 4, determine o vigésimo termo.",
+            83,
+            "a20=7+19·4=83."
+        ],
+        [
+            "Calcule a soma dos 20 primeiros termos da PA com primeiro termo 3 e razão 2.",
+            440,
+            "a20=41. S20=20(3+41)/2=440."
+        ],
+        [
+            "Em uma PG com primeiro termo 3 e razão 2, determine o oitavo termo.",
+            384,
+            "a8=3·2⁷=384."
+        ],
+        [
+            "Calcule a soma dos 6 primeiros termos da PG de primeiro termo 2 e razão 3.",
+            728,
+            "S6=2(3⁶−1)/(3−1)=728."
+        ],
+        [
+            "R$ 2.000 rendem 10% ao ano em juros compostos por 2 anos. Determine o montante.",
+            2420,
+            "M=2000·1,1²=2420."
+        ],
+        [
+            "Um equipamento de R$ 10.000 perde 20% do valor por ano. Quanto vale após 2 anos?",
+            6400,
+            "Valor=10000·0,8²=6400."
+        ],
+        [
+            "Em uma PA, o quinto termo é 18 e a razão é 3. Determine o primeiro termo.",
+            6,
+            "a5=a1+4r. Logo a1=18−12=6."
+        ],
+        [
+            "Em uma PG de razão 2, o terceiro termo é 12. Determine o primeiro termo.",
+            3,
+            "a3=a1·2²; então a1=12/4=3."
+        ],
+        [
+            "Calcule a soma dos 15 primeiros termos de uma PA cujo primeiro e décimo quinto termos são 5 e 47.",
+            390,
+            "S15=15(5+47)/2=390."
+        ],
+        [
+            "R$ 1.500 rendem 20% ao ano em juros compostos por 2 anos. Determine o montante.",
+            2160,
+            "M=1500·1,2²=2160."
+        ]
+    ],
+    "10": [
+        [
+            "Um retângulo tem lados x e x+3 e área 180. Determine x positivo.",
+            12,
+            "x²+3x−180=0=(x−12)(x+15). A raiz positiva é 12."
+        ],
+        [
+            "Uma caixa cúbica tem volume 343 cm³. Determine a aresta.",
+            7,
+            "A aresta é ∛343=7 cm."
+        ],
+        [
+            "Uma parábola f(x)=−2x²+16x+3 atinge seu valor máximo em qual abscissa?",
+            4,
+            "O vértice tem xv=−16/(−4)=4."
+        ],
+        [
+            "Um triângulo retângulo tem catetos 9 e 12. Determine o raio da circunferência circunscrita.",
+            7.5,
+            "A hipotenusa é 15. Em triângulo retângulo, o raio circunscrito é metade: 7,5."
+        ],
+        [
+            "Uma senha tem 3 algarismos distintos escolhidos entre 1 e 5. Quantas senhas existem?",
+            60,
+            "Há 5·4·3 possibilidades, totalizando 60."
+        ],
+        [
+            "R$ 500 aumentam 20% e depois diminuem 20% sobre o novo valor. Determine o valor final.",
+            480,
+            "500·1,2=600; depois 600·0,8=480."
+        ],
+        [
+            "Uma circunferência tem raio 7. Qual é o coeficiente de π em seu comprimento?",
+            14,
+            "C=2πr=14π."
+        ],
+        [
+            "Em uma turma, 18 estudam inglês, 16 espanhol e 8 ambos. Quantos estudam pelo menos um idioma?",
+            26,
+            "Pela inclusão-exclusão: 18+16−8=26."
+        ],
+        [
+            "Uma sequência tem a1=2 e an=3a(n−1)+1. Determine a3.",
+            22,
+            "a2=7 e a3=3·7+1=22."
+        ],
+        [
+            "Um produto de R$ 250 recebe descontos sucessivos de 20% e 10%. Qual é o preço final?",
+            180,
+            "250·0,8=200; depois 200·0,9=180."
+        ]
+    ]
+};
+
+const questoesNivel5 = Object.fromEntries(Object.entries(dadosQuestoesNivel5).map(([fase, lista]) => [fase, lista.map(makeQ)]));
 
 // ESTADO ATUAL
 // =====================================================
