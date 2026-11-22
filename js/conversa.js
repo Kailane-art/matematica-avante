@@ -169,6 +169,102 @@
         removerMensagemDaTela(mensagem.id);
     }
 
+    async function renderizarAcoesConviteDesafio(challengeId, container) {
+        container.replaceChildren();
+
+        const { data, error } = await supabaseClient.rpc("get_friend_challenge_invitations");
+        if (error) {
+            container.textContent = "Não foi possível verificar este convite.";
+            console.error("Erro ao consultar convite de desafio:", error);
+            return;
+        }
+
+        const convite = (data || []).find(item => item.id === challengeId);
+        if (!convite) {
+            container.textContent = "Este convite expirou ou não está mais disponível.";
+            return;
+        }
+
+        function adicionarBotao(rotulo, acao, classe, botoes) {
+            const botao = document.createElement("button");
+            botao.type = "button";
+            botao.className = "conversa-desafio-botao " + (classe || "");
+            botao.textContent = rotulo;
+            botao.addEventListener("click", () => responderConviteDesafio(challengeId, acao, container));
+            botoes.appendChild(botao);
+        }
+
+        function adicionarBotaoAbrir() {
+            const botao = document.createElement("button");
+            botao.type = "button";
+            botao.className = "conversa-desafio-botao";
+            botao.textContent = "Abrir partida";
+            botao.addEventListener("click", () => {
+                window.location.href = "desafios.html?desafio=" + encodeURIComponent(challengeId);
+            });
+            container.appendChild(botao);
+        }
+
+        if (convite.status === "in_progress") {
+            const aviso = document.createElement("strong");
+            aviso.className = "conversa-status-desafio";
+            aviso.textContent = convite.opponent_id === usuarioAtual.id
+                ? "Você aceitou o convite. A partida começou."
+                : "Seu amigo aceitou o convite. A partida começou.";
+            container.appendChild(aviso);
+            adicionarBotaoAbrir();
+            return;
+        }
+
+        if (convite.status !== "pending") {
+            container.textContent = "Este convite não está mais disponível.";
+            return;
+        }
+
+        if (convite.opponent_id !== usuarioAtual.id) {
+            container.textContent = "Convite enviado. Aguardando resposta do amigo.";
+            return;
+        }
+
+        const botoes = document.createElement("div");
+        botoes.className = "conversa-desafio-botoes";
+        adicionarBotao("Aceitar desafio", true, "aceitar", botoes);
+        adicionarBotao("Recusar", false, "recusar", botoes);
+        container.appendChild(botoes);
+    }
+
+    async function responderConviteDesafio(challengeId, aceitar, container) {
+        container.querySelectorAll("button").forEach(botao => botao.disabled = true);
+        try {
+            const { data, error } = await supabaseClient.rpc("respond_friend_challenge", {
+                p_challenge_id: challengeId,
+                p_accept: aceitar
+            });
+            if (error) throw error;
+
+            container.replaceChildren();
+            if (data === "accepted" && aceitar) {
+                const aviso = document.createElement("strong");
+                aviso.className = "conversa-status-desafio";
+                aviso.textContent = "Desafio aceito. A partida começou.";
+                container.appendChild(aviso);
+                const abrir = document.createElement("button");
+                abrir.type = "button";
+                abrir.className = "conversa-desafio-botao";
+                abrir.textContent = "Abrir partida";
+                abrir.addEventListener("click", () => {
+                    window.location.href = "desafios.html?desafio=" + encodeURIComponent(challengeId);
+                });
+                container.appendChild(abrir);
+            } else {
+                container.textContent = "Você recusou o convite.";
+            }
+        } catch (erro) {
+            console.error("Erro ao responder convite de desafio:", erro);
+            container.textContent = erro.message || "Não foi possível responder ao convite.";
+        }
+    }
+
     async function renderizarAcoesSolicitacaoProfessor(requestId, messageId, container) {
         container.replaceChildren();
 
@@ -279,8 +375,10 @@
 
         const marcadorSolicitacao = /^\[\[TEACHER_REQUEST:([0-9a-f-]{36})\]\]\r?\n?/i.exec(mensagem.body || "");
         const ehSolicitacaoProfessor = Boolean(marcadorSolicitacao);
+        const marcadorDesafio = /^\[\[FRIEND_CHALLENGE:([0-9a-f-]{36})\]\]\r?\n?/i.exec(mensagem.body || "");
+        const ehConviteDesafio = Boolean(marcadorDesafio);
 
-        const texto = document.createElement(ehSolicitacaoProfessor ? "div" : "span");
+        const texto = document.createElement(ehSolicitacaoProfessor || ehConviteDesafio ? "div" : "span");
         texto.className = "conversa-texto";
         texto.textContent = ehSolicitacaoProfessor
             ? mensagem.body.slice(marcadorSolicitacao[0].length)
@@ -301,6 +399,19 @@
                 acoes.textContent = "Verificando solicitação...";
                 item.appendChild(acoes);
                 renderizarAcoesSolicitacaoProfessor(marcadorSolicitacao[1], mensagem.id, acoes);
+            }
+        } else if (ehConviteDesafio) {
+            item.classList.add("conversa-mensagem-desafio");
+            texto.textContent = mensagem.body.slice(marcadorDesafio[0].length);
+            item.append(texto, horario);
+            const acoes = document.createElement("div");
+            acoes.className = "conversa-acoes-desafio";
+            acoes.textContent = "Verificando convite...";
+            item.appendChild(acoes);
+            if (somenteLeitura) {
+                acoes.textContent = "Convites não podem ser aceitos durante o período de recuperação da amizade.";
+            } else {
+                renderizarAcoesConviteDesafio(marcadorDesafio[1], acoes);
             }
         } else if (somenteLeitura) {
             item.append(texto, horario);
