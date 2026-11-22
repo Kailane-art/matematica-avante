@@ -18,7 +18,8 @@
     function abrirPainel() {
         if (!painel || !fundoPainel || !botaoPainel) return;
 
-        carregarContatosChat();
+        selecaoManualPainel = false;
+        carregarContatosChat(true);
         painel.classList.add("aberto");
         fundoPainel.classList.add("aberto");
         painel.removeAttribute("inert");
@@ -73,6 +74,7 @@
     abasPainel.forEach(function(aba) {
         aba.addEventListener("click", function() {
             const secao = aba.dataset.secaoChat;
+            selecaoManualPainel = true;
 
             if (secao === "solicitacoes" || secao === "amigos") {
                 carregarContatosChat();
@@ -245,6 +247,7 @@
     let usuarioAtualId = null;
     let tipoUsuarioAtual = null;
     let quantidadeSolicitacoesRecebidas = 0;
+    let selecaoManualPainel = false;
     let quantidadeNotificacoesProfessorNaoLidas = 0;
     let quantidadeAlertasNaoLidos = 0;
     let notificacoesProfessor = [];
@@ -903,7 +906,7 @@
         return quantidadeNotificacoesProfessorNaoLidas + quantidadeAlertasNaoLidos;
     }
 
-    async function carregarContatosChat() {
+    async function carregarContatosChat(selecionarSecaoComNovidades = false) {
         if (!supabaseClient) return;
 
         if (listaAmigos) estadoPainel(listaAmigos, "loader-circle", "Carregando amizades...");
@@ -961,7 +964,7 @@
                     ? "notificacoes"
                     : (recebidas.length ? "solicitacoes" : null);
 
-            if (secaoComNovidades) {
+            if (selecionarSecaoComNovidades && !selecaoManualPainel && secaoComNovidades) {
                 abasPainel.forEach(function(aba) {
                     const ativa = aba.dataset.secaoChat === secaoComNovidades;
                     aba.classList.toggle("ativa", ativa);
