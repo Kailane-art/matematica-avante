@@ -743,6 +743,16 @@
 .chat-conversa-dados strong { color: #1e293b; font-size: 14px; }
 .chat-conversa-dados small { color: #64748b; font-size: 12px; }
 .chat-conversa-aviao { color: #3158c9; width: 20px; height: 20px; }
+.chat-conversa-nao-lida {
+    width: 11px;
+    height: 11px;
+    flex: 0 0 11px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background: #f4c542;
+    box-shadow: 0 0 0 3px rgba(244, 197, 66, 0.16);
+}
+
 .chat-botao-aviao {
     width: 38px;
     height: 38px;
