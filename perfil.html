@@ -950,6 +950,7 @@ async function carregarAvatarDaConta() {
             if (elementoSeloNome) {
                 elementoSeloNome.textContent = "Mestre da Matemática";
                 elementoSeloNome.classList.remove("selo-dev-nome");
+                elementoSeloNome.classList.add("titulo-nivel5");
             }
         } else if (perfil.tipo_usuario === "dev") {
             if (elementoSeloIcone) elementoSeloIcone.textContent = "⚡";
