@@ -28,17 +28,23 @@
 
     <section class="card-perfil identidade">
 
+        <button id="botaoFavoritoPerfil" class="botao-favorito-perfil" type="button" aria-label="Adicionar aos favoritos" title="Adicionar aos favoritos" hidden>
+            <i data-lucide="star"></i>
+        </button>
+
         <div class="avatar-area">
             <img id="fotoPerfilPublico" src="" alt="Foto do perfil" hidden>
         </div>
-
-        <h2>Perfil do estudante</h2>
 
         <h3 id="nomePerfilPublico">Carregando perfil...</h3>
 
         <p id="usernamePerfilPublico"></p>
 
         <p id="tipoPerfilPublico"></p>
+
+        <p id="nivelPerfilPublico" class="nivel-perfil-publico" hidden></p>
+
+        <p id="seloPerfilPublico" class="selo-perfil-publico" hidden></p>
 
         <p id="bioPerfilPublico"></p>
 
@@ -187,6 +193,89 @@ async function carregarEstadoAmizadeAtual() {
     if (perfil) await configurarBotaoAmizade(perfil.id);
 }
 
+function atualizarBotaoFavorito(favoritado) {
+    const botao = document.getElementById("botaoFavoritoPerfil");
+    if (!botao) return;
+
+    botao.dataset.favoritado = String(favoritado);
+    botao.classList.toggle("favoritado", favoritado);
+    botao.setAttribute(
+        "aria-label",
+        favoritado ? "Remover dos favoritos" : "Adicionar aos favoritos"
+    );
+    botao.title = favoritado ? "Remover dos favoritos" : "Adicionar aos favoritos";
+    botao.innerHTML = '<i data-lucide="star"></i>';
+    botao.disabled = false;
+
+    if (window.lucide) lucide.createIcons();
+}
+
+async function configurarFavoritoPerfil(idPerfil, idUsuarioAtual, ehProprioPerfil) {
+    const botao = document.getElementById("botaoFavoritoPerfil");
+    const status = document.getElementById("statusPerfilPublico");
+    if (!botao) return;
+
+    if (!idUsuarioAtual || ehProprioPerfil) {
+        botao.hidden = true;
+        return;
+    }
+
+    botao.hidden = false;
+    botao.disabled = true;
+
+    try {
+        const { data, error } = await supabaseClient
+            .from("profile_favorites")
+            .select("profile_id")
+            .eq("user_id", idUsuarioAtual)
+            .eq("profile_id", idPerfil)
+            .maybeSingle();
+
+        if (error) throw error;
+
+        atualizarBotaoFavorito(Boolean(data));
+
+        botao.onclick = async function() {
+            if (botao.disabled) return;
+            botao.disabled = true;
+            const jaFavoritado = botao.dataset.favoritado === "true";
+
+            try {
+                let resultado;
+
+                if (jaFavoritado) {
+                    resultado = await supabaseClient
+                        .from("profile_favorites")
+                        .delete()
+                        .eq("user_id", idUsuarioAtual)
+                        .eq("profile_id", idPerfil);
+                } else {
+                    resultado = await supabaseClient
+                        .from("profile_favorites")
+                        .insert({
+                            user_id: idUsuarioAtual,
+                            profile_id: idPerfil
+                        });
+                }
+
+                if (resultado.error) throw resultado.error;
+                atualizarBotaoFavorito(!jaFavoritado);
+                status.textContent = jaFavoritado
+                    ? "Perfil removido dos favoritos."
+                    : "Perfil salvo nos favoritos.";
+            } catch (erro) {
+                console.error("Erro ao atualizar favorito:", erro);
+                status.textContent = "Não foi possível atualizar os favoritos. Tente novamente.";
+                botao.disabled = false;
+            }
+        };
+    } catch (erro) {
+        console.error("Erro ao carregar favorito:", erro);
+        botao.hidden = true;
+        status.textContent = "Não foi possível carregar os favoritos.";
+    }
+}
+
 async function carregarPerfilPublico() {
 
     const status = document.getElementById("statusPerfilPublico");
@@ -239,7 +328,36 @@ async function carregarPerfilPublico() {
         tipo.textContent =
             perfil.tipo_usuario === "professor"
                 ? "Professor"
-                : "Aluno";
+                : perfil.tipo_usuario === "dev"
+                    ? "DEV"
+                    : "Aluno";
+
+        const nivel = document.getElementById("nivelPerfilPublico");
+        try {
+            const { data: nivelAtual, error: erroNivel } = await supabaseClient.rpc(
+                "get_public_profile_level",
+                { p_username: nomeUsuario }
+            );
+            if (erroNivel) throw erroNivel;
+            if (Number.isInteger(nivelAtual)) {
+                nivel.textContent = "Nível " + nivelAtual;
+                nivel.hidden = false;
+            }
+        } catch (erro) {
+            console.warn("Não foi possível carregar o nível público:", erro);
+        }
+
+        const selo = document.getElementById("seloPerfilPublico");
+        if (perfil.tipo_usuario === "dev") {
+            selo.textContent = "⚡ Selo: Coração da Matrix";
+            selo.classList.add("selo-dev-nome");
+            selo.hidden = false;
+        } else {
+            selo.textContent = "";
+            selo.hidden = true;
+        }
+
+        await configurarFavoritoPerfil(perfil.id, sessaoAtual?.user?.id, ehProprioPerfil);
         bio.textContent = perfil.bio || "Este usuário ainda não adicionou uma bio.";
 
         if (perfil.avatar_path) {
