@@ -216,7 +216,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "No numerador: 7/8−1/3=13/24. No denominador: 5/6−1/4=7/12. Então (13/24)÷(7/12)=13/14.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Calcule: 2⁻² + 3⁻² − 1/6.",
@@ -235,7 +235,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "2⁻²=1/4 e 3⁻²=1/9. Com denominador 36: 9/36+4/36−6/36=7/36.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "A razão entre a e b é 3:5. Sabendo que 2a+b=88, determine b−a.",
@@ -254,7 +254,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Se a=3k e b=5k, então 2a+b=6k+5k=88. Logo k=8, a=24 e b=40; portanto b−a=16.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Se 3/5 de um número é igual a 2/3 de 45, quanto vale 4/7 desse número?",
@@ -273,7 +273,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "2/3 de 45 é 30. Então 3N/5=30, de onde N=50. Por fim, 4/7 de 50 é 200/7.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Calcule: (√5 + √2)² − (√5 − √2)².",
@@ -292,7 +292,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Usando (a+b)²−(a−b)²=4ab, com a=√5 e b=√2, o resultado é 4√10.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         }
     ],
     "2": [
@@ -408,7 +408,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Cada máquina produz 180÷(2×4)=22,5 peças por hora. Em 5 máquinas durante 6 horas: 22,5×5×6=675 peças.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Se f(x)=2x²−3x+4, calcule f(−3)+f(2).",
@@ -427,7 +427,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "f(−3)=31 e f(2)=6. A soma é 31+6=37.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "A média de seis números é 17. Quatro deles somam 54. Os dois números restantes diferem em 5. Qual é o maior?",
@@ -446,7 +446,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "A soma total é 6×17=102. Os dois restantes somam 48. Se o maior é M, M+(M−5)=48; portanto M=26,5.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Em um mapa de escala 1:250.000, a distância em linha reta entre duas cidades é 6,4 cm. Se o trajeto rodoviário é 20% maior, qual é sua extensão?",
@@ -465,7 +465,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "A distância em linha reta é 6,4×250.000=1.600.000 cm=16 km. O trajeto é 20% maior: 16×1,2=19,2 km.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "35% de A equivale a 50% de B. Se B=84, quanto vale A+B?",
@@ -484,7 +484,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "50% de 84 é 42. Assim, 0,35A=42, logo A=120. Portanto A+B=204.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         }
     ],
     "3": [
@@ -600,7 +600,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Multiplicando por 6: 4x−2+3x+12=42. Então 7x=32 e x=32/7.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Para que valor de k a equação 2x²−12x+k=0 possui raízes reais iguais?",
@@ -619,7 +619,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Raízes iguais exigem Δ=0: (−12)²−4×2×k=0. Logo 144−8k=0 e k=18.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Resolva o sistema 2x+3y=19 e 5x−y=8. Depois, determine 2x−y.",
@@ -638,7 +638,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Da segunda equação, y=5x−8. Substituindo: 17x=43, então x=43/17 e y=79/17. Assim, 2x−y=7/17.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "A equação x²+px+25=0 possui raízes reais iguais e sua raiz dupla é negativa. Determine p e a raiz.",
@@ -657,7 +657,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Δ=0 implica p²−100=0, então p=±10. A raiz dupla é −p/2; para ser negativa, p=10 e a raiz é −5.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Resolva o sistema x²+y²=25 e x+y=7, considerando x e y positivos.",
@@ -676,7 +676,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "(x+y)²=x²+y²+2xy; 49=25+2xy, xy=12. As raízes são 3 e 4.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         }
     ],
     "4": [
@@ -792,7 +792,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "A área dá D×d=240. Como D=d+8, temos d(d+8)=240. O par positivo é 12 e 20; a diagonal maior mede 20 cm.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Um setor circular tem ângulo central de 150°. O círculo completo tem comprimento 12π cm. Qual é a área do setor?",
@@ -811,7 +811,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "De 2πr=12π, temos r=6. A área do setor é 150/360×π×6²=15π cm².",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "A soma dos ângulos internos de um polígono convexo é 1.440°. Quantas diagonais ele possui?",
@@ -830,7 +830,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "(n−2)×180=1.440 resulta em n=10 lados. O número de diagonais é n(n−3)/2=10×7/2=35.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Um triângulo retângulo tem catetos de 9 cm e 12 cm. Determine o raio da circunferência inscrita e a área do triângulo.",
@@ -849,7 +849,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "A hipotenusa é 15 cm. O raio inscrito é (9+12−15)/2=3 cm. A área é 9×12/2=54 cm².",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Um hexágono regular tem lado 4 cm. Determine seu apótema e sua área.",
@@ -868,7 +868,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "O apótema é √(4²−2²)=2√3 cm. A área é perímetro×apótema/2=(24×2√3)/2=24√3 cm².",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         }
     ],
     "5": [
@@ -984,7 +984,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "(6×2+8×3+5x)/10=7,8. Então 36+5x=78, logo x=8,4.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Uma função é definida por f(x)=|3x−9|+2. Para quais valores de x temos f(x)=14?",
@@ -1003,7 +1003,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "|3x−9|+2=14 implica |3x−9|=12. Então 3x−9=12 ou −12, resultando em x=7 ou x=−1.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Se f(x)=x²−2x+1 e g(x)=3x−2, quanto vale f(g(−1))?",
@@ -1022,7 +1022,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "g(−1)=−5. Depois f(−5)=25+10+1=36.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Uma PA tem a₃=8 e a₉=26. Qual é a soma dos 15 primeiros termos?",
@@ -1041,7 +1041,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "r=(26−8)/6=3. Logo a₁=2 e a₁₅=44. A soma é 15(2+44)/2=345.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "A reta y=−4x+20 intercepta os dois eixos coordenados. Qual é a distância entre os pontos de interseção?",
@@ -1060,7 +1060,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Os interceptos são (0,20) e (5,0). A distância é √(5²+20²)=√425=5√17.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         }
     ],
     "6": [
@@ -1176,7 +1176,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Substituindo x=3: 9−3(m+1)+2m−3=0, então m=3. A equação fica x²−4x+3=0, cujas raízes são 3 e 1.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Resolva: 3/(x−2) − 2/(x+1) = 1, considerando x≠2 e x≠−1.",
@@ -1195,7 +1195,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Multiplicando pelos denominadores: 3(x+1)−2(x−2)=(x−2)(x+1). Simplificando, x²−2x−9=0. As soluções são x=1±√10; ambas respeitam as restrições.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Se α e β são raízes de x²−8x+12=0, quanto vale α³+β³?",
@@ -1214,7 +1214,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "α+β=8 e αβ=12. Então α³+β³=(α+β)³−3αβ(α+β)=512−288=224.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Resolva a equação |2x−5|=x+1.",
@@ -1233,7 +1233,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Caso 1: 2x−5=x+1, então x=6. Caso 2: −2x+5=x+1, então 4=3x e x=4/3. As duas soluções são 4/3 e 6.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Um retângulo tem perímetro 34 cm e área 60 cm². Qual é a medida de sua diagonal?",
@@ -1252,7 +1252,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Os lados somam 17 e multiplicam 60, portanto são 5 e 12. A diagonal é √(5²+12²)=13 cm.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         }
     ],
     "7": [
@@ -1368,7 +1368,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "400=100h/3, então h=12 cm. A altura inclinada é √(12²+5²)=13 cm.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Um cilindro tem volume 200π cm³ e raio 5 cm. Qual é sua área total?",
@@ -1387,7 +1387,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "200π=π×5²×h, então h=8 cm. A área total é 2π×5²+2π×5×8=130π cm².",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Uma caixa retangular tem dimensões 6 cm, 8 cm e x cm. Se sua diagonal espacial mede 26 cm, quanto mede x?",
@@ -1406,7 +1406,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "6²+8²+x²=26², então x²=576 e x=24 cm.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Um tronco de cone tem raios 2 cm e 5 cm e altura 4 cm. Qual é o volume?",
@@ -1425,7 +1425,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "V=πh(R²+Rr+r²)/3=4π(25+10+4)/3=52π.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Um poliedro convexo possui 4 faces triangulares e 8 faces quadrangulares. Quantos vértices ele possui?",
@@ -1444,7 +1444,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "A contagem pelas faces dá 4×3+8×4=44 incidências de arestas. Cada aresta pertence a duas faces, então E=22. Pela relação de Euler, V−22+12=2; V=12.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         }
     ],
     "8": [
@@ -1560,7 +1560,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Usando (a+b)²−(a−b)²=4ab, obtemos 4×√7×√3=4√21.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Qual é o valor de 81^(3/4)?",
@@ -1579,7 +1579,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "A raiz quarta de 81 é 3. Elevando ao cubo: 3³=27.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Racionalize a expressão 5/(√7−√2).",
@@ -1598,7 +1598,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Multiplicando pelo conjugado: 5(√7+√2)/(7−2)=√7+√2.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Resolva a equação 4^(x−1)=8^(x/2).",
@@ -1617,7 +1617,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Na base 2: 2^(2x−2)=2^(3x/2). Igualando expoentes, x=4.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Calcule: [81^(3/4) × 32^(2/5)] ÷ √4.",
@@ -1636,7 +1636,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "81^(3/4)=27, 32^(2/5)=4 e √4=2. Portanto (27×4)/2=54.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         }
     ],
     "9": [
@@ -1752,7 +1752,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Se o último for zero, há 9×8×7=504 senhas. Se for 2, 4, 6 ou 8, há 4×8×8×7=1.792. Total: 2.296.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Seis pessoas vão ocupar seis cadeiras em fila. De quantas maneiras isso pode ocorrer se duas pessoas específicas devem ficar lado a lado?",
@@ -1771,7 +1771,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Considere as duas pessoas como um bloco: há 5! maneiras de organizar o bloco com as outras quatro pessoas e 2 ordens internas. Total: 5!×2=240.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Em uma turma, 60% são meninas e 40% são meninos. Se 25% das meninas e 10% dos meninos usam óculos, qual porcentagem da turma usa óculos?",
@@ -1790,7 +1790,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Meninas com óculos: 60%×25%=15%. Meninos com óculos: 40%×10%=4%. Total: 19%.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Uma variável assume os valores 2, 4 e 6 com frequências 2, x e 3. Se a média é 4,2, qual é x?",
@@ -1809,7 +1809,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "(2×2+4x+6×3)/(2+x+3)=4,2. Então 22+4x=21+4,2x e x=5.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Uma moeda honesta é lançada 5 vezes. Qual é a probabilidade de sair exatamente 3 caras?",
@@ -1828,7 +1828,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Há C(5,3)=10 sequências com exatamente 3 caras entre 2⁵=32 resultados. A probabilidade é 10/32=5/16.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         }
     ],
     "10": [
@@ -1944,7 +1944,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "−6x+7≤2x+5. Então 2≤8x e x≥1/4.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Uma PG tem a₂=12 e a₅=324, com razão positiva. Qual é a soma dos 6 primeiros termos?",
@@ -1963,7 +1963,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "r³=324/12=27, então r=3 e a₁=4. S₆=4(3⁶−1)/(3−1)=1.456.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "Resolva: log₃(x)+log₃(x−2)=2, sabendo que x>2.",
@@ -1982,7 +1982,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "log₃[x(x−2)]=2, então x²−2x=9. As soluções são 1±√10; como x>2, x=1+√10.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "A circunferência tem equação x²+y²−4x+2y−20=0. Determine seu centro, raio e área.",
@@ -2001,7 +2001,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "Completando quadrados: (x−2)²+(y+1)²=25. O centro é (2,−1), o raio é 5 e a área é 25π.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         },
         {
             "pergunta": "A área de um quadrado aumenta 44%. Em seguida, seu lado diminui 10%. Em relação à área inicial, qual é a variação percentual final?",
@@ -2020,7 +2020,7 @@ const questoesNivel3 ={
                 }
             ],
             "explicacao": "O aumento de 44% na área multiplica o lado por √1,44=1,2. Depois, o lado é multiplicado por 0,9. O fator final do lado é 1,08; para a área, 1,08²=1,1664, ou aumento de 16,64%.",
-            "dificuldade": "Médio a Difícil"
+            "dificuldade": "Difícil"
         }
     ]
 };
