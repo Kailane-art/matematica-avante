@@ -298,6 +298,7 @@
             campo.setAttribute("aria-label", "Conversa em modo de leitura durante o prazo de recuperação");
         }
         nomeContato.textContent = perfil.display_name || "Usuário";
+        nomeContato.href = "perfil-publico.html?usuario=" + encodeURIComponent(perfil.username);
         usernameContato.textContent = "@" + perfil.username;
 
         if (perfil.avatar_path) {
