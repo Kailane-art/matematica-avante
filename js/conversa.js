@@ -244,6 +244,10 @@
 
             if (error) throw error;
 
+            if (window.maPushNotifications) {
+                await window.maPushNotifications.enviarEvento("teacher_decision", { request_id: requestId });
+            }
+
             renderizarAcoesSolicitacaoProfessor(requestId, messageId, container);
 
             if (data === "em_analise") {
