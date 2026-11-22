@@ -104,8 +104,8 @@
 
         if (tipo === "recebido") {
             acoes.append(
-                criarAcao("Aceitar", "", () => responderConvite(item.id, true)),
-                criarAcao("Recusar", "desafio-acao-secundaria", () => responderConvite(item.id, false))
+                criarAcao("Aceitar", "", () => responderConvite(item, true)),
+                criarAcao("Recusar", "desafio-acao-secundaria", () => responderConvite(item, false))
             );
         } else if (tipo === "ativa") {
             acoes.append(criarAcao("Abrir partida", "", () => abrirPartida(item.id)));
@@ -146,17 +146,26 @@
         }
     }
 
-    async function responderConvite(id, aceitar) {
+    async function responderConvite(convite, aceitar) {
         const botoes = recebidos.querySelectorAll("button");
         botoes.forEach(botao => botao.disabled = true);
         try {
             const { data, error } = await rpc("respond_friend_challenge", {
-                p_challenge_id: id,
+                p_challenge_id: convite.id,
                 p_accept: aceitar
             });
             if (error) throw error;
+            if (aceitar && data === "accepted") {
+                const { data: messageId, error: messageError } = await rpc("send_chat_message", {
+                    p_contact_id: convite.challenger_id,
+                    p_body: "Aceitei seu convite para o desafio de matemática. A partida já começou!"
+                });
+                if (!messageError && window.maPushNotifications && messageId) {
+                    await window.maPushNotifications.enviarEvento("message", { message_id: messageId });
+                }
+            }
             await atualizarPainel();
-            if (aceitar) await abrirPartida(id);
+            if (aceitar) await abrirPartida(convite.id);
             else mostrarMensagem(estadoCriacao, "Convite recusado.", false);
         } catch (error) {
             console.error("Erro ao responder convite:", error);
