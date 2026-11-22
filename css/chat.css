@@ -896,3 +896,32 @@
     color:#dbeafe;
 }
 
+
+
+/* Indicador de presença online nos avatares do chat. */
+.chat-avatar {
+    position: relative;
+    overflow: visible;
+}
+
+.chat-avatar img {
+    border-radius: 50%;
+}
+
+.chat-status-online {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    width: 13px;
+    height: 13px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.modo-escuro .chat-status-online {
+    border-color: #13294b;
+}
