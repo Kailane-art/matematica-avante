@@ -53,6 +53,16 @@
         rolarParaFim();
     }
 
+    async function marcarConversaComoLida() {
+        if (!contatoId) return;
+        const { error } = await supabaseClient.rpc("mark_conversation_read", {
+            p_contact_id: contatoId
+        });
+        if (error) {
+            console.error("Não foi possível marcar as mensagens como lidas:", error);
+        }
+    }
+
     async function carregarMensagens() {
         const { data, error } = await supabaseClient.rpc(
             "get_conversation_messages",
@@ -136,6 +146,9 @@
                     mensagensPendentes.push(payload.new);
                 } else {
                     renderizarMensagem(payload.new);
+                    if (payload.new.sender_id !== usuarioAtual.id) {
+                        marcarConversaComoLida();
+                    }
                 }
             })
             .subscribe(status => {
@@ -145,9 +158,16 @@
             });
 
         await carregarMensagens();
+        await marcarConversaComoLida();
         carregandoHistorico = false;
+        const recebeuDuranteCarregamento = mensagensPendentes.some(
+            mensagem => mensagem.sender_id !== usuarioAtual.id
+        );
         mensagensPendentes.forEach(renderizarMensagem);
         mensagensPendentes = [];
+        if (recebeuDuranteCarregamento) {
+            await marcarConversaComoLida();
+        }
     }
 
     formulario.addEventListener("submit", async function (event) {
