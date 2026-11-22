@@ -180,7 +180,10 @@
                 p_topic: conteudo
             });
             if (error) throw error;
-            mostrarMensagem(estadoCriacao, "Convite enviado. Seu amigo terá 10 minutos para responder.", false);
+            if (window.maPushNotifications && data && data.message_id) {
+                await window.maPushNotifications.enviarEvento("message", { message_id: data.message_id });
+            }
+            mostrarMensagem(estadoCriacao, "Convite enviado no chat. Seu amigo terá 10 minutos para responder.", false);
             form.reset();
             await atualizarPainel();
         } catch (error) {
