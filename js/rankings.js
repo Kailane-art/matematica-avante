@@ -26,7 +26,29 @@
 
     function formatarXP(valor) {
         const xp = Number(valor) || 0;
-        return xp.toLocaleString("pt-BR") + (xp === 1 ? " XP" : " XP");
+        return xp.toLocaleString("pt-BR") + " XP";
+    }
+
+    function criarAvatar(item) {
+        const nome = item.display_name || "Estudante";
+        const avatar = criarElemento("span", "ranking-avatar-fallback", nome.trim().charAt(0).toUpperCase());
+
+        if (!item.avatar_path || typeof supabaseClient === "undefined" || !supabaseClient) {
+            return avatar;
+        }
+
+        const { data } = supabaseClient.storage.from("avatars").getPublicUrl(item.avatar_path);
+        if (!data || !data.publicUrl) return avatar;
+
+        const imagem = document.createElement("img");
+        imagem.className = "ranking-avatar";
+        imagem.src = data.publicUrl;
+        imagem.alt = "Foto de perfil de " + nome;
+        imagem.loading = "lazy";
+        imagem.onerror = function () {
+            imagem.replaceWith(avatar);
+        };
+        return imagem;
     }
 
     function formatarDataISO(dataISO) {
@@ -57,7 +79,7 @@
         const pontuacao = criarElemento("span", "ranking-pontuacao", formatarXP(item.weekly_xp));
 
         identidade.append(nome, username);
-        linha.append(posicao, identidade, pontuacao);
+        linha.append(posicao, criarAvatar(item), identidade, pontuacao);
         return linha;
     }
 
@@ -96,10 +118,10 @@
             );
 
             const posicao = item.position
-                ? criarElemento("span", "ranking-resultado-posicao", item.position + "º lugar")
+                ? criarElemento("span", "ranking-resultado-posicao", item.position + "º lugar · " + formatarXP(item.weekly_xp))
                 : criarElemento("span", "ranking-resultado-sem-pontos", "Sem XP nesta semana");
 
-            linha.append(identidade, posicao);
+            linha.append(criarAvatar(item), identidade, posicao);
             resultadosPesquisa.appendChild(linha);
         });
     }
@@ -166,7 +188,7 @@
         const vitorias = criarElemento("span", "ranking-pontuacao",
             Number(item.weekly_wins || 0) + (Number(item.weekly_wins || 0) === 1 ? " vitória" : " vitórias")
         );
-        linha.append(posicao, identidade, vitorias);
+        linha.append(posicao, criarAvatar(item), identidade, vitorias);
         return linha;
     }
 
@@ -232,7 +254,7 @@
                     const posicao = item.position
                         ? criarElemento("span", "ranking-resultado-posicao", item.position + "º lugar · " + item.weekly_wins + " vitórias")
                         : criarElemento("span", "ranking-resultado-sem-pontos", "Sem vitórias nesta semana");
-                    linha.append(identidade, posicao);
+                    linha.append(criarAvatar(item), identidade, posicao);
                     resultadosPesquisaDesafios.appendChild(linha);
                 });
             }
