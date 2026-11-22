@@ -660,22 +660,42 @@ async function carregarPerfilPublico() {
         }
 
         const selo = document.getElementById("seloPerfilPublico");
-        let concluiuNivel5 = false;
-        try {
-            const { data: possuiTitulo, error: erroTitulo } = await supabaseClient.rpc(
-                "get_public_profile_has_level5_title",
-                { p_username: nomeUsuario }
-            );
-            if (erroTitulo) throw erroTitulo;
-            concluiuNivel5 = possuiTitulo === true;
-        } catch (erroTituloPublico) {
-            console.warn("Não foi possível verificar o título público do Nível 5:", erroTituloPublico);
-        }
+        const titulosDisponiveis = {
+            estudante_dedicado: {
+                nome: "Estudante Dedicado",
+                icone: "🔥",
+                classe: "titulo-estudante-dedicado"
+            },
+            estrategista_matematico: {
+                nome: "Estrategista Matemático",
+                icone: "🧠",
+                classe: "titulo-estrategista-matematico"
+            },
+            guardiao_constancia: {
+                nome: "Guardião da Constância",
+                icone: "🛡️",
+                classe: "titulo-guardiao-constancia"
+            },
+            mestre_matematica: {
+                nome: "Mestre da Matemática",
+                icone: "🏆",
+                classe: "titulo-nivel5"
+            }
+        };
 
-        selo.classList.remove("selo-dev-nome", "titulo-nivel5");
-        if (concluiuNivel5) {
-            selo.textContent = "🏆 Título: Mestre da Matemática";
-            selo.classList.add("titulo-nivel5");
+        const tituloSelecionado = titulosDisponiveis[perfil.featured_title] || null;
+
+        selo.classList.remove(
+            "selo-dev-nome",
+            "titulo-nivel5",
+            "titulo-estudante-dedicado",
+            "titulo-estrategista-matematico",
+            "titulo-guardiao-constancia"
+        );
+
+        if (tituloSelecionado) {
+            selo.textContent = tituloSelecionado.icone + " Título: " + tituloSelecionado.nome;
+            selo.classList.add(tituloSelecionado.classe);
             selo.hidden = false;
         } else if (perfil.tipo_usuario === "dev") {
             selo.textContent = "⚡ Selo: Coração da Matrix";
