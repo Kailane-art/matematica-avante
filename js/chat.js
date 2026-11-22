@@ -299,6 +299,12 @@
         window.location.href = "conversa.html?usuario=" + encodeURIComponent(contato.username);
     }
 
+    function formatarPreviaChat(body) {
+        return String(body || "").startsWith("[[TEACHER_REQUEST:")
+            ? "Nova solicitação para professor"
+            : body;
+    }
+
     function criarItemConversa(contato, previa, naoLida, conversaId) {
         const item = document.createElement("button");
         item.type = "button";
@@ -396,7 +402,7 @@
                     if (contatoRemetente && mensagem.sender_id !== usuarioAtualId) {
                         const elemento = criarItemConversa(
                             contatoRemetente,
-                            mensagem.body,
+                            formatarPreviaChat(mensagem.body),
                             true,
                             mensagem.conversation_id
                         );
@@ -404,7 +410,7 @@
                         itensPorConversa.set(mensagem.conversation_id, {
                             contato: contatoRemetente,
                             element: elemento,
-                            previa: mensagem.body,
+                            previa: formatarPreviaChat(mensagem.body),
                             naoLida: true
                         });
 
@@ -420,13 +426,13 @@
                     return;
                 }
 
-                conversa.previa = mensagem.body;
+                conversa.previa = formatarPreviaChat(mensagem.body);
                 if (mensagem.sender_id !== usuarioAtualId) {
                     conversa.naoLida = true;
                 }
 
                 const previa = conversa.element.querySelector(".chat-conversa-previa");
-                if (previa) previa.textContent = mensagem.body;
+                if (previa) previa.textContent = conversa.previa;
 
                 const indicadorAtual = conversa.element.lastElementChild;
                 const novoIndicador = criarIndicadorConversa(conversa.naoLida);
