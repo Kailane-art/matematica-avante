@@ -143,7 +143,7 @@
             <input
                 type="search"
                 id="campoPesquisaProfessor"
-                placeholder="Nome ou especialidade..."
+                placeholder="Digite o nome do professor..."
                 autocomplete="off"
             >
 
@@ -296,6 +296,35 @@
 
 
 </main>
+
+
+    
+<!-- =====================================================
+     PAINEL COM TODOS OS RESULTADOS DA PESQUISA
+     ===================================================== -->
+<div
+    id="painelResultadosProfessores"
+    class="painel-resultados-professores"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="tituloResultadosProfessores"
+    hidden
+>
+    <section class="conteudo-resultados-professores">
+        <div class="cabecalho-resultados-professores">
+            <h2 id="tituloResultadosProfessores">Professores encontrados</h2>
+            <button type="button" id="fecharResultadosProfessores" aria-label="Fechar resultados">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <div id="listaCompletaProfessores" class="lista-cards-professores"></div>
+        <div id="estadoPesquisaCompletaVazia" class="estado-pesquisa-vazia" hidden>
+            <h3>Nenhum professor encontrado</h3>
+            <p>Não encontramos professores com nomes que começam com esse trecho.</p>
+        </div>
+    </section>
+</div>
+
 
 
 
