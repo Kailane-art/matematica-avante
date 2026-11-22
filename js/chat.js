@@ -652,7 +652,9 @@
     function atualizarBadgeNotificacoes() {
         if (!badgeNotificacoes) return;
 
-        const total = quantidadeSolicitacoesRecebidas + quantidadeNotificacoesProfessorNaoLidas;
+        const total = notificacoesSiteAtivadas
+            ? quantidadeSolicitacoesRecebidas + quantidadeNotificacoesProfessorNaoLidas
+            : 0;
         badgeNotificacoes.hidden = total === 0;
         badgeNotificacoes.textContent = total ? String(total) : "";
     }
@@ -667,8 +669,35 @@
         });
     }
 
+    let notificacoesSiteAtivadas = true;
+
     async function carregarNotificacoesChat() {
         if (!listaNotificacoes) return;
+
+        try {
+            const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+            if (erroUsuario) throw erroUsuario;
+            if (user) {
+                const { data: preferencias, error: erroPreferencias } = await supabaseClient
+                    .from("user_settings")
+                    .select("site_notifications_enabled")
+                    .eq("user_id", user.id)
+                    .maybeSingle();
+                if (erroPreferencias) throw erroPreferencias;
+                notificacoesSiteAtivadas = preferencias?.site_notifications_enabled !== false;
+            }
+        } catch (erro) {
+            console.error("Não foi possível consultar a preferência de notificações:", erro);
+            notificacoesSiteAtivadas = true;
+        }
+
+        if (!notificacoesSiteAtivadas) {
+            quantidadeNotificacoesProfessorNaoLidas = 0;
+            notificacoesProfessor = [];
+            estadoPainel(listaNotificacoes, "bell-off", "Notificações desativadas", "Você pode reativá-las nas configurações do site.");
+            atualizarBadgeNotificacoes();
+            return;
+        }
 
         if (tipoUsuarioAtual !== "dev") {
             quantidadeNotificacoesProfessorNaoLidas = 0;
