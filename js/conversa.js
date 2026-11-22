@@ -245,7 +245,7 @@
         item.className = "conversa-mensagem " + (mensagem.sender_id === usuarioAtual.id ? "enviada" : "recebida");
         item.dataset.messageId = mensagem.id;
 
-        const marcadorSolicitacao = /^\\[\\[TEACHER_REQUEST:([0-9a-f-]{36})\\]\\]\\r?\\n?/i.exec(mensagem.body || "");
+        const marcadorSolicitacao = /^\[\[TEACHER_REQUEST:([0-9a-f-]{36})\]\]\r?\n?/i.exec(mensagem.body || "");
         const ehSolicitacaoProfessor = Boolean(marcadorSolicitacao);
 
         const texto = document.createElement(ehSolicitacaoProfessor ? "div" : "span");
