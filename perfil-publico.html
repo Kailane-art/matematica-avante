@@ -111,8 +111,8 @@ async function configurarBotaoAmizade(idPerfil) {
                     return;
                 }
 
-                mensagem.textContent = "Solicitação de amizade enviada!";
                 await configurarBotaoAmizade(idPerfil);
+                mensagem.textContent = "Solicitação de amizade enviada!";
             };
         }
     } catch (erro) {
@@ -141,9 +141,8 @@ async function responderAmizade(idSolicitacao, aceitar) {
         return;
     }
 
-    mensagem.textContent = aceitar ? "Agora vocês são amigos!" : "Solicitação recusada.";
-    const perfilId = new URLSearchParams(window.location.search).get("usuario");
     await carregarEstadoAmizadeAtual();
+    mensagem.textContent = aceitar ? "Agora vocês são amigos!" : "Solicitação recusada.";
 }
 
 async function carregarEstadoAmizadeAtual() {
