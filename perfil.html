@@ -471,6 +471,18 @@ Sair
                 placeholder="https://..."
             >
 
+            <label for="editarTituloDestaque">
+                Título em destaque
+            </label>
+
+            <select id="editarTituloDestaque">
+                <option value="">Não exibir título</option>
+            </select>
+
+            <small>
+                Escolha uma conquista que você já desbloqueou. Você pode trocar ou ocultar o título quando quiser.
+            </small>
+
             <p
                 id="mensagemEditarPerfil"
                 aria-live="polite"
@@ -882,7 +894,7 @@ async function carregarAvatarDaConta() {
 
         const { data: perfil, error } = await supabaseClient
             .from("profiles")
-            .select("avatar_path, username, display_name, bio, tipo_usuario")
+            .select("avatar_path, username, display_name, bio, tipo_usuario, featured_title")
             .eq("id", user.id)
             .single();
 
@@ -932,25 +944,47 @@ async function carregarAvatarDaConta() {
         const elementoSeloRotulo = document.getElementById("seloContaRotulo");
         const elementoSeloNome = document.getElementById("seloContaNome");
         const elementoSeloIcone = document.getElementById("seloContaIcone");
-        let concluiuNivel5 = false;
-        try {
-            const { data: fasesN5, error: erroFasesN5 } = await supabaseClient
-                .from("user_level_progress")
-                .select("phase_number")
-                .eq("level_number", 5)
-                .eq("completed", true);
-            if (erroFasesN5) throw erroFasesN5;
-            concluiuNivel5 = new Set((fasesN5 || []).map(f => Number(f.phase_number))).size >= 10;
-        } catch (erroTituloN5) {
-            console.error("Não foi possível verificar o título do Nível 5:", erroTituloN5);
+        const titulosDisponiveis = {
+            estudante_dedicado: {
+                nome: "Estudante Dedicado",
+                icone: "🔥",
+                classe: "titulo-estudante-dedicado"
+            },
+            estrategista_matematico: {
+                nome: "Estrategista Matemático",
+                icone: "🧠",
+                classe: "titulo-estrategista-matematico"
+            },
+            guardiao_constancia: {
+                nome: "Guardião da Constância",
+                icone: "🛡️",
+                classe: "titulo-guardiao-constancia"
+            },
+            mestre_matematica: {
+                nome: "Mestre da Matemática",
+                icone: "🏆",
+                classe: "titulo-nivel5"
+            }
+        };
+
+        const tituloSelecionado = titulosDisponiveis[perfil.featured_title] || null;
+
+        if (elementoSeloNome) {
+            elementoSeloNome.classList.remove(
+                "selo-dev-nome",
+                "titulo-nivel5",
+                "titulo-estudante-dedicado",
+                "titulo-estrategista-matematico",
+                "titulo-guardiao-constancia"
+            );
         }
-        if (concluiuNivel5) {
-            if (elementoSeloIcone) elementoSeloIcone.textContent = "🏆";
+
+        if (tituloSelecionado) {
+            if (elementoSeloIcone) elementoSeloIcone.textContent = tituloSelecionado.icone;
             if (elementoSeloRotulo) elementoSeloRotulo.textContent = "Título:";
             if (elementoSeloNome) {
-                elementoSeloNome.textContent = "Mestre da Matemática";
-                elementoSeloNome.classList.remove("selo-dev-nome");
-                elementoSeloNome.classList.add("titulo-nivel5");
+                elementoSeloNome.textContent = tituloSelecionado.nome;
+                elementoSeloNome.classList.add(tituloSelecionado.classe);
             }
         } else if (perfil.tipo_usuario === "dev") {
             if (elementoSeloIcone) elementoSeloIcone.textContent = "⚡";
@@ -964,7 +998,6 @@ async function carregarAvatarDaConta() {
             if (elementoSeloRotulo) elementoSeloRotulo.textContent = " Selo Premium:";
             if (elementoSeloNome) {
                 elementoSeloNome.textContent = "Não possui";
-                elementoSeloNome.classList.remove("selo-dev-nome");
             }
         }
 
