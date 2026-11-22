@@ -58,6 +58,10 @@
         </p>
 
         <div id="acoesPerfilPublico" class="acoes-perfil-publico" hidden>
+            <button id="botaoContratarProfessor" type="button" hidden>
+                <i data-lucide="briefcase-business"></i>
+                Contratar professor
+            </button>
             <button id="botaoAdicionarAmizade" type="button">
                 <i data-lucide="user-round-plus"></i>
                 Adicionar amizade
@@ -112,6 +116,7 @@
 
 let perfilPublicoAtual = null;
 let usuarioAtualEhDev = false;
+let tipoUsuarioAtual = null;
 
 async function configurarBotaoAmizade(idPerfil) {
     const botaoAdicionar = document.getElementById("botaoAdicionarAmizade");
@@ -596,6 +601,7 @@ async function carregarPerfilPublico() {
         const ehProprioPerfil = sessaoAtual?.user?.id === perfil.id;
         perfilPublicoAtual = perfil;
         usuarioAtualEhDev = false;
+        tipoUsuarioAtual = null;
 
         if (sessaoAtual?.user?.id) {
             const { data: perfilLogado, error: erroPerfilLogado } = await supabaseClient
@@ -604,7 +610,17 @@ async function carregarPerfilPublico() {
                 .eq("id", sessaoAtual.user.id)
                 .maybeSingle();
             if (erroPerfilLogado) throw erroPerfilLogado;
-            usuarioAtualEhDev = perfilLogado?.tipo_usuario === "dev";
+            tipoUsuarioAtual = perfilLogado?.tipo_usuario || null;
+            usuarioAtualEhDev = tipoUsuarioAtual === "dev";
+        }
+
+        const botaoContratar = document.getElementById("botaoContratarProfessor");
+        if (botaoContratar) {
+            botaoContratar.hidden = !(
+                perfil.tipo_usuario === "professor" &&
+                tipoUsuarioAtual !== null &&
+                tipoUsuarioAtual !== "professor"
+            );
         }
 
         const acoesPerfil = document.getElementById("acoesPerfilPublico");
