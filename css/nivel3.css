@@ -822,6 +822,10 @@
    CLASSIFICAÇÃO INDIVIDUAL DAS QUESTÕES
    ===================================================== */
 
+.rotulo-dificuldade-questao[hidden] {
+    display: none;
+}
+
 .rotulo-dificuldade-questao {
     display: inline-flex;
     align-items: center;
