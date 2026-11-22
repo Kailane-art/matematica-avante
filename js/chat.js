@@ -224,12 +224,14 @@
     const badgeNotificacoes = document.getElementById("notificacoesChatBadge");
     const listaConversas = document.getElementById("listaConversas");
     const estadoVazioConversas = document.getElementById("estadoVazioConversas");
+    let canalListaMensagens = null;
+    let amigosDaLista = [];
 
     function abrirConversa(contato) {
         window.location.href = "conversa.html?usuario=" + encodeURIComponent(contato.username);
     }
 
-    function criarItemConversa(contato, previa) {
+    function criarItemConversa(contato, previa, naoLida) {
         const item = document.createElement("button");
         item.type = "button";
         item.className = "chat-conversa-item";
@@ -260,16 +262,25 @@
         ultimaMensagem.textContent = previa || "Conversa iniciada";
         dados.append(nome, username, ultimaMensagem);
 
-        const aviao = document.createElement("i");
-        aviao.setAttribute("data-lucide", "send");
-        aviao.className = "chat-conversa-aviao";
+        let indicador;
+        if (naoLida) {
+            indicador = document.createElement("span");
+            indicador.className = "chat-conversa-nao-lida";
+            indicador.setAttribute("aria-label", "Mensagem não lida");
+            indicador.title = "Nova mensagem";
+        } else {
+            indicador = document.createElement("i");
+            indicador.setAttribute("data-lucide", "send");
+            indicador.className = "chat-conversa-aviao";
+        }
 
-        item.append(avatar, dados, aviao);
+        item.append(avatar, dados, indicador);
         return item;
     }
 
     async function atualizarListaConversas(amigos) {
         if (!listaConversas || !estadoVazioConversas) return;
+        amigosDaLista = amigos;
         if (!amigos.length) {
             listaConversas.hidden = true;
             estadoVazioConversas.hidden = false;
@@ -281,13 +292,36 @@
             const usuarioId = sessao?.user?.id;
             if (!usuarioId) throw new Error("Sessão não encontrada.");
 
+            if (!canalListaMensagens) {
+                canalListaMensagens = supabaseClient
+                    .channel("lista-conversas-" + usuarioId)
+                    .on("postgres_changes", {
+                        event: "INSERT",
+                        schema: "public",
+                        table: "messages"
+                    }, async () => {
+                        if (amigosDaLista.length) {
+                            await atualizarListaConversas(amigosDaLista);
+                        }
+                    })
+                    .subscribe(status => {
+                        if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+                            console.error("Não foi possível atualizar a lista de conversas em tempo real:", status);
+                        }
+                    });
+            }
+
             const { data: conversas, error: erroConversas } = await supabaseClient.rpc("get_chat_conversations");
             if (erroConversas) throw erroConversas;
 
             const contatosComMensagem = (conversas || [])
                 .map(conversa => {
                     const contato = amigos.find(item => item.contact_id === conversa.contact_id);
-                    return contato ? { contato, previa: conversa.last_message } : null;
+                    return contato ? {
+                        contato,
+                        previa: conversa.last_message,
+                        naoLida: Boolean(conversa.has_unread)
+                    } : null;
                 })
                 .filter(Boolean);
 
@@ -298,7 +332,7 @@
             }
 
             listaConversas.replaceChildren(
-                ...contatosComMensagem.map(item => criarItemConversa(item.contato, item.previa))
+                ...contatosComMensagem.map(item => criarItemConversa(item.contato, item.previa, item.naoLida))
             );
             listaConversas.hidden = false;
             estadoVazioConversas.hidden = true;
@@ -494,5 +528,7 @@
     if (window.lucide) {
         atualizarIcones();
     }
+
+    carregarContatosChat();
 
 })();
