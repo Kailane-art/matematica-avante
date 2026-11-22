@@ -719,6 +719,12 @@
 }
 
 
+/* Respeita o atributo hidden nos estados da lista de conversas. */
+.chat-estado-vazio[hidden],
+.chat-lista-itens[hidden] {
+    display: none !important;
+}
+
 /* Conversas e botão de avião */
 .chat-lista-itens {
     display: flex;
