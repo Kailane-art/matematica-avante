@@ -246,7 +246,9 @@
     let tipoUsuarioAtual = null;
     let quantidadeSolicitacoesRecebidas = 0;
     let quantidadeNotificacoesProfessorNaoLidas = 0;
+    let quantidadeAlertasNaoLidos = 0;
     let notificacoesProfessor = [];
+    let notificacoesAlertas = [];
     let recarregandoConversas = false;
     let recargaPendente = false;
     const itensPorConversa = new Map();
@@ -414,6 +416,22 @@
                 event: "UPDATE",
                 schema: "public",
                 table: "teacher_request_notifications",
+                filter: "recipient_id=eq." + usuarioId
+            }, () => {
+                carregarNotificacoesChat();
+            })
+            .on("postgres_changes", {
+                event: "INSERT",
+                schema: "public",
+                table: "global_alert_notifications",
+                filter: "recipient_id=eq." + usuarioId
+            }, () => {
+                carregarNotificacoesChat();
+            })
+            .on("postgres_changes", {
+                event: "UPDATE",
+                schema: "public",
+                table: "global_alert_notifications",
                 filter: "recipient_id=eq." + usuarioId
             }, () => {
                 carregarNotificacoesChat();
@@ -689,7 +707,7 @@
         if (!badgeNotificacoes) return;
 
         const total = notificacoesSiteAtivadas
-            ? quantidadeSolicitacoesRecebidas + quantidadeNotificacoesProfessorNaoLidas
+            ? quantidadeSolicitacoesRecebidas + quantidadeNotificacoesProfessorNaoLidas + quantidadeAlertasNaoLidos
             : 0;
         badgeNotificacoes.hidden = total === 0;
         badgeNotificacoes.textContent = total ? String(total) : "";
@@ -710,14 +728,17 @@
     async function carregarNotificacoesChat() {
         if (!listaNotificacoes) return;
 
+        let usuario = null;
         try {
-            const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+            const { data: sessao, error: erroUsuario } = await supabaseClient.auth.getUser();
             if (erroUsuario) throw erroUsuario;
-            if (user) {
+            usuario = sessao?.user || null;
+
+            if (usuario) {
                 const { data: preferencias, error: erroPreferencias } = await supabaseClient
                     .from("user_settings")
                     .select("site_notifications_enabled")
-                    .eq("user_id", user.id)
+                    .eq("user_id", usuario.id)
                     .maybeSingle();
                 if (erroPreferencias) throw erroPreferencias;
                 notificacoesSiteAtivadas = preferencias?.site_notifications_enabled !== false;
@@ -729,21 +750,18 @@
 
         if (!notificacoesSiteAtivadas) {
             quantidadeNotificacoesProfessorNaoLidas = 0;
+            quantidadeAlertasNaoLidos = 0;
             notificacoesProfessor = [];
+            notificacoesAlertas = [];
             estadoPainel(listaNotificacoes, "bell-off", "Notificações desativadas", "Você pode reativá-las nas configurações do site.");
             atualizarBadgeNotificacoes();
             return;
         }
 
-        if (tipoUsuarioAtual !== "dev") {
+        if (!usuario) {
             quantidadeNotificacoesProfessorNaoLidas = 0;
-            notificacoesProfessor = [];
-            estadoPainel(
-                listaNotificacoes,
-                "bell",
-                "Nenhuma notificação nova",
-                "Quando houver avisos destinados à sua conta, eles aparecerão aqui."
-            );
+            quantidadeAlertasNaoLidos = 0;
+            estadoPainel(listaNotificacoes, "bell", "Entre na sua conta", "Faça login para consultar suas notificações.");
             atualizarBadgeNotificacoes();
             return;
         }
@@ -751,86 +769,127 @@
         estadoPainel(listaNotificacoes, "loader-circle", "Carregando notificações...");
 
         try {
-            const { data, error } = await supabaseClient.rpc("get_teacher_request_notifications");
-            if (error) throw error;
+            const agora = new Date().toISOString();
+            const [resultadoAlertas, resultadoProfessor] = await Promise.all([
+                supabaseClient
+                    .from("global_alert_notifications")
+                    .select("id,alert_id,created_at,read_at,alert:global_alerts!inner(message,author_name,author_username,published_at,expires_at)")
+                    .eq("recipient_id", usuario.id)
+                    .gt("alert.expires_at", agora)
+                    .order("created_at", { ascending: false }),
+                tipoUsuarioAtual === "dev"
+                    ? supabaseClient.rpc("get_teacher_request_notifications")
+                    : Promise.resolve({ data: [], error: null })
+            ]);
 
-            notificacoesProfessor = data || [];
+            if (resultadoAlertas.error) throw resultadoAlertas.error;
+            if (resultadoProfessor.error) throw resultadoProfessor.error;
+
+            notificacoesAlertas = resultadoAlertas.data || [];
+            notificacoesProfessor = resultadoProfessor.data || [];
+            quantidadeAlertasNaoLidos = notificacoesAlertas.filter(item => !item.read_at).length;
             quantidadeNotificacoesProfessorNaoLidas =
                 notificacoesProfessor.filter(item => !item.read_at).length;
 
-            if (!notificacoesProfessor.length) {
+            const fragmento = document.createDocumentFragment();
+            const itens = [];
+
+            notificacoesAlertas.forEach(function(notificacao) {
+                itens.push({
+                    tipo: "alerta",
+                    data: notificacao.created_at,
+                    notificacao: notificacao
+                });
+            });
+
+            notificacoesProfessor.forEach(function(notificacao) {
+                itens.push({
+                    tipo: "professor",
+                    data: notificacao.created_at,
+                    notificacao: notificacao
+                });
+            });
+
+            itens.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+            if (!itens.length) {
                 estadoPainel(
                     listaNotificacoes,
                     "bell",
                     "Nenhuma notificação por enquanto",
-                    "Novas solicitações de cadastro como professor aparecerão aqui."
+                    "Quando houver novos alertas ou avisos destinados à sua conta, eles aparecerão aqui."
                 );
-            } else {
-                const fragmento = document.createDocumentFragment();
+                atualizarBadgeNotificacoes();
+                return;
+            }
 
-                notificacoesProfessor.forEach(function(notificacao) {
-                    const item = document.createElement("button");
-                    item.type = "button";
-                    item.className = "chat-notificacao-item";
-                    if (!notificacao.read_at) item.classList.add("nao-lida");
+            itens.forEach(function(registro) {
+                const notificacao = registro.notificacao;
+                const ehAlerta = registro.tipo === "alerta";
+                const item = document.createElement("button");
+                item.type = "button";
+                item.className = "chat-notificacao-item";
+                if (!notificacao.read_at) item.classList.add("nao-lida");
 
-                    const icone = document.createElement("span");
-                    icone.className = "chat-notificacao-icone";
-                    const desenho = document.createElement("i");
-                    desenho.setAttribute("data-lucide", "graduation-cap");
-                    icone.appendChild(desenho);
+                const icone = document.createElement("span");
+                icone.className = "chat-notificacao-icone";
+                const desenho = document.createElement("i");
+                desenho.setAttribute("data-lucide", ehAlerta ? "megaphone" : "graduation-cap");
+                icone.appendChild(desenho);
 
-                    const dados = document.createElement("span");
-                    dados.className = "chat-notificacao-dados";
+                const dados = document.createElement("span");
+                dados.className = "chat-notificacao-dados";
 
-                    const titulo = document.createElement("strong");
-                    titulo.textContent = "Nova solicitação";
+                const titulo = document.createElement("strong");
+                titulo.textContent = ehAlerta ? "Novo alerta" : "Nova solicitação";
 
-                    const autor = document.createElement("span");
-                    autor.textContent = "Por @" + (notificacao.candidate_username || "usuário");
+                const autor = document.createElement("span");
+                autor.textContent = ehAlerta
+                    ? "Por: " + (notificacao.alert?.author_name || "Equipe Matemática Avante")
+                    : "Por @" + (notificacao.candidate_username || "usuário");
 
-                    const data = document.createElement("small");
-                    data.textContent = formatarDataNotificacao(notificacao.created_at);
+                const data = document.createElement("small");
+                data.textContent = formatarDataNotificacao(notificacao.created_at);
+                dados.append(titulo, autor, data);
 
-                    dados.append(titulo, autor, data);
+                const seta = document.createElement("i");
+                seta.setAttribute("data-lucide", "chevron-right");
+                seta.className = "chat-notificacao-seta";
+                item.append(icone, dados, seta);
 
-                    const seta = document.createElement("i");
-                    seta.setAttribute("data-lucide", "chevron-right");
-                    seta.className = "chat-notificacao-seta";
-
-                    item.append(icone, dados, seta);
-
-                    item.addEventListener("click", async function() {
-                        item.disabled = true;
-
-                        try {
-                            if (!notificacao.read_at) {
-                                const { error: erroLeitura } = await supabaseClient.rpc(
-                                    "mark_teacher_request_notification_read",
-                                    { p_notification_id: notificacao.notification_id }
-                                );
-                                if (erroLeitura) throw erroLeitura;
-                            }
-                        } catch (erro) {
-                            console.error("Não foi possível marcar a notificação como lida:", erro);
+                item.addEventListener("click", async function() {
+                    item.disabled = true;
+                    try {
+                        if (!notificacao.read_at) {
+                            const rpc = ehAlerta
+                                ? "mark_global_alert_notification_read"
+                                : "mark_teacher_request_notification_read";
+                            const { error: erroLeitura } = await supabaseClient.rpc(rpc, {
+                                p_notification_id: notificacao.id || notificacao.notification_id
+                            });
+                            if (erroLeitura) throw erroLeitura;
                         }
+                    } catch (erro) {
+                        console.error("Não foi possível marcar a notificação como lida:", erro);
+                    }
 
+                    if (ehAlerta) {
+                        window.location.href = "alertas.html";
+                    } else {
                         window.location.href =
                             "conversa.html?usuario=" +
                             encodeURIComponent(notificacao.candidate_username);
-                    });
-
-                    fragmento.appendChild(item);
+                    }
                 });
 
-                listaNotificacoes.replaceChildren(fragmento);
-                atualizarIcones();
-            }
+                fragmento.appendChild(item);
+            });
 
+            listaNotificacoes.replaceChildren(fragmento);
+            atualizarIcones();
             atualizarBadgeNotificacoes();
-
         } catch (erro) {
-            console.error("Erro ao carregar notificações administrativas:", erro);
+            console.error("Erro ao carregar notificações:", erro);
             estadoPainel(
                 listaNotificacoes,
                 "alert-circle",
@@ -839,7 +898,7 @@
             );
         }
 
-        return quantidadeNotificacoesProfessorNaoLidas;
+        return quantidadeNotificacoesProfessorNaoLidas + quantidadeAlertasNaoLidos;
     }
 
     async function carregarContatosChat() {
@@ -896,7 +955,7 @@
             atualizarBadgeNotificacoes();
 
             const secaoComNovidades =
-                tipoUsuarioAtual === "dev" && quantidadeNotificacoesProfessorNaoLidas > 0
+                (quantidadeNotificacoesProfessorNaoLidas + quantidadeAlertasNaoLidos) > 0
                     ? "notificacoes"
                     : (recebidas.length ? "solicitacoes" : null);
 
