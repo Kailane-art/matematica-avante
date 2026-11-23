@@ -171,11 +171,12 @@ Escolha um assunto para começar seus estudos.
     </div>
 
     <div class="materia-item">
-        <button class="materia-botao materia-indisponivel" type="button" disabled>
+        <button class="materia-botao" type="button" onclick="window.location.href='trigonometria.html'">
             <i data-lucide="triangle"></i>
             <span class="materia-nome">Trigonometria</span>
-            <span class="materia-selo">Em desenvolvimento</span>
+            <span class="materia-barra" role="progressbar" aria-label="Progresso em Trigonometria" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressoTrigonometriaBarra"></span></span>
         </button>
+        <span class="materia-status" id="progressoTrigonometriaTexto">Carregando progresso...</span>
     </div>
 
 </div>
@@ -407,6 +408,13 @@ lucide.createIcons();
             texto: document.getElementById("progressoProbabilidadeTexto"),
             barra: document.getElementById("progressoProbabilidadeBarra"),
             tipos: ["prob_conceito","prob_experimentos","prob_espaco_amostral","prob_eventos","prob_uniao_intersecao","prob_complementar","prob_calculo","prob_condicional","prob_independencia","prob_binomial"],
+            totalQuestoes: 50
+        },
+        {
+            nome: "Trigonometria",
+            texto: document.getElementById("progressoTrigonometriaTexto"),
+            barra: document.getElementById("progressoTrigonometriaBarra"),
+            tipos: ["trig_angulos","trig_graus_radianos","trig_triangulo_retangulo","trig_razoes","trig_seno_cosseno_tangente","trig_ciclo","trig_angulos_notaveis","trig_identidades","trig_equacoes","trig_aplicacoes"],
             totalQuestoes: 50
         }
     ];
