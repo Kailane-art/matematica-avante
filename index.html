@@ -8,7 +8,7 @@
 
     <title>Matemática Avante</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=20261123-autoexclusao1">
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="manifest" href="manifest.webmanifest">
@@ -183,12 +183,28 @@
                 aria-live="polite">
             </p>
 
+            <div id="painelRecuperacaoExclusao" class="auth-aviso" hidden>
+                <strong>Recuperação de conta</strong>
+                <p>Se esta conta estiver aguardando exclusão, você poderá receber um link seguro para cancelar o processo e reativá-la.</p>
+                <div class="auth-recuperacao-acoes">
+                    <button type="button" id="botaoConfirmarRecuperacaoConta" class="auth-acao-botao">Confirmar</button>
+                    <button type="button" id="botaoCancelarRecuperacaoConta" class="auth-acao-secundario">Cancelar</button>
+                </div>
+            </div>
+
+            <section id="painelAcaoConta" class="auth-form" hidden aria-labelledby="tituloAcaoConta">
+                <h3 id="tituloAcaoConta"></h3>
+                <p id="descricaoAcaoConta"></p>
+                <button type="button" id="botaoExecutarAcaoConta" class="auth-acao-botao"></button>
+                <p id="resultadoAcaoConta" role="status" aria-live="polite"></p>
+            </section>
+
         </section>
 
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/script.js"></script>
+<script src="js/script.js?v=20261123-autoexclusao1"></script>
 
     <script>
         lucide.createIcons();
