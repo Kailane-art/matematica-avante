@@ -10,7 +10,7 @@
 <title>Matérias - Matemática Avante</title>
 
 
-<link rel="stylesheet" href="css/style.css?v=20261122-materias2">
+<link rel="stylesheet" href="css/style.css?v=20261123-materias-algebra1">
 
 
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -109,7 +109,11 @@ Escolha um assunto para começar seus estudos.
         <button class="materia-botao" type="button" onclick="window.location.href='algebra.html'">
             <i data-lucide="variable"></i>
             <span class="materia-nome">Álgebra</span>
+            <span class="materia-barra" role="progressbar" aria-label="Progresso em Álgebra" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span id="progressoAlgebraBarra"></span>
+            </span>
         </button>
+        <span class="materia-status" id="progressoAlgebraTexto">Carregando progresso...</span>
     </div>
 
     <div class="materia-item">
@@ -336,6 +340,24 @@ lucide.createIcons();
                 "geo_pitagoras",
                 "geo_trigonometria",
                 "geo_analitica"
+            ],
+            totalQuestoes: 50
+        },
+        {
+            nome: "Álgebra",
+            texto: document.getElementById("progressoAlgebraTexto"),
+            barra: document.getElementById("progressoAlgebraBarra"),
+            tipos: [
+                "alg_linguagem",
+                "alg_expressoes",
+                "alg_valor_numerico",
+                "alg_monomios",
+                "alg_polinomios",
+                "alg_operacoes",
+                "alg_produtos_notaveis",
+                "alg_fatoracao",
+                "alg_equacoes",
+                "alg_sistemas"
             ],
             totalQuestoes: 50
         }
