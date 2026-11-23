@@ -646,6 +646,7 @@ const paginasProtegidas = new Set([
     "geometria.html",
     "basico.html",
     "aprender-basico.html",
+    "aprender-geometria.html",
     "nivel1.html",
     "nivel2.html",
     "nivel3.html",
