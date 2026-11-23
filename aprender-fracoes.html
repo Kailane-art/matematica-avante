@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprender Frações e Decimais - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css?v=20261123-aprenderfracoes1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-aprender-fracoes">
+
+<header>
+    <button id="voltarPagina" type="button" aria-label="Voltar">
+        <i data-lucide="arrow-left"></i>
+    </button>
+    <h1>Atividades de Frações e Decimais</h1>
+    <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+        <i data-lucide="menu"></i>
+    </button>
+</header>
+
+<main class="aprender-geometria-conteudo">
+    <div class="titulo-operacoes">
+        <h2>Aprender</h2>
+        <p>Escolha um conteúdo de Frações e Decimais para praticar.</p>
+    </div>
+
+    <nav class="materias operacoes geometria-topicos" aria-label="Conteúdos de Frações e Decimais">
+<button type="button" data-topico="conceito" aria-label="Conceito de fração" aria-pressed="false" title="Conceito de fração"><i data-lucide="shapes"></i><span>Conceito de fração</span></button>
+<button type="button" data-topico="equivalentes" aria-label="Frações equivalentes" aria-pressed="false" title="Frações equivalentes"><i data-lucide="copy"></i><span>Frações equivalentes</span></button>
+<button type="button" data-topico="simplificacao" aria-label="Simplificação de frações" aria-pressed="false" title="Simplificação de frações"><i data-lucide="minimize"></i><span>Simplificação de frações</span></button>
+<button type="button" data-topico="comparacao" aria-label="Comparação de frações" aria-pressed="false" title="Comparação de frações"><i data-lucide="arrow-left-right"></i><span>Comparação de frações</span></button>
+<button type="button" data-topico="adicao" aria-label="Adição de frações" aria-pressed="false" title="Adição de frações"><i data-lucide="plus"></i><span>Adição de frações</span></button>
+<button type="button" data-topico="subtracao" aria-label="Subtração de frações" aria-pressed="false" title="Subtração de frações"><i data-lucide="minus"></i><span>Subtração de frações</span></button>
+<button type="button" data-topico="multiplicacao" aria-label="Multiplicação de frações" aria-pressed="false" title="Multiplicação de frações"><i data-lucide="x"></i><span>Multiplicação de frações</span></button>
+<button type="button" data-topico="divisao" aria-label="Divisão de frações" aria-pressed="false" title="Divisão de frações"><i data-lucide="divide"></i><span>Divisão de frações</span></button>
+<button type="button" data-topico="decimais" aria-label="Números decimais" aria-pressed="false" title="Números decimais"><i data-lucide="decimal"></i><span>Números decimais</span></button>
+<button type="button" data-topico="conversao" aria-label="Conversão entre frações e decimais" aria-pressed="false" title="Conversão entre frações e decimais"><i data-lucide="repeat"></i><span>Conversão entre frações e decimais</span></button>
+</nav>
+
+    <p id="mensagemCarregamentoFracoes" class="mensagem-geometria" role="status">Selecione um conteúdo para começar.</p>
+    <div id="fracoesAtividades" class="geometria-atividades"></div>
+</main>
+
+<div id="fundoMenu"></div>
+<div id="menuLateral">
+    <h2>Menu</h2>
+    <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+    <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+    <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+    <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+    <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+    <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+    <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+    <a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+    <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+    <a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+(function () {
+    const conteudos = [
+{id:"conceito",activityType:"frac_conceito",titulo:"Conceito de fração",icone:"shapes",descricao:"Entenda a fração como parte de um todo e identifique numerador e denominador.",questoes:[{pergunta:"Em uma fração, o numerador indica:",opcoes:{a:"Quantas partes foram consideradas",b:"Em quantas partes iguais o todo foi dividido",c:"O tamanho do inteiro"}},{pergunta:"Na fração 3/5, o denominador é:",opcoes:{a:"3",b:"5",c:"8"}},{pergunta:"A fração 1/4 representa:",opcoes:{a:"Uma parte de quatro partes iguais",b:"Quatro partes de uma parte",c:"Uma parte de cinco partes"}},{pergunta:"Qual fração representa duas partes de um total de sete?",opcoes:{a:"7/2",b:"2/7",c:"2/5"}},{pergunta:"Uma pizza foi dividida em 8 pedaços iguais e 3 foram comidos. Qual fração foi comida?",opcoes:{a:"5/8",b:"8/3",c:"3/8"}}]},
+{id:"equivalentes",activityType:"frac_equivalentes",titulo:"Frações equivalentes",icone:"copy",descricao:"Reconheça frações diferentes que representam a mesma quantidade.",questoes:[{pergunta:"Qual fração é equivalente a 1/2?",opcoes:{a:"2/4",b:"2/3",c:"3/5"}},{pergunta:"A fração equivalente a 2/3 com denominador 12 é:",opcoes:{a:"4/12",b:"8/12",c:"6/12"}},{pergunta:"As frações 3/4 e 6/8 são:",opcoes:{a:"Diferentes em valor",b:"Equivalentes",c:"Sempre maiores que 1"}},{pergunta:"Multiplicar numerador e denominador pelo mesmo número diferente de zero produz:",opcoes:{a:"Uma fração equivalente",b:"Uma fração sempre maior",c:"Um número inteiro"}},{pergunta:"Qual fração é equivalente a 5/6?",opcoes:{a:"10/12",b:"5/12",c:"6/10"}}]},
+{id:"simplificacao",activityType:"frac_simplificacao",titulo:"Simplificação de frações",icone:"minimize",descricao:"Reduza frações dividindo numerador e denominador por um divisor comum.",questoes:[{pergunta:"Qual é a forma simplificada de 4/8?",opcoes:{a:"2/4",b:"1/2",c:"4/4"}},{pergunta:"Simplifique 12/18:",opcoes:{a:"2/3",b:"3/2",c:"6/9"}},{pergunta:"Qual é a forma irredutível de 15/25?",opcoes:{a:"5/10",b:"3/5",c:"15/5"}},{pergunta:"Para simplificar uma fração, devemos dividir numerador e denominador:",opcoes:{a:"Por números diferentes",b:"Pelo mesmo divisor comum",c:"Somente pelo numerador"}},{pergunta:"A forma simplificada de 21/28 é:",opcoes:{a:"3/4",b:"7/4",c:"4/3"}}]},
+{id:"comparacao",activityType:"frac_comparacao",titulo:"Comparação de frações",icone:"arrow-left-right",descricao:"Compare frações usando denominadores iguais, equivalência e referências como metade e inteiro.",questoes:[{pergunta:"Qual fração é maior?",opcoes:{a:"1/3",b:"1/2",c:"São iguais"}},{pergunta:"Entre 3/8 e 5/8, a maior é:",opcoes:{a:"3/8",b:"5/8",c:"São iguais"}},{pergunta:"Qual fração representa exatamente um inteiro?",opcoes:{a:"4/4",b:"3/4",c:"5/4"}},{pergunta:"Qual é a menor fração?",opcoes:{a:"2/5",b:"4/5",c:"3/5"}},{pergunta:"Entre 2/3 e 3/4, qual é maior?",opcoes:{a:"2/3",b:"3/4",c:"São iguais"}}]},
+{id:"adicao",activityType:"frac_adicao",titulo:"Adição de frações",icone:"plus",descricao:"Some frações com denominadores iguais ou encontre um denominador comum.",questoes:[{pergunta:"Quanto é 2/7 + 3/7?",opcoes:{a:"5/7",b:"5/14",c:"1/7"}},{pergunta:"Quanto é 1/2 + 1/4?",opcoes:{a:"2/6",b:"3/4",c:"1/6"}},{pergunta:"Quanto é 2/3 + 1/3?",opcoes:{a:"1",b:"3/6",c:"2/9"}},{pergunta:"Quanto é 1/5 + 2/5?",opcoes:{a:"3/10",b:"2/5",c:"3/5"}},{pergunta:"Quanto é 1/2 + 1/3?",opcoes:{a:"2/5",b:"5/6",c:"1/6"}}]},
+{id:"subtracao",activityType:"frac_subtracao",titulo:"Subtração de frações",icone:"minus",descricao:"Subtraia frações com denominadores iguais ou transforme-as em frações equivalentes.",questoes:[{pergunta:"Quanto é 5/8 - 2/8?",opcoes:{a:"3/8",b:"3/16",c:"7/8"}},{pergunta:"Quanto é 3/4 - 1/4?",opcoes:{a:"1/4",b:"2/4",c:"4/4"}},{pergunta:"Quanto é 1 - 2/5?",opcoes:{a:"2/5",b:"3/5",c:"1/5"}},{pergunta:"Quanto é 5/6 - 1/3?",opcoes:{a:"4/3",b:"1/2",c:"2/3"}},{pergunta:"Quanto é 7/10 - 3/10?",opcoes:{a:"4/10",b:"10/10",c:"3/10"}}]},
+{id:"multiplicacao",activityType:"frac_multiplicacao",titulo:"Multiplicação de frações",icone:"x",descricao:"Multiplique numeradores entre si e denominadores entre si. Simplifique o resultado quando possível.",questoes:[{pergunta:"Quanto é 1/2 × 1/3?",opcoes:{a:"1/5",b:"1/6",c:"2/3"}},{pergunta:"Quanto é 2/3 × 3/4?",opcoes:{a:"6/12",b:"5/7",c:"6/7"}},{pergunta:"Quanto é 3/5 × 2?",opcoes:{a:"6/5",b:"5/6",c:"3/10"}},{pergunta:"Quanto é 2/7 × 7/2?",opcoes:{a:"1",b:"2/7",c:"7/2"}},{pergunta:"Quanto é 4/5 × 5/8?",opcoes:{a:"20/40",b:"1/2",c:"9/13"}}]},
+{id:"divisao",activityType:"frac_divisao",titulo:"Divisão de frações",icone:"divide",descricao:"Divida multiplicando a primeira fração pelo inverso da segunda.",questoes:[{pergunta:"Quanto é 1/2 ÷ 1/4?",opcoes:{a:"1/8",b:"2",c:"1/2"}},{pergunta:"Para dividir por uma fração, podemos:",opcoes:{a:"Multiplicar pelo inverso dela",b:"Somar os denominadores",c:"Subtrair os numeradores"}},{pergunta:"Quanto é 2/3 ÷ 1/3?",opcoes:{a:"2",b:"1/3",c:"2/9"}},{pergunta:"Quanto é 3/4 ÷ 1/2?",opcoes:{a:"3/8",b:"3/2",c:"4/3"}},{pergunta:"Quanto é 1/5 ÷ 2/5?",opcoes:{a:"2",b:"1/2",c:"2/25"}}]},
+{id:"decimais",activityType:"frac_decimais",titulo:"Números decimais",icone:"decimal",descricao:"Leia casas decimais, compare valores e relacione décimos, centésimos e milésimos.",questoes:[{pergunta:"Como se lê 0,5?",opcoes:{a:"Cinco décimos",b:"Cinco centésimos",c:"Cinco unidades"}},{pergunta:"Qual número é maior?",opcoes:{a:"0,7",b:"0,65",c:"São iguais"}},{pergunta:"A fração decimal 25/100 corresponde a:",opcoes:{a:"2,5",b:"0,25",c:"0,025"}},{pergunta:"No número 3,48, o algarismo 8 ocupa a casa dos:",opcoes:{a:"Décimos",b:"Centésimos",c:"Milésimos"}},{pergunta:"Quanto é 1,2 + 0,3?",opcoes:{a:"1,5",b:"1,23",c:"1,3"}}]},
+{id:"conversao",activityType:"frac_conversao",titulo:"Conversão entre frações e decimais",icone:"repeat",descricao:"Converta frações em números decimais e reconheça representações equivalentes.",questoes:[{pergunta:"A fração 1/2 em decimal é:",opcoes:{a:"0,2",b:"0,5",c:"1,2"}},{pergunta:"A fração 3/4 em decimal é:",opcoes:{a:"0,34",b:"0,75",c:"0,8"}},{pergunta:"O número decimal 0,25 corresponde à fração:",opcoes:{a:"1/4",b:"1/2",c:"2/5"}},{pergunta:"O número 0,6 corresponde à fração simplificada:",opcoes:{a:"6/100",b:"3/5",c:"1/6"}},{pergunta:"A fração 1/5 em decimal é:",opcoes:{a:"0,2",b:"0,5",c:"0,05"}}]}
+    ];
+
+    const areaAtividades = document.getElementById("fracoesAtividades");
+    const mensagemCarregamento = document.getElementById("mensagemCarregamentoFracoes");
+    const botoesTopicos = document.querySelectorAll(".geometria-topicos button");
+    const estados = new Map();
+    const tiposAtividade = conteudos.map(function (item) { return item.activityType; });
+
+    let usuarioAtual = null;
+    let xpTotal = 0;
+    let carregamentoConcluido = false;
+
+    function criarElemento(tag, classe, texto) {
+        const elemento = document.createElement(tag);
+        if (classe) elemento.className = classe;
+        if (texto !== undefined) elemento.textContent = texto;
+        return elemento;
+    }
+
+    function atualizarXPExibido() {
+        estados.forEach(function (estado) { estado.xp.textContent = String(xpTotal); });
+    }
+
+    function atualizarPontuacao(estado) {
+        estado.pontuacao.textContent = "Pontuação: " + estado.acertos + "/5";
+    }
+
+    function bloquearQuestao(questaoElemento, bloquear) {
+        questaoElemento.querySelectorAll("button[data-option-id]").forEach(function (botao) {
+            botao.disabled = bloquear;
+            if (bloquear) botao.classList.add("resposta-bloqueada");
+            else botao.classList.remove("resposta-bloqueada");
+        });
+    }
+
+    function aplicarTentativa(estado, numero, tentativa) {
+        if (estado.respondidas.has(numero)) return;
+        estado.respondidas.set(numero, tentativa);
+
+        const questaoElemento = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questaoElemento) return;
+
+        bloquearQuestao(questaoElemento, true);
+        const botaoSelecionado = questaoElemento.querySelector('[data-option-id="' + tentativa.selected_option_id + '"]');
+        if (tentativa.is_correct) estado.acertos++;
+
+        if (botaoSelecionado) {
+            botaoSelecionado.classList.add(tentativa.is_correct ? "resposta-correta" : "resposta-errada");
+        }
+        atualizarPontuacao(estado);
+    }
+
+    function verificarConclusao(estado) {
+        if (estado.respondidas.size !== 5) return;
+        estado.resultado.textContent = estado.acertos === 5
+            ? "Parabéns! Você acertou todas as questões deste conteúdo!"
+            : "Atividade concluída! Você acertou " + estado.acertos + " de 5 questões.";
+    }
+
+    function criarAtividade(conteudo) {
+        const painel = criarElemento("section", "exercicios-basico geometria-exercicios");
+        painel.hidden = true;
+
+        const cabecalho = criarElemento("div", "titulo-exercicios");
+        const icone = document.createElement("i");
+        icone.setAttribute("data-lucide", conteudo.icone);
+        cabecalho.appendChild(icone);
+        cabecalho.appendChild(criarElemento("h2", "", conteudo.titulo));
+        painel.appendChild(cabecalho);
+        painel.appendChild(criarElemento("p", "subtitulo-exercicios", conteudo.descricao));
+        painel.appendChild(criarElemento("p", "geometria-regra-xp", "Responda às 5 questões. Cada acerto vale 10 XP."));
+
+        conteudo.questoes.forEach(function (questao, indice) {
+            const numero = indice + 1;
+            const blocoQuestao = criarElemento("div", "questao");
+            blocoQuestao.dataset.numero = String(numero);
+
+            const enunciado = document.createElement("p");
+            enunciado.appendChild(criarElemento("strong", "", numero + "."));
+            enunciado.appendChild(document.createTextNode(" " + questao.pergunta));
+            blocoQuestao.appendChild(enunciado);
+
+            const alternativas = criarElemento("div", "alternativas");
+            Object.entries(questao.opcoes).forEach(function ([letra, texto]) {
+                const botao = criarElemento("button", "", texto);
+                botao.type = "button";
+                botao.dataset.optionId = letra;
+                botao.disabled = true;
+                botao.addEventListener("click", function () {
+                    responderQuestao(conteudo, numero, letra, botao);
+                });
+                alternativas.appendChild(botao);
+            });
+
+            blocoQuestao.appendChild(alternativas);
+            painel.appendChild(blocoQuestao);
+        });
+
+        const resultado = criarElemento("div", "resultado-exercicios");
+        const pontuacao = criarElemento("h2", "", "Pontuação: 0/5");
+        const mensagem = criarElemento("p", "");
+        mensagem.setAttribute("aria-live", "polite");
+        const linhaXP = document.createElement("p");
+        linhaXP.appendChild(document.createTextNode("XP total: "));
+        const xp = criarElemento("strong", "", "0");
+        linhaXP.appendChild(xp);
+        resultado.appendChild(pontuacao);
+        resultado.appendChild(mensagem);
+        resultado.appendChild(linhaXP);
+        painel.appendChild(resultado);
+
+        const estado = { painel, pontuacao, resultado: mensagem, xp, respondidas: new Map(), acertos: 0 };
+        estados.set(conteudo.activityType, estado);
+        areaAtividades.appendChild(painel);
+    }
+
+    conteudos.forEach(criarAtividade);
+
+    function selecionarConteudo(id) {
+        const selecionado = conteudos.find(function (item) { return item.id === id; });
+        if (!selecionado) return;
+
+        botoesTopicos.forEach(function (botao) {
+            const ativo = botao.dataset.topico === id;
+            botao.classList.toggle("ativo", ativo);
+            botao.setAttribute("aria-pressed", String(ativo));
+        });
+
+        conteudos.forEach(function (item) {
+            estados.get(item.activityType).painel.hidden = item.id !== id;
+        });
+
+        mensagemCarregamento.textContent = carregamentoConcluido
+            ? "Atividade selecionada. Seu progresso fica salvo."
+            : "Carregando seu progresso...";
+    }
+
+    botoesTopicos.forEach(function (botao) {
+        botao.addEventListener("click", function () { selecionarConteudo(botao.dataset.topico); });
+    });
+
+    async function carregarEstadoFuncoes() {
+        try {
+            if (!supabaseClient) throw new Error("Conexão com o Supabase indisponível.");
+
+            const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+            if (erroUsuario || !user) throw new Error("Sessão não autenticada.");
+            usuarioAtual = user;
+
+            const [resultadoXP, resultadoTentativas] = await Promise.all([
+                supabaseClient.from("user_progress").select("total_xp").eq("user_id", user.id).maybeSingle(),
+                supabaseClient.from("user_question_attempts")
+                    .select("activity_type, question_id, selected_option_id, is_correct")
+                    .eq("user_id", user.id).in("activity_type", tiposAtividade)
+            ]);
+
+            if (resultadoXP.error) throw resultadoXP.error;
+            if (resultadoTentativas.error) throw resultadoTentativas.error;
+            xpTotal = Number(resultadoXP.data?.total_xp || 0);
+
+            (resultadoTentativas.data || []).forEach(function (tentativa) {
+                const estado = estados.get(tentativa.activity_type);
+                const numero = Number(tentativa.question_id);
+                if (!estado || !Number.isInteger(numero) || numero < 1 || numero > 5) return;
+                aplicarTentativa(estado, numero, tentativa);
+            });
+
+            estados.forEach(function (estado) {
+                for (let numero = 1; numero <= 5; numero++) {
+                    if (!estado.respondidas.has(numero)) {
+                        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+                        if (questao) bloquearQuestao(questao, false);
+                    }
+                }
+                if (estado.respondidas.size > 0) estado.resultado.textContent = "Seu progresso anterior foi carregado.";
+                verificarConclusao(estado);
+            });
+
+            atualizarXPExibido();
+            carregamentoConcluido = true;
+            mensagemCarregamento.textContent = "Escolha um conteúdo para começar. Seu progresso fica salvo.";
+        } catch (erro) {
+            console.error("Erro ao carregar atividades de Frações e Decimais:", erro);
+            mensagemCarregamento.textContent = "Não foi possível carregar seu progresso. Atualize a página e tente novamente.";
+        }
+    }
+
+    async function responderQuestao(conteudo, numero, optionId, botao) {
+        const estado = estados.get(conteudo.activityType);
+        if (!carregamentoConcluido || !usuarioAtual || !estado || estado.respondidas.has(numero) || !botao || botao.disabled) return;
+
+        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questao) return;
+
+        bloquearQuestao(questao, true);
+        estado.resultado.textContent = "Registrando sua resposta...";
+
+        try {
+            const { data, error } = await supabaseClient.rpc("submit_operation_answer", {
+                p_activity_type: conteudo.activityType,
+                p_question_id: String(numero),
+                p_option_id: optionId
+            });
+            if (error) throw error;
+            if (!data) throw new Error("O banco não retornou um resultado.");
+
+            xpTotal = Number(data.total_xp || 0);
+            atualizarXPExibido();
+
+            if (data.already_answered) {
+                const { data: tentativa, error: erroTentativa } = await supabaseClient
+                    .from("user_question_attempts")
+                    .select("question_id, selected_option_id, is_correct")
+                    .eq("user_id", usuarioAtual.id)
+                    .eq("activity_type", conteudo.activityType)
+                    .eq("question_id", String(numero))
+                    .maybeSingle();
+                if (erroTentativa) throw erroTentativa;
+                if (tentativa) aplicarTentativa(estado, numero, tentativa);
+                estado.resultado.textContent = "Esta questão já foi respondida anteriormente.";
+                verificarConclusao(estado);
+                return;
+            }
+
+            aplicarTentativa(estado, numero, { selected_option_id: optionId, is_correct: data.correct });
+            estado.resultado.textContent = data.correct
+                ? "Resposta correta! Você ganhou " + data.xp_awarded + " XP."
+                : "Resposta incorreta. Continue estudando!";
+            verificarConclusao(estado);
+        } catch (erro) {
+            console.error("Erro ao registrar resposta de Funções:", erro);
+            bloquearQuestao(questao, false);
+            estado.resultado.textContent = "Não foi possível registrar sua resposta. Tente novamente.";
+        }
+    }
+
+    carregarEstadoFuncoes();
+    if (window.lucide) lucide.createIcons();
+})();
+</script>
+</body>
+</html>
