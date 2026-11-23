@@ -418,3 +418,35 @@
     opacity: .55;
     cursor: not-allowed;
 }
+
+
+/* Caixa de apresentação em azul Royal */
+.desafios-introducao {
+    background: #4169e1;
+    border-color: #3159c7;
+}
+.desafios-introducao h2,
+.desafios-introducao p {
+    color: #fff;
+}
+.desafios-introducao-icone {
+    background: rgba(255, 255, 255, .17);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .2);
+}
+.modo-escuro .desafios-introducao {
+    background: #4169e1;
+    border-color: #3159c7;
+}
+.modo-escuro .desafios-introducao h2,
+.modo-escuro .desafios-introducao p {
+    color: #fff;
+}
+
+/* Contraste do botão Enviar convite no tema escuro */
+.modo-escuro .desafio-botao-principal {
+    color: #fff;
+}
+.modo-escuro .desafio-botao-principal svg {
+    color: #fff;
+}
