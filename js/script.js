@@ -771,7 +771,18 @@ async function chamarServicoAutoexclusao(payload) {
         { body: payload }
     );
 
-    if (error) throw error;
+    if (error) {
+        let mensagem = error.message || "Falha ao comunicar com o serviço de conta.";
+        if (error.context && typeof error.context.json === "function") {
+            try {
+                const detalhe = await error.context.json();
+                if (detalhe && detalhe.error) mensagem = detalhe.error;
+            } catch (erroLeitura) {
+                console.warn("Não foi possível ler o detalhe do erro da função:", erroLeitura);
+            }
+        }
+        throw new Error(mensagem);
+    }
     if (data && data.error) throw new Error(data.error);
     return data;
 }
