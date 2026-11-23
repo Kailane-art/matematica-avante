@@ -332,6 +332,28 @@ if (window.supabase && window.supabase.createClient) {
     );
 }
 
+// Compartilha apenas verificações de sessão simultâneas.
+// A promessa é descartada ao terminar, evitando manter dados de usuário em cache.
+let verificacaoUsuarioEmAndamento = null;
+
+function obterUsuarioAutenticado() {
+    if (!supabaseClient) {
+        return Promise.resolve({
+            data: { user: null },
+            error: new Error("A conexão com o Supabase não está disponível.")
+        });
+    }
+
+    if (!verificacaoUsuarioEmAndamento) {
+        verificacaoUsuarioEmAndamento = supabaseClient.auth.getUser()
+            .finally(function() {
+                verificacaoUsuarioEmAndamento = null;
+            });
+    }
+
+    return verificacaoUsuarioEmAndamento;
+}
+
 /* ================================================
    PRESENÇA ONLINE GLOBAL
    Supabase Realtime Presence, sem persistir status no banco.
@@ -486,7 +508,7 @@ async function iniciarPresencaOnlineGlobal() {
     if (!supabaseClient || paginaLogin || canalPresencaOnline) return;
 
     try {
-        const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+        const { data: { user }, error: erroUsuario } = await obterUsuarioAutenticado();
         if (erroUsuario || !user) return;
 
         usuarioPresencaOnlineId = user.id;
@@ -542,7 +564,7 @@ aplicarTamanhoTextoGlobal(localStorage.getItem("tamanhoTexto") || 3);
 async function salvarPreferenciaUsuario(alteracoes) {
     if (!supabaseClient) return;
     try {
-        const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+        const { data: { user }, error: erroUsuario } = await obterUsuarioAutenticado();
         if (erroUsuario || !user) return;
         const { error } = await supabaseClient
             .from("user_settings")
@@ -560,7 +582,7 @@ async function salvarPreferenciaUsuario(alteracoes) {
 async function carregarPreferenciasGlobais() {
     if (!supabaseClient) return;
     try {
-        const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+        const { data: { user }, error: erroUsuario } = await obterUsuarioAutenticado();
         if (erroUsuario || !user) return;
         const { data, error } = await supabaseClient
             .from("user_settings")
@@ -628,7 +650,7 @@ if (paginasProtegidas.has(paginaAtual)) {
             }
 
             const { data: { user }, error } =
-                await supabaseClient.auth.getUser();
+                await obterUsuarioAutenticado();
 
       if (error || !user) {
     window.location.replace("index.html");
@@ -1289,7 +1311,7 @@ async function usuarioTemAcessoPremium(){
         const {
             data: { user },
             error
-        } = await supabaseClient.auth.getUser();
+        } = await obterUsuarioAutenticado();
 
         if(error || !user){
 
@@ -1958,7 +1980,7 @@ async function registrarUltimaAtividade(chave, nome, url) {
     try {
 
         const { data: { user }, error: erroUsuario } =
-            await supabaseClient.auth.getUser();
+            await obterUsuarioAutenticado();
 
         if (erroUsuario || !user) return false;
 
@@ -1992,7 +2014,7 @@ async function carregarIndicadoresUsuario() {
     try {
 
         const { data: { user }, error: erroUsuario } =
-            await supabaseClient.auth.getUser();
+            await obterUsuarioAutenticado();
 
         if (erroUsuario || !user) return;
 
@@ -2230,7 +2252,7 @@ if (botaoContinuarEstudando) {
             if (supabaseClient) {
 
                 const { data: { user }, error: erroUsuario } =
-                    await supabaseClient.auth.getUser();
+                    await obterUsuarioAutenticado();
 
                 if (!erroUsuario && user) {
 
@@ -2617,7 +2639,7 @@ async function abrirModalEditarPerfil() {
         const {
             data: { user },
             error: erroUsuario
-        } = await supabaseClient.auth.getUser();
+        } = await obterUsuarioAutenticado();
 
         if (erroUsuario || !user) {
             throw new Error(
@@ -2873,7 +2895,7 @@ if (formEditarPerfil) {
                 const {
                     data: { user },
                     error: erroUsuario
-                } = await supabaseClient.auth.getUser();
+                } = await obterUsuarioAutenticado();
 
                 if (erroUsuario || !user) {
                     throw new Error(
@@ -3105,7 +3127,7 @@ async function verificarAcessoNivelProgressivo(numeroNivel) {
         const {
             data: { user },
             error: erroUsuario
-        } = await supabaseClient.auth.getUser();
+        } = await obterUsuarioAutenticado();
 
         if (erroUsuario || !user) {
             throw erroUsuario || new Error("Usuário não autenticado.");
