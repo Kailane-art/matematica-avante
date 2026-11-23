@@ -764,6 +764,99 @@ function mostrarMensagemAutenticacao(texto) {
 
 }
 
+// Comunicação com o fluxo seguro de autoexclusão.
+async function chamarServicoAutoexclusao(payload) {
+    const { data, error } = await supabaseClient.functions.invoke(
+        "account-self-service",
+        { body: payload }
+    );
+
+    if (error) throw error;
+    if (data && data.error) throw new Error(data.error);
+    return data;
+}
+
+// Link de confirmação/recuperação só é consumido após um clique explícito.
+// Isso evita que verificadores automáticos de links consumam o token ao abrir a página.
+function prepararAcaoDeAutoexclusao() {
+    const parametros = new URLSearchParams(window.location.search);
+    const acao = parametros.get("acao");
+    const token = parametros.get("token");
+
+    if (!["confirmar-exclusao", "recuperar-exclusao"].includes(acao)) return;
+
+    const painel = document.getElementById("painelAcaoConta");
+    const abas = document.querySelector(".auth-abas");
+    const login = document.getElementById("formLogin");
+    const cadastro = document.getElementById("formCadastro");
+    const titulo = document.getElementById("tituloAcaoConta");
+    const descricao = document.getElementById("descricaoAcaoConta");
+    const botao = document.getElementById("botaoExecutarAcaoConta");
+    const resultado = document.getElementById("resultadoAcaoConta");
+
+    if (!painel || !titulo || !descricao || !botao || !resultado) return;
+
+    if (abas) abas.hidden = true;
+    if (login) login.hidden = true;
+    if (cadastro) cadastro.hidden = true;
+    if (mensagemAutenticacao) mensagemAutenticacao.hidden = true;
+    painel.hidden = false;
+
+    const confirmarExclusao = acao === "confirmar-exclusao";
+    titulo.textContent = confirmarExclusao
+        ? "Confirmar exclusão da conta"
+        : "Recuperar conta";
+    descricao.textContent = confirmarExclusao
+        ? "Ao confirmar, sua conta será desativada e começará o prazo de 30 dias para recuperação. Até este clique, nada será alterado."
+        : "Ao confirmar, a solicitação de exclusão será cancelada e sua conta será reativada. Depois disso, você poderá entrar novamente com seu e-mail e senha.";
+    botao.textContent = confirmarExclusao
+        ? "Confirmar exclusão da conta"
+        : "Cancelar exclusão e reativar conta";
+
+    if (!token || !/^[a-f0-9]{64}$/i.test(token)) {
+        botao.disabled = true;
+        resultado.textContent = "Este link está incompleto ou é inválido.";
+        return;
+    }
+
+    botao.addEventListener("click", async function() {
+        botao.disabled = true;
+        resultado.textContent = confirmarExclusao
+            ? "Confirmando a exclusão..."
+            : "Reativando sua conta...";
+
+        try {
+            const resposta = await chamarServicoAutoexclusao({
+                action: confirmarExclusao ? "confirm_deletion" : "recover",
+                token: token
+            });
+
+            if (confirmarExclusao) {
+                try {
+                    await supabaseClient.auth.signOut({ scope: "local" });
+                } catch (erroSessao) {
+                    console.warn("A sessão local já pode estar inválida:", erroSessao);
+                }
+
+                localStorage.removeItem("nomeUsuario");
+                localStorage.removeItem("tipoUsuario");
+                localStorage.removeItem("fotoPerfil");
+            }
+
+            resultado.textContent = resposta.message ||
+                (confirmarExclusao
+                    ? "Exclusão confirmada. O prazo de 30 dias começou."
+                    : "Exclusão cancelada. Sua conta foi reativada.");
+            botao.textContent = "Concluído";
+            window.history.replaceState({}, document.title, window.location.pathname);
+        } catch (erro) {
+            console.error("Erro na ação de autoexclusão:", erro);
+            resultado.textContent = erro.message || "Não foi possível concluir esta ação. Solicite um novo link ou tente novamente.";
+            botao.disabled = false;
+        }
+    });
+}
+
 
 // Carregar perfil e entrar no sistema
 
@@ -1056,8 +1149,11 @@ if (formLogin) {
 
             if (contaBanida) {
                 mostrarMensagemAutenticacao(
-                    "Não é possível fazer login nesta conta. Entre em contato com a equipe do Matemática Avante para obter mais informações."
+                    "Esta conta está temporariamente impedida de entrar. Se você iniciou uma exclusão, poderá solicitar a recuperação por e-mail."
                 );
+
+                const painelRecuperacao = document.getElementById("painelRecuperacaoExclusao");
+                if (painelRecuperacao) painelRecuperacao.hidden = false;
             } else {
                 mostrarMensagemAutenticacao(
                     "Email ou senha incorretos, ou sua conta ainda não foi confirmada."
@@ -1072,7 +1168,47 @@ if (formLogin) {
 
     });
 
-} 
+}
+
+// Recuperação da autoexclusão durante a tentativa de login.
+const botaoConfirmarRecuperacaoConta = document.getElementById("botaoConfirmarRecuperacaoConta");
+const botaoCancelarRecuperacaoConta = document.getElementById("botaoCancelarRecuperacaoConta");
+const painelRecuperacaoExclusao = document.getElementById("painelRecuperacaoExclusao");
+
+if (botaoConfirmarRecuperacaoConta) {
+    botaoConfirmarRecuperacaoConta.addEventListener("click", async function() {
+        const email = document.getElementById("emailLogin")?.value.trim();
+        if (!email) {
+            mostrarMensagemAutenticacao("Informe o e-mail da conta para solicitar a recuperação.");
+            return;
+        }
+
+        botaoConfirmarRecuperacaoConta.disabled = true;
+        mostrarMensagemAutenticacao("Solicitando o link seguro de recuperação...");
+
+        try {
+            const resposta = await chamarServicoAutoexclusao({
+                action: "request_recovery",
+                email: email
+            });
+            mostrarMensagemAutenticacao(resposta.message || "Se a conta estiver em período de exclusão, enviaremos um link de recuperação.");
+        } catch (erro) {
+            console.error("Erro ao solicitar recuperação da conta:", erro);
+            mostrarMensagemAutenticacao(erro.message || "Não foi possível solicitar a recuperação agora.");
+        } finally {
+            botaoConfirmarRecuperacaoConta.disabled = false;
+        }
+    });
+}
+
+if (botaoCancelarRecuperacaoConta) {
+    botaoCancelarRecuperacaoConta.addEventListener("click", function() {
+        if (painelRecuperacaoExclusao) painelRecuperacaoExclusao.hidden = true;
+        mostrarMensagemAutenticacao("Você continuará desconectado. Se houver uma exclusão em andamento, o prazo continuará normalmente.");
+    });
+}
+
+prepararAcaoDeAutoexclusao();
 
 // ================================
 // RECUPERAÇÃO DE SENHA
