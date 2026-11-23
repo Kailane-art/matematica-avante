@@ -16,6 +16,8 @@
 
     let temporizadorPesquisa = null;
     let temporizadorPesquisaDesafios = null;
+    let requisicaoPesquisa = 0;
+    let requisicaoPesquisaDesafios = 0;
 
     function criarElemento(tag, classe, texto) {
         const elemento = document.createElement(tag);
@@ -153,6 +155,7 @@
     }
 
     async function pesquisarEstudantes(termo) {
+        const requisicaoAtual = ++requisicaoPesquisa;
         if (termo.length < 2) {
             resultadosPesquisa.replaceChildren();
             if (ajudaPesquisa) {
@@ -164,11 +167,13 @@
         if (ajudaPesquisa) ajudaPesquisa.textContent = "Pesquisando...";
         try {
             const dados = await consultarRanking(termo);
+            if (requisicaoAtual !== requisicaoPesquisa) return;
             renderizarPesquisa(dados.search_results || []);
             if (ajudaPesquisa) {
                 ajudaPesquisa.textContent = "Resultados da semana atual.";
             }
         } catch (erro) {
+            if (requisicaoAtual !== requisicaoPesquisa) return;
             console.error("Erro ao pesquisar estudante no ranking:", erro);
             resultadosPesquisa.replaceChildren(
                 criarElemento("p", "ranking-status", "Não foi possível realizar a pesquisa. Tente novamente.")
@@ -229,6 +234,7 @@
     }
 
     async function pesquisarRankingDesafios(termo) {
+        const requisicaoAtual = ++requisicaoPesquisaDesafios;
         if (termo.length < 2) {
             resultadosPesquisaDesafios.replaceChildren();
             ajudaPesquisaDesafios.textContent = "Digite pelo menos 2 caracteres para pesquisar.";
@@ -237,6 +243,7 @@
         ajudaPesquisaDesafios.textContent = "Pesquisando...";
         try {
             const dados = await consultarRankingDesafios(termo);
+            if (requisicaoAtual !== requisicaoPesquisaDesafios) return;
             resultadosPesquisaDesafios.replaceChildren();
             const itens = dados.search_results || [];
             if (!itens.length) {
@@ -260,6 +267,7 @@
             }
             ajudaPesquisaDesafios.textContent = "Resultados da semana atual.";
         } catch (erro) {
+            if (requisicaoAtual !== requisicaoPesquisaDesafios) return;
             console.error("Erro ao pesquisar no ranking de desafios:", erro);
             resultadosPesquisaDesafios.replaceChildren(
                 criarElemento("p", "ranking-status", "Não foi possível realizar a pesquisa.")
