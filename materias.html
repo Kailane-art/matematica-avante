@@ -120,7 +120,9 @@ Escolha um assunto para começar seus estudos.
         <button class="materia-botao" type="button" onclick="window.location.href='funcoes.html'">
             <i data-lucide="chart-no-axes-combined"></i>
             <span class="materia-nome">Funções</span>
+            <span class="materia-barra" role="progressbar" aria-label="Progresso em Funções" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressoFuncoesBarra"></span></span>
         </button>
+        <span class="materia-status" id="progressoFuncoesTexto">Carregando progresso...</span>
     </div>
 
     <div class="materia-item">
@@ -358,6 +360,13 @@ lucide.createIcons();
                 "alg_equacoes",
                 "alg_sistemas"
             ],
+            totalQuestoes: 50
+        },
+        {
+            nome: "Funções",
+            texto: document.getElementById("progressoFuncoesTexto"),
+            barra: document.getElementById("progressoFuncoesBarra"),
+            tipos: ["fn_conceito", "fn_elementos", "fn_lei_formacao", "fn_valor", "fn_plano_cartesiano", "fn_graficos", "fn_afim", "fn_quadratica", "fn_zeros", "fn_variacao"],
             totalQuestoes: 50
         }
     ];
