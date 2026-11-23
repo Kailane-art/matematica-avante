@@ -98,9 +98,11 @@ Escolha um assunto para começar seus estudos.
         <button class="materia-botao" type="button" onclick="window.location.href='geometria.html'">
             <i data-lucide="ruler"></i>
             <span class="materia-nome">Geometria</span>
-            <span class="materia-barra materia-barra-sem-dados" aria-hidden="true"><span></span></span>
+            <span class="materia-barra" role="progressbar" aria-label="Progresso em Geometria" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span id="progressoGeometriaBarra"></span>
+            </span>
         </button>
-        <span class="materia-status">Acompanhamento ainda não disponível</span>
+        <span class="materia-status" id="progressoGeometriaTexto">Carregando progresso...</span>
     </div>
 
     <div class="materia-item">
@@ -312,11 +314,39 @@ lucide.createIcons();
 
 <script>
 (async function carregarProgressoDasMaterias() {
-    const texto = document.getElementById("progressoBasicoTexto");
-    const barra = document.getElementById("progressoBasicoBarra");
-    const trilho = barra ? barra.parentElement : null;
+    const materias = [
+        {
+            nome: "Básico da Matemática",
+            texto: document.getElementById("progressoBasicoTexto"),
+            barra: document.getElementById("progressoBasicoBarra"),
+            tipos: ["adicao", "subtracao", "multiplicacao", "divisao"],
+            totalQuestoes: 20
+        },
+        {
+            nome: "Geometria",
+            texto: document.getElementById("progressoGeometriaTexto"),
+            barra: document.getElementById("progressoGeometriaBarra"),
+            tipos: [
+                "geo_basica",
+                "geo_figuras",
+                "geo_angulos",
+                "geo_perimetro_area",
+                "geo_espacial",
+                "geo_volume",
+                "geo_semelhanca",
+                "geo_pitagoras",
+                "geo_trigonometria",
+                "geo_analitica"
+            ],
+            totalQuestoes: 50
+        }
+    ];
 
-    if (!texto || !barra || !trilho) return;
+    const materiasValidas = materias.filter(function(materia) {
+        return materia.texto && materia.barra && materia.barra.parentElement;
+    });
+
+    if (materiasValidas.length === 0) return;
 
     try {
         if (typeof supabaseClient === "undefined" || !supabaseClient ||
@@ -331,32 +361,47 @@ lucide.createIcons();
             throw resultadoUsuario.error || new Error("Usuário não autenticado.");
         }
 
+        const todosTipos = materiasValidas.reduce(function(lista, materia) {
+            return lista.concat(materia.tipos);
+        }, []);
+
         const { data, error } = await supabaseClient
             .from("user_question_attempts")
             .select("activity_type, question_id")
             .eq("user_id", usuario.id)
-            .in("activity_type", ["adicao", "subtracao", "multiplicacao", "divisao"]);
+            .in("activity_type", todosTipos);
 
         if (error) throw error;
 
-        const questoesConcluidas = new Set(
-            (data || []).map(function(questao) {
-                return questao.activity_type + "-" + questao.question_id;
-            })
-        );
+        materiasValidas.forEach(function(materia) {
+            const questoesConcluidas = new Set(
+                (data || [])
+                    .filter(function(questao) {
+                        return materia.tipos.includes(questao.activity_type);
+                    })
+                    .map(function(questao) {
+                        return questao.activity_type + "-" + questao.question_id;
+                    })
+            );
 
-        // O Básico possui 5 exercícios em cada uma das quatro operações.
-        const totalQuestoes = 20;
-        const quantidade = Math.min(questoesConcluidas.size, totalQuestoes);
-        const porcentagem = Math.round((quantidade / totalQuestoes) * 100);
+            // Conta questões respondidas, inclusive tentativas incorretas, como no Básico.
+            const quantidade = Math.min(questoesConcluidas.size, materia.totalQuestoes);
+            const porcentagem = Math.round(
+                (quantidade / materia.totalQuestoes) * 100
+            );
+            const trilho = materia.barra.parentElement;
 
-        barra.style.width = porcentagem + "%";
-        trilho.setAttribute("aria-valuenow", String(porcentagem));
-        texto.textContent = quantidade + " de " + totalQuestoes +
-            " exercícios concluídos • " + porcentagem + "%";
+            materia.barra.style.width = porcentagem + "%";
+            trilho.setAttribute("aria-valuenow", String(porcentagem));
+            materia.texto.textContent = quantidade + " de " +
+                materia.totalQuestoes + " exercícios concluídos • " +
+                porcentagem + "%";
+        });
     } catch (erro) {
-        console.error("Não foi possível carregar o progresso de Básico da Matemática:", erro);
-        texto.textContent = "Progresso indisponível no momento";
+        console.error("Não foi possível carregar o progresso das matérias:", erro);
+        materiasValidas.forEach(function(materia) {
+            materia.texto.textContent = "Progresso indisponível no momento";
+        });
     }
 })();
 </script>
