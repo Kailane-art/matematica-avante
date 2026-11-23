@@ -154,6 +154,11 @@ if (menuLateral) {
         if (!link) {
             link = document.createElement("a");
             link.className = "menu-item";
+        } else if (link.tagName !== "A") {
+            const linkAntigo = link;
+            link = document.createElement("a");
+            link.className = linkAntigo.className || "menu-item";
+            linkAntigo.replaceWith(link);
         }
 
         linksUtilizados.add(link);
