@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probabilidade - Matemática Avante</title>
+<link rel="stylesheet" href="css/style.css?v=20261123-probabilidade1">
+<script src="https://unpkg.com/lucide@latest"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-probabilidade">
+<header><button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar"><i data-lucide="arrow-left"></i></button><h1>Probabilidade</h1><button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu"><i data-lucide="menu"></i></button></header>
+<main class="pagina-probabilidade-conteudo">
+<nav class="probabilidade-navegacao" aria-label="Conteúdos de Probabilidade">
+<button class="probabilidade-botao-topico" type="button" data-topico="conceito" aria-label="Conceito de Probabilidade" title="Conceito de Probabilidade" aria-pressed="false"><i data-lucide="dice-5"></i></button>
+<button class="probabilidade-botao-topico" type="button" data-topico="experimentos" aria-label="Experimentos aleatórios" title="Experimentos aleatórios" aria-pressed="false"><i data-lucide="shuffle"></i></button>
+<button class="probabilidade-botao-topico" type="button" data-topico="espaco-amostral" aria-label="Espaço amostral" title="Espaço amostral" aria-pressed="false"><i data-lucide="grid-3x3"></i></button>
+<button class="probabilidade-botao-topico" type="button" data-topico="eventos" aria-label="Eventos" title="Eventos" aria-pressed="false"><i data-lucide="target"></i></button>
+<button class="probabilidade-botao-topico" type="button" data-topico="uniao-intersecao" aria-label="União e interseção de eventos" title="União e interseção de eventos" aria-pressed="false"><i data-lucide="git-merge"></i></button>
+<button class="probabilidade-botao-topico" type="button" data-topico="complementar" aria-label="Evento complementar" title="Evento complementar" aria-pressed="false"><i data-lucide="circle-minus"></i></button>
+<button class="probabilidade-botao-topico" type="button" data-topico="calculo" aria-label="Cálculo de probabilidade" title="Cálculo de probabilidade" aria-pressed="false"><i data-lucide="calculator"></i></button>
+<button class="probabilidade-botao-topico" type="button" data-topico="condicional" aria-label="Probabilidade condicional" title="Probabilidade condicional" aria-pressed="false"><i data-lucide="git-branch"></i></button>
+<button class="probabilidade-botao-topico" type="button" data-topico="independencia" aria-label="Eventos independentes e dependentes" title="Eventos independentes e dependentes" aria-pressed="false"><i data-lucide="workflow"></i></button>
+<button class="probabilidade-botao-topico" type="button" data-topico="binomial" aria-label="Distribuição binomial" title="Distribuição binomial" aria-pressed="false"><i data-lucide="chart-no-axes-column"></i></button>
+</nav>
+<section class="probabilidade-paineis" aria-live="polite">
+<article class="probabilidade-painel" data-conteudo="conceito" hidden><h2>1. Conceito de Probabilidade</h2><p>Entenda o que é probabilidade e como medir a chance de um acontecimento.</p><div class="probabilidade-exemplo"><h3>Exemplo explicado</h3><p>Uma moeda equilibrada tem dois resultados possíveis: cara ou coroa. Cada um possui chance de 1 em 2, ou 50%.</p><p>Identifique primeiro os resultados possíveis e depois os resultados que atendem à condição do problema. Só então escolha a operação adequada.</p></div></article>
+<article class="probabilidade-painel" data-conteudo="experimentos" hidden><h2>2. Experimentos aleatórios</h2><p>Identifique experimentos aleatórios e reconheça situações cujo resultado não pode ser previsto com certeza.</p><div class="probabilidade-exemplo"><h3>Exemplo explicado</h3><p>Ao lançar um dado, não sabemos qual face ficará para cima. O resultado depende do acaso, embora conheçamos todas as possibilidades.</p><p>Identifique primeiro os resultados possíveis e depois os resultados que atendem à condição do problema. Só então escolha a operação adequada.</p></div></article>
+<article class="probabilidade-painel" data-conteudo="espaco-amostral" hidden><h2>3. Espaço amostral</h2><p>Aprenda a listar todos os resultados possíveis de um experimento.</p><div class="probabilidade-exemplo"><h3>Exemplo explicado</h3><p>Quando lançamos um dado comum, o espaço amostral é {1, 2, 3, 4, 5, 6}. Cada número é um resultado possível.</p><p>Identifique primeiro os resultados possíveis e depois os resultados que atendem à condição do problema. Só então escolha a operação adequada.</p></div></article>
+<article class="probabilidade-painel" data-conteudo="eventos" hidden><h2>4. Eventos</h2><p>Diferencie eventos simples, compostos, certos e impossíveis.</p><div class="probabilidade-exemplo"><h3>Exemplo explicado</h3><p>No lançamento de um dado, o evento “sair número par” reúne 2, 4 e 6. É composto porque possui mais de um resultado.</p><p>Identifique primeiro os resultados possíveis e depois os resultados que atendem à condição do problema. Só então escolha a operação adequada.</p></div></article>
+<article class="probabilidade-painel" data-conteudo="uniao-intersecao" hidden><h2>5. União e interseção de eventos</h2><p>Entenda quando ocorre pelo menos um evento e quando dois eventos acontecem juntos.</p><div class="probabilidade-exemplo"><h3>Exemplo explicado</h3><p>Considere A = sair número par e B = sair número maior que 3. A interseção é {4, 6}, pois esses resultados pertencem aos dois eventos.</p><p>Identifique primeiro os resultados possíveis e depois os resultados que atendem à condição do problema. Só então escolha a operação adequada.</p></div></article>
+<article class="probabilidade-painel" data-conteudo="complementar" hidden><h2>6. Evento complementar</h2><p>Calcule a chance de um evento não acontecer usando a probabilidade complementar.</p><div class="probabilidade-exemplo"><h3>Exemplo explicado</h3><p>Se a chance de um ônibus atrasar é 20%, a chance de não atrasar é 100% − 20% = 80%. São eventos complementares.</p><p>Identifique primeiro os resultados possíveis e depois os resultados que atendem à condição do problema. Só então escolha a operação adequada.</p></div></article>
+<article class="probabilidade-painel" data-conteudo="calculo" hidden><h2>7. Cálculo de probabilidade</h2><p>Use a razão entre resultados favoráveis e resultados possíveis em situações equiprováveis.</p><div class="probabilidade-exemplo"><h3>Exemplo explicado</h3><p>Uma urna tem 3 bolas vermelhas e 2 azuis. Há 5 bolas no total. P(vermelha) = 3/5 = 0,6 = 60%.</p><p>Identifique primeiro os resultados possíveis e depois os resultados que atendem à condição do problema. Só então escolha a operação adequada.</p></div></article>
+<article class="probabilidade-painel" data-conteudo="condicional" hidden><h2>8. Probabilidade condicional</h2><p>Calcule a chance de um evento sabendo que outro já ocorreu.</p><div class="probabilidade-exemplo"><h3>Exemplo explicado</h3><p>Em um grupo de 20 pessoas, 8 usam óculos. Sabendo que a pessoa escolhida usa óculos, a análise passa a considerar apenas esse grupo de 8 pessoas.</p><p>Identifique primeiro os resultados possíveis e depois os resultados que atendem à condição do problema. Só então escolha a operação adequada.</p></div></article>
+<article class="probabilidade-painel" data-conteudo="independencia" hidden><h2>9. Eventos independentes e dependentes</h2><p>Descubra se a ocorrência de um evento altera a probabilidade de outro.</p><div class="probabilidade-exemplo"><h3>Exemplo explicado</h3><p>Retirar uma bola, devolvê-la à urna e depois retirar outra mantém as mesmas chances. Sem devolver a primeira bola, as chances podem mudar.</p><p>Identifique primeiro os resultados possíveis e depois os resultados que atendem à condição do problema. Só então escolha a operação adequada.</p></div></article>
+<article class="probabilidade-painel" data-conteudo="binomial" hidden><h2>10. Distribuição binomial</h2><p>Conheça situações com número fixo de tentativas independentes e dois resultados possíveis.</p><div class="probabilidade-exemplo"><h3>Exemplo explicado</h3><p>Uma moeda lançada 4 vezes tem um número fixo de tentativas. Em cada lançamento, os resultados possíveis são cara ou coroa.</p><p>Identifique primeiro os resultados possíveis e depois os resultados que atendem à condição do problema. Só então escolha a operação adequada.</p></div></article>
+</section>
+<button class="botao-proxima-aula" type="button" onclick="window.location.href='aprender-probabilidade.html'">Próxima Aula <i data-lucide="arrow-right"></i></button>
+</main>
+<div id="fundoMenu"></div><div id="menuLateral"><h2>Menu</h2><a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+<a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+<a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+<a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+<a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+<a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+<a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+<a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+<a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+<a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a></div>
+<script src="js/script.js?v=20261123-probabilidade1"></script>
+<script>
+(function(){
+ const botoes=document.querySelectorAll(".probabilidade-botao-topico");
+ const paineis=document.querySelectorAll(".probabilidade-painel");
+ botoes.forEach(function(botao){botao.addEventListener("click",function(){
+  const id=botao.dataset.topico;
+  botoes.forEach(function(item){const ativo=item===botao;item.classList.toggle("ativo",ativo);item.setAttribute("aria-pressed",String(ativo));});
+  paineis.forEach(function(painel){painel.hidden=painel.dataset.conteudo!==id;});
+ });});
+ if(window.lucide)lucide.createIcons();
+})();
+</script>
+</body></html>
