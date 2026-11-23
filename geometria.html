@@ -5,30 +5,162 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Geometria - Matemática Avante</title>
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=20261123-geometria1">
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 
-<body>
+<body class="pagina-geometria">
 
 <header>
-    <button id="voltarPagina" type="button">
+    <button id="voltarPagina" type="button" aria-label="Voltar">
         <i data-lucide="arrow-left"></i>
     </button>
     <h1>Geometria</h1>
 </header>
 
-<!-- TÍTULO -->
-<div class="titulo-operacoes">
-    <h2>Aprenda Geometria</h2>
-    <p>
-        <small>A geometria analisa formas, dimensões, posições e medidas dos objetos, permitindo entender melhor o espaço que nos cerca.</small>
-    </p>
-</div>
+<main class="geometria-conteudo">
 
-<main class="pagina-basico">
+    <nav class="geometria-navegacao" aria-label="Conteúdos de Geometria">
+        <button class="geometria-botao-topico" type="button" data-topico="basica" aria-label="Elementos básicos da Geometria" title="Elementos básicos da Geometria" aria-pressed="false">
+            <i data-lucide="ruler"></i>
+        </button>
+        <button class="geometria-botao-topico" type="button" data-topico="figuras" aria-label="Figuras planas" title="Figuras planas" aria-pressed="false">
+            <i data-lucide="shapes"></i>
+        </button>
+        <button class="geometria-botao-topico" type="button" data-topico="angulos" aria-label="Ângulos" title="Ângulos" aria-pressed="false">
+            <i data-lucide="move-up-right"></i>
+        </button>
+        <button class="geometria-botao-topico" type="button" data-topico="perimetro-area" aria-label="Perímetro e área" title="Perímetro e área" aria-pressed="false">
+            <i data-lucide="square"></i>
+        </button>
+        <button class="geometria-botao-topico" type="button" data-topico="espacial" aria-label="Geometria espacial" title="Geometria espacial" aria-pressed="false">
+            <i data-lucide="box"></i>
+        </button>
+        <button class="geometria-botao-topico" type="button" data-topico="volume" aria-label="Volume e capacidade" title="Volume e capacidade" aria-pressed="false">
+            <i data-lucide="cylinder"></i>
+        </button>
+        <button class="geometria-botao-topico" type="button" data-topico="semelhanca" aria-label="Semelhança e congruência" title="Semelhança e congruência" aria-pressed="false">
+            <i data-lucide="copy"></i>
+        </button>
+        <button class="geometria-botao-topico" type="button" data-topico="pitagoras" aria-label="Teorema de Pitágoras" title="Teorema de Pitágoras" aria-pressed="false">
+            <i data-lucide="triangle"></i>
+        </button>
+        <button class="geometria-botao-topico" type="button" data-topico="trigonometria" aria-label="Trigonometria" title="Trigonometria" aria-pressed="false">
+            <i data-lucide="activity"></i>
+        </button>
+        <button class="geometria-botao-topico" type="button" data-topico="analitica" aria-label="Geometria analítica" title="Geometria analítica" aria-pressed="false">
+            <i data-lucide="chart-scatter"></i>
+        </button>
+    </nav>
+
+    <section class="geometria-paineis" aria-live="polite">
+        <article class="geometria-painel" data-conteudo="basica" hidden>
+            <h2>Elementos básicos da Geometria</h2>
+            <p>A Geometria começa com elementos que usamos para representar posições e caminhos no espaço.</p>
+            <div class="geometria-exemplo">
+                <h3>Ponto</h3>
+                <p>Indica uma posição. Não possui comprimento, largura ou espessura. Costuma ser representado por uma letra maiúscula, como A.</p>
+            </div>
+            <div class="geometria-exemplo">
+                <h3>Reta</h3>
+                <p>É formada por infinitos pontos e se prolonga sem fim nos dois sentidos.</p>
+            </div>
+            <div class="geometria-exemplo">
+                <h3>Semirreta</h3>
+                <p>Tem um ponto de origem e continua infinitamente em apenas um sentido.</p>
+            </div>
+            <div class="geometria-exemplo">
+                <h3>Segmento de reta</h3>
+                <p>É uma parte da reta limitada por dois pontos, chamados extremidades. Por isso, possui um comprimento definido.</p>
+            </div>
+            <div class="geometria-exemplo">
+                <h3>Plano</h3>
+                <p>É uma superfície plana que se estende infinitamente em duas dimensões.</p>
+            </div>
+        </article>
+
+        <article class="geometria-painel" data-conteudo="figuras" hidden>
+            <h2>Figuras planas</h2>
+            <p>São figuras que possuem duas dimensões: comprimento e largura. Elas ficam em uma superfície plana.</p>
+            <div class="geometria-exemplo"><h3>Triângulo</h3><p>Possui 3 lados, 3 vértices e a soma dos ângulos internos é 180°.</p></div>
+            <div class="geometria-exemplo"><h3>Quadriláteros</h3><p>Possuem 4 lados. Quadrado, retângulo, losango e trapézio são exemplos.</p></div>
+            <div class="geometria-exemplo"><h3>Polígonos</h3><p>São figuras planas fechadas formadas por segmentos de reta. Pentágonos e hexágonos são exemplos.</p></div>
+            <div class="geometria-exemplo"><h3>Círculo e circunferência</h3><p>A circunferência é a linha curva fechada; o círculo é a região interna delimitada por ela.</p></div>
+        </article>
+
+        <article class="geometria-painel" data-conteudo="angulos" hidden>
+            <h2>Ângulos</h2>
+            <p>Um ângulo é formado por duas semirretas que partem do mesmo ponto, chamado vértice. Sua medida geralmente é expressa em graus (°).</p>
+            <div class="geometria-exemplo"><h3>Agudo</h3><p>Maior que 0° e menor que 90°.</p></div>
+            <div class="geometria-exemplo"><h3>Reto</h3><p>Mede exatamente 90°.</p></div>
+            <div class="geometria-exemplo"><h3>Obtuso</h3><p>Maior que 90° e menor que 180°.</p></div>
+            <div class="geometria-exemplo"><h3>Raso</h3><p>Mede exatamente 180°.</p></div>
+            <div class="geometria-exemplo"><h3>Completo</h3><p>Uma volta inteira, equivalente a 360°.</p></div>
+        </article>
+
+        <article class="geometria-painel" data-conteudo="perimetro-area" hidden>
+            <h2>Perímetro e área</h2>
+            <p>O perímetro mede o contorno de uma figura. A área mede a superfície ocupada por ela.</p>
+            <div class="geometria-exemplo"><h3>Quadrado</h3><p>Perímetro: P = 4 × lado. Área: A = lado².</p></div>
+            <div class="geometria-exemplo"><h3>Retângulo</h3><p>Perímetro: P = 2 × (base + altura). Área: A = base × altura.</p></div>
+            <div class="geometria-exemplo"><h3>Triângulo</h3><p>Perímetro: soma dos três lados. Área: A = (base × altura) ÷ 2.</p></div>
+            <div class="geometria-exemplo"><h3>Círculo</h3><p>Comprimento da circunferência: C = 2 × π × raio. Área: A = π × raio².</p></div>
+        </article>
+
+        <article class="geometria-painel" data-conteudo="espacial" hidden>
+            <h2>Geometria espacial</h2>
+            <p>Estuda sólidos geométricos, que possuem três dimensões: comprimento, largura e altura.</p>
+            <div class="geometria-exemplo"><h3>Cubo</h3><p>Possui 6 faces quadradas, 12 arestas e 8 vértices.</p></div>
+            <div class="geometria-exemplo"><h3>Prisma</h3><p>Tem duas bases paralelas e congruentes, ligadas por faces laterais.</p></div>
+            <div class="geometria-exemplo"><h3>Pirâmide</h3><p>Possui uma base e faces laterais triangulares que se encontram em um vértice.</p></div>
+            <div class="geometria-exemplo"><h3>Cilindro, cone e esfera</h3><p>São sólidos com superfícies curvas. O cilindro tem duas bases circulares, o cone tem uma base circular e a esfera é totalmente curva.</p></div>
+        </article>
+
+        <article class="geometria-painel" data-conteudo="volume" hidden>
+            <h2>Volume e capacidade</h2>
+            <p>Volume é o espaço ocupado por um sólido. Capacidade é quanto um recipiente pode armazenar.</p>
+            <div class="geometria-exemplo"><h3>Volume do bloco retangular</h3><p>V = comprimento × largura × altura.</p></div>
+            <div class="geometria-exemplo"><h3>Volume do cubo</h3><p>V = lado³.</p></div>
+            <div class="geometria-exemplo"><h3>Unidades</h3><p>O volume pode ser medido em cm³, m³ e outras unidades cúbicas. A capacidade costuma ser medida em litros (L) e mililitros (mL).</p></div>
+            <div class="geometria-exemplo"><h3>Conversão importante</h3><p>1 litro corresponde a 1.000 mililitros; 1 dm³ corresponde a 1 litro.</p></div>
+        </article>
+
+        <article class="geometria-painel" data-conteudo="semelhanca" hidden>
+            <h2>Semelhança e congruência</h2>
+            <p>Esses conceitos comparam figuras e ajudam a entender quando elas têm a mesma forma ou exatamente o mesmo tamanho.</p>
+            <div class="geometria-exemplo"><h3>Figuras semelhantes</h3><p>Têm a mesma forma: ângulos correspondentes iguais e lados correspondentes proporcionais. Podem ter tamanhos diferentes.</p></div>
+            <div class="geometria-exemplo"><h3>Figuras congruentes</h3><p>Têm a mesma forma e o mesmo tamanho. Seus lados e ângulos correspondentes possuem medidas iguais.</p></div>
+            <div class="geometria-exemplo"><h3>Razão de semelhança</h3><p>É a razão entre medidas correspondentes de duas figuras semelhantes. Ela indica o fator de ampliação ou redução.</p></div>
+        </article>
+
+        <article class="geometria-painel" data-conteudo="pitagoras" hidden>
+            <h2>Teorema de Pitágoras</h2>
+            <p>É aplicado em triângulos retângulos, aqueles que possuem um ângulo de 90°.</p>
+            <div class="geometria-exemplo"><h3>Fórmula</h3><p>a² = b² + c²</p><p>Nessa relação, a é a hipotenusa, o lado oposto ao ângulo reto; b e c são os catetos.</p></div>
+            <div class="geometria-exemplo"><h3>Exemplo</h3><p>Se os catetos medem 3 cm e 4 cm: a² = 3² + 4² = 9 + 16 = 25. Portanto, a = 5 cm.</p></div>
+            <div class="geometria-exemplo"><h3>Atenção</h3><p>A hipotenusa é sempre o maior lado do triângulo retângulo.</p></div>
+        </article>
+
+        <article class="geometria-painel" data-conteudo="trigonometria" hidden>
+            <h2>Trigonometria</h2>
+            <p>Estuda relações entre ângulos e lados dos triângulos, especialmente dos triângulos retângulos.</p>
+            <div class="geometria-exemplo"><h3>Seno</h3><p>sen(θ) = cateto oposto ÷ hipotenusa.</p></div>
+            <div class="geometria-exemplo"><h3>Cosseno</h3><p>cos(θ) = cateto adjacente ÷ hipotenusa.</p></div>
+            <div class="geometria-exemplo"><h3>Tangente</h3><p>tg(θ) = cateto oposto ÷ cateto adjacente.</p></div>
+            <div class="geometria-exemplo"><h3>Aplicações</h3><p>Essas relações ajudam a calcular alturas e distâncias que seriam difíceis de medir diretamente.</p></div>
+        </article>
+
+        <article class="geometria-painel" data-conteudo="analitica" hidden>
+            <h2>Geometria analítica</h2>
+            <p>Une Geometria e Álgebra para estudar figuras usando números e coordenadas no plano cartesiano.</p>
+            <div class="geometria-exemplo"><h3>Plano cartesiano</h3><p>É formado por dois eixos perpendiculares: eixo x (horizontal) e eixo y (vertical). Um ponto é indicado por um par ordenado (x, y).</p></div>
+            <div class="geometria-exemplo"><h3>Distância entre dois pontos</h3><p>Para A(x₁, y₁) e B(x₂, y₂): d = √[(x₂ − x₁)² + (y₂ − y₁)²].</p></div>
+            <div class="geometria-exemplo"><h3>Ponto médio</h3><p>M = ((x₁ + x₂) ÷ 2, (y₁ + y₂) ÷ 2).</p></div>
+        </article>
+    </section>
+
     <button
         class="botao-proxima-aula"
         onclick="window.location.href='aprender-geometria.html'"
@@ -36,11 +168,35 @@
         Próxima Aula
         <i data-lucide="arrow-right"></i>
     </button>
+
 </main>
 
 <script src="js/script.js"></script>
 <script>
-lucide.createIcons();
+(function () {
+    const botoes = document.querySelectorAll(".geometria-botao-topico");
+    const paineis = document.querySelectorAll(".geometria-painel");
+
+    botoes.forEach(function (botao) {
+        botao.addEventListener("click", function () {
+            const topicoSelecionado = botao.dataset.topico;
+
+            botoes.forEach(function (item) {
+                const selecionado = item === botao;
+                item.classList.toggle("ativo", selecionado);
+                item.setAttribute("aria-pressed", String(selecionado));
+            });
+
+            paineis.forEach(function (painel) {
+                painel.hidden = painel.dataset.conteudo !== topicoSelecionado;
+            });
+        });
+    });
+
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+})();
 </script>
 
 </body>
