@@ -10,7 +10,7 @@
 <title>Matérias - Matemática Avante</title>
 
 
-<link rel="stylesheet" href="css/style.css?v=20261122-materias1">
+<link rel="stylesheet" href="css/style.css?v=20261122-materias2">
 
 
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -332,27 +332,27 @@ lucide.createIcons();
         }
 
         const { data, error } = await supabaseClient
-            .from("user_level_progress")
-            .select("level_number, phase_number, completed")
-            .in("level_number", [1, 2, 3, 4, 5])
-            .eq("completed", true);
+            .from("user_question_rewards")
+            .select("activity_type, question_id")
+            .in("activity_type", ["adicao", "subtracao", "multiplicacao", "divisao"]);
 
         if (error) throw error;
 
-        const fasesConcluidas = new Set(
-            (data || []).map(function(fase) {
-                return Number(fase.level_number) + "-" + Number(fase.phase_number);
+        const questoesConcluidas = new Set(
+            (data || []).map(function(questao) {
+                return questao.activity_type + "-" + questao.question_id;
             })
         );
 
-        const totalFases = 50;
-        const quantidade = Math.min(fasesConcluidas.size, totalFases);
-        const porcentagem = Math.round((quantidade / totalFases) * 100);
+        // O Básico possui 5 exercícios em cada uma das quatro operações.
+        const totalQuestoes = 20;
+        const quantidade = Math.min(questoesConcluidas.size, totalQuestoes);
+        const porcentagem = Math.round((quantidade / totalQuestoes) * 100);
 
         barra.style.width = porcentagem + "%";
         trilho.setAttribute("aria-valuenow", String(porcentagem));
-        texto.textContent = quantidade + " de " + totalFases +
-            " fases concluídas • " + porcentagem + "%";
+        texto.textContent = quantidade + " de " + totalQuestoes +
+            " exercícios concluídos • " + porcentagem + "%";
     } catch (erro) {
         console.error("Não foi possível carregar o progresso de Básico da Matemática:", erro);
         texto.textContent = "Progresso indisponível no momento";
