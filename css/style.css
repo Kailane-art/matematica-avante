@@ -4511,3 +4511,454 @@ body {
         transition: none;
     }
 }
+
+
+/* =====================================================
+   PÁGINA SOBRE - ORGANIZAÇÃO E VISUAL
+   ===================================================== */
+
+.pagina-sobre {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #12366f 0%, #17458b 48%, #f4f8ff 48%, #f4f8ff 100%);
+    color: #172b4d;
+}
+
+.pagina-sobre .sobre-header {
+    min-height: 76px;
+    padding: 14px max(20px, calc((100% - 1080px) / 2));
+    background: #12366f;
+    justify-content: flex-start;
+}
+
+.pagina-sobre .sobre-header-nome {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .2px;
+}
+
+.pagina-sobre .sobre-hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 64px 22px 76px;
+    color: #fff;
+}
+
+.sobre-etiqueta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 13px;
+    border: 1px solid rgba(255,255,255,.28);
+    border-radius: 999px;
+    background: rgba(255,255,255,.10);
+    color: #dbeafe;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.sobre-etiqueta svg {
+    width: 16px;
+    height: 16px;
+}
+
+.pagina-sobre .sobre-hero h1 {
+    max-width: 760px;
+    margin: 22px auto 16px;
+    color: #fff;
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.12;
+    letter-spacing: -1.2px;
+}
+
+.pagina-sobre .sobre-hero p {
+    max-width: 680px;
+    color: #e5efff;
+    font-size: 18px;
+    line-height: 1.75;
+}
+
+.sobre-hero-link,
+.sobre-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.sobre-hero-link {
+    margin-top: 25px;
+    padding: 13px 18px;
+    border-radius: 12px;
+    background: #fff;
+    color: #17458b;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.sobre-hero-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,.18);
+}
+
+.sobre-hero-link svg,
+.sobre-link svg {
+    width: 17px;
+    height: 17px;
+}
+
+.pagina-sobre .sobre-conteudo {
+    max-width: 1080px;
+    margin: -24px auto 0;
+    padding: 0 22px 54px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 18px;
+}
+
+.pagina-sobre .card-sobre {
+    width: auto;
+    min-width: 0;
+    padding: 25px;
+    border: 1px solid #e1eaf7;
+    border-radius: 18px;
+    background: #fff;
+    color: #334155;
+    text-align: left;
+    box-shadow: 0 8px 24px rgba(15, 43, 82, .07);
+    backdrop-filter: none;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+
+.pagina-sobre .card-sobre:hover {
+    transform: translateY(-4px);
+    border-color: #b8d1f5;
+    background: #fff;
+    box-shadow: 0 14px 30px rgba(15, 43, 82, .12);
+}
+
+.sobre-icone {
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 18px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #eaf2ff;
+    color: #1e4f9a;
+}
+
+.sobre-icone svg {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+}
+
+.pagina-sobre .card-sobre h2 {
+    margin: 0 0 10px;
+    color: #173b70;
+    font-size: 19px;
+    line-height: 1.35;
+}
+
+.pagina-sobre .card-sobre p {
+    color: #526176;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.pagina-sobre .sobre-card-destaque {
+    border-top: 4px solid #3b82f6;
+}
+
+.pagina-sobre .sobre-link {
+    margin-top: 16px;
+    color: #1d4f91;
+    font-size: 14px;
+}
+
+.sobre-historia {
+    max-width: 1036px;
+    margin: 0 auto 64px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    border-radius: 20px;
+    background: #e8f1ff;
+    color: #173b70;
+}
+
+.sobre-historia-icone {
+    display: flex;
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 17px;
+    background: #1e4f9a;
+    color: #fff;
+}
+
+.sobre-historia-icone svg {
+    width: 28px;
+    height: 28px;
+}
+
+.sobre-subtitulo {
+    display: block;
+    margin-bottom: 8px;
+    color: #3970b8;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.sobre-historia h2,
+.sobre-secao-titulo h2 {
+    margin: 0 0 10px;
+    color: #173b70;
+    font-size: 27px;
+}
+
+.sobre-historia p,
+.sobre-secao-titulo p {
+    color: #526176;
+    line-height: 1.7;
+}
+
+.sobre-faq,
+.sobre-contato {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 22px 64px;
+}
+
+.sobre-secao-titulo {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.sobre-faq details {
+    margin-bottom: 12px;
+    padding: 18px 20px;
+    border: 1px solid #e1eaf7;
+    border-radius: 14px;
+    background: #fff;
+    color: #173b70;
+}
+
+.sobre-faq summary {
+    cursor: pointer;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.sobre-faq details p {
+    padding-top: 12px;
+    color: #526176;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.sobre-contato {
+    padding-bottom: 72px;
+}
+
+.sobre-contato-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.sobre-contato-item {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 18px;
+    border: 1px solid #dce7f6;
+    border-radius: 16px;
+    background: #fff;
+    color: #173b70;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.sobre-contato-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(15, 43, 82, .10);
+}
+
+.sobre-contato-icone {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: #eaf2ff;
+    color: #1e4f9a;
+}
+
+.sobre-contato-icone svg {
+    width: 22px;
+    height: 22px;
+}
+
+.sobre-contato-item > span:nth-child(2) {
+    min-width: 0;
+    flex: 1;
+}
+
+.sobre-contato-item small,
+.sobre-contato-item strong {
+    display: block;
+}
+
+.sobre-contato-item small {
+    margin-bottom: 4px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.sobre-contato-item strong {
+    overflow-wrap: anywhere;
+    font-size: 14px;
+}
+
+.sobre-contato-item > svg {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 auto;
+    color: #6483ad;
+}
+
+.pagina-sobre .sobre-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 25px 20px;
+    background: #12366f;
+    color: #fff;
+    text-align: center;
+}
+
+.pagina-sobre .sobre-footer span {
+    color: #cbdcf5;
+    font-size: 13px;
+}
+
+.modo-escuro.pagina-sobre {
+    background: linear-gradient(180deg, #0d2344 0%, #12366f 48%, #0b1d36 48%, #0b1d36 100%);
+    color: #e5edf8;
+}
+
+.modo-escuro.pagina-sobre .sobre-header,
+.modo-escuro.pagina-sobre .sobre-footer {
+    background: #0d2344;
+}
+
+.modo-escuro.pagina-sobre .card-sobre,
+.modo-escuro.pagina-sobre .sobre-faq details,
+.modo-escuro.pagina-sobre .sobre-contato-item {
+    border-color: #29466e;
+    background: #132b4c;
+    color: #e5edf8;
+}
+
+.modo-escuro.pagina-sobre .card-sobre:hover {
+    border-color: #416b9f;
+    background: #17365e;
+}
+
+.modo-escuro.pagina-sobre .card-sobre h2,
+.modo-escuro.pagina-sobre .sobre-historia h2,
+.modo-escuro.pagina-sobre .sobre-secao-titulo h2,
+.modo-escuro.pagina-sobre .sobre-contato-item strong,
+.modo-escuro.pagina-sobre .sobre-faq summary {
+    color: #f1f6ff;
+}
+
+.modo-escuro.pagina-sobre .card-sobre p,
+.modo-escuro.pagina-sobre .sobre-historia p,
+.modo-escuro.pagina-sobre .sobre-secao-titulo p,
+.modo-escuro.pagina-sobre .sobre-faq details p {
+    color: #c3d1e4;
+}
+
+.modo-escuro.pagina-sobre .sobre-icone,
+.modo-escuro.pagina-sobre .sobre-contato-icone {
+    background: #1d416e;
+    color: #bfdbfe;
+}
+
+.modo-escuro.pagina-sobre .sobre-historia {
+    background: #132b4c;
+    color: #e5edf8;
+}
+
+.modo-escuro.pagina-sobre .sobre-subtitulo {
+    color: #93c5fd;
+}
+
+.modo-escuro.pagina-sobre .sobre-contato-item small {
+    color: #a9bdd8;
+}
+
+@media (max-width: 760px) {
+    .pagina-sobre .sobre-conteudo {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sobre-historia {
+        margin: 0 22px 54px;
+    }
+}
+
+@media (max-width: 540px) {
+    .pagina-sobre .sobre-header {
+        padding: 12px 16px;
+    }
+
+    .pagina-sobre .sobre-hero {
+        padding: 48px 20px 65px;
+    }
+
+    .pagina-sobre .sobre-hero p {
+        font-size: 16px;
+    }
+
+    .pagina-sobre .sobre-conteudo {
+        grid-template-columns: 1fr;
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .pagina-sobre .card-sobre {
+        padding: 23px;
+    }
+
+    .sobre-historia {
+        margin-right: 16px;
+        margin-left: 16px;
+        padding: 23px;
+        align-items: flex-start;
+    }
+
+    .sobre-historia h2,
+    .sobre-secao-titulo h2 {
+        font-size: 23px;
+    }
+
+    .sobre-contato-links {
+        grid-template-columns: 1fr;
+    }
+}
