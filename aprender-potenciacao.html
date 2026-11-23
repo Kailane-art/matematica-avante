@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprender Potenciação e Radiciação - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css?v=20261123-aprenderpotenciacao1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-aprender-potenciacao">
+
+<header>
+    <button id="voltarPagina" type="button" aria-label="Voltar">
+        <i data-lucide="arrow-left"></i>
+    </button>
+    <h1>Atividades de Potenciação e Radiciação</h1>
+    <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+        <i data-lucide="menu"></i>
+    </button>
+</header>
+
+<main class="aprender-geometria-conteudo">
+    <div class="titulo-operacoes">
+        <h2>Aprender</h2>
+        <p>Escolha um conteúdo de Potenciação e Radiciação para praticar.</p>
+    </div>
+
+    <nav class="materias operacoes geometria-topicos" aria-label="Conteúdos de Potenciação e Radiciação">
+<button type="button" data-topico="conceito" aria-label="Conceito de potenciação" aria-pressed="false" title="Conceito de potenciação"><i data-lucide="superscript"></i><span>Conceito de potenciação</span></button>
+<button type="button" data-topico="propriedades" aria-label="Propriedades das potências" aria-pressed="false" title="Propriedades das potências"><i data-lucide="sigma"></i><span>Propriedades das potências</span></button>
+<button type="button" data-topico="expoentes" aria-label="Expoente zero e expoente negativo" aria-pressed="false" title="Expoente zero e expoente negativo"><i data-lucide="hash"></i><span>Expoente zero e expoente negativo</span></button>
+<button type="button" data-topico="sinais" aria-label="Potências com bases negativas" aria-pressed="false" title="Potências com bases negativas"><i data-lucide="plus-minus"></i><span>Potências com bases negativas</span></button>
+<button type="button" data-topico="raiz-quadrada" aria-label="Raiz quadrada" aria-pressed="false" title="Raiz quadrada"><i data-lucide="square-root"></i><span>Raiz quadrada</span></button>
+<button type="button" data-topico="raiz-cubica" aria-label="Raiz cúbica" aria-pressed="false" title="Raiz cúbica"><i data-lucide="box"></i><span>Raiz cúbica</span></button>
+<button type="button" data-topico="radicais" aria-label="Simplificação de radicais" aria-pressed="false" title="Simplificação de radicais"><i data-lucide="scaling"></i><span>Simplificação de radicais</span></button>
+<button type="button" data-topico="operacoes" aria-label="Operações com radicais" aria-pressed="false" title="Operações com radicais"><i data-lucide="plus"></i><span>Operações com radicais</span></button>
+<button type="button" data-topico="fracionario" aria-label="Expoentes fracionários" aria-pressed="false" title="Expoentes fracionários"><i data-lucide="fraction"></i><span>Expoentes fracionários</span></button>
+<button type="button" data-topico="cientifica" aria-label="Notação científica" aria-pressed="false" title="Notação científica"><i data-lucide="atom"></i><span>Notação científica</span></button>
+</nav>
+
+    <p id="mensagemCarregamentoPotenciacao" class="mensagem-geometria" role="status">Selecione um conteúdo para começar.</p>
+    <div id="potenciacaoAtividades" class="geometria-atividades"></div>
+</main>
+
+<div id="fundoMenu"></div>
+<div id="menuLateral">
+    <h2>Menu</h2>
+    <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+    <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+    <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+    <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+    <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+    <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+    <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+    <a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+    <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+    <a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+(function () {
+    const conteudos = [
+{id:"conceito",activityType:"pot_conceito",titulo:"Conceito de potenciação",icone:"superscript",descricao:"Compreenda a potenciação como uma multiplicação de fatores iguais.",questoes:[{pergunta:"Em 2³, a base é:",opcoes:{a:"2",b:"3",c:"6"}},{pergunta:"Em 5², o expoente indica:",opcoes:{a:"A base somada duas vezes",b:"Quantas vezes a base aparece como fator",c:"A base dividida por 2"}},{pergunta:"Quanto é 3²?",opcoes:{a:"6",b:"9",c:"8"}},{pergunta:"A expressão 4³ representa:",opcoes:{a:"4 + 4 + 4",b:"4 × 3",c:"4 × 4 × 4"}},{pergunta:"Quanto é 2⁴?",opcoes:{a:"8",b:"16",c:"12"}}]},
+{id:"propriedades",activityType:"pot_propriedades",titulo:"Propriedades das potências",icone:"sigma",descricao:"Use as propriedades de produto e quociente de potências de mesma base.",questoes:[{pergunta:"Quanto é 2³ × 2²?",opcoes:{a:"2⁵",b:"2⁶",c:"2¹"}},{pergunta:"Quanto é 5⁴ ÷ 5²?",opcoes:{a:"5⁶",b:"5²",c:"5⁸"}},{pergunta:"Quanto é (3²)³?",opcoes:{a:"3⁵",b:"3⁶",c:"3⁹"}},{pergunta:"Quanto é 7¹?",opcoes:{a:"1",b:"0",c:"7"}},{pergunta:"Quanto é 10² × 10?",opcoes:{a:"10²",b:"10³",c:"10⁴"}}]},
+{id:"expoentes",activityType:"pot_expoentes",titulo:"Expoente zero e expoente negativo",icone:"hash",descricao:"Entenda o valor de potências com expoente zero e expoentes inteiros negativos.",questoes:[{pergunta:"Quanto é 8⁰?",opcoes:{a:"0",b:"1",c:"8"}},{pergunta:"Quanto é 2⁻¹?",opcoes:{a:"-2",b:"1/2",c:"2"}},{pergunta:"Quanto é 10⁻²?",opcoes:{a:"0,01",b:"0,1",c:"100"}},{pergunta:"Para a diferente de zero, a⁰ é igual a:",opcoes:{a:"0",b:"a",c:"1"}},{pergunta:"Quanto é 3⁻²?",opcoes:{a:"-9",b:"1/9",c:"1/6"}}]},
+{id:"sinais",activityType:"pot_sinais",titulo:"Potências com bases negativas",icone:"plus-minus",descricao:"Observe os sinais em potências de base negativa e diferencie expoentes pares e ímpares.",questoes:[{pergunta:"Quanto é (-2)²?",opcoes:{a:"-4",b:"4",c:"-2"}},{pergunta:"Quanto é (-2)³?",opcoes:{a:"-8",b:"8",c:"6"}},{pergunta:"Quanto é -2², sem parênteses?",opcoes:{a:"4",b:"-4",c:"-8"}},{pergunta:"Quanto é (-3)⁴?",opcoes:{a:"-81",b:"81",c:"-12"}},{pergunta:"Uma base negativa elevada a expoente ímpar resulta em:",opcoes:{a:"Valor negativo",b:"Valor positivo",c:"Sempre zero"}}]},
+{id:"raiz-quadrada",activityType:"pot_raiz_quadrada",titulo:"Raiz quadrada",icone:"square-root",descricao:"Encontre o número que, multiplicado por ele mesmo, produz o radicando.",questoes:[{pergunta:"Qual é √25?",opcoes:{a:"4",b:"5",c:"6"}},{pergunta:"Qual é √81?",opcoes:{a:"8",b:"9",c:"7"}},{pergunta:"Qual é √144?",opcoes:{a:"12",b:"14",c:"10"}},{pergunta:"Qual é √0?",opcoes:{a:"0",b:"1",c:"Não existe"}},{pergunta:"Qual é √49 + √16?",opcoes:{a:"9",b:"11",c:"13"}}]},
+{id:"raiz-cubica",activityType:"pot_raiz_cubica",titulo:"Raiz cúbica",icone:"box",descricao:"Encontre o número que elevado ao cubo resulta no radicando.",questoes:[{pergunta:"Qual é ∛8?",opcoes:{a:"2",b:"4",c:"8"}},{pergunta:"Qual é ∛27?",opcoes:{a:"9",b:"3",c:"6"}},{pergunta:"Qual é ∛64?",opcoes:{a:"4",b:"8",c:"6"}},{pergunta:"Qual é ∛(-125)?",opcoes:{a:"5",b:"-25",c:"-5"}},{pergunta:"Qual é ∛1?",opcoes:{a:"0",b:"1",c:"3"}}]},
+{id:"radicais",activityType:"pot_radicais",titulo:"Simplificação de radicais",icone:"scaling",descricao:"Simplifique raízes extraindo fatores que sejam potências perfeitas.",questoes:[{pergunta:"Qual é a forma simplificada de √12?",opcoes:{a:"2√3",b:"3√2",c:"6√2"}},{pergunta:"Qual é a forma simplificada de √50?",opcoes:{a:"5√2",b:"2√5",c:"10√5"}},{pergunta:"Qual é √18 simplificada?",opcoes:{a:"9√2",b:"3√2",c:"2√3"}},{pergunta:"Qual é √72 simplificada?",opcoes:{a:"6√2",b:"3√8",c:"8√2"}},{pergunta:"Qual é √20 simplificada?",opcoes:{a:"2√5",b:"4√5",c:"5√2"}}]},
+{id:"operacoes",activityType:"pot_operacoes",titulo:"Operações com radicais",icone:"plus",descricao:"Some e subtraia radicais semelhantes e multiplique expressões simples.",questoes:[{pergunta:"Quanto é 2√3 + 4√3?",opcoes:{a:"6√3",b:"6√6",c:"8√3"}},{pergunta:"Quanto é 5√2 - 2√2?",opcoes:{a:"3√2",b:"3√0",c:"7√2"}},{pergunta:"Quanto é √2 × √8?",opcoes:{a:"√10",b:"4",c:"2√2"}},{pergunta:"Quanto é 3√5 + √5?",opcoes:{a:"3√10",b:"4√5",c:"4√10"}},{pergunta:"Quanto é √3 × √12?",opcoes:{a:"6",b:"√15",c:"3√4"}}]},
+{id:"fracionario",activityType:"pot_expoente_fracionario",titulo:"Expoentes fracionários",icone:"fraction",descricao:"Relacione expoentes fracionários com raízes e potências.",questoes:[{pergunta:"Quanto é 9^(1/2)?",opcoes:{a:"3",b:"4,5",c:"9"}},{pergunta:"A expressão 8^(1/3) equivale a:",opcoes:{a:"√8",b:"∛8",c:"8³"}},{pergunta:"Quanto é 16^(1/2)?",opcoes:{a:"8",b:"2",c:"4"}},{pergunta:"Quanto é 27^(1/3)?",opcoes:{a:"9",b:"3",c:"6"}},{pergunta:"O expoente 1/2 representa a:",opcoes:{a:"Raiz quadrada",b:"Raiz cúbica",c:"Potência ao quadrado"}}]},
+{id:"cientifica",activityType:"pot_cientifica",titulo:"Notação científica",icone:"atom",descricao:"Escreva números muito grandes ou pequenos usando potência de base 10.",questoes:[{pergunta:"Como escrever 3.000 em notação científica?",opcoes:{a:"3 × 10³",b:"30 × 10²",c:"3 × 10²"}},{pergunta:"Como escrever 45.000?",opcoes:{a:"45 × 10³",b:"4,5 × 10⁴",c:"4,5 × 10³"}},{pergunta:"Como escrever 0,006 em notação científica?",opcoes:{a:"6 × 10⁻³",b:"6 × 10³",c:"0,6 × 10⁻²"}},{pergunta:"Em notação científica, o número antes da potência de 10 deve ter módulo:",opcoes:{a:"Entre 1 e 10, incluindo 10",b:"Menor que 1",c:"Sempre igual a 10"}},{pergunta:"Como escrever 720.000?",opcoes:{a:"7,2 × 10⁵",b:"72 × 10⁴",c:"7,2 × 10⁴"}}]}
+    ];
+
+    const areaAtividades = document.getElementById("potenciacaoAtividades");
+    const mensagemCarregamento = document.getElementById("mensagemCarregamentoPotenciacao");
+    const botoesTopicos = document.querySelectorAll(".geometria-topicos button");
+    const estados = new Map();
+    const tiposAtividade = conteudos.map(function (item) { return item.activityType; });
+
+    let usuarioAtual = null;
+    let xpTotal = 0;
+    let carregamentoConcluido = false;
+
+    function criarElemento(tag, classe, texto) {
+        const elemento = document.createElement(tag);
+        if (classe) elemento.className = classe;
+        if (texto !== undefined) elemento.textContent = texto;
+        return elemento;
+    }
+
+    function atualizarXPExibido() {
+        estados.forEach(function (estado) { estado.xp.textContent = String(xpTotal); });
+    }
+
+    function atualizarPontuacao(estado) {
+        estado.pontuacao.textContent = "Pontuação: " + estado.acertos + "/5";
+    }
+
+    function bloquearQuestao(questaoElemento, bloquear) {
+        questaoElemento.querySelectorAll("button[data-option-id]").forEach(function (botao) {
+            botao.disabled = bloquear;
+            if (bloquear) botao.classList.add("resposta-bloqueada");
+            else botao.classList.remove("resposta-bloqueada");
+        });
+    }
+
+    function aplicarTentativa(estado, numero, tentativa) {
+        if (estado.respondidas.has(numero)) return;
+        estado.respondidas.set(numero, tentativa);
+
+        const questaoElemento = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questaoElemento) return;
+
+        bloquearQuestao(questaoElemento, true);
+        const botaoSelecionado = questaoElemento.querySelector('[data-option-id="' + tentativa.selected_option_id + '"]');
+        if (tentativa.is_correct) estado.acertos++;
+
+        if (botaoSelecionado) {
+            botaoSelecionado.classList.add(tentativa.is_correct ? "resposta-correta" : "resposta-errada");
+        }
+        atualizarPontuacao(estado);
+    }
+
+    function verificarConclusao(estado) {
+        if (estado.respondidas.size !== 5) return;
+        estado.resultado.textContent = estado.acertos === 5
+            ? "Parabéns! Você acertou todas as questões deste conteúdo!"
+            : "Atividade concluída! Você acertou " + estado.acertos + " de 5 questões.";
+    }
+
+    function criarAtividade(conteudo) {
+        const painel = criarElemento("section", "exercicios-basico geometria-exercicios");
+        painel.hidden = true;
+
+        const cabecalho = criarElemento("div", "titulo-exercicios");
+        const icone = document.createElement("i");
+        icone.setAttribute("data-lucide", conteudo.icone);
+        cabecalho.appendChild(icone);
+        cabecalho.appendChild(criarElemento("h2", "", conteudo.titulo));
+        painel.appendChild(cabecalho);
+        painel.appendChild(criarElemento("p", "subtitulo-exercicios", conteudo.descricao));
+        painel.appendChild(criarElemento("p", "geometria-regra-xp", "Responda às 5 questões. Cada acerto vale 10 XP."));
+
+        conteudo.questoes.forEach(function (questao, indice) {
+            const numero = indice + 1;
+            const blocoQuestao = criarElemento("div", "questao");
+            blocoQuestao.dataset.numero = String(numero);
+
+            const enunciado = document.createElement("p");
+            enunciado.appendChild(criarElemento("strong", "", numero + "."));
+            enunciado.appendChild(document.createTextNode(" " + questao.pergunta));
+            blocoQuestao.appendChild(enunciado);
+
+            const alternativas = criarElemento("div", "alternativas");
+            Object.entries(questao.opcoes).forEach(function ([letra, texto]) {
+                const botao = criarElemento("button", "", texto);
+                botao.type = "button";
+                botao.dataset.optionId = letra;
+                botao.disabled = true;
+                botao.addEventListener("click", function () {
+                    responderQuestao(conteudo, numero, letra, botao);
+                });
+                alternativas.appendChild(botao);
+            });
+
+            blocoQuestao.appendChild(alternativas);
+            painel.appendChild(blocoQuestao);
+        });
+
+        const resultado = criarElemento("div", "resultado-exercicios");
+        const pontuacao = criarElemento("h2", "", "Pontuação: 0/5");
+        const mensagem = criarElemento("p", "");
+        mensagem.setAttribute("aria-live", "polite");
+        const linhaXP = document.createElement("p");
+        linhaXP.appendChild(document.createTextNode("XP total: "));
+        const xp = criarElemento("strong", "", "0");
+        linhaXP.appendChild(xp);
+        resultado.appendChild(pontuacao);
+        resultado.appendChild(mensagem);
+        resultado.appendChild(linhaXP);
+        painel.appendChild(resultado);
+
+        const estado = { painel, pontuacao, resultado: mensagem, xp, respondidas: new Map(), acertos: 0 };
+        estados.set(conteudo.activityType, estado);
+        areaAtividades.appendChild(painel);
+    }
+
+    conteudos.forEach(criarAtividade);
+
+    function selecionarConteudo(id) {
+        const selecionado = conteudos.find(function (item) { return item.id === id; });
+        if (!selecionado) return;
+
+        botoesTopicos.forEach(function (botao) {
+            const ativo = botao.dataset.topico === id;
+            botao.classList.toggle("ativo", ativo);
+            botao.setAttribute("aria-pressed", String(ativo));
+        });
+
+        conteudos.forEach(function (item) {
+            estados.get(item.activityType).painel.hidden = item.id !== id;
+        });
+
+        mensagemCarregamento.textContent = carregamentoConcluido
+            ? "Atividade selecionada. Seu progresso fica salvo."
+            : "Carregando seu progresso...";
+    }
+
+    botoesTopicos.forEach(function (botao) {
+        botao.addEventListener("click", function () { selecionarConteudo(botao.dataset.topico); });
+    });
+
+    async function carregarEstadoFuncoes() {
+        try {
+            if (!supabaseClient) throw new Error("Conexão com o Supabase indisponível.");
+
+            const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+            if (erroUsuario || !user) throw new Error("Sessão não autenticada.");
+            usuarioAtual = user;
+
+            const [resultadoXP, resultadoTentativas] = await Promise.all([
+                supabaseClient.from("user_progress").select("total_xp").eq("user_id", user.id).maybeSingle(),
+                supabaseClient.from("user_question_attempts")
+                    .select("activity_type, question_id, selected_option_id, is_correct")
+                    .eq("user_id", user.id).in("activity_type", tiposAtividade)
+            ]);
+
+            if (resultadoXP.error) throw resultadoXP.error;
+            if (resultadoTentativas.error) throw resultadoTentativas.error;
+            xpTotal = Number(resultadoXP.data?.total_xp || 0);
+
+            (resultadoTentativas.data || []).forEach(function (tentativa) {
+                const estado = estados.get(tentativa.activity_type);
+                const numero = Number(tentativa.question_id);
+                if (!estado || !Number.isInteger(numero) || numero < 1 || numero > 5) return;
+                aplicarTentativa(estado, numero, tentativa);
+            });
+
+            estados.forEach(function (estado) {
+                for (let numero = 1; numero <= 5; numero++) {
+                    if (!estado.respondidas.has(numero)) {
+                        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+                        if (questao) bloquearQuestao(questao, false);
+                    }
+                }
+                if (estado.respondidas.size > 0) estado.resultado.textContent = "Seu progresso anterior foi carregado.";
+                verificarConclusao(estado);
+            });
+
+            atualizarXPExibido();
+            carregamentoConcluido = true;
+            mensagemCarregamento.textContent = "Escolha um conteúdo para começar. Seu progresso fica salvo.";
+        } catch (erro) {
+            console.error("Erro ao carregar atividades de Potenciação e Radiciação:", erro);
+            mensagemCarregamento.textContent = "Não foi possível carregar seu progresso. Atualize a página e tente novamente.";
+        }
+    }
+
+    async function responderQuestao(conteudo, numero, optionId, botao) {
+        const estado = estados.get(conteudo.activityType);
+        if (!carregamentoConcluido || !usuarioAtual || !estado || estado.respondidas.has(numero) || !botao || botao.disabled) return;
+
+        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questao) return;
+
+        bloquearQuestao(questao, true);
+        estado.resultado.textContent = "Registrando sua resposta...";
+
+        try {
+            const { data, error } = await supabaseClient.rpc("submit_operation_answer", {
+                p_activity_type: conteudo.activityType,
+                p_question_id: String(numero),
+                p_option_id: optionId
+            });
+            if (error) throw error;
+            if (!data) throw new Error("O banco não retornou um resultado.");
+
+            xpTotal = Number(data.total_xp || 0);
+            atualizarXPExibido();
+
+            if (data.already_answered) {
+                const { data: tentativa, error: erroTentativa } = await supabaseClient
+                    .from("user_question_attempts")
+                    .select("question_id, selected_option_id, is_correct")
+                    .eq("user_id", usuarioAtual.id)
+                    .eq("activity_type", conteudo.activityType)
+                    .eq("question_id", String(numero))
+                    .maybeSingle();
+                if (erroTentativa) throw erroTentativa;
+                if (tentativa) aplicarTentativa(estado, numero, tentativa);
+                estado.resultado.textContent = "Esta questão já foi respondida anteriormente.";
+                verificarConclusao(estado);
+                return;
+            }
+
+            aplicarTentativa(estado, numero, { selected_option_id: optionId, is_correct: data.correct });
+            estado.resultado.textContent = data.correct
+                ? "Resposta correta! Você ganhou " + data.xp_awarded + " XP."
+                : "Resposta incorreta. Continue estudando!";
+            verificarConclusao(estado);
+        } catch (erro) {
+            console.error("Erro ao registrar resposta de Funções:", erro);
+            bloquearQuestao(questao, false);
+            estado.resultado.textContent = "Não foi possível registrar sua resposta. Tente novamente.";
+        }
+    }
+
+    carregarEstadoFuncoes();
+    if (window.lucide) lucide.createIcons();
+})();
+</script>
+</body>
+</html>
