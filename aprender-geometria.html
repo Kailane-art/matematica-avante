@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprender Geometria - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css?v=20261123-aprendergeo1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+
+<body class="pagina-aprender-geometria">
+
+<header>
+    <button id="voltarPagina" type="button" aria-label="Voltar">
+        <i data-lucide="arrow-left"></i>
+    </button>
+    <h1>Atividades de Geometria</h1>
+    <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+        <i data-lucide="menu"></i>
+    </button>
+</header>
+
+<main class="aprender-geometria-conteudo">
+
+    <div class="titulo-operacoes">
+        <h2>Aprender</h2>
+        <p>Escolha um conteúdo de Geometria para praticar.</p>
+    </div>
+
+    <nav class="materias operacoes geometria-topicos" aria-label="Conteúdos de Geometria">
+        <button type="button" data-topico="basica" aria-label="Elementos básicos da Geometria" aria-pressed="false" title="Elementos básicos da Geometria">
+            <i data-lucide="ruler"></i><span>Elementos básicos</span>
+        </button>
+        <button type="button" data-topico="figuras" aria-label="Figuras planas" aria-pressed="false" title="Figuras planas">
+            <i data-lucide="shapes"></i><span>Figuras planas</span>
+        </button>
+        <button type="button" data-topico="angulos" aria-label="Ângulos" aria-pressed="false" title="Ângulos">
+            <i data-lucide="move-up-right"></i><span>Ângulos</span>
+        </button>
+        <button type="button" data-topico="perimetro-area" aria-label="Perímetro e área" aria-pressed="false" title="Perímetro e área">
+            <i data-lucide="square"></i><span>Perímetro e área</span>
+        </button>
+        <button type="button" data-topico="espacial" aria-label="Geometria espacial" aria-pressed="false" title="Geometria espacial">
+            <i data-lucide="box"></i><span>Geometria espacial</span>
+        </button>
+        <button type="button" data-topico="volume" aria-label="Volume e capacidade" aria-pressed="false" title="Volume e capacidade">
+            <i data-lucide="cylinder"></i><span>Volume e capacidade</span>
+        </button>
+        <button type="button" data-topico="semelhanca" aria-label="Semelhança e congruência" aria-pressed="false" title="Semelhança e congruência">
+            <i data-lucide="copy"></i><span>Semelhança</span>
+        </button>
+        <button type="button" data-topico="pitagoras" aria-label="Teorema de Pitágoras" aria-pressed="false" title="Teorema de Pitágoras">
+            <i data-lucide="triangle"></i><span>Pitágoras</span>
+        </button>
+        <button type="button" data-topico="trigonometria" aria-label="Trigonometria" aria-pressed="false" title="Trigonometria">
+            <i data-lucide="activity"></i><span>Trigonometria</span>
+        </button>
+        <button type="button" data-topico="analitica" aria-label="Geometria analítica" aria-pressed="false" title="Geometria analítica">
+            <i data-lucide="chart-scatter"></i><span>Geometria analítica</span>
+        </button>
+    </nav>
+
+    <p id="mensagemCarregamentoGeometria" class="mensagem-geometria" role="status">
+        Selecione um conteúdo para começar.
+    </p>
+
+    <div id="geometriaAtividades" class="geometria-atividades"></div>
+
+</main>
+
+<!-- MENU LATERAL -->
+<div id="fundoMenu"></div>
+<div id="menuLateral">
+    <h2>Menu</h2>
+
+    <a href="inicio.html" class="menu-item">
+        <i data-lucide="house"></i>
+        <span>Voltar ao início</span>
+    </a>
+
+    <a href="perfil.html" class="menu-item">
+        <i data-lucide="user-round"></i>
+        <span>Perfil</span>
+    </a>
+
+    <a href="chat.html" class="menu-item">
+        <i data-lucide="messages-square"></i>
+        <span>Chat</span>
+    </a>
+
+    <a href="materias.html" class="menu-item">
+        <i data-lucide="book-open"></i>
+        <span>Matérias</span>
+    </a>
+
+    <a href="atividades.html" class="menu-item">
+        <i data-lucide="clipboard-list"></i>
+        <span>Atividades</span>
+    </a>
+
+    <a href="professores.html" class="menu-item">
+        <i data-lucide="graduation-cap"></i>
+        <span>Professores</span>
+    </a>
+
+    <a href="planos.html" class="menu-item">
+        <i data-lucide="credit-card"></i>
+        <span>Planos e Assinaturas</span>
+    </a>
+
+    <a href="configuracoes.html" class="menu-item">
+        <i data-lucide="settings"></i>
+        <span>Configurações</span>
+    </a>
+
+    <a href="sobre.html" class="menu-item">
+        <i data-lucide="info"></i>
+        <span>Sobre</span>
+    </a>
+
+    <a href="alertas.html" class="menu-item">
+        <i data-lucide="megaphone"></i>
+        <span>Alertas e Eventos</span>
+    </a>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+(function () {
+    const conteudos = [
+        {
+            id: "basica",
+            activityType: "geo_basica",
+            titulo: "Elementos básicos da Geometria",
+            descricao: "Pratique a identificação de pontos, retas, semirretas, segmentos e planos.",
+            icone: "ruler",
+            questoes: [
+                { pergunta: "Qual elemento indica uma posição e não possui dimensões?", opcoes: { a: "Reta", b: "Ponto", c: "Plano" } },
+                { pergunta: "Qual elemento se prolonga infinitamente nos dois sentidos?", opcoes: { a: "Reta", b: "Semirreta", c: "Segmento de reta" } },
+                { pergunta: "Qual parte da reta possui duas extremidades?", opcoes: { a: "Semirreta", b: "Plano", c: "Segmento de reta" } },
+                { pergunta: "Qual elemento tem uma origem e se prolonga infinitamente em um sentido?", opcoes: { a: "Segmento de reta", b: "Semirreta", c: "Reta" } },
+                { pergunta: "Qual elemento geométrico possui duas dimensões e se estende infinitamente?", opcoes: { a: "Plano", b: "Ponto", c: "Reta" } }
+            ]
+        },
+        {
+            id: "figuras",
+            activityType: "geo_figuras",
+            titulo: "Figuras planas",
+            descricao: "Identifique polígonos, quadriláteros, triângulos, círculos e circunferências.",
+            icone: "shapes",
+            questoes: [
+                { pergunta: "Qual figura plana possui exatamente três lados?", opcoes: { a: "Quadrilátero", b: "Pentágono", c: "Triângulo" } },
+                { pergunta: "Qual figura possui quatro lados iguais e quatro ângulos retos?", opcoes: { a: "Quadrado", b: "Retângulo", c: "Losango" } },
+                { pergunta: "Qual quadrilátero possui quatro ângulos retos e lados opostos iguais?", opcoes: { a: "Losango", b: "Retângulo", c: "Trapézio" } },
+                { pergunta: "O que é a circunferência?", opcoes: { a: "Toda a região interna do círculo", b: "Um polígono de seis lados", c: "Uma linha curva fechada" } },
+                { pergunta: "Quantos lados possui um hexágono?", opcoes: { a: "Cinco", b: "Seis", c: "Oito" } }
+            ]
+        },
+        {
+            id: "angulos",
+            activityType: "geo_angulos",
+            titulo: "Ângulos",
+            descricao: "Reconheça os tipos de ângulos e suas medidas em graus.",
+            icone: "move-up-right",
+            questoes: [
+                { pergunta: "Um ângulo de 45° é classificado como:", opcoes: { a: "Agudo", b: "Reto", c: "Obtuso" } },
+                { pergunta: "Um ângulo que mede exatamente 90° é:", opcoes: { a: "Raso", b: "Reto", c: "Completo" } },
+                { pergunta: "Um ângulo de 120° é:", opcoes: { a: "Agudo", b: "Reto", c: "Obtuso" } },
+                { pergunta: "Um ângulo de 180° é chamado de:", opcoes: { a: "Raso", b: "Agudo", c: "Completo" } },
+                { pergunta: "Uma volta completa corresponde a:", opcoes: { a: "90°", b: "360°", c: "180°" } }
+            ]
+        },
+        {
+            id: "perimetro-area",
+            activityType: "geo_perimetro_area",
+            titulo: "Perímetro e área",
+            descricao: "Calcule contornos e superfícies de figuras planas.",
+            icone: "square",
+            questoes: [
+                { pergunta: "Um quadrado tem lado de 4 cm. Qual é seu perímetro?", opcoes: { a: "12 cm", b: "16 cm", c: "20 cm" } },
+                { pergunta: "Um quadrado tem lado de 5 cm. Qual é sua área?", opcoes: { a: "20 cm²", b: "30 cm²", c: "25 cm²" } },
+                { pergunta: "Um retângulo tem base de 6 cm e altura de 3 cm. Qual é sua área?", opcoes: { a: "18 cm²", b: "9 cm²", c: "12 cm²" } },
+                { pergunta: "Um triângulo tem lados de 3 cm, 4 cm e 5 cm. Qual é seu perímetro?", opcoes: { a: "10 cm", b: "12 cm", c: "14 cm" } },
+                { pergunta: "Um triângulo tem base de 8 cm e altura de 5 cm. Qual é sua área?", opcoes: { a: "40 cm²", b: "13 cm²", c: "20 cm²" } }
+            ]
+        },
+        {
+            id: "espacial",
+            activityType: "geo_espacial",
+            titulo: "Geometria espacial",
+            descricao: "Estude as características de cubos, prismas, pirâmides e corpos redondos.",
+            icone: "box",
+            questoes: [
+                { pergunta: "Quantas faces possui um cubo?", opcoes: { a: "6", b: "8", c: "12" } },
+                { pergunta: "Um prisma possui:", opcoes: { a: "Uma única base", b: "Apenas uma superfície curva", c: "Duas bases paralelas e congruentes" } },
+                { pergunta: "Uma pirâmide possui:", opcoes: { a: "Duas bases circulares", b: "Uma base e faces laterais triangulares", c: "Somente uma superfície curva" } },
+                { pergunta: "Quantas bases circulares possui um cilindro?", opcoes: { a: "Duas", b: "Uma", c: "Nenhuma" } },
+                { pergunta: "Qual característica corresponde à esfera?", opcoes: { a: "Possui seis faces planas", b: "Possui doze arestas", c: "Tem superfície curva, sem faces planas, arestas ou vértices" } }
+            ]
+        },
+        {
+            id: "volume",
+            activityType: "geo_volume",
+            titulo: "Volume e capacidade",
+            descricao: "Calcule o espaço ocupado por sólidos e pratique conversões de capacidade.",
+            icone: "cylinder",
+            questoes: [
+                { pergunta: "Um bloco mede 3 cm, 2 cm e 4 cm. Qual é seu volume?", opcoes: { a: "18 cm³", b: "24 cm³", c: "20 cm³" } },
+                { pergunta: "Qual é o volume de um cubo com aresta de 3 cm?", opcoes: { a: "27 cm³", b: "9 cm³", c: "18 cm³" } },
+                { pergunta: "Quantos mililitros correspondem a 1 litro?", opcoes: { a: "100 mL", b: "500 mL", c: "1.000 mL" } },
+                { pergunta: "A quantos litros corresponde 1 dm³?", opcoes: { a: "10 L", b: "1 L", c: "100 L" } },
+                { pergunta: "Um bloco mede 5 cm de comprimento, 2 cm de largura e 2 cm de altura. Qual é seu volume?", opcoes: { a: "20 cm³", b: "10 cm³", c: "25 cm³" } }
+            ]
+        },
+        {
+            id: "semelhanca",
+            activityType: "geo_semelhanca",
+            titulo: "Semelhança e congruência",
+            descricao: "Compare figuras, identifique proporções e reconheça figuras congruentes.",
+            icone: "copy",
+            questoes: [
+                { pergunta: "Figuras semelhantes possuem:", opcoes: { a: "Sempre o mesmo tamanho", b: "Todos os lados com medidas iguais", c: "A mesma forma, ângulos correspondentes iguais e lados proporcionais" } },
+                { pergunta: "Figuras congruentes possuem:", opcoes: { a: "A mesma forma e o mesmo tamanho", b: "Apenas a mesma área", c: "Somente ângulos diferentes" } },
+                { pergunta: "Um lado de 3 cm foi ampliado para 6 cm. Qual foi o fator de escala?", opcoes: { a: "3", b: "2", c: "6" } },
+                { pergunta: "Em triângulos semelhantes, os ângulos correspondentes são:", opcoes: { a: "Sempre diferentes", b: "Sempre retos", c: "Iguais" } },
+                { pergunta: "Um segmento de 4 cm é ampliado por fator 3. Qual será sua nova medida?", opcoes: { a: "12 cm", b: "7 cm", c: "9 cm" } }
+            ]
+        },
+        {
+            id: "pitagoras",
+            activityType: "geo_pitagoras",
+            titulo: "Teorema de Pitágoras",
+            descricao: "Resolva problemas com catetos e hipotenusa em triângulos retângulos.",
+            icone: "triangle",
+            questoes: [
+                { pergunta: "Um triângulo retângulo possui catetos de 3 cm e 4 cm. Quanto mede a hipotenusa?", opcoes: { a: "6 cm", b: "5 cm", c: "7 cm" } },
+                { pergunta: "Um triângulo retângulo possui catetos de 5 cm e 12 cm. Qual é a hipotenusa?", opcoes: { a: "12 cm", b: "17 cm", c: "13 cm" } },
+                { pergunta: "A hipotenusa mede 10 cm e um cateto mede 6 cm. Quanto mede o outro cateto?", opcoes: { a: "8 cm", b: "6 cm", c: "9 cm" } },
+                { pergunta: "Considerando a como hipotenusa e b e c como catetos, qual é a fórmula correta?", opcoes: { a: "a = b + c", b: "a² = b² + c²", c: "a² = b² - c²" } },
+                { pergunta: "Um triângulo retângulo possui catetos de 8 cm e 15 cm. Qual é a hipotenusa?", opcoes: { a: "15 cm", b: "16 cm", c: "17 cm" } }
+            ]
+        },
+        {
+            id: "trigonometria",
+            activityType: "geo_trigonometria",
+            titulo: "Trigonometria",
+            descricao: "Pratique as razões seno, cosseno e tangente no triângulo retângulo.",
+            icone: "activity",
+            questoes: [
+                { pergunta: "No triângulo retângulo, o seno de um ângulo é:", opcoes: { a: "Cateto oposto ÷ hipotenusa", b: "Cateto adjacente ÷ hipotenusa", c: "Cateto oposto ÷ cateto adjacente" } },
+                { pergunta: "O cosseno de um ângulo é:", opcoes: { a: "Cateto oposto ÷ hipotenusa", b: "Cateto adjacente ÷ hipotenusa", c: "Hipotenusa ÷ cateto oposto" } },
+                { pergunta: "A tangente de um ângulo é:", opcoes: { a: "Hipotenusa ÷ cateto adjacente", b: "Cateto adjacente ÷ hipotenusa", c: "Cateto oposto ÷ cateto adjacente" } },
+                { pergunta: "Qual é o valor de sen(30°)?", opcoes: { a: "1/2", b: "√2/2", c: "√3/2" } },
+                { pergunta: "Qual é o valor de cos(60°)?", opcoes: { a: "√3/2", b: "1/2", c: "1" } }
+            ]
+        },
+        {
+            id: "analitica",
+            activityType: "geo_analitica",
+            titulo: "Geometria analítica",
+            descricao: "Use coordenadas, distância entre pontos e ponto médio no plano cartesiano.",
+            icone: "chart-scatter",
+            questoes: [
+                { pergunta: "Como representamos um ponto no plano cartesiano?", opcoes: { a: "Por uma única medida", b: "Por um ângulo", c: "Por um par ordenado (x, y)" } },
+                { pergunta: "Qual eixo do plano cartesiano é horizontal?", opcoes: { a: "Eixo x", b: "Eixo y", c: "Nenhum dos dois" } },
+                { pergunta: "Qual é a distância entre os pontos (0, 0) e (3, 4)?", opcoes: { a: "4", b: "5", c: "7" } },
+                { pergunta: "Qual é o ponto médio entre (0, 0) e (4, 6)?", opcoes: { a: "(4, 6)", b: "(1, 3)", c: "(2, 3)" } },
+                { pergunta: "O ponto (-2, 3) está em qual quadrante?", opcoes: { a: "Segundo quadrante", b: "Primeiro quadrante", c: "Quarto quadrante" } }
+            ]
+        }
+    ];
+
+    const areaAtividades = document.getElementById("geometriaAtividades");
+    const mensagemCarregamento = document.getElementById("mensagemCarregamentoGeometria");
+    const botoesTopicos = document.querySelectorAll(".geometria-topicos button");
+    const estados = new Map();
+    const tiposAtividade = conteudos.map(function (item) {
+        return item.activityType;
+    });
+
+    let usuarioAtual = null;
+    let xpTotal = 0;
+    let carregamentoConcluido = false;
+
+    function criarElemento(tag, classe, texto) {
+        const elemento = document.createElement(tag);
+        if (classe) elemento.className = classe;
+        if (texto !== undefined) elemento.textContent = texto;
+        return elemento;
+    }
+
+    function atualizarXPExibido() {
+        estados.forEach(function (estado) {
+            estado.xp.textContent = String(xpTotal);
+        });
+    }
+
+    function atualizarPontuacao(estado) {
+        estado.pontuacao.textContent =
+            "Pontuação: " + estado.acertos + "/5";
+    }
+
+    function bloquearQuestao(questaoElemento, bloquear) {
+        questaoElemento.querySelectorAll("button[data-option-id]").forEach(function (botao) {
+            botao.disabled = bloquear;
+            if (bloquear) {
+                botao.classList.add("resposta-bloqueada");
+            } else {
+                botao.classList.remove("resposta-bloqueada");
+            }
+        });
+    }
+
+    function aplicarTentativa(estado, numero, tentativa) {
+        if (estado.respondidas.has(numero)) return;
+
+        estado.respondidas.set(numero, tentativa);
+        const questaoElemento = estado.painel.querySelector(
+            '.questao[data-numero="' + numero + '"]'
+        );
+
+        if (!questaoElemento) return;
+
+        bloquearQuestao(questaoElemento, true);
+
+        const botaoSelecionado = questaoElemento.querySelector(
+            '[data-option-id="' + tentativa.selected_option_id + '"]'
+        );
+
+        if (tentativa.is_correct) {
+            estado.acertos++;
+        }
+
+        if (botaoSelecionado) {
+            botaoSelecionado.classList.add(
+                tentativa.is_correct ? "resposta-correta" : "resposta-errada"
+            );
+        }
+
+        atualizarPontuacao(estado);
+    }
+
+    function verificarConclusao(estado) {
+        if (estado.respondidas.size !== 5) return;
+
+        if (estado.acertos === 5) {
+            estado.resultado.textContent =
+                "Parabéns! Você acertou todas as questões deste conteúdo!";
+        } else {
+            estado.resultado.textContent =
+                "Atividade concluída! Você acertou " +
+                estado.acertos + " de 5 questões.";
+        }
+    }
+
+    function criarAtividade(conteudo) {
+        const painel = criarElemento("section", "exercicios-basico geometria-exercicios");
+        painel.hidden = true;
+
+        const cabecalho = criarElemento("div", "titulo-exercicios");
+        const icone = document.createElement("i");
+        icone.setAttribute("data-lucide", conteudo.icone);
+        cabecalho.appendChild(icone);
+        cabecalho.appendChild(criarElemento("h2", "", conteudo.titulo));
+        painel.appendChild(cabecalho);
+
+        painel.appendChild(criarElemento("p", "subtitulo-exercicios", conteudo.descricao));
+        painel.appendChild(criarElemento(
+            "p",
+            "geometria-regra-xp",
+            "Responda às 5 questões. Cada acerto vale 10 XP."
+        ));
+
+        conteudo.questoes.forEach(function (questao, indice) {
+            const numero = indice + 1;
+            const blocoQuestao = criarElemento("div", "questao");
+            blocoQuestao.dataset.numero = String(numero);
+
+            const enunciado = document.createElement("p");
+            enunciado.appendChild(criarElemento("strong", "", numero + "."));
+            enunciado.appendChild(document.createTextNode(" " + questao.pergunta));
+            blocoQuestao.appendChild(enunciado);
+
+            const alternativas = criarElemento("div", "alternativas");
+
+            Object.entries(questao.opcoes).forEach(function ([letra, texto]) {
+                const botao = criarElemento("button", "", texto);
+                botao.type = "button";
+                botao.dataset.optionId = letra;
+                botao.disabled = true;
+                botao.addEventListener("click", function () {
+                    responderQuestao(conteudo, numero, letra, botao);
+                });
+                alternativas.appendChild(botao);
+            });
+
+            blocoQuestao.appendChild(alternativas);
+            painel.appendChild(blocoQuestao);
+        });
+
+        const resultado = criarElemento("div", "resultado-exercicios");
+        const pontuacao = criarElemento("h2", "", "Pontuação: 0/5");
+        const mensagem = criarElemento("p", "");
+        mensagem.setAttribute("aria-live", "polite");
+        const linhaXP = document.createElement("p");
+        linhaXP.appendChild(document.createTextNode("XP total: "));
+        const xp = criarElemento("strong", "", "0");
+        linhaXP.appendChild(xp);
+
+        resultado.appendChild(pontuacao);
+        resultado.appendChild(mensagem);
+        resultado.appendChild(linhaXP);
+        painel.appendChild(resultado);
+
+        const estado = {
+            painel: painel,
+            pontuacao: pontuacao,
+            resultado: mensagem,
+            xp: xp,
+            respondidas: new Map(),
+            acertos: 0
+        };
+
+        estados.set(conteudo.activityType, estado);
+        areaAtividades.appendChild(painel);
+    }
+
+    conteudos.forEach(criarAtividade);
+
+    function selecionarConteudo(id) {
+        const conteudoSelecionado = conteudos.find(function (item) {
+            return item.id === id;
+        });
+
+        if (!conteudoSelecionado) return;
+
+        botoesTopicos.forEach(function (botao) {
+            const selecionado = botao.dataset.topico === id;
+            botao.classList.toggle("ativo", selecionado);
+            botao.setAttribute("aria-pressed", String(selecionado));
+        });
+
+        conteudos.forEach(function (item) {
+            const estado = estados.get(item.activityType);
+            estado.painel.hidden = item.id !== id;
+        });
+
+        mensagemCarregamento.textContent = carregamentoConcluido
+            ? "Atividade selecionada. Seu progresso fica salvo."
+            : "Carregando seu progresso...";
+    }
+
+    botoesTopicos.forEach(function (botao) {
+        botao.addEventListener("click", function () {
+            selecionarConteudo(botao.dataset.topico);
+        });
+    });
+
+    async function carregarEstadoGeometria() {
+        try {
+            if (!supabaseClient) {
+                throw new Error("Conexão com o Supabase indisponível.");
+            }
+
+            const { data: { user }, error: erroUsuario } =
+                await supabaseClient.auth.getUser();
+
+            if (erroUsuario || !user) {
+                throw new Error("Sessão não autenticada.");
+            }
+
+            usuarioAtual = user;
+
+            const [resultadoXP, resultadoTentativas] = await Promise.all([
+                supabaseClient
+                    .from("user_progress")
+                    .select("total_xp")
+                    .eq("user_id", user.id)
+                    .maybeSingle(),
+
+                supabaseClient
+                    .from("user_question_attempts")
+                    .select("activity_type, question_id, selected_option_id, is_correct")
+                    .eq("user_id", user.id)
+                    .in("activity_type", tiposAtividade)
+            ]);
+
+            if (resultadoXP.error) throw resultadoXP.error;
+            if (resultadoTentativas.error) throw resultadoTentativas.error;
+
+            xpTotal = Number(resultadoXP.data?.total_xp || 0);
+
+            (resultadoTentativas.data || []).forEach(function (tentativa) {
+                const estado = estados.get(tentativa.activity_type);
+                const numero = Number(tentativa.question_id);
+
+                if (
+                    !estado ||
+                    !Number.isInteger(numero) ||
+                    numero < 1 ||
+                    numero > 5
+                ) {
+                    return;
+                }
+
+                aplicarTentativa(estado, numero, tentativa);
+            });
+
+            estados.forEach(function (estado) {
+                for (let numero = 1; numero <= 5; numero++) {
+                    if (!estado.respondidas.has(numero)) {
+                        const questao = estado.painel.querySelector(
+                            '.questao[data-numero="' + numero + '"]'
+                        );
+                        if (questao) bloquearQuestao(questao, false);
+                    }
+                }
+
+                if (estado.respondidas.size > 0) {
+                    estado.resultado.textContent =
+                        "Seu progresso anterior foi carregado.";
+                }
+
+                verificarConclusao(estado);
+            });
+
+            atualizarXPExibido();
+            carregamentoConcluido = true;
+            mensagemCarregamento.textContent =
+                "Escolha um conteúdo para começar. Seu progresso fica salvo.";
+        } catch (erro) {
+            console.error("Erro ao carregar atividades de Geometria:", erro);
+            mensagemCarregamento.textContent =
+                "Não foi possível carregar seu progresso. Atualize a página e tente novamente.";
+        }
+    }
+
+    async function responderQuestao(conteudo, numero, optionId, botao) {
+        const estado = estados.get(conteudo.activityType);
+
+        if (
+            !carregamentoConcluido ||
+            !usuarioAtual ||
+            !estado ||
+            estado.respondidas.has(numero) ||
+            !botao ||
+            botao.disabled
+        ) {
+            return;
+        }
+
+        const questao = estado.painel.querySelector(
+            '.questao[data-numero="' + numero + '"]'
+        );
+
+        if (!questao) return;
+
+        bloquearQuestao(questao, true);
+        estado.resultado.textContent = "Registrando sua resposta...";
+
+        try {
+            const { data, error } = await supabaseClient.rpc(
+                "submit_operation_answer",
+                {
+                    p_activity_type: conteudo.activityType,
+                    p_question_id: String(numero),
+                    p_option_id: optionId
+                }
+            );
+
+            if (error) throw error;
+            if (!data) {
+                throw new Error("O banco não retornou um resultado.");
+            }
+
+            xpTotal = Number(data.total_xp || 0);
+            atualizarXPExibido();
+
+            if (data.already_answered) {
+                const { data: tentativa, error: erroTentativa } =
+                    await supabaseClient
+                        .from("user_question_attempts")
+                        .select("question_id, selected_option_id, is_correct")
+                        .eq("user_id", usuarioAtual.id)
+                        .eq("activity_type", conteudo.activityType)
+                        .eq("question_id", String(numero))
+                        .maybeSingle();
+
+                if (erroTentativa) throw erroTentativa;
+
+                if (tentativa) {
+                    aplicarTentativa(estado, numero, tentativa);
+                }
+
+                estado.resultado.textContent =
+                    "Esta questão já foi respondida anteriormente.";
+                verificarConclusao(estado);
+                return;
+            }
+
+            aplicarTentativa(estado, numero, {
+                selected_option_id: optionId,
+                is_correct: data.correct
+            });
+
+            if (data.correct) {
+                estado.resultado.textContent =
+                    "Resposta correta! Você ganhou " +
+                    data.xp_awarded + " XP.";
+            } else {
+                estado.resultado.textContent =
+                    "Resposta incorreta. Continue estudando!";
+            }
+
+            verificarConclusao(estado);
+        } catch (erro) {
+            console.error("Erro ao registrar resposta de Geometria:", erro);
+            bloquearQuestao(questao, false);
+            estado.resultado.textContent =
+                "Não foi possível registrar sua resposta. Tente novamente.";
+        }
+    }
+
+    carregarEstadoGeometria();
+
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+})();
+</script>
+
+</body>
+</html>
