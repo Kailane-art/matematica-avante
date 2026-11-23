@@ -1446,6 +1446,7 @@ const CHAVE_STREAK = "diasEstudados";
 const CHAVE_ULTIMA_ATIVIDADE = "ultimaAtividade";
 
 let diasEstudoSincronizados = null;
+let diasEstudoVerificadosSincronizados = null;
 // =====================================================
 // OBTER DATA LOCAL NO FORMATO YYYY-MM-DD
 // =====================================================
@@ -1538,6 +1539,20 @@ function obterDiasEstudados() {
 
 }
 
+// A sequência oficial considera somente dias confirmados pelo servidor.
+// O histórico completo continua disponível em obterDiasEstudados().
+function obterDiasEstudadosVerificados() {
+
+    if (Array.isArray(diasEstudoVerificadosSincronizados)) {
+
+        return [...new Set(diasEstudoVerificadosSincronizados)].sort();
+
+    }
+
+    return obterDiasEstudados();
+
+}
+
 
 // =====================================================
 // SALVAR DIAS DE ESTUDO
@@ -1614,7 +1629,7 @@ function registrarEstudoHoje() {
 function calcularSequenciaAtual() {
 
     const dias =
-        obterDiasEstudados();
+        obterDiasEstudadosVerificados();
 
     if (!dias.length) {
 
@@ -2040,6 +2055,10 @@ async function carregarIndicadoresUsuario() {
 
         if (erroUsuario || !user) return;
 
+        // Evita exibir temporariamente datas legadas como sequência verificada.
+        diasEstudoVerificadosSincronizados = [];
+        atualizarSequenciaInicio();
+
         // Importa datas antigas do navegador sem duplicar registros.
         // O banco ignora dias que já existem para essa conta.
         const diasLegados = obterDiasEstudados().filter(function(data) {
@@ -2084,7 +2103,7 @@ async function carregarIndicadoresUsuario() {
 
             supabaseClient
                 .from("user_study_days")
-                .select("study_date")
+                .select("study_date, is_verified")
                 .eq("user_id", user.id)
                 .order("study_date", { ascending: true }),
 
@@ -2130,7 +2149,19 @@ async function carregarIndicadoresUsuario() {
             elementoTaxaAcertos.textContent = taxaAcertos + "%";
         }
 
-        diasEstudoSincronizados = (resultadoDias.data || [])
+        const registrosDias = resultadoDias.data || [];
+
+        // Mantém todo o histórico, inclusive datas legadas não verificadas.
+        diasEstudoSincronizados = registrosDias
+            .map(function(registro) {
+                return registro.study_date;
+            });
+
+        // A sequência exibida usa apenas dias confirmados por atividades no servidor.
+        diasEstudoVerificadosSincronizados = registrosDias
+            .filter(function(registro) {
+                return registro.is_verified === true;
+            })
             .map(function(registro) {
                 return registro.study_date;
             });
