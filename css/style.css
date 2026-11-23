@@ -5261,23 +5261,21 @@ body {
 }
 
 
-/* PÁGINA SOBRE - FUNDO AZUL-MARINHO VIVO E EQUILIBRADO */
+/* PÁGINA SOBRE - GRADIENTE CONTÍNUO ROYAL BLUE → AZUL-MARINHO */
 .pagina-sobre {
     background: linear-gradient(
         180deg,
-        #123b70 0%,
-        #194b83 48%,
-        #f3f8ff 48%,
-        #f3f8ff 100%
+        #4169e1 0%,
+        #2454a6 52%,
+        #12366f 100%
     );
 }
 
 .modo-escuro.pagina-sobre {
     background: linear-gradient(
         180deg,
-        #092a50 0%,
-        #103a68 48%,
-        #071b36 48%,
-        #071b36 100%
+        #244f9a 0%,
+        #173d70 55%,
+        #0b1d36 100%
     );
 }
