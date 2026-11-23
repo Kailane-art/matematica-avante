@@ -6177,3 +6177,94 @@ body {
         font-size: 22px;
     }
 }
+
+
+/* APRENDER ÁLGEBRA - MESMO PADRÃO VISUAL DA APRENDER GEOMETRIA */
+.pagina-aprender-algebra .aprender-geometria-conteudo {
+    width: min(100% - 32px, 1000px);
+    margin: 0 auto 40px;
+}
+
+.pagina-aprender-algebra .geometria-topicos {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    margin: 20px auto 16px;
+}
+
+.pagina-aprender-algebra .geometria-topicos button {
+    min-width: 0;
+    min-height: 66px;
+    padding: 9px 6px;
+    border-radius: 10px;
+    background: #1E3A8A;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 12px;
+    line-height: 1.2;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.pagina-aprender-algebra .geometria-topicos button svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.pagina-aprender-algebra .geometria-topicos button span {
+    display: block;
+}
+
+.pagina-aprender-algebra .geometria-topicos button:hover,
+.pagina-aprender-algebra .geometria-topicos button.ativo {
+    background: #294ec5;
+    transform: translateY(-2px);
+}
+
+.pagina-aprender-algebra .geometria-topicos button.ativo {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+}
+
+.pagina-aprender-algebra .mensagem-geometria,
+.pagina-aprender-algebra .geometria-regra-xp {
+    text-align: center;
+    color: #52627a;
+    margin: 14px 0;
+    font-size: 14px;
+}
+
+.pagina-aprender-algebra .geometria-exercicios {
+    margin-top: 18px;
+}
+
+.pagina-aprender-algebra .geometria-exercicios[hidden] {
+    display: none !important;
+}
+
+.modo-escuro.pagina-aprender-algebra .mensagem-geometria,
+.modo-escuro.pagina-aprender-algebra .geometria-regra-xp {
+    color: #cbdaf0;
+}
+
+@media (max-width: 700px) {
+    .pagina-aprender-algebra .geometria-topicos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .pagina-aprender-algebra .geometria-topicos button {
+        min-height: 58px;
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+    .pagina-aprender-algebra .geometria-topicos {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
