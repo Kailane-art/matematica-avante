@@ -208,6 +208,60 @@
         }
     });
 
+    const botaoSairConfiguracoes = document.getElementById("botaoSairConfiguracoes");
+    const botaoExcluirConta = document.getElementById("botaoExcluirConta");
+
+    if (botaoSairConfiguracoes) {
+        botaoSairConfiguracoes.addEventListener("click", async function() {
+            if (!confirm("Tem certeza que deseja sair?")) return;
+
+            botaoSairConfiguracoes.disabled = true;
+            try {
+                if (window.maPushNotifications) {
+                    await window.maPushNotifications.desvincularDispositivo();
+                }
+
+                const { error } = await supabaseClient.auth.signOut();
+                if (error) throw error;
+
+                localStorage.removeItem("nomeUsuario");
+                localStorage.removeItem("tipoUsuario");
+                localStorage.removeItem("fotoPerfil");
+                window.location.href = "index.html";
+            } catch (erro) {
+                console.error("Erro ao sair da conta:", erro);
+                mostrarStatus("Não foi possível encerrar sua sessão. Tente novamente.", true);
+                botaoSairConfiguracoes.disabled = false;
+            }
+        });
+    }
+
+    if (botaoExcluirConta) {
+        botaoExcluirConta.addEventListener("click", async function() {
+            const confirmar = confirm(
+                "Deseja solicitar a exclusão da sua conta?\n\nVocê receberá um e-mail com um link de confirmação. Sua conta continuará ativa até abrir esse link. Depois da confirmação, começará o prazo de 30 dias para recuperar a conta."
+            );
+            if (!confirmar) return;
+
+            botaoExcluirConta.disabled = true;
+            mostrarStatus("Enviando o e-mail de confirmação da exclusão...");
+            try {
+                const { data, error } = await supabaseClient.functions.invoke(
+                    "account-self-service",
+                    { body: { action: "request_deletion" } }
+                );
+                if (error) throw error;
+                if (data?.error) throw new Error(data.error);
+                mostrarStatus(data?.message || "Enviamos um e-mail para confirmar a solicitação. Sua conta continua ativa até a confirmação.");
+            } catch (erro) {
+                console.error("Erro ao solicitar exclusão da conta:", erro);
+                mostrarStatus(erro.message || "Não foi possível solicitar a exclusão agora.", true);
+            } finally {
+                botaoExcluirConta.disabled = false;
+            }
+        });
+    }
+
     carregarConfiguracoes();
     if (window.lucide) lucide.createIcons();
 })();
