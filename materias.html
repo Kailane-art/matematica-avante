@@ -126,19 +126,21 @@ Escolha um assunto para começar seus estudos.
     </div>
 
     <div class="materia-item">
-        <button class="materia-botao materia-indisponivel" type="button" disabled>
+        <button class="materia-botao" type="button" onclick="window.location.href='fracoes.html'">
             <i data-lucide="percent"></i>
             <span class="materia-nome">Frações e Decimais</span>
-            <span class="materia-selo">Em desenvolvimento</span>
+            <span class="materia-barra" role="progressbar" aria-label="Progresso em Frações e Decimais" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressoFracoesBarra"></span></span>
         </button>
+        <span class="materia-status" id="progressoFracoesTexto">Carregando progresso...</span>
     </div>
 
     <div class="materia-item">
-        <button class="materia-botao materia-indisponivel" type="button" disabled>
+        <button class="materia-botao" type="button" onclick="window.location.href='potenciacao.html'">
             <i data-lucide="superscript"></i>
             <span class="materia-nome">Potenciação e Radiciação</span>
-            <span class="materia-selo">Em desenvolvimento</span>
+            <span class="materia-barra" role="progressbar" aria-label="Progresso em Potenciação e Radiciação" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressoPotenciacaoBarra"></span></span>
         </button>
+        <span class="materia-status" id="progressoPotenciacaoTexto">Carregando progresso...</span>
     </div>
 
     <div class="materia-item">
@@ -392,6 +394,20 @@ lucide.createIcons();
 
         const todosTipos = materiasValidas.reduce(function(lista, materia) {
             return lista.concat(materia.tipos);
+        },
+        {
+            nome: "Frações e Decimais",
+            texto: document.getElementById("progressoFracoesTexto"),
+            barra: document.getElementById("progressoFracoesBarra"),
+            tipos: ["frac_conceito","frac_equivalentes","frac_simplificacao","frac_comparacao","frac_adicao","frac_subtracao","frac_multiplicacao","frac_divisao","frac_decimais","frac_conversao"],
+            totalQuestoes: 50
+        },
+        {
+            nome: "Potenciação e Radiciação",
+            texto: document.getElementById("progressoPotenciacaoTexto"),
+            barra: document.getElementById("progressoPotenciacaoBarra"),
+            tipos: ["pot_conceito","pot_propriedades","pot_expoentes","pot_sinais","pot_raiz_quadrada","pot_raiz_cubica","pot_radicais","pot_operacoes","pot_expoente_fracionario","pot_cientifica"],
+            totalQuestoes: 50
         }, []);
 
         const { data, error } = await supabaseClient
