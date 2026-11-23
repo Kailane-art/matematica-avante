@@ -8177,3 +8177,53 @@ body {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
+
+
+/* Ações dos links seguros de autoexclusão e recuperação. */
+.auth-recuperacao-acoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+.auth-acao-botao,
+.auth-acao-secundario {
+    flex: 1;
+    min-height: 44px;
+    padding: 11px 14px;
+    border: 0;
+    border-radius: 10px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+.auth-acao-botao {
+    background: #1e3a8a;
+    color: #fff;
+}
+.auth-acao-secundario {
+    background: #e2e8f0;
+    color: #26364d;
+}
+.auth-acao-botao:disabled,
+.auth-acao-secundario:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+#resultadoAcaoConta {
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.modo-escuro .auth-acao-botao {
+    background: #1e40af;
+    color: #fff;
+}
+.modo-escuro .auth-acao-secundario {
+    background: #29466d;
+    color: #f8fafc;
+}
+@media (max-width: 420px) {
+    .auth-recuperacao-acoes {
+        flex-direction: column;
+    }
+}
