@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprender Funções - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css?v=20261123-aprenderfuncoes1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-aprender-funcoes">
+
+<header>
+    <button id="voltarPagina" type="button" aria-label="Voltar">
+        <i data-lucide="arrow-left"></i>
+    </button>
+    <h1>Atividades de Funções</h1>
+    <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+        <i data-lucide="menu"></i>
+    </button>
+</header>
+
+<main class="aprender-geometria-conteudo">
+    <div class="titulo-operacoes">
+        <h2>Aprender</h2>
+        <p>Escolha um conteúdo de Funções para praticar.</p>
+    </div>
+
+    <nav class="materias operacoes geometria-topicos" aria-label="Conteúdos de Funções">
+        <button type="button" data-topico="conceito" aria-label="Conceito de função" aria-pressed="false" title="Conceito de função"><i data-lucide="workflow"></i><span>Conceito</span></button>
+        <button type="button" data-topico="elementos" aria-label="Domínio, contradomínio e imagem" aria-pressed="false" title="Domínio, contradomínio e imagem"><i data-lucide="layers"></i><span>Domínio e imagem</span></button>
+        <button type="button" data-topico="lei" aria-label="Lei de formação" aria-pressed="false" title="Lei de formação"><i data-lucide="function-square"></i><span>Lei de formação</span></button>
+        <button type="button" data-topico="valor" aria-label="Valor de uma função" aria-pressed="false" title="Valor de uma função"><i data-lucide="calculator"></i><span>Valor da função</span></button>
+        <button type="button" data-topico="cartesiano" aria-label="Plano cartesiano" aria-pressed="false" title="Plano cartesiano"><i data-lucide="axis-3d"></i><span>Plano cartesiano</span></button>
+        <button type="button" data-topico="graficos" aria-label="Gráficos de funções" aria-pressed="false" title="Gráficos de funções"><i data-lucide="chart-line"></i><span>Gráficos</span></button>
+        <button type="button" data-topico="afim" aria-label="Função afim" aria-pressed="false" title="Função afim"><i data-lucide="trending-up"></i><span>Função afim</span></button>
+        <button type="button" data-topico="quadratica" aria-label="Função quadrática" aria-pressed="false" title="Função quadrática"><i data-lucide="chart-no-axes-combined"></i><span>Quadrática</span></button>
+        <button type="button" data-topico="zeros" aria-label="Zeros ou raízes da função" aria-pressed="false" title="Zeros ou raízes da função"><i data-lucide="crosshair"></i><span>Zeros e raízes</span></button>
+        <button type="button" data-topico="variacao" aria-label="Crescimento e decrescimento" aria-pressed="false" title="Crescimento e decrescimento"><i data-lucide="activity"></i><span>Variação</span></button>
+    </nav>
+
+    <p id="mensagemCarregamentoFuncoes" class="mensagem-geometria" role="status">Selecione um conteúdo para começar.</p>
+    <div id="funcoesAtividades" class="geometria-atividades"></div>
+</main>
+
+<div id="fundoMenu"></div>
+<div id="menuLateral">
+    <h2>Menu</h2>
+    <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+    <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+    <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+    <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+    <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+    <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+    <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+    <a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+    <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+    <a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+(function () {
+    const conteudos = [
+        {
+            id: "conceito", activityType: "fn_conceito",
+            titulo: "Conceito de função", icone: "workflow",
+            descricao: "Identifique relações que representam funções e compreenda a associação entre entrada e saída.",
+            questoes: [
+                { pergunta: "O que caracteriza uma função?", opcoes: { a: "Uma relação em que toda saída possui duas entradas", b: "Cada entrada do domínio está associada a exatamente uma saída", c: "Uma relação que sempre produz números positivos" } },
+                { pergunta: "Se f(x) = x + 2, qual é a saída para a entrada 3?", opcoes: { a: "5", b: "6", c: "4" } },
+                { pergunta: "Qual relação NÃO representa uma função?", opcoes: { a: "1 → 3 e 2 → 4", b: "1 → 5 e 2 → 5", c: "1 → 2 e 1 → 4" } },
+                { pergunta: "Na escrita f(x), o que x representa?", opcoes: { a: "O resultado final", b: "O valor de entrada", c: "O conjunto imagem" } },
+                { pergunta: "Em uma função, cada elemento do domínio deve ter:", opcoes: { a: "Uma única imagem", b: "Duas imagens diferentes", c: "Nenhuma imagem" } }
+            ]
+        },
+        {
+            id: "elementos", activityType: "fn_elementos",
+            titulo: "Domínio, contradomínio e imagem", icone: "layers",
+            descricao: "Diferencie os conjuntos de entrada, destino e os resultados que a função realmente assume.",
+            questoes: [
+                { pergunta: "O domínio de uma função é:", opcoes: { a: "O conjunto dos valores de entrada permitidos", b: "O conjunto dos resultados obtidos", c: "Sempre o conjunto dos números positivos" } },
+                { pergunta: "O contradomínio representa:", opcoes: { a: "Apenas os valores que aparecem no gráfico", b: "O conjunto definido como destino das saídas", c: "Os valores proibidos para x" } },
+                { pergunta: "A imagem de uma função é:", opcoes: { a: "Todo o conjunto dos números reais", b: "O conjunto de entradas", c: "O conjunto de saídas realmente obtidas" } },
+                { pergunta: "Se o domínio é {1, 2, 3} e f(x) = x + 1, qual é a imagem?", opcoes: { a: "{1, 2, 3}", b: "{2, 3, 4}", c: "{0, 1, 2}" } },
+                { pergunta: "A imagem de uma função está contida no:", opcoes: { a: "Contradomínio", b: "Domínio", c: "Eixo horizontal" } }
+            ]
+        },
+        {
+            id: "lei", activityType: "fn_lei_formacao",
+            titulo: "Lei de formação", icone: "function-square",
+            descricao: "Interprete a regra algébrica que transforma cada valor de entrada em uma saída.",
+            questoes: [
+                { pergunta: "Na função f(x) = 2x + 3, a regra é:", opcoes: { a: "Multiplicar x por 2 e somar 3", b: "Somar 2 e multiplicar por 3", c: "Elevar x ao quadrado e somar 3" } },
+                { pergunta: "Qual expressão representa o dobro de x menos 5?", opcoes: { a: "5x - 2", b: "2x - 5", c: "2(x - 5)" } },
+                { pergunta: "Se f(x) = x - 4, qual é a regra aplicada?", opcoes: { a: "Multiplicar por 4", b: "Somar 4", c: "Subtrair 4 da entrada" } },
+                { pergunta: "Na expressão f(x) = 3x, o número 3 indica:", opcoes: { a: "O valor fixo da saída", b: "Que a entrada é dividida por 3", c: "Que a entrada é multiplicada por 3" } },
+                { pergunta: "Qual lei corresponde a somar 7 ao triplo de x?", opcoes: { a: "f(x) = 3x + 7", b: "f(x) = 7x + 3", c: "f(x) = 3(x - 7)" } }
+            ]
+        },
+        {
+            id: "valor", activityType: "fn_valor",
+            titulo: "Valor de uma função", icone: "calculator",
+            descricao: "Substitua a variável pelo valor indicado e calcule corretamente o resultado.",
+            questoes: [
+                { pergunta: "Se f(x) = 2x + 1, quanto vale f(3)?", opcoes: { a: "6", b: "7", c: "8" } },
+                { pergunta: "Se f(x) = 5x - 2, quanto vale f(2)?", opcoes: { a: "8", b: "10", c: "12" } },
+                { pergunta: "Se f(x) = x² + 1, quanto vale f(4)?", opcoes: { a: "8", b: "15", c: "17" } },
+                { pergunta: "Se f(x) = 3x, quanto vale f(-2)?", opcoes: { a: "6", b: "-6", c: "-5" } },
+                { pergunta: "Se f(x) = x + 9, quanto vale f(0)?", opcoes: { a: "0", b: "8", c: "9" } }
+            ]
+        },
+        {
+            id: "cartesiano", activityType: "fn_plano_cartesiano",
+            titulo: "Plano cartesiano", icone: "axis-3d",
+            descricao: "Leia pares ordenados e reconheça os eixos e a origem do plano cartesiano.",
+            questoes: [
+                { pergunta: "Qual eixo representa os valores de x?", opcoes: { a: "Eixo horizontal", b: "Eixo vertical", c: "Eixo diagonal" } },
+                { pergunta: "Qual é o ponto de origem do plano cartesiano?", opcoes: { a: "(1, 1)", b: "(0, 0)", c: "(0, 1)" } },
+                { pergunta: "No ponto (4, 2), qual é a coordenada x?", opcoes: { a: "2", b: "6", c: "4" } },
+                { pergunta: "O ponto (0, 5) está:", opcoes: { a: "Sobre o eixo x", b: "Na origem", c: "Sobre o eixo y" } },
+                { pergunta: "No ponto (-3, 2), a coordenada x indica deslocamento:", opcoes: { a: "3 unidades para a esquerda", b: "3 unidades para a direita", c: "2 unidades para baixo" } }
+            ]
+        },
+        {
+            id: "graficos", activityType: "fn_graficos",
+            titulo: "Gráficos de funções", icone: "chart-line",
+            descricao: "Interprete pontos, pares ordenados e a representação gráfica de uma função.",
+            questoes: [
+                { pergunta: "Um ponto do gráfico de uma função representa:", opcoes: { a: "Somente o valor de x", b: "Um par (x, f(x))", c: "Apenas o contradomínio" } },
+                { pergunta: "Se f(2) = 5, qual ponto pertence ao gráfico?", opcoes: { a: "(5, 2)", b: "(2, 2)", c: "(2, 5)" } },
+                { pergunta: "No gráfico de uma função, o eixo vertical normalmente mostra:", opcoes: { a: "Os valores de f(x)", b: "Somente o domínio", c: "Os nomes das variáveis" } },
+                { pergunta: "Se os pontos (0, 1) e (1, 3) pertencem a uma reta, quando x aumenta 1 unidade, y:", opcoes: { a: "Diminui 2", b: "Aumenta 2", c: "Permanece igual" } },
+                { pergunta: "O gráfico de uma função é formado por pontos que relacionam:", opcoes: { a: "Domínio e imagem", b: "Somente números negativos", c: "Dois contradomínios" } }
+            ]
+        },
+        {
+            id: "afim", activityType: "fn_afim",
+            titulo: "Função afim", icone: "trending-up",
+            descricao: "Reconheça a forma f(x) = ax + b e interprete seus coeficientes.",
+            questoes: [
+                { pergunta: "Qual é a forma geral de uma função afim?", opcoes: { a: "f(x) = ax² + bx + c", b: "f(x) = ax + b", c: "f(x) = a/x" } },
+                { pergunta: "Na função f(x) = 4x + 2, qual é o coeficiente angular?", opcoes: { a: "4", b: "2", c: "6" } },
+                { pergunta: "Na função f(x) = 3x - 5, qual é o coeficiente linear?", opcoes: { a: "3", b: "5", c: "-5" } },
+                { pergunta: "Uma função afim com coeficiente angular positivo é:", opcoes: { a: "Decrescente", b: "Crescente", c: "Sempre constante" } },
+                { pergunta: "Se f(x) = 2x + 1, quanto vale f(2)?", opcoes: { a: "5", b: "4", c: "3" } }
+            ]
+        },
+        {
+            id: "quadratica", activityType: "fn_quadratica",
+            titulo: "Função quadrática", icone: "chart-no-axes-combined",
+            descricao: "Identifique a função do segundo grau, seus coeficientes e a concavidade da parábola.",
+            questoes: [
+                { pergunta: "Qual é a forma geral de uma função quadrática?", opcoes: { a: "f(x) = ax + b", b: "f(x) = ax² + bx + c, com a ≠ 0", c: "f(x) = a/x" } },
+                { pergunta: "O gráfico de uma função quadrática é:", opcoes: { a: "Uma reta", b: "Uma circunferência", c: "Uma parábola" } },
+                { pergunta: "Se o coeficiente a é positivo, a parábola tem concavidade:", opcoes: { a: "Voltada para cima", b: "Voltada para baixo", c: "Horizontal" } },
+                { pergunta: "Na função f(x) = 2x² - 3x + 7, qual é o coeficiente c?", opcoes: { a: "2", b: "-3", c: "7" } },
+                { pergunta: "Para ser quadrática, o coeficiente a deve ser:", opcoes: { a: "Igual a zero", b: "Diferente de zero", c: "Sempre negativo" } }
+            ]
+        },
+        {
+            id: "zeros", activityType: "fn_zeros",
+            titulo: "Zeros ou raízes da função", icone: "crosshair",
+            descricao: "Encontre valores de x que tornam a função igual a zero e interprete-os no gráfico.",
+            questoes: [
+                { pergunta: "O zero de uma função é o valor de x para o qual:", opcoes: { a: "f(x) = 0", b: "x = 0 obrigatoriamente", c: "f(x) = 1" } },
+                { pergunta: "Qual é o zero de f(x) = x - 4?", opcoes: { a: "-4", b: "0", c: "4" } },
+                { pergunta: "Qual é o zero de f(x) = 2x + 6?", opcoes: { a: "3", b: "-3", c: "-6" } },
+                { pergunta: "No gráfico, os zeros de uma função correspondem aos pontos em que ela:", opcoes: { a: "Cruza o eixo y", b: "Cruza ou toca o eixo x", c: "Passa pela origem obrigatoriamente" } },
+                { pergunta: "Se f(x) = x² - 9, quais são as raízes?", opcoes: { a: "-9 e 9", b: "0 e 9", c: "-3 e 3" } }
+            ]
+        },
+        {
+            id: "variacao", activityType: "fn_variacao",
+            titulo: "Crescimento e decrescimento", icone: "activity",
+            descricao: "Identifique quando os valores de uma função aumentam ou diminuem conforme x cresce.",
+            questoes: [
+                { pergunta: "Uma função é crescente quando, ao aumentar x, seus valores:", opcoes: { a: "Também aumentam", b: "Sempre ficam iguais", c: "Diminuem" } },
+                { pergunta: "A função f(x) = -2x + 1 é:", opcoes: { a: "Crescente", b: "Decrescente", c: "Constante" } },
+                { pergunta: "A função f(x) = 5 é:", opcoes: { a: "Crescente", b: "Decrescente", c: "Constante" } },
+                { pergunta: "Uma parábola com concavidade para cima:", opcoes: { a: "É sempre decrescente", b: "Diminui até o vértice e depois aumenta", c: "Aumenta e depois diminui" } },
+                { pergunta: "Uma função afim com coeficiente angular negativo é:", opcoes: { a: "Decrescente", b: "Crescente", c: "Constante" } }
+            ]
+        }
+    ];
+
+    const areaAtividades = document.getElementById("funcoesAtividades");
+    const mensagemCarregamento = document.getElementById("mensagemCarregamentoFuncoes");
+    const botoesTopicos = document.querySelectorAll(".geometria-topicos button");
+    const estados = new Map();
+    const tiposAtividade = conteudos.map(function (item) { return item.activityType; });
+
+    let usuarioAtual = null;
+    let xpTotal = 0;
+    let carregamentoConcluido = false;
+
+    function criarElemento(tag, classe, texto) {
+        const elemento = document.createElement(tag);
+        if (classe) elemento.className = classe;
+        if (texto !== undefined) elemento.textContent = texto;
+        return elemento;
+    }
+
+    function atualizarXPExibido() {
+        estados.forEach(function (estado) { estado.xp.textContent = String(xpTotal); });
+    }
+
+    function atualizarPontuacao(estado) {
+        estado.pontuacao.textContent = "Pontuação: " + estado.acertos + "/5";
+    }
+
+    function bloquearQuestao(questaoElemento, bloquear) {
+        questaoElemento.querySelectorAll("button[data-option-id]").forEach(function (botao) {
+            botao.disabled = bloquear;
+            if (bloquear) botao.classList.add("resposta-bloqueada");
+            else botao.classList.remove("resposta-bloqueada");
+        });
+    }
+
+    function aplicarTentativa(estado, numero, tentativa) {
+        if (estado.respondidas.has(numero)) return;
+        estado.respondidas.set(numero, tentativa);
+
+        const questaoElemento = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questaoElemento) return;
+
+        bloquearQuestao(questaoElemento, true);
+        const botaoSelecionado = questaoElemento.querySelector('[data-option-id="' + tentativa.selected_option_id + '"]');
+        if (tentativa.is_correct) estado.acertos++;
+
+        if (botaoSelecionado) {
+            botaoSelecionado.classList.add(tentativa.is_correct ? "resposta-correta" : "resposta-errada");
+        }
+        atualizarPontuacao(estado);
+    }
+
+    function verificarConclusao(estado) {
+        if (estado.respondidas.size !== 5) return;
+        estado.resultado.textContent = estado.acertos === 5
+            ? "Parabéns! Você acertou todas as questões deste conteúdo!"
+            : "Atividade concluída! Você acertou " + estado.acertos + " de 5 questões.";
+    }
+
+    function criarAtividade(conteudo) {
+        const painel = criarElemento("section", "exercicios-basico geometria-exercicios");
+        painel.hidden = true;
+
+        const cabecalho = criarElemento("div", "titulo-exercicios");
+        const icone = document.createElement("i");
+        icone.setAttribute("data-lucide", conteudo.icone);
+        cabecalho.appendChild(icone);
+        cabecalho.appendChild(criarElemento("h2", "", conteudo.titulo));
+        painel.appendChild(cabecalho);
+        painel.appendChild(criarElemento("p", "subtitulo-exercicios", conteudo.descricao));
+        painel.appendChild(criarElemento("p", "geometria-regra-xp", "Responda às 5 questões. Cada acerto vale 10 XP."));
+
+        conteudo.questoes.forEach(function (questao, indice) {
+            const numero = indice + 1;
+            const blocoQuestao = criarElemento("div", "questao");
+            blocoQuestao.dataset.numero = String(numero);
+
+            const enunciado = document.createElement("p");
+            enunciado.appendChild(criarElemento("strong", "", numero + "."));
+            enunciado.appendChild(document.createTextNode(" " + questao.pergunta));
+            blocoQuestao.appendChild(enunciado);
+
+            const alternativas = criarElemento("div", "alternativas");
+            Object.entries(questao.opcoes).forEach(function ([letra, texto]) {
+                const botao = criarElemento("button", "", texto);
+                botao.type = "button";
+                botao.dataset.optionId = letra;
+                botao.disabled = true;
+                botao.addEventListener("click", function () {
+                    responderQuestao(conteudo, numero, letra, botao);
+                });
+                alternativas.appendChild(botao);
+            });
+
+            blocoQuestao.appendChild(alternativas);
+            painel.appendChild(blocoQuestao);
+        });
+
+        const resultado = criarElemento("div", "resultado-exercicios");
+        const pontuacao = criarElemento("h2", "", "Pontuação: 0/5");
+        const mensagem = criarElemento("p", "");
+        mensagem.setAttribute("aria-live", "polite");
+        const linhaXP = document.createElement("p");
+        linhaXP.appendChild(document.createTextNode("XP total: "));
+        const xp = criarElemento("strong", "", "0");
+        linhaXP.appendChild(xp);
+        resultado.appendChild(pontuacao);
+        resultado.appendChild(mensagem);
+        resultado.appendChild(linhaXP);
+        painel.appendChild(resultado);
+
+        const estado = { painel, pontuacao, resultado: mensagem, xp, respondidas: new Map(), acertos: 0 };
+        estados.set(conteudo.activityType, estado);
+        areaAtividades.appendChild(painel);
+    }
+
+    conteudos.forEach(criarAtividade);
+
+    function selecionarConteudo(id) {
+        const selecionado = conteudos.find(function (item) { return item.id === id; });
+        if (!selecionado) return;
+
+        botoesTopicos.forEach(function (botao) {
+            const ativo = botao.dataset.topico === id;
+            botao.classList.toggle("ativo", ativo);
+            botao.setAttribute("aria-pressed", String(ativo));
+        });
+
+        conteudos.forEach(function (item) {
+            estados.get(item.activityType).painel.hidden = item.id !== id;
+        });
+
+        mensagemCarregamento.textContent = carregamentoConcluido
+            ? "Atividade selecionada. Seu progresso fica salvo."
+            : "Carregando seu progresso...";
+    }
+
+    botoesTopicos.forEach(function (botao) {
+        botao.addEventListener("click", function () { selecionarConteudo(botao.dataset.topico); });
+    });
+
+    async function carregarEstadoFuncoes() {
+        try {
+            if (!supabaseClient) throw new Error("Conexão com o Supabase indisponível.");
+
+            const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+            if (erroUsuario || !user) throw new Error("Sessão não autenticada.");
+            usuarioAtual = user;
+
+            const [resultadoXP, resultadoTentativas] = await Promise.all([
+                supabaseClient.from("user_progress").select("total_xp").eq("user_id", user.id).maybeSingle(),
+                supabaseClient.from("user_question_attempts")
+                    .select("activity_type, question_id, selected_option_id, is_correct")
+                    .eq("user_id", user.id).in("activity_type", tiposAtividade)
+            ]);
+
+            if (resultadoXP.error) throw resultadoXP.error;
+            if (resultadoTentativas.error) throw resultadoTentativas.error;
+            xpTotal = Number(resultadoXP.data?.total_xp || 0);
+
+            (resultadoTentativas.data || []).forEach(function (tentativa) {
+                const estado = estados.get(tentativa.activity_type);
+                const numero = Number(tentativa.question_id);
+                if (!estado || !Number.isInteger(numero) || numero < 1 || numero > 5) return;
+                aplicarTentativa(estado, numero, tentativa);
+            });
+
+            estados.forEach(function (estado) {
+                for (let numero = 1; numero <= 5; numero++) {
+                    if (!estado.respondidas.has(numero)) {
+                        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+                        if (questao) bloquearQuestao(questao, false);
+                    }
+                }
+                if (estado.respondidas.size > 0) estado.resultado.textContent = "Seu progresso anterior foi carregado.";
+                verificarConclusao(estado);
+            });
+
+            atualizarXPExibido();
+            carregamentoConcluido = true;
+            mensagemCarregamento.textContent = "Escolha um conteúdo para começar. Seu progresso fica salvo.";
+        } catch (erro) {
+            console.error("Erro ao carregar atividades de Funções:", erro);
+            mensagemCarregamento.textContent = "Não foi possível carregar seu progresso. Atualize a página e tente novamente.";
+        }
+    }
+
+    async function responderQuestao(conteudo, numero, optionId, botao) {
+        const estado = estados.get(conteudo.activityType);
+        if (!carregamentoConcluido || !usuarioAtual || !estado || estado.respondidas.has(numero) || !botao || botao.disabled) return;
+
+        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questao) return;
+
+        bloquearQuestao(questao, true);
+        estado.resultado.textContent = "Registrando sua resposta...";
+
+        try {
+            const { data, error } = await supabaseClient.rpc("submit_operation_answer", {
+                p_activity_type: conteudo.activityType,
+                p_question_id: String(numero),
+                p_option_id: optionId
+            });
+            if (error) throw error;
+            if (!data) throw new Error("O banco não retornou um resultado.");
+
+            xpTotal = Number(data.total_xp || 0);
+            atualizarXPExibido();
+
+            if (data.already_answered) {
+                const { data: tentativa, error: erroTentativa } = await supabaseClient
+                    .from("user_question_attempts")
+                    .select("question_id, selected_option_id, is_correct")
+                    .eq("user_id", usuarioAtual.id)
+                    .eq("activity_type", conteudo.activityType)
+                    .eq("question_id", String(numero))
+                    .maybeSingle();
+                if (erroTentativa) throw erroTentativa;
+                if (tentativa) aplicarTentativa(estado, numero, tentativa);
+                estado.resultado.textContent = "Esta questão já foi respondida anteriormente.";
+                verificarConclusao(estado);
+                return;
+            }
+
+            aplicarTentativa(estado, numero, { selected_option_id: optionId, is_correct: data.correct });
+            estado.resultado.textContent = data.correct
+                ? "Resposta correta! Você ganhou " + data.xp_awarded + " XP."
+                : "Resposta incorreta. Continue estudando!";
+            verificarConclusao(estado);
+        } catch (erro) {
+            console.error("Erro ao registrar resposta de Funções:", erro);
+            bloquearQuestao(questao, false);
+            estado.resultado.textContent = "Não foi possível registrar sua resposta. Tente novamente.";
+        }
+    }
+
+    carregarEstadoFuncoes();
+    if (window.lucide) lucide.createIcons();
+})();
+</script>
+</body>
+</html>
