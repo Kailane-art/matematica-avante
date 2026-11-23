@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprender Álgebra - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css?v=20261123-aprenderalgebra1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-aprender-algebra">
+
+<header>
+    <button id="voltarPagina" type="button" aria-label="Voltar">
+        <i data-lucide="arrow-left"></i>
+    </button>
+    <h1>Atividades de Álgebra</h1>
+    <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+        <i data-lucide="menu"></i>
+    </button>
+</header>
+
+<main class="aprender-geometria-conteudo">
+    <div class="titulo-operacoes">
+        <h2>Aprender</h2>
+        <p>Escolha um conteúdo de Álgebra para praticar.</p>
+    </div>
+
+    <nav class="materias operacoes geometria-topicos" aria-label="Conteúdos de Álgebra">
+        <button type="button" data-topico="linguagem" aria-label="Linguagem algébrica" aria-pressed="false" title="Linguagem algébrica"><i data-lucide="languages"></i><span>Linguagem algébrica</span></button>
+        <button type="button" data-topico="expressoes" aria-label="Expressões algébricas" aria-pressed="false" title="Expressões algébricas"><i data-lucide="variable"></i><span>Expressões</span></button>
+        <button type="button" data-topico="valor-numerico" aria-label="Valor numérico" aria-pressed="false" title="Valor numérico"><i data-lucide="calculator"></i><span>Valor numérico</span></button>
+        <button type="button" data-topico="monomios" aria-label="Monômios" aria-pressed="false" title="Monômios"><i data-lucide="hash"></i><span>Monômios</span></button>
+        <button type="button" data-topico="polinomios" aria-label="Polinômios" aria-pressed="false" title="Polinômios"><i data-lucide="list-ordered"></i><span>Polinômios</span></button>
+        <button type="button" data-topico="operacoes" aria-label="Operações com polinômios" aria-pressed="false" title="Operações com polinômios"><i data-lucide="sigma"></i><span>Operações</span></button>
+        <button type="button" data-topico="produtos-notaveis" aria-label="Produtos notáveis" aria-pressed="false" title="Produtos notáveis"><i data-lucide="square-function"></i><span>Produtos notáveis</span></button>
+        <button type="button" data-topico="fatoracao" aria-label="Fatoração" aria-pressed="false" title="Fatoração"><i data-lucide="git-branch"></i><span>Fatoração</span></button>
+        <button type="button" data-topico="equacoes" aria-label="Equações do primeiro grau" aria-pressed="false" title="Equações do primeiro grau"><i data-lucide="equal"></i><span>Equações</span></button>
+        <button type="button" data-topico="sistemas" aria-label="Sistemas de equações" aria-pressed="false" title="Sistemas de equações"><i data-lucide="network"></i><span>Sistemas</span></button>
+    </nav>
+
+    <p id="mensagemCarregamentoAlgebra" class="mensagem-geometria" role="status">Selecione um conteúdo para começar.</p>
+    <div id="algebraAtividades" class="geometria-atividades"></div>
+</main>
+
+<div id="fundoMenu"></div>
+<div id="menuLateral">
+    <h2>Menu</h2>
+    <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+    <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+    <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+    <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+    <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+    <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+    <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+    <a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+    <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+    <a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+(function () {
+    const conteudos = [
+        {
+            id: "linguagem", activityType: "alg_linguagem",
+            titulo: "Linguagem algébrica", icone: "languages",
+            descricao: "Traduza situações e expressões da linguagem comum para a linguagem matemática.",
+            questoes: [
+                { pergunta: "O dobro de um número x é representado por:", opcoes: { a: "2x", b: "x + 2", c: "x²" } },
+                { pergunta: "Um número aumentado em 7 é:", opcoes: { a: "7x", b: "x + 7", c: "x - 7" } },
+                { pergunta: "A terça parte de um número y é:", opcoes: { a: "3y", b: "y - 3", c: "y ÷ 3" } },
+                { pergunta: "O triplo da soma de x e 2 é:", opcoes: { a: "3(x + 2)", b: "3x + 2", c: "3x - 2" } },
+                { pergunta: "A diferença entre um número n e 5 é:", opcoes: { a: "5 - n", b: "n - 5", c: "5n" } }
+            ]
+        },
+        {
+            id: "expressoes", activityType: "alg_expressoes",
+            titulo: "Expressões algébricas", icone: "variable",
+            descricao: "Identifique termos, coeficientes e partes literais das expressões.",
+            questoes: [
+                { pergunta: "Quantos termos possui a expressão 4x + 3?", opcoes: { a: "1", b: "3", c: "2" } },
+                { pergunta: "Qual é o coeficiente numérico de 7a?", opcoes: { a: "7", b: "a", c: "1" } },
+                { pergunta: "Qual é a parte literal de -5x²y?", opcoes: { a: "-5", b: "x²y", c: "-5x²y" } },
+                { pergunta: "Qual expressão possui três termos?", opcoes: { a: "5m", b: "2x + 1", c: "3a - b + 4" } },
+                { pergunta: "Qual par contém termos semelhantes?", opcoes: { a: "3x e -2x", b: "3x e 3y", c: "x² e x" } }
+            ]
+        },
+        {
+            id: "valor-numerico", activityType: "alg_valor_numerico",
+            titulo: "Valor numérico", icone: "calculator",
+            descricao: "Substitua as letras pelos valores indicados e calcule as expressões.",
+            questoes: [
+                { pergunta: "Se x = 4, qual é o valor de 2x + 3?", opcoes: { a: "10", b: "11", c: "12" } },
+                { pergunta: "Se a = 3, quanto vale 5a - 2?", opcoes: { a: "15", b: "12", c: "13" } },
+                { pergunta: "Se x = 3, quanto vale x² + 2?", opcoes: { a: "11", b: "9", c: "7" } },
+                { pergunta: "Se m = -2, qual é o valor de 3m - 4?", opcoes: { a: "10", b: "-10", c: "-2" } },
+                { pergunta: "Se a = 4 e b = 5, quanto vale 2a + b?", opcoes: { a: "12", b: "14", c: "13" } }
+            ]
+        },
+        {
+            id: "monomios", activityType: "alg_monomios",
+            titulo: "Monômios", icone: "hash",
+            descricao: "Pratique coeficiente, parte literal, grau e operações com monômios.",
+            questoes: [
+                { pergunta: "Em -5x²y, qual é o coeficiente numérico?", opcoes: { a: "-5", b: "5", c: "-1" } },
+                { pergunta: "Qual é o grau do monômio 2a³b²?", opcoes: { a: "3", b: "4", c: "5" } },
+                { pergunta: "Qual par é formado por monômios semelhantes?", opcoes: { a: "2x e 2y", b: "4x² e -7x²", c: "x e x²" } },
+                { pergunta: "Qual expressão é um monômio?", opcoes: { a: "6ab", b: "2x + 1", c: "x + y" } },
+                { pergunta: "Qual é o produto de 3x por 2x²?", opcoes: { a: "5x³", b: "6x²", c: "6x³" } }
+            ]
+        },
+        {
+            id: "polinomios", activityType: "alg_polinomios",
+            titulo: "Polinômios", icone: "list-ordered",
+            descricao: "Reconheça termos, grau e classificação de polinômios.",
+            questoes: [
+                { pergunta: "Quantos termos possui 3x² + 2x - 1?", opcoes: { a: "2", b: "3", c: "4" } },
+                { pergunta: "Qual é o grau do polinômio 4x³ + 2x - 7?", opcoes: { a: "3", b: "2", c: "1" } },
+                { pergunta: "Qual é o termo independente de 2x² + 5x - 9?", opcoes: { a: "2", b: "5", c: "-9" } },
+                { pergunta: "O polinômio 5x² - 3x + 1 é classificado como:", opcoes: { a: "Monômio", b: "Trinômio", c: "Binômio" } },
+                { pergunta: "Qual é o grau de 7x⁴ + 2x²?", opcoes: { a: "4", b: "2", c: "6" } }
+            ]
+        },
+        {
+            id: "operacoes", activityType: "alg_operacoes",
+            titulo: "Operações com polinômios", icone: "sigma",
+            descricao: "Some, subtraia e multiplique polinômios, reduzindo os termos semelhantes.",
+            questoes: [
+                { pergunta: "Simplifique (2x + 3) + (x + 4).", opcoes: { a: "3x + 1", b: "3x + 12", c: "3x + 7" } },
+                { pergunta: "Simplifique (5x + 2) - (2x - 1).", opcoes: { a: "7x + 1", b: "3x + 3", c: "3x + 1" } },
+                { pergunta: "Qual é o produto de 3x por 2x²?", opcoes: { a: "6x³", b: "5x²", c: "6x²" } },
+                { pergunta: "Simplifique 12x² ÷ 3x.", opcoes: { a: "4x²", b: "9x", c: "4x" } },
+                { pergunta: "Simplifique (x + 2) + (3x - 5).", opcoes: { a: "4x + 7", b: "4x - 3", c: "2x - 3" } }
+            ]
+        },
+        {
+            id: "produtos-notaveis", activityType: "alg_produtos_notaveis",
+            titulo: "Produtos notáveis", icone: "square-function",
+            descricao: "Reconheça e aplique quadrado da soma, quadrado da diferença e produto da soma pela diferença.",
+            questoes: [
+                { pergunta: "Qual é o desenvolvimento de (x + 3)²?", opcoes: { a: "x² + 6x + 9", b: "x² + 9", c: "x² + 3x + 9" } },
+                { pergunta: "Qual é o resultado de (x + 2)(x - 2)?", opcoes: { a: "x² + 4", b: "x² - 2x + 4", c: "x² - 4" } },
+                { pergunta: "O quadrado da soma (a + b)² é:", opcoes: { a: "a² + b²", b: "a² + 2ab + b²", c: "a² - 2ab + b²" } },
+                { pergunta: "Qual é o desenvolvimento de (x - 5)²?", opcoes: { a: "x² - 10x + 25", b: "x² - 25", c: "x² + 10x + 25" } },
+                { pergunta: "Qual é o resultado de (2x + 1)(2x - 1)?", opcoes: { a: "4x² + 1", b: "4x² - 4x + 1", c: "4x² - 1" } }
+            ]
+        },
+        {
+            id: "fatoracao", activityType: "alg_fatoracao",
+            titulo: "Fatoração", icone: "git-branch",
+            descricao: "Transforme polinômios em produtos de fatores.",
+            questoes: [
+                { pergunta: "Qual é a fatoração de 3x + 6?", opcoes: { a: "3(x - 2)", b: "3(x + 2)", c: "x(3 + 6)" } },
+                { pergunta: "Qual é a fatoração de x² + 5x?", opcoes: { a: "x(x + 5)", b: "(x + 5)²", c: "5(x + 1)" } },
+                { pergunta: "Qual é a fatoração de x² - 9?", opcoes: { a: "(x - 9)(x + 1)", b: "(x - 3)²", c: "(x - 3)(x + 3)" } },
+                { pergunta: "Coloque o fator comum em evidência: 4a + 8b.", opcoes: { a: "2(2a + 8b)", b: "4(a + 2b)", c: "4(a + 8b)" } },
+                { pergunta: "Qual é a fatoração de x² + 6x + 9?", opcoes: { a: "(x + 3)²", b: "(x + 9)(x + 1)", c: "(x - 3)²" } }
+            ]
+        },
+        {
+            id: "equacoes", activityType: "alg_equacoes",
+            titulo: "Equações do primeiro grau", icone: "equal",
+            descricao: "Encontre o valor da incógnita em equações de primeiro grau.",
+            questoes: [
+                { pergunta: "Resolva: 2x + 3 = 11.", opcoes: { a: "3", b: "5", c: "4" } },
+                { pergunta: "Resolva: 5x = 35.", opcoes: { a: "5", b: "7", c: "8" } },
+                { pergunta: "Resolva: 3x - 4 = 8.", opcoes: { a: "4", b: "3", c: "6" } },
+                { pergunta: "Resolva: x ÷ 2 + 3 = 7.", opcoes: { a: "6", b: "10", c: "8" } },
+                { pergunta: "Resolva: 4x + 2 = 18.", opcoes: { a: "2", b: "4", c: "5" } }
+            ]
+        },
+        {
+            id: "sistemas", activityType: "alg_sistemas",
+            titulo: "Sistemas de equações", icone: "network",
+            descricao: "Resolva sistemas simples de duas equações com duas incógnitas.",
+            questoes: [
+                { pergunta: "No sistema x + y = 7 e x = 3, qual é o valor de y?", opcoes: { a: "4", b: "3", c: "5" } },
+                { pergunta: "No sistema x + y = 10 e x - y = 2, qual é o par (x, y)?", opcoes: { a: "(5, 5)", b: "(4, 6)", c: "(6, 4)" } },
+                { pergunta: "No sistema 2x + y = 8 e x = 3, qual é o valor de y?", opcoes: { a: "3", b: "2", c: "4" } },
+                { pergunta: "No sistema x + y = 5 e x - y = 1, qual é o par (x, y)?", opcoes: { a: "(3, 2)", b: "(2, 3)", c: "(4, 1)" } },
+                { pergunta: "Se x = 2 e y = 5, quanto vale x + y?", opcoes: { a: "6", b: "8", c: "7" } }
+            ]
+        }
+    ];
+
+    const areaAtividades = document.getElementById("algebraAtividades");
+    const mensagemCarregamento = document.getElementById("mensagemCarregamentoAlgebra");
+    const botoesTopicos = document.querySelectorAll(".geometria-topicos button");
+    const estados = new Map();
+    const tiposAtividade = conteudos.map(function (item) { return item.activityType; });
+
+    let usuarioAtual = null;
+    let xpTotal = 0;
+    let carregamentoConcluido = false;
+
+    function criarElemento(tag, classe, texto) {
+        const elemento = document.createElement(tag);
+        if (classe) elemento.className = classe;
+        if (texto !== undefined) elemento.textContent = texto;
+        return elemento;
+    }
+
+    function atualizarXPExibido() {
+        estados.forEach(function (estado) { estado.xp.textContent = String(xpTotal); });
+    }
+
+    function atualizarPontuacao(estado) {
+        estado.pontuacao.textContent = "Pontuação: " + estado.acertos + "/5";
+    }
+
+    function bloquearQuestao(questaoElemento, bloquear) {
+        questaoElemento.querySelectorAll("button[data-option-id]").forEach(function (botao) {
+            botao.disabled = bloquear;
+            if (bloquear) botao.classList.add("resposta-bloqueada");
+            else botao.classList.remove("resposta-bloqueada");
+        });
+    }
+
+    function aplicarTentativa(estado, numero, tentativa) {
+        if (estado.respondidas.has(numero)) return;
+        estado.respondidas.set(numero, tentativa);
+
+        const questaoElemento = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questaoElemento) return;
+
+        bloquearQuestao(questaoElemento, true);
+        const botaoSelecionado = questaoElemento.querySelector('[data-option-id="' + tentativa.selected_option_id + '"]');
+        if (tentativa.is_correct) estado.acertos++;
+
+        if (botaoSelecionado) {
+            botaoSelecionado.classList.add(tentativa.is_correct ? "resposta-correta" : "resposta-errada");
+        }
+        atualizarPontuacao(estado);
+    }
+
+    function verificarConclusao(estado) {
+        if (estado.respondidas.size !== 5) return;
+        estado.resultado.textContent = estado.acertos === 5
+            ? "Parabéns! Você acertou todas as questões deste conteúdo!"
+            : "Atividade concluída! Você acertou " + estado.acertos + " de 5 questões.";
+    }
+
+    function criarAtividade(conteudo) {
+        const painel = criarElemento("section", "exercicios-basico geometria-exercicios");
+        painel.hidden = true;
+
+        const cabecalho = criarElemento("div", "titulo-exercicios");
+        const icone = document.createElement("i");
+        icone.setAttribute("data-lucide", conteudo.icone);
+        cabecalho.appendChild(icone);
+        cabecalho.appendChild(criarElemento("h2", "", conteudo.titulo));
+        painel.appendChild(cabecalho);
+        painel.appendChild(criarElemento("p", "subtitulo-exercicios", conteudo.descricao));
+        painel.appendChild(criarElemento("p", "geometria-regra-xp", "Responda às 5 questões. Cada acerto vale 10 XP."));
+
+        conteudo.questoes.forEach(function (questao, indice) {
+            const numero = indice + 1;
+            const blocoQuestao = criarElemento("div", "questao");
+            blocoQuestao.dataset.numero = String(numero);
+
+            const enunciado = document.createElement("p");
+            enunciado.appendChild(criarElemento("strong", "", numero + "."));
+            enunciado.appendChild(document.createTextNode(" " + questao.pergunta));
+            blocoQuestao.appendChild(enunciado);
+
+            const alternativas = criarElemento("div", "alternativas");
+            Object.entries(questao.opcoes).forEach(function ([letra, texto]) {
+                const botao = criarElemento("button", "", texto);
+                botao.type = "button";
+                botao.dataset.optionId = letra;
+                botao.disabled = true;
+                botao.addEventListener("click", function () {
+                    responderQuestao(conteudo, numero, letra, botao);
+                });
+                alternativas.appendChild(botao);
+            });
+
+            blocoQuestao.appendChild(alternativas);
+            painel.appendChild(blocoQuestao);
+        });
+
+        const resultado = criarElemento("div", "resultado-exercicios");
+        const pontuacao = criarElemento("h2", "", "Pontuação: 0/5");
+        const mensagem = criarElemento("p", "");
+        mensagem.setAttribute("aria-live", "polite");
+        const linhaXP = document.createElement("p");
+        linhaXP.appendChild(document.createTextNode("XP total: "));
+        const xp = criarElemento("strong", "", "0");
+        linhaXP.appendChild(xp);
+        resultado.appendChild(pontuacao);
+        resultado.appendChild(mensagem);
+        resultado.appendChild(linhaXP);
+        painel.appendChild(resultado);
+
+        const estado = { painel, pontuacao, resultado: mensagem, xp, respondidas: new Map(), acertos: 0 };
+        estados.set(conteudo.activityType, estado);
+        areaAtividades.appendChild(painel);
+    }
+
+    conteudos.forEach(criarAtividade);
+
+    function selecionarConteudo(id) {
+        const selecionado = conteudos.find(function (item) { return item.id === id; });
+        if (!selecionado) return;
+
+        botoesTopicos.forEach(function (botao) {
+            const ativo = botao.dataset.topico === id;
+            botao.classList.toggle("ativo", ativo);
+            botao.setAttribute("aria-pressed", String(ativo));
+        });
+
+        conteudos.forEach(function (item) {
+            estados.get(item.activityType).painel.hidden = item.id !== id;
+        });
+
+        mensagemCarregamento.textContent = carregamentoConcluido
+            ? "Atividade selecionada. Seu progresso fica salvo."
+            : "Carregando seu progresso...";
+    }
+
+    botoesTopicos.forEach(function (botao) {
+        botao.addEventListener("click", function () { selecionarConteudo(botao.dataset.topico); });
+    });
+
+    async function carregarEstadoAlgebra() {
+        try {
+            if (!supabaseClient) throw new Error("Conexão com o Supabase indisponível.");
+
+            const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+            if (erroUsuario || !user) throw new Error("Sessão não autenticada.");
+            usuarioAtual = user;
+
+            const [resultadoXP, resultadoTentativas] = await Promise.all([
+                supabaseClient.from("user_progress").select("total_xp").eq("user_id", user.id).maybeSingle(),
+                supabaseClient.from("user_question_attempts")
+                    .select("activity_type, question_id, selected_option_id, is_correct")
+                    .eq("user_id", user.id).in("activity_type", tiposAtividade)
+            ]);
+
+            if (resultadoXP.error) throw resultadoXP.error;
+            if (resultadoTentativas.error) throw resultadoTentativas.error;
+            xpTotal = Number(resultadoXP.data?.total_xp || 0);
+
+            (resultadoTentativas.data || []).forEach(function (tentativa) {
+                const estado = estados.get(tentativa.activity_type);
+                const numero = Number(tentativa.question_id);
+                if (!estado || !Number.isInteger(numero) || numero < 1 || numero > 5) return;
+                aplicarTentativa(estado, numero, tentativa);
+            });
+
+            estados.forEach(function (estado) {
+                for (let numero = 1; numero <= 5; numero++) {
+                    if (!estado.respondidas.has(numero)) {
+                        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+                        if (questao) bloquearQuestao(questao, false);
+                    }
+                }
+                if (estado.respondidas.size > 0) estado.resultado.textContent = "Seu progresso anterior foi carregado.";
+                verificarConclusao(estado);
+            });
+
+            atualizarXPExibido();
+            carregamentoConcluido = true;
+            mensagemCarregamento.textContent = "Escolha um conteúdo para começar. Seu progresso fica salvo.";
+        } catch (erro) {
+            console.error("Erro ao carregar atividades de Álgebra:", erro);
+            mensagemCarregamento.textContent = "Não foi possível carregar seu progresso. Atualize a página e tente novamente.";
+        }
+    }
+
+    async function responderQuestao(conteudo, numero, optionId, botao) {
+        const estado = estados.get(conteudo.activityType);
+        if (!carregamentoConcluido || !usuarioAtual || !estado || estado.respondidas.has(numero) || !botao || botao.disabled) return;
+
+        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questao) return;
+
+        bloquearQuestao(questao, true);
+        estado.resultado.textContent = "Registrando sua resposta...";
+
+        try {
+            const { data, error } = await supabaseClient.rpc("submit_operation_answer", {
+                p_activity_type: conteudo.activityType,
+                p_question_id: String(numero),
+                p_option_id: optionId
+            });
+            if (error) throw error;
+            if (!data) throw new Error("O banco não retornou um resultado.");
+
+            xpTotal = Number(data.total_xp || 0);
+            atualizarXPExibido();
+
+            if (data.already_answered) {
+                const { data: tentativa, error: erroTentativa } = await supabaseClient
+                    .from("user_question_attempts")
+                    .select("question_id, selected_option_id, is_correct")
+                    .eq("user_id", usuarioAtual.id)
+                    .eq("activity_type", conteudo.activityType)
+                    .eq("question_id", String(numero))
+                    .maybeSingle();
+                if (erroTentativa) throw erroTentativa;
+                if (tentativa) aplicarTentativa(estado, numero, tentativa);
+                estado.resultado.textContent = "Esta questão já foi respondida anteriormente.";
+                verificarConclusao(estado);
+                return;
+            }
+
+            aplicarTentativa(estado, numero, { selected_option_id: optionId, is_correct: data.correct });
+            estado.resultado.textContent = data.correct
+                ? "Resposta correta! Você ganhou " + data.xp_awarded + " XP."
+                : "Resposta incorreta. Continue estudando!";
+            verificarConclusao(estado);
+        } catch (erro) {
+            console.error("Erro ao registrar resposta de Álgebra:", erro);
+            bloquearQuestao(questao, false);
+            estado.resultado.textContent = "Não foi possível registrar sua resposta. Tente novamente.";
+        }
+    }
+
+    carregarEstadoAlgebra();
+    if (window.lucide) lucide.createIcons();
+})();
+</script>
+</body>
+</html>
