@@ -728,7 +728,7 @@
 
     let notificacoesSiteAtivadas = true;
 
-    async function carregarNotificacoesChat() {
+    async function carregarNotificacoesChatInterno() {
         if (!listaNotificacoes) return;
 
         let usuario = usuarioAtualId ? { id: usuarioAtualId } : null;
@@ -907,6 +907,28 @@
         }
 
         return quantidadeNotificacoesProfessorNaoLidas + quantidadeAlertasNaoLidos;
+    }
+
+    // Agrupa eventos próximos do Realtime para evitar várias leituras simultâneas.
+    let carregamentoNotificacoesEmAndamento = null;
+    let recargaNotificacoesPendente = false;
+
+    function carregarNotificacoesChat() {
+        if (carregamentoNotificacoesEmAndamento) {
+            recargaNotificacoesPendente = true;
+            return carregamentoNotificacoesEmAndamento;
+        }
+
+        carregamentoNotificacoesEmAndamento = (async function() {
+            do {
+                recargaNotificacoesPendente = false;
+                await carregarNotificacoesChatInterno();
+            } while (recargaNotificacoesPendente);
+        })().finally(function() {
+            carregamentoNotificacoesEmAndamento = null;
+        });
+
+        return carregamentoNotificacoesEmAndamento;
     }
 
     async function carregarContatosChat(selecionarSecaoComNovidades = false) {
