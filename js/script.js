@@ -645,6 +645,7 @@ const paginasProtegidas = new Set([
     "professores.html",
     "geometria.html",
     "basico.html",
+    "algebra.html",
     "aprender-basico.html",
     "aprender-geometria.html",
     "nivel1.html",
@@ -652,10 +653,10 @@ const paginasProtegidas = new Set([
     "nivel3.html",
     "nivel4.html",
     "nivel5.html",
-    "adicao.html",
-    "subtracao.html",
-    "multiplicacao.html",
-    "divisao.html",
+    
+    
+    
+    
     "planos.html",
     "configuracoes.html",
     "alertas.html"
@@ -2250,24 +2251,9 @@ const conteudosRastreaveis = {
         nome: "Geometria"
     },
 
-    "adicao.html": {
-        chave: "adicao",
-        nome: "Adição"
-    },
-
-    "subtracao.html": {
-        chave: "subtracao",
-        nome: "Subtração"
-    },
-
-    "multiplicacao.html": {
-        chave: "multiplicacao",
-        nome: "Multiplicação"
-    },
-
-    "divisao.html": {
-        chave: "divisao",
-        nome: "Divisão"
+    "algebra.html": {
+        chave: "algebra",
+        nome: "Álgebra"
     },
 
     "nivel2.html": {
