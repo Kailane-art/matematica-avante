@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estatística - Matemática Avante</title>
+<link rel="stylesheet" href="css/style.css?v=20261123-estatistica1">
+<script src="https://unpkg.com/lucide@latest"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-estatistica">
+<header><button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar"><i data-lucide="arrow-left"></i></button><h1>Estatística</h1><button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu"><i data-lucide="menu"></i></button></header>
+<main class="pagina-estatistica-conteudo">
+<nav class="estatistica-navegacao" aria-label="Conteúdos de Estatística">
+<button class="estatistica-botao-topico" type="button" data-topico="conceito" aria-label="Conceito de Estatística" title="Conceito de Estatística" aria-pressed="false"><i data-lucide="chart-column"></i></button>
+<button class="estatistica-botao-topico" type="button" data-topico="populacao-amostra" aria-label="População e amostra" title="População e amostra" aria-pressed="false"><i data-lucide="users"></i></button>
+<button class="estatistica-botao-topico" type="button" data-topico="variaveis" aria-label="Variáveis estatísticas" title="Variáveis estatísticas" aria-pressed="false"><i data-lucide="list-filter"></i></button>
+<button class="estatistica-botao-topico" type="button" data-topico="tabelas" aria-label="Tabelas estatísticas" title="Tabelas estatísticas" aria-pressed="false"><i data-lucide="table"></i></button>
+<button class="estatistica-botao-topico" type="button" data-topico="graficos" aria-label="Gráficos estatísticos" title="Gráficos estatísticos" aria-pressed="false"><i data-lucide="chart-no-axes-combined"></i></button>
+<button class="estatistica-botao-topico" type="button" data-topico="frequencia" aria-label="Frequência absoluta e relativa" title="Frequência absoluta e relativa" aria-pressed="false"><i data-lucide="chart-pie"></i></button>
+<button class="estatistica-botao-topico" type="button" data-topico="media" aria-label="Média aritmética" title="Média aritmética" aria-pressed="false"><i data-lucide="sigma"></i></button>
+<button class="estatistica-botao-topico" type="button" data-topico="mediana" aria-label="Mediana" title="Mediana" aria-pressed="false"><i data-lucide="arrow-left-right"></i></button>
+<button class="estatistica-botao-topico" type="button" data-topico="moda" aria-label="Moda" title="Moda" aria-pressed="false"><i data-lucide="repeat"></i></button>
+<button class="estatistica-botao-topico" type="button" data-topico="amplitude" aria-label="Amplitude e dispersão" title="Amplitude e dispersão" aria-pressed="false"><i data-lucide="move-horizontal"></i></button>
+</nav>
+<section class="estatistica-paineis" aria-live="polite">
+<article class="estatistica-painel" data-conteudo="conceito" hidden>
+<h2>1. Conceito de Estatística</h2>
+<p>Estatística é a área da Matemática que trabalha com dados. Ela ajuda a coletar, organizar, apresentar, analisar e interpretar informações.</p>
+<div class="estatistica-exemplo"><h3>Exemplo explicado</h3><p>Imagine que uma escola quer descobrir qual esporte os alunos preferem. Primeiro, ela coleta as respostas. Depois, organiza os resultados em uma tabela ou gráfico.</p><p>Com os dados organizados, fica mais fácil comparar as preferências e tirar conclusões. A Estatística aparece em pesquisas, esportes, saúde, educação e muitas outras áreas.</p></div>
+</article>
+<article class="estatistica-painel" data-conteudo="populacao-amostra" hidden>
+<h2>2. População e amostra</h2>
+<p>População é o conjunto completo de elementos que uma pesquisa deseja estudar. Amostra é uma parte desse conjunto, escolhida para representar a população.</p>
+<div class="estatistica-exemplo"><h3>Exemplo explicado</h3><p>Exemplo: uma escola tem 800 estudantes. Se a pesquisa consulta todos os 800, eles formam a população pesquisada. Se consulta apenas 80, esses 80 formam uma amostra.</p><p>A amostra precisa ser escolhida com cuidado para representar bem a população. Quando todos os elementos são pesquisados, temos um censo.</p></div>
+</article>
+<article class="estatistica-painel" data-conteudo="variaveis" hidden>
+<h2>3. Variáveis estatísticas</h2>
+<p>Variável é a característica observada em cada elemento da pesquisa. Ela pode ser qualitativa, quando descreve uma categoria, ou quantitativa, quando representa uma quantidade numérica.</p>
+<div class="estatistica-exemplo"><h3>Exemplo explicado</h3><p>Exemplos qualitativos: cor dos olhos, cidade onde mora e estado civil. Exemplos quantitativos: idade, altura e número de irmãos.</p><p>Variáveis quantitativas podem ser discretas, quando resultam de contagens, ou contínuas, quando podem assumir valores decimais dentro de um intervalo.</p></div>
+</article>
+<article class="estatistica-painel" data-conteudo="tabelas" hidden>
+<h2>4. Tabelas estatísticas</h2>
+<p>Tabelas organizam dados em linhas e colunas. Elas permitem localizar informações e comparar categorias sem precisar ler uma lista desorganizada.</p>
+<div class="estatistica-exemplo"><h3>Exemplo explicado</h3><p>Exemplo: em uma pesquisa sobre transporte, 12 estudantes usam ônibus, 8 vão a pé e 5 usam bicicleta. O total é 12 + 8 + 5 = 25 estudantes.</p><p>Uma tabela deve ter título, categorias identificadas e valores apresentados com clareza. A soma das frequências deve corresponder ao total de observações.</p></div>
+</article>
+<article class="estatistica-painel" data-conteudo="graficos" hidden>
+<h2>5. Gráficos estatísticos</h2>
+<p>Gráficos apresentam os dados de forma visual. Os mais comuns são os de barras, linhas e setores. Cada tipo ajuda a observar aspectos diferentes dos dados.</p>
+<div class="estatistica-exemplo"><h3>Exemplo explicado</h3><p>Gráfico de barras: compara categorias, como a quantidade de alunos por turma. Gráfico de linhas: mostra mudanças ao longo do tempo, como a temperatura durante uma semana.</p><p>Gráfico de setores: mostra como um total está dividido em partes. Sempre observe o título, a legenda, os eixos e a escala antes de tirar conclusões.</p></div>
+</article>
+<article class="estatistica-painel" data-conteudo="frequencia" hidden>
+<h2>6. Frequência absoluta e relativa</h2>
+<p>Frequência absoluta é o número de vezes que um valor ou categoria aparece. Frequência relativa é a parte que essa frequência representa em relação ao total.</p>
+<div class="estatistica-exemplo"><h3>Exemplo explicado</h3><p>Exemplo: em uma turma de 20 alunos, 5 preferem vôlei. A frequência absoluta é 5. A frequência relativa é 5 ÷ 20 = 0,25 = 25%.</p><p>Para calcular a frequência relativa em porcentagem, divida a frequência absoluta pelo total e multiplique por 100. A soma das frequências relativas é 100%.</p></div>
+</article>
+<article class="estatistica-painel" data-conteudo="media" hidden>
+<h2>7. Média aritmética</h2>
+<p>A média aritmética é calculada somando todos os valores e dividindo o resultado pela quantidade de valores.</p>
+<div class="estatistica-exemplo"><h3>Exemplo explicado</h3><p>Exemplo: notas 6, 8 e 10. Soma: 6 + 8 + 10 = 24. Quantidade de notas: 3. Média: 24 ÷ 3 = 8.</p><p>A média considera todos os valores, por isso pode ser influenciada por valores muito altos ou muito baixos.</p></div>
+</article>
+<article class="estatistica-painel" data-conteudo="mediana" hidden>
+<h2>8. Mediana</h2>
+<p>Mediana é o valor que fica no centro de um conjunto de dados depois que todos os valores são colocados em ordem crescente ou decrescente.</p>
+<div class="estatistica-exemplo"><h3>Exemplo explicado</h3><p>Com quantidade ímpar: 2, 5, 9. O valor central é 5. Com quantidade par: 2, 4, 6, 8. A mediana é a média dos dois valores centrais: (4 + 6) ÷ 2 = 5.</p><p>Atenção: sempre organize os dados antes de procurar a mediana. Não é necessariamente o número que aparece mais vezes.</p></div>
+</article>
+<article class="estatistica-painel" data-conteudo="moda" hidden>
+<h2>9. Moda</h2>
+<p>Moda é o valor que aparece com maior frequência em um conjunto de dados. Um conjunto pode ter uma moda, mais de uma moda ou nenhuma moda.</p>
+<div class="estatistica-exemplo"><h3>Exemplo explicado</h3><p>Exemplo: 2, 3, 3, 4, 5. O número 3 aparece duas vezes e os outros aparecem uma vez. Portanto, a moda é 3.</p><p>No conjunto 2, 2, 3, 3, 4, existem duas modas: 2 e 3. Se todos os valores aparecem a mesma quantidade de vezes, o conjunto pode ser considerado amodal.</p></div>
+</article>
+<article class="estatistica-painel" data-conteudo="amplitude" hidden>
+<h2>10. Amplitude e dispersão</h2>
+<p>Amplitude é uma medida simples de dispersão. Ela mostra a distância entre o maior e o menor valor de um conjunto de dados.</p>
+<div class="estatistica-exemplo"><h3>Exemplo explicado</h3><p>Exemplo: dados 3, 5, 8 e 10. Maior valor: 10. Menor valor: 3. Amplitude: 10 − 3 = 7.</p><p>Uma amplitude maior indica que os dados cobrem um intervalo maior. Porém, ela considera apenas os extremos e não mostra como os outros valores estão distribuídos.</p></div>
+</article>
+</section>
+<button class="botao-proxima-aula" type="button" onclick="window.location.href='aprender-estatistica.html'">Próxima Aula <i data-lucide="arrow-right"></i></button>
+</main>
+<div id="fundoMenu"></div><div id="menuLateral"><h2>Menu</h2><a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+<a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+<a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+<a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+<a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+<a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+<a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+<a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+<a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+<a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a></div>
+<script src="js/script.js?v=20261123-estatistica1"></script>
+<script>
+(function(){
+ const botoes=document.querySelectorAll(".estatistica-botao-topico");
+ const paineis=document.querySelectorAll(".estatistica-painel");
+ botoes.forEach(function(botao){botao.addEventListener("click",function(){
+  const id=botao.dataset.topico;
+  botoes.forEach(function(item){const ativo=item===botao;item.classList.toggle("ativo",ativo);item.setAttribute("aria-pressed",String(ativo));});
+  paineis.forEach(function(painel){painel.hidden=painel.dataset.conteudo!==id;});
+ });});
+ if(window.lucide)lucide.createIcons();
+})();
+</script>
+</body></html>
