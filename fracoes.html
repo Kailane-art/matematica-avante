@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frações e Decimais - Matemática Avante</title>
+<link rel="stylesheet" href="css/style.css?v=20261123-fracoes1">
+<script src="https://unpkg.com/lucide@latest"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-fracoes">
+<header><button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar"><i data-lucide="arrow-left"></i></button><h1>Frações e Decimais</h1><button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu"><i data-lucide="menu"></i></button></header>
+<main class="pagina-fracoes-conteudo">
+<nav class="fracoes-navegacao" aria-label="Conteúdos de Frações e Decimais"><button class="fracoes-botao-topico" type="button" data-topico="conceito" aria-label="Conceito de fração" title="Conceito de fração" aria-pressed="false"><i data-lucide="shapes"></i></button>
+<button class="fracoes-botao-topico" type="button" data-topico="equivalentes" aria-label="Frações equivalentes" title="Frações equivalentes" aria-pressed="false"><i data-lucide="copy"></i></button>
+<button class="fracoes-botao-topico" type="button" data-topico="simplificacao" aria-label="Simplificação de frações" title="Simplificação de frações" aria-pressed="false"><i data-lucide="minimize"></i></button>
+<button class="fracoes-botao-topico" type="button" data-topico="comparacao" aria-label="Comparação de frações" title="Comparação de frações" aria-pressed="false"><i data-lucide="arrow-left-right"></i></button>
+<button class="fracoes-botao-topico" type="button" data-topico="adicao" aria-label="Adição de frações" title="Adição de frações" aria-pressed="false"><i data-lucide="plus"></i></button>
+<button class="fracoes-botao-topico" type="button" data-topico="subtracao" aria-label="Subtração de frações" title="Subtração de frações" aria-pressed="false"><i data-lucide="minus"></i></button>
+<button class="fracoes-botao-topico" type="button" data-topico="multiplicacao" aria-label="Multiplicação de frações" title="Multiplicação de frações" aria-pressed="false"><i data-lucide="x"></i></button>
+<button class="fracoes-botao-topico" type="button" data-topico="divisao" aria-label="Divisão de frações" title="Divisão de frações" aria-pressed="false"><i data-lucide="divide"></i></button>
+<button class="fracoes-botao-topico" type="button" data-topico="decimais" aria-label="Números decimais" title="Números decimais" aria-pressed="false"><i data-lucide="calculator"></i></button>
+<button class="fracoes-botao-topico" type="button" data-topico="conversao" aria-label="Conversão entre frações e decimais" title="Conversão entre frações e decimais" aria-pressed="false"><i data-lucide="repeat"></i></button></nav>
+<section class="fracoes-paineis" aria-live="polite"><article class="fracoes-painel" data-conteudo="conceito" hidden><h2>Conceito de fração</h2><p>Entenda a fração como parte de um todo e identifique numerador e denominador.</p><div class="fracoes-exemplo"><h3>O</h3><p> </p><p>q</p></div></article>
+<article class="fracoes-painel" data-conteudo="equivalentes" hidden><h2>Frações equivalentes</h2><p>Reconheça frações diferentes que representam a mesma quantidade.</p><div class="fracoes-exemplo"><h3>C</h3><p>o</p><p>m</p></div></article>
+<article class="fracoes-painel" data-conteudo="simplificacao" hidden><h2>Simplificação de frações</h2><p>Reduza frações dividindo numerador e denominador por um divisor comum.</p><div class="fracoes-exemplo"><h3>C</h3><p>o</p><p>m</p></div></article>
+<article class="fracoes-painel" data-conteudo="comparacao" hidden><h2>Comparação de frações</h2><p>Compare frações usando denominadores iguais, equivalência e referências como metade e inteiro.</p><div class="fracoes-exemplo"><h3>C</h3><p>o</p><p>m</p></div></article>
+<article class="fracoes-painel" data-conteudo="adicao" hidden><h2>Adição de frações</h2><p>Some frações com denominadores iguais ou encontre um denominador comum.</p><div class="fracoes-exemplo"><h3>D</h3><p>e</p><p>n</p></div></article>
+<article class="fracoes-painel" data-conteudo="subtracao" hidden><h2>Subtração de frações</h2><p>Subtraia frações com denominadores iguais ou transforme-as em frações equivalentes.</p><div class="fracoes-exemplo"><h3>D</h3><p>e</p><p>n</p></div></article>
+<article class="fracoes-painel" data-conteudo="multiplicacao" hidden><h2>Multiplicação de frações</h2><p>Multiplique numeradores entre si e denominadores entre si. Simplifique o resultado quando possível.</p><div class="fracoes-exemplo"><h3>R</h3><p>e</p><p>g</p></div></article>
+<article class="fracoes-painel" data-conteudo="divisao" hidden><h2>Divisão de frações</h2><p>Divida multiplicando a primeira fração pelo inverso da segunda.</p><div class="fracoes-exemplo"><h3>D</h3><p>i</p><p>v</p></div></article>
+<article class="fracoes-painel" data-conteudo="decimais" hidden><h2>Números decimais</h2><p>Leia casas decimais, compare valores e relacione décimos, centésimos e milésimos.</p><div class="fracoes-exemplo"><h3>C</h3><p>a</p><p>s</p></div></article>
+<article class="fracoes-painel" data-conteudo="conversao" hidden><h2>Conversão entre frações e decimais</h2><p>Converta frações em números decimais e reconheça representações equivalentes.</p><div class="fracoes-exemplo"><h3>C</h3><p>o</p><p>n</p></div></article></section>
+<button class="botao-proxima-aula" type="button" onclick="window.location.href='aprender-fracoes.html'">Próxima Aula <i data-lucide="arrow-right"></i></button>
+</main>
+<div id="fundoMenu"></div><div id="menuLateral"><h2>Menu</h2><a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+<a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+<a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+<a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+<a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+<a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+<a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+<a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+<a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+<a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a></div>
+<script src="js/script.js"></script>
+<script>
+(function(){
+ const botoes=document.querySelectorAll(".fracoes-botao-topico");
+ const paineis=document.querySelectorAll(".fracoes-painel");
+ botoes.forEach(function(botao){botao.addEventListener("click",function(){
+  const id=botao.dataset.topico;
+  botoes.forEach(function(item){const ativo=item===botao;item.classList.toggle("ativo",ativo);item.setAttribute("aria-pressed",String(ativo));});
+  paineis.forEach(function(painel){painel.hidden=painel.dataset.conteudo!==id;});
+ });});
+ if(window.lucide)lucide.createIcons();
+})();
+</script>
+</body></html>
