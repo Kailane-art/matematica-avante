@@ -162,11 +162,12 @@ Escolha um assunto para começar seus estudos.
     </div>
 
     <div class="materia-item">
-        <button class="materia-botao materia-indisponivel" type="button" disabled>
+        <button class="materia-botao" type="button" onclick="window.location.href='probabilidade.html'">
             <i data-lucide="dice-5"></i>
             <span class="materia-nome">Probabilidade</span>
-            <span class="materia-selo">Em desenvolvimento</span>
+            <span class="materia-barra" role="progressbar" aria-label="Progresso em Probabilidade" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressoProbabilidadeBarra"></span></span>
         </button>
+        <span class="materia-status" id="progressoProbabilidadeTexto">Carregando progresso...</span>
     </div>
 
     <div class="materia-item">
@@ -399,6 +400,13 @@ lucide.createIcons();
             texto: document.getElementById("progressoEstatisticaTexto"),
             barra: document.getElementById("progressoEstatisticaBarra"),
             tipos: ["est_conceito","est_populacao_amostra","est_variaveis","est_tabelas","est_graficos","est_frequencia","est_media","est_mediana","est_moda","est_amplitude"],
+            totalQuestoes: 50
+        },
+        {
+            nome: "Probabilidade",
+            texto: document.getElementById("progressoProbabilidadeTexto"),
+            barra: document.getElementById("progressoProbabilidadeBarra"),
+            tipos: ["prob_conceito","prob_experimentos","prob_espaco_amostral","prob_eventos","prob_uniao_intersecao","prob_complementar","prob_calculo","prob_condicional","prob_independencia","prob_binomial"],
             totalQuestoes: 50
         }
     ];
