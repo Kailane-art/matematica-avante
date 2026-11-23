@@ -513,13 +513,7 @@ async function iniciarPresencaOnlineGlobal() {
 
         usuarioPresencaOnlineId = user.id;
 
-        const { data: preferencias, error: erroPreferencias } = await supabaseClient
-            .from("user_settings")
-            .select("show_online_status")
-            .eq("user_id", user.id)
-            .maybeSingle();
-
-        if (erroPreferencias) throw erroPreferencias;
+        const preferencias = await obterPreferenciasBanco(user.id);
         presencaOnlineHabilitada = preferencias?.show_online_status !== false;
 
         await supabaseClient.realtime.setAuth();
@@ -579,25 +573,53 @@ async function salvarPreferenciaUsuario(alteracoes) {
     }
 }
 
+// Compartilha a leitura das preferências quando presença e interface inicializam juntas.
+let leituraPreferenciasEmAndamento = null;
+let usuarioLeituraPreferenciasId = null;
+
+function obterPreferenciasBanco(usuarioId) {
+    if (!supabaseClient || !usuarioId) return Promise.resolve(null);
+
+    if (
+        !leituraPreferenciasEmAndamento ||
+        usuarioLeituraPreferenciasId !== usuarioId
+    ) {
+        usuarioLeituraPreferenciasId = usuarioId;
+        leituraPreferenciasEmAndamento = supabaseClient
+            .from("user_settings")
+            .select("theme, text_size, show_online_status")
+            .eq("user_id", usuarioId)
+            .maybeSingle()
+            .then(function(resultado) {
+                if (resultado.error) throw resultado.error;
+                return resultado.data;
+            })
+            .finally(function() {
+                leituraPreferenciasEmAndamento = null;
+                usuarioLeituraPreferenciasId = null;
+            });
+    }
+
+    return leituraPreferenciasEmAndamento;
+}
+
 async function carregarPreferenciasGlobais() {
     if (!supabaseClient) return;
     try {
         const { data: { user }, error: erroUsuario } = await obterUsuarioAutenticado();
         if (erroUsuario || !user) return;
-        const { data, error } = await supabaseClient
-            .from("user_settings")
-            .select("theme, text_size")
-            .eq("user_id", user.id)
-            .maybeSingle();
-        if (error) throw error;
+        const data = await obterPreferenciasBanco(user.id);
         if (!data) return;
 
-        if (!paginaLogin) {
+        if (!paginaLogin && data.theme) {
             localStorage.setItem("tema", data.theme);
             aplicarTemaGlobal(data.theme);
         }
-        localStorage.setItem("tamanhoTexto", String(data.text_size));
-        aplicarTamanhoTextoGlobal(data.text_size);
+        if (data.text_size != null) {
+            localStorage.setItem("tamanhoTexto", String(data.text_size));
+            aplicarTamanhoTextoGlobal(data.text_size);
+        }
+        presencaOnlineHabilitada = data.show_online_status !== false;
     } catch (erro) {
         console.error("Não foi possível carregar as preferências globais:", erro);
     }
