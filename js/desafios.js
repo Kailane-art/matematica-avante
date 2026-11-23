@@ -155,6 +155,11 @@
                 p_accept: aceitar
             });
             if (error) throw error;
+            if (aceitar && data === "expired") {
+                mostrarMensagem(estadoCriacao, "Este convite expirou e não pode mais ser aceito.", true);
+                await atualizarPainel();
+                return;
+            }
             if (aceitar && data === "accepted") {
                 const { data: messageId, error: messageError } = await rpc("send_chat_message", {
                     p_contact_id: convite.challenger_id,
@@ -165,8 +170,8 @@
                 }
             }
             await atualizarPainel();
-            if (aceitar) await abrirPartida(convite.id);
-            else mostrarMensagem(estadoCriacao, "Convite recusado.", false);
+            if (aceitar && data === "accepted") await abrirPartida(convite.id);
+            else if (!aceitar && data === "declined") mostrarMensagem(estadoCriacao, "Convite recusado.", false);
         } catch (error) {
             console.error("Erro ao responder convite:", error);
             mostrarMensagem(estadoCriacao, error.message || "Não foi possível responder ao convite.", true);
