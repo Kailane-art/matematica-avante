@@ -5089,3 +5089,173 @@ body {
     }
 }
 
+
+
+/* =====================================================
+   PÁGINA SOBRE - PALETA AZUL MAIS VIVA
+   ===================================================== */
+.pagina-sobre {
+    background: linear-gradient(
+        180deg,
+        #0756d8 0%,
+        #087ff5 48%,
+        #f3f8ff 48%,
+        #f3f8ff 100%
+    );
+}
+
+.pagina-sobre .sobre-header,
+.pagina-sobre .sobre-footer {
+    background: #0647bd;
+}
+
+.pagina-sobre .sobre-header .icon-button {
+    background: #0878ed;
+    color: #fff;
+}
+
+.pagina-sobre .sobre-hero {
+    background: transparent;
+}
+
+.sobre-etiqueta {
+    border-color: rgba(255,255,255,.38);
+    background: rgba(255,255,255,.16);
+    color: #fff;
+}
+
+.pagina-sobre .sobre-hero p {
+    color: #eaf5ff;
+}
+
+.sobre-hero-link {
+    color: #0756d8;
+    box-shadow: 0 7px 20px rgba(0, 39, 120, .18);
+}
+
+.sobre-hero-link:hover {
+    color: #0346b5;
+}
+
+.pagina-sobre .card-sobre {
+    border-color: #d5e7ff;
+}
+
+.pagina-sobre .card-sobre:hover {
+    border-color: #83bdff;
+}
+
+.pagina-sobre .sobre-icone,
+.pagina-sobre .sobre-contato-icone {
+    border-color: #c6e1ff;
+    background: linear-gradient(145deg, #eaf5ff, #d5eaff);
+    color: #0868e8;
+}
+
+.pagina-sobre .card-sobre h2,
+.sobre-grade-intro h2,
+.sobre-historia h2,
+.sobre-secao-titulo h2 {
+    color: #073b91;
+}
+
+.pagina-sobre .sobre-card-destaque {
+    border-left-color: #087bff;
+}
+
+.pagina-sobre .sobre-link,
+.pagina-sobre .sobre-contato-item > svg {
+    color: #0868e8;
+}
+
+.sobre-subtitulo {
+    color: #0873e8;
+}
+
+.sobre-historia {
+    border: 1px solid #c8e2ff;
+    background: linear-gradient(115deg, #e4f2ff, #d4eaff);
+    color: #073b91;
+}
+
+.sobre-historia-icone {
+    background: linear-gradient(145deg, #087bff, #0756d8);
+    box-shadow: 0 7px 18px rgba(7, 86, 216, .22);
+}
+
+.sobre-faq details {
+    border-color: #d5e7ff;
+}
+
+.sobre-faq summary {
+    color: #073b91;
+}
+
+.sobre-contato-item {
+    border-color: #d5e7ff;
+}
+
+.sobre-contato-item:hover {
+    border-color: #8bc3ff;
+    box-shadow: 0 10px 24px rgba(7, 86, 216, .12);
+}
+
+.pagina-sobre .sobre-footer span {
+    color: #dceeff;
+}
+
+.modo-escuro.pagina-sobre {
+    background: linear-gradient(
+        180deg,
+        #063b9b 0%,
+        #0756bd 48%,
+        #071b36 48%,
+        #071b36 100%
+    );
+}
+
+.modo-escuro.pagina-sobre .sobre-header,
+.modo-escuro.pagina-sobre .sobre-footer {
+    background: #052e78;
+}
+
+.modo-escuro.pagina-sobre .sobre-header .icon-button {
+    background: #0878ed;
+}
+
+.modo-escuro.pagina-sobre .sobre-icone,
+.modo-escuro.pagina-sobre .sobre-contato-icone {
+    border-color: #2869b5;
+    background: linear-gradient(145deg, #164f9a, #103d7a);
+    color: #d9edff;
+}
+
+.modo-escuro.pagina-sobre .sobre-card-destaque {
+    border-left-color: #29a5ff;
+}
+
+.modo-escuro.pagina-sobre .sobre-subtitulo {
+    color: #67bdff;
+}
+
+.modo-escuro.pagina-sobre .sobre-historia {
+    border-color: #24558e;
+    background: linear-gradient(115deg, #123c70, #0d315e);
+}
+
+.modo-escuro.pagina-sobre .sobre-historia-icone {
+    background: linear-gradient(145deg, #168cff, #0862d9);
+}
+
+.modo-escuro.pagina-sobre .sobre-link,
+.modo-escuro.pagina-sobre .sobre-contato-item > svg {
+    color: #69bdff;
+}
+
+.modo-escuro.pagina-sobre .sobre-faq details {
+    border-color: #24558e;
+}
+
+.modo-escuro.pagina-sobre .sobre-contato-item:hover {
+    border-color: #3989d8;
+}
