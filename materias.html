@@ -332,8 +332,9 @@ lucide.createIcons();
         }
 
         const { data, error } = await supabaseClient
-            .from("user_question_rewards")
+            .from("user_question_attempts")
             .select("activity_type, question_id")
+            .eq("user_id", usuario.id)
             .in("activity_type", ["adicao", "subtracao", "multiplicacao", "divisao"]);
 
         if (error) throw error;
