@@ -7,7 +7,7 @@
     <title>Configurações - Matemática Avante</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="manifest" href="manifest.webmanifest">
-    <link rel="stylesheet" href="css/configuracoes.css">
+    <link rel="stylesheet" href="css/configuracoes.css?v=20261123-autoexclusao1">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -93,6 +93,34 @@
             </div>
         </section>
 
+        <section class="config-grupo" aria-labelledby="titulo-conta">
+            <div class="config-grupo-titulo">
+                <i data-lucide="user-round-cog"></i>
+                <div>
+                    <h2 id="titulo-conta">Conta</h2>
+                    <p>Gerencie sua sessão e a exclusão da sua conta.</p>
+                </div>
+            </div>
+            <div class="config-opcao config-conta-acoes">
+                <div class="config-opcao-texto">
+                    <strong>Encerrar sessão</strong>
+                    <span>Saia da sua conta neste dispositivo.</span>
+                </div>
+                <button id="botaoSairConfiguracoes" type="button" class="config-botao-secundario">
+                    <i data-lucide="log-out"></i> Sair
+                </button>
+            </div>
+            <div class="config-opcao config-conta-acoes">
+                <div class="config-opcao-texto">
+                    <strong>Excluir a conta</strong>
+                    <span>Solicite a exclusão. A conta só será desativada depois da confirmação enviada ao seu e-mail. Após confirmar, haverá 30 dias para recuperação.</span>
+                </div>
+                <button id="botaoExcluirConta" type="button" class="config-botao-perigoso">
+                    <i data-lucide="user-round-x"></i> Excluir a conta
+                </button>
+            </div>
+        </section>
+
         <p id="configStatus" class="config-status" role="status" aria-live="polite">Carregando suas preferências...</p>
     </main>
 
@@ -115,8 +143,8 @@
 
     </aside>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=20261123-autoexclusao1"></script>
     <script src="js/notificacoes-push.js"></script>
-    <script src="js/configuracoes.js"></script>
+    <script src="js/configuracoes.js?v=20261123-autoexclusao1"></script>
 </body>
 </html>
