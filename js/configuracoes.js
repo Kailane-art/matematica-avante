@@ -250,7 +250,18 @@
                     "account-self-service",
                     { body: { action: "request_deletion" } }
                 );
-                if (error) throw error;
+                if (error) {
+                    let mensagem = error.message || "Falha ao comunicar com o serviço de conta.";
+                    if (error.context && typeof error.context.json === "function") {
+                        try {
+                            const detalhe = await error.context.json();
+                            if (detalhe?.error) mensagem = detalhe.error;
+                        } catch (erroLeitura) {
+                            console.warn("Não foi possível ler o detalhe do erro da função:", erroLeitura);
+                        }
+                    }
+                    throw new Error(mensagem);
+                }
                 if (data?.error) throw new Error(data.error);
                 mostrarStatus(data?.message || "Enviamos um e-mail para confirmar a solicitação. Sua conta continua ativa até a confirmação.");
             } catch (erro) {
