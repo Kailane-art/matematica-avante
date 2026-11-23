@@ -3133,10 +3133,15 @@ html.verificando-sessao::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #12366f;
-    color: #ffffff;
+    background: #f4f8ff;
+    color: #1E3A8A;
     font-size: 17px;
     font-weight: 600;
+}
+
+html.verificando-sessao:has(body.modo-escuro)::before {
+    background: #12366f;
+    color: #ffffff;
 }
 
 
