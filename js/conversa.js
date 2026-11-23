@@ -243,7 +243,9 @@
             if (error) throw error;
 
             container.replaceChildren();
-            if (data === "accepted" && aceitar) {
+            if (data === "expired") {
+                container.textContent = "Este convite expirou e não pode mais ser aceito.";
+            } else if (data === "accepted" && aceitar) {
                 const { data: messageId, error: messageError } = await supabaseClient.rpc("send_chat_message", {
                     p_contact_id: contatoId,
                     p_body: "Aceitei seu convite para o desafio de matemática. A partida já começou!"
@@ -263,8 +265,10 @@
                     window.location.href = "desafios.html?desafio=" + encodeURIComponent(challengeId);
                 });
                 container.appendChild(abrir);
-            } else {
+            } else if (data === "declined" && !aceitar) {
                 container.textContent = "Você recusou o convite.";
+            } else {
+                container.textContent = "Não foi possível concluir a resposta ao convite.";
             }
         } catch (erro) {
             console.error("Erro ao responder convite de desafio:", erro);
