@@ -5901,3 +5901,91 @@ body {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
+
+
+/* APRENDER BÁSICO - QUATRO OPERAÇÕES NA MESMA PÁGINA */
+.pagina-aprender-basico .aprender-basico-conteudo {
+    width: min(100% - 32px, 1000px);
+    margin: 0 auto 40px;
+}
+
+.pagina-aprender-basico .titulo-operacoes {
+    text-align: center;
+    margin: 28px 12px 18px;
+}
+
+.pagina-aprender-basico .operacoes-topicos {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin: 20px auto 16px;
+}
+
+.pagina-aprender-basico .operacoes-topicos button {
+    min-width: 0;
+    min-height: 66px;
+    padding: 9px 6px;
+    border-radius: 10px;
+    background: #1E3A8A;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 12px;
+    line-height: 1.2;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.pagina-aprender-basico .operacoes-topicos button svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.pagina-aprender-basico .operacoes-topicos button span {
+    display: block;
+}
+
+.pagina-aprender-basico .operacoes-topicos button:hover,
+.pagina-aprender-basico .operacoes-topicos button.ativo {
+    background: #294ec5;
+    transform: translateY(-2px);
+}
+
+.pagina-aprender-basico .operacoes-topicos button.ativo {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+}
+
+.pagina-aprender-basico .mensagem-aprender-basico {
+    text-align: center;
+    color: #52627a;
+    margin: 14px 0;
+    font-size: 14px;
+}
+
+.pagina-aprender-basico .basico-exercicios {
+    margin-top: 18px;
+}
+
+.pagina-aprender-basico .basico-exercicios[hidden] {
+    display: none !important;
+}
+
+.modo-escuro.pagina-aprender-basico .mensagem-aprender-basico {
+    color: #cbdaf0;
+}
+
+@media (max-width: 700px) {
+    .pagina-aprender-basico .operacoes-topicos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .pagina-aprender-basico .operacoes-topicos button {
+        min-height: 58px;
+        font-size: 12px;
+    }
+}
