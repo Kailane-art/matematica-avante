@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funções - Matemática Avante</title>
+<link rel="stylesheet" href="css/style.css?v=20261123-funcoes1">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-funcoes">
+
+<header>
+    <button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar">
+        <i data-lucide="arrow-left"></i>
+    </button>
+    <h1>Funções</h1>
+    <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+        <i data-lucide="menu"></i>
+    </button>
+</header>
+
+<main class="pagina-funcoes-conteudo">
+    <nav class="funcoes-navegacao" aria-label="Conteúdos de Funções">
+        <button class="funcoes-botao-topico" type="button" data-topico="conceito" aria-label="Conceito de função" title="Conceito de função" aria-pressed="false"><i data-lucide="workflow"></i></button>
+        <button class="funcoes-botao-topico" type="button" data-topico="elementos" aria-label="Domínio, contradomínio e imagem" title="Domínio, contradomínio e imagem" aria-pressed="false"><i data-lucide="layers"></i></button>
+        <button class="funcoes-botao-topico" type="button" data-topico="lei" aria-label="Lei de formação" title="Lei de formação" aria-pressed="false"><i data-lucide="function-square"></i></button>
+        <button class="funcoes-botao-topico" type="button" data-topico="valor" aria-label="Valor de uma função" title="Valor de uma função" aria-pressed="false"><i data-lucide="calculator"></i></button>
+        <button class="funcoes-botao-topico" type="button" data-topico="cartesiano" aria-label="Plano cartesiano" title="Plano cartesiano" aria-pressed="false"><i data-lucide="axis-3d"></i></button>
+        <button class="funcoes-botao-topico" type="button" data-topico="graficos" aria-label="Gráficos de funções" title="Gráficos de funções" aria-pressed="false"><i data-lucide="chart-line"></i></button>
+        <button class="funcoes-botao-topico" type="button" data-topico="afim" aria-label="Função afim" title="Função afim" aria-pressed="false"><i data-lucide="trending-up"></i></button>
+        <button class="funcoes-botao-topico" type="button" data-topico="quadratica" aria-label="Função quadrática" title="Função quadrática" aria-pressed="false"><i data-lucide="chart-no-axes-combined"></i></button>
+        <button class="funcoes-botao-topico" type="button" data-topico="zeros" aria-label="Zeros ou raízes da função" title="Zeros ou raízes da função" aria-pressed="false"><i data-lucide="crosshair"></i></button>
+        <button class="funcoes-botao-topico" type="button" data-topico="variacao" aria-label="Crescimento e decrescimento" title="Crescimento e decrescimento" aria-pressed="false"><i data-lucide="activity"></i></button>
+    </nav>
+
+    <section class="funcoes-paineis" aria-live="polite">
+        <article class="funcoes-painel" data-conteudo="conceito" hidden>
+            <h2>O que é uma função?</h2>
+            <p>Uma função é uma relação matemática que associa cada elemento de um conjunto de entrada a exatamente um elemento de um conjunto de saída. Ela descreve como uma quantidade depende de outra.</p>
+            <div class="funcoes-exemplo"><h3>Regra de associação</h3><p>Imagine uma máquina: você informa um número, a regra realiza uma operação e apresenta um resultado. Se a regra for somar 3, a entrada 2 produz a saída 5.</p></div>
+            <div class="funcoes-exemplo"><h3>Exemplo</h3><p>A relação f(x) = x + 3 é uma função. Para cada valor escolhido para x, existe um único resultado correspondente.</p></div>
+            <div class="funcoes-exemplo"><h3>Atenção</h3><p>Uma mesma entrada não pode produzir duas saídas diferentes dentro da mesma função. Entradas diferentes, porém, podem produzir a mesma saída.</p></div>
+        </article>
+
+        <article class="funcoes-painel" data-conteudo="elementos" hidden>
+            <h2>Domínio, contradomínio e imagem</h2>
+            <p>Toda função envolve conjuntos que ajudam a identificar de onde vêm os valores de entrada e onde estão os possíveis resultados.</p>
+            <div class="funcoes-exemplo"><h3>Domínio</h3><p>É o conjunto de valores que podem ser usados como entrada da função. Costumamos representar esses valores pela variável x.</p></div>
+            <div class="funcoes-exemplo"><h3>Contradomínio</h3><p>É o conjunto definido como destino das possíveis saídas da função.</p></div>
+            <div class="funcoes-exemplo"><h3>Imagem</h3><p>É o conjunto dos valores que a função realmente produz. A imagem está contida no contradomínio.</p></div>
+            <div class="funcoes-exemplo"><h3>Exemplo</h3><p>Se f(x) = x², com domínio {−2, −1, 0, 1, 2} e contradomínio dos números naturais, a imagem é {0, 1, 4}.</p></div>
+        </article>
+
+        <article class="funcoes-painel" data-conteudo="lei" hidden>
+            <h2>Lei de formação</h2>
+            <p>A lei de formação é a regra matemática que determina como calcular a saída de uma função a partir de cada entrada.</p>
+            <div class="funcoes-exemplo"><h3>Representação</h3><p>Uma função pode ser escrita como f(x) = 2x + 1. A letra x representa a entrada, enquanto f(x) representa o valor de saída.</p></div>
+            <div class="funcoes-exemplo"><h3>Como interpretar</h3><p>A regra indica que devemos multiplicar o valor de entrada por 2 e depois somar 1.</p></div>
+            <div class="funcoes-exemplo"><h3>Exemplo</h3><p>Para x = 3: f(3) = 2 · 3 + 1 = 7. Portanto, a saída correspondente a 3 é 7.</p></div>
+        </article>
+
+        <article class="funcoes-painel" data-conteudo="valor" hidden>
+            <h2>Calculando valores de uma função</h2>
+            <p>Calcular o valor de uma função significa substituir a variável de entrada pelo número indicado e realizar as operações da expressão.</p>
+            <div class="funcoes-exemplo"><h3>Exemplo resolvido</h3><p>Considere f(x) = 3x − 4. Para descobrir f(5), substituímos x por 5: f(5) = 3 · 5 − 4 = 15 − 4 = 11.</p></div>
+            <div class="funcoes-exemplo"><h3>Entrada negativa</h3><p>Se x = −2, então f(−2) = 3 · (−2) − 4 = −6 − 4 = −10. Os parênteses ajudam a preservar o sinal.</p></div>
+            <div class="funcoes-exemplo"><h3>Dica</h3><p>Respeite a ordem das operações e substitua todas as ocorrências da variável.</p></div>
+        </article>
+
+        <article class="funcoes-painel" data-conteudo="cartesiano" hidden>
+            <h2>Plano cartesiano</h2>
+            <p>O plano cartesiano permite localizar pontos usando pares ordenados. Ele é formado por dois eixos numéricos perpendiculares.</p>
+            <div class="funcoes-exemplo"><h3>Eixo horizontal</h3><p>É o eixo x, também chamado de eixo das abscissas. Ele indica a primeira coordenada do ponto.</p></div>
+            <div class="funcoes-exemplo"><h3>Eixo vertical</h3><p>É o eixo y, também chamado de eixo das ordenadas. Ele indica a segunda coordenada.</p></div>
+            <div class="funcoes-exemplo"><h3>Pares ordenados</h3><p>Um ponto é indicado por (x, y). Por exemplo, o ponto (2, 3) fica duas unidades à direita e três unidades acima da origem.</p></div>
+            <div class="funcoes-exemplo"><h3>Origem</h3><p>É o ponto de encontro dos eixos, representado por (0, 0).</p></div>
+        </article>
+
+        <article class="funcoes-painel" data-conteudo="graficos" hidden>
+            <h2>Gráficos de funções</h2>
+            <p>O gráfico de uma função é a representação visual dos pares ordenados (x, f(x)) no plano cartesiano.</p>
+            <div class="funcoes-exemplo"><h3>Construção</h3><p>Escolhemos alguns valores para x, calculamos f(x) e marcamos os pontos correspondentes no plano cartesiano.</p></div>
+            <div class="funcoes-exemplo"><h3>Exemplo</h3><p>Para f(x) = x + 1, alguns pares são (0, 1), (1, 2) e (2, 3). Ao marcar esses pontos, obtemos parte de uma reta.</p></div>
+            <div class="funcoes-exemplo"><h3>Leitura do gráfico</h3><p>O eixo horizontal mostra as entradas e o vertical mostra os valores correspondentes da função. Cada ponto do gráfico representa um par entrada-saída.</p></div>
+        </article>
+
+        <article class="funcoes-painel" data-conteudo="afim" hidden>
+            <h2>Função afim</h2>
+            <p>A função afim é definida por f(x) = ax + b, em que a e b são números reais. Seu gráfico é uma reta.</p>
+            <div class="funcoes-exemplo"><h3>Coeficientes</h3><p>O número a é o coeficiente angular e indica a inclinação da reta. O número b é o coeficiente linear e indica onde a reta cruza o eixo y.</p></div>
+            <div class="funcoes-exemplo"><h3>Exemplo</h3><p>Em f(x) = 2x + 3, temos a = 2 e b = 3. Quando x = 0, f(0) = 3, então a reta cruza o eixo vertical no ponto (0, 3).</p></div>
+            <div class="funcoes-exemplo"><h3>Comportamento</h3><p>Se a > 0, a função é crescente. Se a < 0, é decrescente. Se a = 0, a função é constante.</p></div>
+        </article>
+
+        <article class="funcoes-painel" data-conteudo="quadratica" hidden>
+            <h2>Função quadrática</h2>
+            <p>A função quadrática, também chamada de função do segundo grau, tem a forma f(x) = ax² + bx + c, com a diferente de zero.</p>
+            <div class="funcoes-exemplo"><h3>Gráfico</h3><p>O gráfico de uma função quadrática é uma parábola. Se a > 0, ela tem concavidade voltada para cima; se a < 0, para baixo.</p></div>
+            <div class="funcoes-exemplo"><h3>Coeficientes</h3><p>O coeficiente a determina a concavidade. Os coeficientes b e c também influenciam a posição da parábola.</p></div>
+            <div class="funcoes-exemplo"><h3>Exemplo</h3><p>Na função f(x) = x² − 4x + 3, temos a = 1, b = −4 e c = 3. Como a é positivo, a parábola tem concavidade para cima.</p></div>
+        </article>
+
+        <article class="funcoes-painel" data-conteudo="zeros" hidden>
+            <h2>Zeros ou raízes da função</h2>
+            <p>O zero de uma função é um valor de x para o qual a saída é igual a zero. No gráfico, corresponde ao ponto em que a curva cruza ou toca o eixo x.</p>
+            <div class="funcoes-exemplo"><h3>Função afim</h3><p>Para f(x) = 2x − 6, fazemos 2x − 6 = 0. Assim, 2x = 6 e x = 3. O zero da função é 3.</p></div>
+            <div class="funcoes-exemplo"><h3>Função quadrática</h3><p>Os zeros de ax² + bx + c podem ser encontrados resolvendo a equação do segundo grau, frequentemente pela fórmula de Bhaskara.</p></div>
+            <div class="funcoes-exemplo"><h3>Interpretação</h3><p>Uma função pode ter nenhum, um ou mais zeros, dependendo de sua expressão e de seu domínio.</p></div>
+        </article>
+
+        <article class="funcoes-painel" data-conteudo="variacao" hidden>
+            <h2>Crescimento e decrescimento</h2>
+            <p>Uma função é crescente em um intervalo quando seus valores aumentam à medida que a entrada aumenta. É decrescente quando os valores diminuem.</p>
+            <div class="funcoes-exemplo"><h3>Função crescente</h3><p>Na função f(x) = 2x, quando x aumenta, f(x) também aumenta. Por exemplo: f(1) = 2 e f(3) = 6.</p></div>
+            <div class="funcoes-exemplo"><h3>Função decrescente</h3><p>Na função f(x) = −x + 5, quando x aumenta, f(x) diminui. Por exemplo: f(1) = 4 e f(3) = 2.</p></div>
+            <div class="funcoes-exemplo"><h3>Na função quadrática</h3><p>Uma parábola pode ser decrescente em uma parte do domínio e crescente em outra, ou o contrário. Isso depende da posição do vértice e da concavidade.</p></div>
+        </article>
+    </section>
+
+    <div id="fundoMenu"></div>
+    <div id="menuLateral">
+        <h2>Menu</h2>
+        <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+        <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+        <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+        <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+        <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+        <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+        <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+        <a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+        <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+        <a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a>
+    </div>
+</main>
+
+<script src="js/script.js"></script>
+<script>
+(function () {
+    const botoes = document.querySelectorAll(".funcoes-botao-topico");
+    const paineis = document.querySelectorAll(".funcoes-painel");
+
+    botoes.forEach(function (botao) {
+        botao.addEventListener("click", function () {
+            const topicoSelecionado = botao.dataset.topico;
+
+            botoes.forEach(function (item) {
+                const selecionado = item === botao;
+                item.classList.toggle("ativo", selecionado);
+                item.setAttribute("aria-pressed", String(selecionado));
+            });
+
+            paineis.forEach(function (painel) {
+                painel.hidden = painel.dataset.conteudo !== topicoSelecionado;
+            });
+        });
+    });
+
+    if (window.lucide) lucide.createIcons();
+})();
+</script>
+</body>
+</html>
