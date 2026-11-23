@@ -913,18 +913,27 @@
         if (listaSolicitacoes) estadoPainel(listaSolicitacoes, "loader-circle", "Carregando solicitações...");
 
         try {
-            await carregarFavoritosUsuario();
+            // Favoritos/perfil e contatos não dependem um do outro.
+            const [resultadoContatos] = await Promise.all([
+                (async function() {
+                    const { data, error } = await supabaseClient.rpc("get_chat_contacts");
+                    if (error) throw error;
+                    return data || [];
+                })(),
+                carregarFavoritosUsuario()
+            ]);
 
-            const { data, error } = await supabaseClient.rpc("get_chat_contacts");
-            if (error) throw error;
-
-            const contatos = data || [];
+            const contatos = resultadoContatos;
             const amigos = contatos.filter(item => item.friendship_status === "accepted");
-            await atualizarListaConversas(amigos);
             const recebidas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "received");
             const enviadas = contatos.filter(item => item.friendship_status === "pending" && item.request_direction === "sent");
             quantidadeSolicitacoesRecebidas = recebidas.length;
-            await carregarNotificacoesChat();
+
+            // Conversas e notificações também podem ser atualizadas em paralelo.
+            await Promise.all([
+                atualizarListaConversas(amigos),
+                carregarNotificacoesChat()
+            ]);
 
             if (listaAmigos) {
                 if (!amigos.length) {
