@@ -5305,3 +5305,147 @@ body {
     background: linear-gradient(145deg, #2367ad, #1b5595);
     color: #eaf5ff;
 }
+
+
+/* PÁGINA MATÉRIAS - GRADE E PROGRESSO */
+.pagina-materias .hero {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 46px 20px 65px;
+}
+
+.pagina-materias .materias {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 900px;
+    margin: 34px auto 0;
+}
+
+.pagina-materias .materia-item {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pagina-materias .materia-botao {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 142px;
+    padding: 20px 18px 28px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    background: #1E3A8A;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(15, 35, 75, 0.13);
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pagina-materias .materia-botao:hover:not(:disabled) {
+    background: #294ec5;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(15, 35, 75, 0.18);
+}
+
+.pagina-materias .materia-botao > svg {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+}
+
+.pagina-materias .materia-nome {
+    line-height: 1.35;
+}
+
+.pagina-materias .materia-barra {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.pagina-materias .materia-barra > span {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: 0 5px 5px 0;
+    background: #FFD54F;
+    transition: width 0.45s ease;
+}
+
+.pagina-materias .materia-barra-sem-dados {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.pagina-materias .materia-status {
+    min-height: 17px;
+    color: #53627a;
+    font-size: 12px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.pagina-materias .materia-indisponivel,
+.pagina-materias .materia-indisponivel:disabled {
+    cursor: not-allowed;
+    opacity: 0.72;
+    background: #38547f;
+    box-shadow: none;
+}
+
+.pagina-materias .materia-selo {
+    display: inline-block;
+    padding: 4px 9px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.12);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.modo-escuro.pagina-materias .materia-status {
+    color: #dbeafe;
+}
+
+.modo-escuro.pagina-materias .materia-botao {
+    background: #1E3A8A;
+}
+
+.modo-escuro.pagina-materias .materia-botao:hover:not(:disabled) {
+    background: #294ec5;
+}
+
+.modo-escuro.pagina-materias .materia-indisponivel,
+.modo-escuro.pagina-materias .materia-indisponivel:disabled {
+    background: #254875;
+}
+
+@media (max-width: 600px) {
+    .pagina-materias .hero {
+        padding: 34px 15px 50px;
+    }
+
+    .pagina-materias .materias {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 28px;
+    }
+
+    .pagina-materias .materia-botao {
+        min-height: 118px;
+    }
+}
