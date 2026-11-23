@@ -661,6 +661,8 @@ const paginasProtegidas = new Set([
     "aprender-estatistica.html",
     "probabilidade.html",
     "aprender-probabilidade.html",
+    "trigonometria.html",
+    "aprender-trigonometria.html",
     "nivel1.html",
     "nivel2.html",
     "nivel3.html",
