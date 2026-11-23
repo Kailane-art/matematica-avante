@@ -231,7 +231,7 @@ header svg {
 }
 
 .modo-escuro {
-    background: #0b1d3a;
+    background: #12366f;
     color: white;
 }
 
@@ -283,7 +283,7 @@ header svg {
 }    .pagina-sobre {
     background: linear-gradient(
         180deg,
-        #0b1d3a,
+        #12366f,
         #1E40AF
     );
     color: white;
