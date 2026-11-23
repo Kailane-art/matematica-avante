@@ -33,7 +33,7 @@
 .conversa-formulario button:disabled { opacity:.55; cursor:wait; }
 .conversa-estado { margin:auto; padding:22px; text-align:center; color:#64748b; line-height:1.5; }
 .conversa-estado.erro { color:#b42318; }
-.modo-escuro.pagina-conversa { background:#0b1d3a; }
+.modo-escuro.pagina-conversa { background:#12366f; }
 .modo-escuro .conversa-cabecalho { background:#13294b; border-color:#29456f; }
 .modo-escuro .conversa-identidade-dados h1 { color:#e2e8f0; }
 .modo-escuro .conversa-identidade-dados .conversa-nome-link { color:#ffffff; }
