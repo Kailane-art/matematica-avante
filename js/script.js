@@ -113,82 +113,94 @@ const botaoMenu = document.getElementById("botaoMenu");
 
 const menuLateral = document.getElementById("menuLateral");
 
-// Adiciona Rankings a todos os menus laterais existentes, sem duplicar links.
-if (menuLateral && !menuLateral.querySelector('a[href="rankings.html"]')) {
-    const linkRankings = document.createElement("a");
-    linkRankings.href = "rankings.html";
-    linkRankings.className = "menu-item";
-    linkRankings.innerHTML = '<i data-lucide="trophy"></i><span>Rankings</span>';
-
-    const tituloMenu = menuLateral.querySelector("h2");
-    if (tituloMenu) {
-        tituloMenu.insertAdjacentElement("afterend", linkRankings);
-    } else {
-        menuLateral.appendChild(linkRankings);
-    }
-
-    if (window.lucide && typeof window.lucide.createIcons === "function") {
-        window.lucide.createIcons();
-    }
-}
-
-// Adiciona Desafios a todos os menus laterais existentes, sem duplicar links.
-if (menuLateral && !menuLateral.querySelector('a[href="desafios.html"]')) {
-    const linkDesafios = document.createElement("a");
-    linkDesafios.href = "desafios.html";
-    linkDesafios.className = "menu-item";
-    linkDesafios.innerHTML = '<i data-lucide="swords"></i><span>Desafios</span>';
-
-    const linkRankingsExistente = menuLateral.querySelector('a[href="rankings.html"]');
-    if (linkRankingsExistente) {
-        linkRankingsExistente.insertAdjacentElement("afterend", linkDesafios);
-    } else {
-        const tituloMenu = menuLateral.querySelector("h2");
-        if (tituloMenu) tituloMenu.insertAdjacentElement("afterend", linkDesafios);
-        else menuLateral.appendChild(linkDesafios);
-    }
-
-    if (window.lucide && typeof window.lucide.createIcons === "function") {
-        window.lucide.createIcons();
-    }
-}
-
+// Padroniza a ordem e os destinos do menu lateral em todas as páginas.
 const fundoMenu = document.getElementById("fundoMenu");
 
-// Torna navegável a opção Configurações nos menus laterais existentes.
-document.querySelectorAll("#menuLateral .menu-item").forEach(function(item) {
-    const texto = item.querySelector("span")?.textContent.trim().toLowerCase();
-    if (texto !== "configurações" || item.tagName === "A") return;
+const itensPadraoMenu = [
+    { href: "inicio.html", texto: "Voltar ao início", icone: "house" },
+    { href: "perfil.html", texto: "Perfil", icone: "user-round" },
+    { href: "rankings.html", texto: "Rankings", icone: "trophy" },
+    { href: "desafios.html", texto: "Desafios", icone: "swords" },
+    { href: "chat.html", texto: "Chat", icone: "messages-square" },
+    { href: "materias.html", texto: "Matérias", icone: "book-open" },
+    { href: "atividades.html", texto: "Atividades", icone: "clipboard-list" },
+    { href: "professores.html", texto: "Professores", icone: "graduation-cap" },
+    { href: "planos.html", texto: "Planos e Assinaturas", icone: "credit-card" },
+    { href: "configuracoes.html", texto: "Configurações", icone: "settings" },
+    { href: "alertas.html", texto: "Alertas e Eventos", icone: "megaphone" },
+    { href: "sobre.html", texto: "Sobre", icone: "info" }
+];
 
-    const link = document.createElement("a");
-    link.className = item.className;
-    link.href = "configuracoes.html";
-    link.setAttribute("aria-label", "Abrir configurações");
-    while (item.firstChild) link.appendChild(item.firstChild);
-    item.replaceWith(link);
-});
+if (menuLateral) {
+    const linksExistentes = Array.from(menuLateral.querySelectorAll(".menu-item"));
+    const linksUtilizados = new Set();
+    const tituloMenu = menuLateral.querySelector("h2");
 
-// Remove do menu o link que aponta para a própria página aberta.
-// A regra também cobre links adicionados dinamicamente acima.
-let caminhoAtualMenu = window.location.pathname;
-while (caminhoAtualMenu.length > 1 && caminhoAtualMenu.endsWith("/")) {
-    caminhoAtualMenu = caminhoAtualMenu.slice(0, -1);
-}
+    itensPadraoMenu.forEach(function(item) {
+        let link = linksExistentes.find(function(elemento) {
+            if (linksUtilizados.has(elemento)) return false;
+            const destino = elemento.getAttribute("href");
+            if (destino) {
+                try {
+                    return new URL(destino, window.location.href).pathname.endsWith("/" + item.href);
+                } catch (erro) {
+                    return false;
+                }
+            }
+            return elemento.querySelector("span")?.textContent.trim().toLowerCase() === item.texto.toLowerCase();
+        });
 
-document.querySelectorAll("#menuLateral a.menu-item[href]").forEach(function(link) {
-    try {
-        let caminhoDestino = new URL(link.getAttribute("href"), window.location.href).pathname;
-        while (caminhoDestino.length > 1 && caminhoDestino.endsWith("/")) {
-            caminhoDestino = caminhoDestino.slice(0, -1);
+        if (!link) {
+            link = document.createElement("a");
+            link.className = "menu-item";
         }
 
-        if (caminhoDestino === caminhoAtualMenu) {
-            link.remove();
+        linksUtilizados.add(link);
+        link.href = item.href;
+        link.classList.add("menu-item");
+        link.setAttribute("aria-label", item.texto);
+        link.innerHTML = '<i data-lucide="' + item.icone + '"></i><span>' + item.texto + '</span>';
+
+        if (tituloMenu) {
+            tituloMenu.insertAdjacentElement("afterend", link);
+        } else {
+            menuLateral.insertBefore(link, menuLateral.firstChild);
         }
-    } catch (erro) {
-        console.warn("Não foi possível verificar um link do menu lateral:", erro);
+    });
+
+    // Remove links duplicados dos itens padronizados.
+    linksExistentes.forEach(function(link) {
+        if (linksUtilizados.has(link)) return;
+        const destino = link.getAttribute("href");
+        const texto = link.querySelector("span")?.textContent.trim().toLowerCase();
+        const itemConhecido = itensPadraoMenu.some(function(item) {
+            return destino === item.href || texto === item.texto.toLowerCase();
+        });
+        if (itemConhecido) link.remove();
+    });
+
+    // Retira somente o link que aponta para a página atualmente aberta.
+    let caminhoAtualMenu = window.location.pathname;
+    while (caminhoAtualMenu.length > 1 && caminhoAtualMenu.endsWith("/")) {
+        caminhoAtualMenu = caminhoAtualMenu.slice(0, -1);
     }
-});
+
+    menuLateral.querySelectorAll("a.menu-item[href]").forEach(function(link) {
+        try {
+            let caminhoDestino = new URL(link.getAttribute("href"), window.location.href).pathname;
+            while (caminhoDestino.length > 1 && caminhoDestino.endsWith("/")) {
+                caminhoDestino = caminhoDestino.slice(0, -1);
+            }
+            if (caminhoDestino === caminhoAtualMenu) link.remove();
+        } catch (erro) {
+            console.warn("Não foi possível verificar um link do menu lateral:", erro);
+        }
+    });
+
+    if (window.lucide && typeof window.lucide.createIcons === "function") {
+        window.lucide.createIcons();
+    }
+}
 
 
 
