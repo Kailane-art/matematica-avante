@@ -10,7 +10,7 @@
 <title>Matérias - Matemática Avante</title>
 
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=20261122-materias1">
 
 
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -20,7 +20,7 @@
 </head>
 
 
-<body>
+<body class="pagina-materias">
 
 
 
@@ -81,59 +81,91 @@ Escolha um assunto para começar seus estudos.
 
 
 
-<div class="materias">
+<div class="materias" id="listaMaterias">
 
+    <div class="materia-item">
+        <button class="materia-botao" type="button" onclick="window.location.href='basico.html'">
+            <i data-lucide="calculator"></i>
+            <span class="materia-nome">Básico da Matemática</span>
+            <span class="materia-barra" role="progressbar" aria-label="Progresso em Básico da Matemática" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span id="progressoBasicoBarra"></span>
+            </span>
+        </button>
+        <span class="materia-status" id="progressoBasicoTexto">Carregando progresso...</span>
+    </div>
 
+    <div class="materia-item">
+        <button class="materia-botao" type="button" onclick="window.location.href='geometria.html'">
+            <i data-lucide="ruler"></i>
+            <span class="materia-nome">Geometria</span>
+            <span class="materia-barra materia-barra-sem-dados" aria-hidden="true"><span></span></span>
+        </button>
+        <span class="materia-status">Acompanhamento ainda não disponível</span>
+    </div>
 
-<button onclick="window.location.href='basico.html'">
+    <div class="materia-item">
+        <button class="materia-botao materia-indisponivel" type="button" disabled>
+            <i data-lucide="variable"></i>
+            <span class="materia-nome">Álgebra</span>
+            <span class="materia-selo">Em desenvolvimento</span>
+        </button>
+    </div>
 
-<i data-lucide="plus"></i>
+    <div class="materia-item">
+        <button class="materia-botao materia-indisponivel" type="button" disabled>
+            <i data-lucide="chart-no-axes-combined"></i>
+            <span class="materia-nome">Funções</span>
+            <span class="materia-selo">Em desenvolvimento</span>
+        </button>
+    </div>
 
-Básico da Matemática
+    <div class="materia-item">
+        <button class="materia-botao materia-indisponivel" type="button" disabled>
+            <i data-lucide="percent"></i>
+            <span class="materia-nome">Frações e Decimais</span>
+            <span class="materia-selo">Em desenvolvimento</span>
+        </button>
+    </div>
 
-</button>
+    <div class="materia-item">
+        <button class="materia-botao materia-indisponivel" type="button" disabled>
+            <i data-lucide="superscript"></i>
+            <span class="materia-nome">Potenciação e Radiciação</span>
+            <span class="materia-selo">Em desenvolvimento</span>
+        </button>
+    </div>
 
+    <div class="materia-item">
+        <button class="materia-botao materia-indisponivel" type="button" disabled>
+            <i data-lucide="wallet"></i>
+            <span class="materia-nome">Porcentagem e Matemática Financeira</span>
+            <span class="materia-selo">Em desenvolvimento</span>
+        </button>
+    </div>
 
+    <div class="materia-item">
+        <button class="materia-botao materia-indisponivel" type="button" disabled>
+            <i data-lucide="chart-column"></i>
+            <span class="materia-nome">Estatística</span>
+            <span class="materia-selo">Em desenvolvimento</span>
+        </button>
+    </div>
 
+    <div class="materia-item">
+        <button class="materia-botao materia-indisponivel" type="button" disabled>
+            <i data-lucide="dice-5"></i>
+            <span class="materia-nome">Probabilidade</span>
+            <span class="materia-selo">Em desenvolvimento</span>
+        </button>
+    </div>
 
-<button>
-
-<i data-lucide="x"></i>
-
-Multiplicação e Divisão
-
-</button>
-
-
-
-
-<button onclick="window.location.href='geometria.html'">
-
-<i data-lucide="ruler"></i>
-
-Geometria
-
-</button>       <button>
-
-<i data-lucide="chart-column"></i>
-
-Funções
-
-</button>
-
-
-
-
-<button>
-
-<i data-lucide="variable"></i>
-
-Álgebra
-
-</button>
-
-
-
+    <div class="materia-item">
+        <button class="materia-botao materia-indisponivel" type="button" disabled>
+            <i data-lucide="triangle"></i>
+            <span class="materia-nome">Trigonometria</span>
+            <span class="materia-selo">Em desenvolvimento</span>
+        </button>
+    </div>
 
 </div>
 
@@ -276,6 +308,57 @@ lucide.createIcons();
 
 
 
+
+
+<script>
+(async function carregarProgressoDasMaterias() {
+    const texto = document.getElementById("progressoBasicoTexto");
+    const barra = document.getElementById("progressoBasicoBarra");
+    const trilho = barra ? barra.parentElement : null;
+
+    if (!texto || !barra || !trilho) return;
+
+    try {
+        if (typeof supabaseClient === "undefined" || !supabaseClient ||
+            typeof obterUsuarioAutenticado !== "function") {
+            throw new Error("Conexão com o banco indisponível.");
+        }
+
+        const resultadoUsuario = await obterUsuarioAutenticado();
+        const usuario = resultadoUsuario.data && resultadoUsuario.data.user;
+
+        if (resultadoUsuario.error || !usuario) {
+            throw resultadoUsuario.error || new Error("Usuário não autenticado.");
+        }
+
+        const { data, error } = await supabaseClient
+            .from("user_level_progress")
+            .select("level_number, phase_number, completed")
+            .in("level_number", [1, 2, 3, 4, 5])
+            .eq("completed", true);
+
+        if (error) throw error;
+
+        const fasesConcluidas = new Set(
+            (data || []).map(function(fase) {
+                return Number(fase.level_number) + "-" + Number(fase.phase_number);
+            })
+        );
+
+        const totalFases = 50;
+        const quantidade = Math.min(fasesConcluidas.size, totalFases);
+        const porcentagem = Math.round((quantidade / totalFases) * 100);
+
+        barra.style.width = porcentagem + "%";
+        trilho.setAttribute("aria-valuenow", String(porcentagem));
+        texto.textContent = quantidade + " de " + totalFases +
+            " fases concluídas • " + porcentagem + "%";
+    } catch (erro) {
+        console.error("Não foi possível carregar o progresso de Básico da Matemática:", erro);
+        texto.textContent = "Progresso indisponível no momento";
+    }
+})();
+</script>
 
 </body>
 
