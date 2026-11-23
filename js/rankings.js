@@ -278,6 +278,7 @@
 
     if (campoPesquisa) {
         campoPesquisa.addEventListener("input", function () {
+            requisicaoPesquisa++;
             window.clearTimeout(temporizadorPesquisa);
             const termo = campoPesquisa.value.trim();
 
@@ -289,6 +290,7 @@
 
     if (campoPesquisaDesafios) {
         campoPesquisaDesafios.addEventListener("input", function () {
+            requisicaoPesquisaDesafios++;
             window.clearTimeout(temporizadorPesquisaDesafios);
             const termo = campoPesquisaDesafios.value.trim();
             temporizadorPesquisaDesafios = window.setTimeout(function () {
