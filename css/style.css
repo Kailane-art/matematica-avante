@@ -4381,3 +4381,133 @@ body {
     background: #0b1d3a;
     color: #f1f5f9;
 }
+
+
+/* MENU LATERAL - REFINAMENTO VISUAL 2026 */
+#menuLateral {
+    box-sizing: border-box;
+    width: min(320px, calc(100vw - 24px));
+    height: 100vh;
+    height: 100dvh;
+    right: calc(-1 * min(340px, 100vw));
+    padding: max(26px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #ffffff;
+    color: #172033;
+    border-radius: 22px 0 0 22px;
+    box-shadow: -12px 0 36px rgba(10, 28, 58, 0.22);
+    transition: right 0.28s ease, background-color 0.25s ease;
+}
+
+#menuLateral.aberto {
+    right: 0;
+    animation: none;
+}
+
+#menuLateral h2 {
+    margin: 0 0 22px;
+    padding: 4px 8px 18px;
+    color: #12366f;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    border-bottom: 1px solid #e5ebf5;
+}
+
+#menuLateral h2::after {
+    content: "MATEMÁTICA AVANTE";
+    display: block;
+    margin-top: 6px;
+    color: #71809a;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+#menuLateral .menu-item {
+    box-sizing: border-box;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin: 0 0 7px;
+    padding: 12px 13px;
+    border: 1px solid transparent;
+    border-radius: 13px;
+    color: #26364f;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+
+#menuLateral .menu-item svg {
+    width: 21px;
+    height: 21px;
+    flex: 0 0 21px;
+    color: #4169e1;
+    stroke-width: 2;
+}
+
+#menuLateral .menu-item:hover {
+    color: #12366f;
+    background: #edf3ff;
+    border-color: #dce7ff;
+    transform: translateX(-2px);
+}
+
+#menuLateral .menu-item:focus-visible {
+    outline: 3px solid rgba(65, 105, 225, 0.45);
+    outline-offset: 2px;
+}
+
+#fundoMenu {
+    background: rgba(8, 18, 36, 0.48);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+}
+
+.modo-escuro #menuLateral {
+    background: #12366f;
+    color: #ffffff;
+    box-shadow: -12px 0 36px rgba(0, 0, 0, 0.34);
+}
+
+.modo-escuro #menuLateral h2 {
+    color: #ffffff;
+    border-bottom-color: rgba(255, 255, 255, 0.18);
+}
+
+.modo-escuro #menuLateral h2::after {
+    color: #c5d7f5;
+}
+
+.modo-escuro #menuLateral .menu-item {
+    color: #f4f7ff;
+}
+
+.modo-escuro #menuLateral .menu-item svg {
+    color: #c5d7ff;
+}
+
+.modo-escuro #menuLateral .menu-item:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.13);
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+@media (max-width: 700px) {
+    #menuLateral {
+        width: min(310px, calc(100vw - 20px));
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #menuLateral,
+    #menuLateral .menu-item {
+        transition: none;
+    }
+}
