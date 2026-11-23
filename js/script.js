@@ -646,6 +646,7 @@ const paginasProtegidas = new Set([
     "geometria.html",
     "basico.html",
     "algebra.html",
+    "funcoes.html",
     "aprender-basico.html",
     "aprender-geometria.html",
     "aprender-algebra.html",
@@ -2255,6 +2256,11 @@ const conteudosRastreaveis = {
     "algebra.html": {
         chave: "algebra",
         nome: "Álgebra"
+    },
+
+    "funcoes.html": {
+        chave: "funcoes",
+        nome: "Funções"
     },
 
     "nivel2.html": {
