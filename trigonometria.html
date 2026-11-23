@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigonometria - Matemática Avante</title>
+<link rel="stylesheet" href="css/style.css?v=20261123-trigonometria1">
+<script src="https://unpkg.com/lucide@latest"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-trigonometria">
+<header><button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar"><i data-lucide="arrow-left"></i></button><h1>Trigonometria</h1><button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu"><i data-lucide="menu"></i></button></header>
+<main class="pagina-trigonometria-conteudo">
+<nav class="trigonometria-navegacao" aria-label="Conteúdos de Trigonometria">
+<button class="trigonometria-botao-topico" type="button" data-topico="angulos" aria-label="Ângulos e medidas" title="Ângulos e medidas" aria-pressed="false"><i data-lucide="angle"></i></button>
+<button class="trigonometria-botao-topico" type="button" data-topico="graus-radianos" aria-label="Graus e radianos" title="Graus e radianos" aria-pressed="false"><i data-lucide="ruler"></i></button>
+<button class="trigonometria-botao-topico" type="button" data-topico="triangulo-retangulo" aria-label="Triângulo retângulo" title="Triângulo retângulo" aria-pressed="false"><i data-lucide="triangle-right"></i></button>
+<button class="trigonometria-botao-topico" type="button" data-topico="razoes" aria-label="Razões trigonométricas" title="Razões trigonométricas" aria-pressed="false"><i data-lucide="calculator"></i></button>
+<button class="trigonometria-botao-topico" type="button" data-topico="seno-cosseno-tangente" aria-label="Seno, cosseno e tangente" title="Seno, cosseno e tangente" aria-pressed="false"><i data-lucide="chart-no-axes-combined"></i></button>
+<button class="trigonometria-botao-topico" type="button" data-topico="ciclo" aria-label="Ciclo trigonométrico" title="Ciclo trigonométrico" aria-pressed="false"><i data-lucide="circle"></i></button>
+<button class="trigonometria-botao-topico" type="button" data-topico="angulos-notaveis" aria-label="Ângulos notáveis" title="Ângulos notáveis" aria-pressed="false"><i data-lucide="star"></i></button>
+<button class="trigonometria-botao-topico" type="button" data-topico="identidades" aria-label="Identidades trigonométricas" title="Identidades trigonométricas" aria-pressed="false"><i data-lucide="sigma"></i></button>
+<button class="trigonometria-botao-topico" type="button" data-topico="equacoes" aria-label="Equações trigonométricas" title="Equações trigonométricas" aria-pressed="false"><i data-lucide="function-square"></i></button>
+<button class="trigonometria-botao-topico" type="button" data-topico="aplicacoes" aria-label="Aplicações da Trigonometria" title="Aplicações da Trigonometria" aria-pressed="false"><i data-lucide="mountain"></i></button>
+</nav>
+<section class="trigonometria-paineis" aria-live="polite">
+<article class="trigonometria-painel" data-conteudo="angulos" hidden><h2>1. Ângulos e medidas</h2><p>Reconheça ângulos, seus elementos e as unidades usadas para medir sua abertura.</p><div class="trigonometria-exemplo"><h3>Exemplo explicado</h3><p>Um ângulo mede a abertura entre duas semirretas que partem do mesmo ponto, chamado vértice. O ângulo reto mede 90°.</p></div></article>
+<article class="trigonometria-painel" data-conteudo="graus-radianos" hidden><h2>2. Graus e radianos</h2><p>Converta medidas angulares entre graus e radianos.</p><div class="trigonometria-exemplo"><h3>Exemplo explicado</h3><p>Uma volta completa mede 360°, que corresponde a 2π radianos. Como 180° = π rad, podemos converter multiplicando ou dividindo por 180.</p></div></article>
+<article class="trigonometria-painel" data-conteudo="triangulo-retangulo" hidden><h2>3. Triângulo retângulo</h2><p>Identifique hipotenusa e catetos em um triângulo retângulo.</p><div class="trigonometria-exemplo"><h3>Exemplo explicado</h3><p>Em um triângulo retângulo, a hipotenusa fica oposta ao ângulo de 90°. Os outros dois lados são os catetos. Se eles medem 3 e 4, a hipotenusa mede 5, pois 3² + 4² = 5².</p></div></article>
+<article class="trigonometria-painel" data-conteudo="razoes" hidden><h2>4. Razões trigonométricas</h2><p>Entenda seno, cosseno e tangente como relações entre os lados de um triângulo retângulo.</p><div class="trigonometria-exemplo"><h3>Exemplo explicado</h3><p>Considere um ângulo agudo de um triângulo retângulo. Seno = cateto oposto/hipotenusa; cosseno = cateto adjacente/hipotenusa; tangente = cateto oposto/cateto adjacente.</p></div></article>
+<article class="trigonometria-painel" data-conteudo="seno-cosseno-tangente" hidden><h2>5. Seno, cosseno e tangente</h2><p>Calcule as razões trigonométricas usando os lados e os ângulos do triângulo retângulo.</p><div class="trigonometria-exemplo"><h3>Exemplo explicado</h3><p>Em um triângulo 3-4-5, para o ângulo oposto ao lado 3, sen = 3/5. Para o ângulo adjacente ao lado 4, cos = 4/5. A tangente é a divisão entre os catetos.</p></div></article>
+<article class="trigonometria-painel" data-conteudo="ciclo" hidden><h2>6. Ciclo trigonométrico</h2><p>Localize ângulos no ciclo trigonométrico e compreenda os sinais das razões.</p><div class="trigonometria-exemplo"><h3>Exemplo explicado</h3><p>O ciclo trigonométrico é uma circunferência de raio 1 centrada na origem. O eixo horizontal representa o cosseno e o vertical representa o seno.</p></div></article>
+<article class="trigonometria-painel" data-conteudo="angulos-notaveis" hidden><h2>7. Ângulos notáveis</h2><p>Memorize e utilize os valores de seno, cosseno e tangente de 30°, 45° e 60°.</p><div class="trigonometria-exemplo"><h3>Exemplo explicado</h3><p>Os ângulos notáveis mais usados são 30°, 45° e 60°. Seus valores podem ser organizados em uma tabela para facilitar cálculos e simplificações.</p></div></article>
+<article class="trigonometria-painel" data-conteudo="identidades" hidden><h2>8. Identidades trigonométricas</h2><p>Use as identidades fundamentais para relacionar seno, cosseno e tangente.</p><div class="trigonometria-exemplo"><h3>Exemplo explicado</h3><p>A identidade sen²(x) + cos²(x) = 1 vale para qualquer ângulo. Se sen(x)=3/5, então cos²(x)=1−9/25=16/25; para ângulo agudo, cos(x)=4/5.</p></div></article>
+<article class="trigonometria-painel" data-conteudo="equacoes" hidden><h2>9. Equações trigonométricas</h2><p>Resolva equações trigonométricas simples considerando os valores e os intervalos dos ângulos.</p><div class="trigonometria-exemplo"><h3>Exemplo explicado</h3><p>Resolver uma equação trigonométrica exige encontrar os ângulos que satisfazem a igualdade no intervalo indicado. Por exemplo, cos(x)=1 ocorre em 0° no intervalo de 0° a 360°.</p></div></article>
+<article class="trigonometria-painel" data-conteudo="aplicacoes" hidden><h2>10. Aplicações da Trigonometria</h2><p>Aplique razões trigonométricas para calcular alturas, distâncias e inclinações.</p><div class="trigonometria-exemplo"><h3>Exemplo explicado</h3><p>Uma pessoa está a 10 m de um prédio e observa o topo com ângulo de elevação cuja tangente é 0,5. A altura, sem considerar a altura dos olhos, é 10 × 0,5 = 5 m.</p></div></article>
+</section>
+<button class="botao-proxima-aula" type="button" onclick="window.location.href='aprender-trigonometria.html'">Próxima Aula <i data-lucide="arrow-right"></i></button>
+</main>
+<div id="fundoMenu"></div><div id="menuLateral"><h2>Menu</h2><a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+<a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+<a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+<a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+<a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+<a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+<a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+<a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+<a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+<a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a></div>
+<script src="js/script.js?v=20261123-trigonometria1"></script>
+<script>
+(function(){
+ const botoes=document.querySelectorAll(".trigonometria-botao-topico");
+ const paineis=document.querySelectorAll(".trigonometria-painel");
+ botoes.forEach(function(botao){botao.addEventListener("click",function(){
+  const id=botao.dataset.topico;
+  botoes.forEach(function(item){const ativo=item===botao;item.classList.toggle("ativo",ativo);item.setAttribute("aria-pressed",String(ativo));});
+  paineis.forEach(function(painel){painel.hidden=painel.dataset.conteudo!==id;});
+ });});
+ if(window.lucide)lucide.createIcons();
+})();
+</script>
+</body></html>
