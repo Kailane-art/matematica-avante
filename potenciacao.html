@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Potenciação e Radiciação - Matemática Avante</title>
+<link rel="stylesheet" href="css/style.css?v=20261123-potenciacao1">
+<script src="https://unpkg.com/lucide@latest"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-potenciacao">
+<header><button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar"><i data-lucide="arrow-left"></i></button><h1>Potenciação e Radiciação</h1><button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu"><i data-lucide="menu"></i></button></header>
+<main class="pagina-potenciacao-conteudo">
+<nav class="potenciacao-navegacao" aria-label="Conteúdos de Potenciação e Radiciação"><button class="potenciacao-botao-topico" type="button" data-topico="conceito" aria-label="Conceito de potenciação" title="Conceito de potenciação" aria-pressed="false"><i data-lucide="superscript"></i></button>
+<button class="potenciacao-botao-topico" type="button" data-topico="propriedades" aria-label="Propriedades das potências" title="Propriedades das potências" aria-pressed="false"><i data-lucide="sigma"></i></button>
+<button class="potenciacao-botao-topico" type="button" data-topico="expoentes" aria-label="Expoente zero e expoente negativo" title="Expoente zero e expoente negativo" aria-pressed="false"><i data-lucide="minus"></i></button>
+<button class="potenciacao-botao-topico" type="button" data-topico="sinais" aria-label="Potências com bases negativas" title="Potências com bases negativas" aria-pressed="false"><i data-lucide="plus-minus"></i></button>
+<button class="potenciacao-botao-topico" type="button" data-topico="raiz-quadrada" aria-label="Raiz quadrada" title="Raiz quadrada" aria-pressed="false"><i data-lucide="square-root"></i></button>
+<button class="potenciacao-botao-topico" type="button" data-topico="raiz-cubica" aria-label="Raiz cúbica" title="Raiz cúbica" aria-pressed="false"><i data-lucide="box"></i></button>
+<button class="potenciacao-botao-topico" type="button" data-topico="radicais" aria-label="Simplificação de radicais" title="Simplificação de radicais" aria-pressed="false"><i data-lucide="scaling"></i></button>
+<button class="potenciacao-botao-topico" type="button" data-topico="operacoes" aria-label="Operações com radicais" title="Operações com radicais" aria-pressed="false"><i data-lucide="plus"></i></button>
+<button class="potenciacao-botao-topico" type="button" data-topico="fracionario" aria-label="Expoentes fracionários" title="Expoentes fracionários" aria-pressed="false"><i data-lucide="fraction"></i></button>
+<button class="potenciacao-botao-topico" type="button" data-topico="cientifica" aria-label="Notação científica" title="Notação científica" aria-pressed="false"><i data-lucide="atom"></i></button></nav>
+<section class="potenciacao-paineis" aria-live="polite"><article class="potenciacao-painel" data-conteudo="conceito" hidden><h2>Conceito de potenciação</h2><p>Compreenda a potenciação como uma multiplicação de fatores iguais.</p><div class="potenciacao-exemplo"><h3>E</h3><p>l</p><p>e</p></div></article>
+<article class="potenciacao-painel" data-conteudo="propriedades" hidden><h2>Propriedades das potências</h2><p>Use as propriedades de produto e quociente de potências de mesma base.</p><div class="potenciacao-exemplo"><h3>P</h3><p>r</p><p>o</p></div></article>
+<article class="potenciacao-painel" data-conteudo="expoentes" hidden><h2>Expoente zero e expoente negativo</h2><p>Entenda o valor de potências com expoente zero e expoentes inteiros negativos.</p><div class="potenciacao-exemplo"><h3>E</h3><p>x</p><p>p</p></div></article>
+<article class="potenciacao-painel" data-conteudo="sinais" hidden><h2>Potências com bases negativas</h2><p>Observe os sinais em potências de base negativa e diferencie expoentes pares e ímpares.</p><div class="potenciacao-exemplo"><h3>A</h3><p>t</p><p>e</p></div></article>
+<article class="potenciacao-painel" data-conteudo="raiz-quadrada" hidden><h2>Raiz quadrada</h2><p>Encontre o número que, multiplicado por ele mesmo, produz o radicando.</p><div class="potenciacao-exemplo"><h3>R</h3><p>a</p><p>i</p></div></article>
+<article class="potenciacao-painel" data-conteudo="raiz-cubica" hidden><h2>Raiz cúbica</h2><p>Encontre o número que elevado ao cubo resulta no radicando.</p><div class="potenciacao-exemplo"><h3>R</h3><p>a</p><p>i</p></div></article>
+<article class="potenciacao-painel" data-conteudo="radicais" hidden><h2>Simplificação de radicais</h2><p>Simplifique raízes extraindo fatores que sejam potências perfeitas.</p><div class="potenciacao-exemplo"><h3>E</h3><p>x</p><p>t</p></div></article>
+<article class="potenciacao-painel" data-conteudo="operacoes" hidden><h2>Operações com radicais</h2><p>Some e subtraia radicais semelhantes e multiplique expressões simples.</p><div class="potenciacao-exemplo"><h3>R</h3><p>a</p><p>d</p></div></article>
+<article class="potenciacao-painel" data-conteudo="fracionario" hidden><h2>Expoentes fracionários</h2><p>Relacione expoentes fracionários com raízes e potências.</p><div class="potenciacao-exemplo"><h3>E</h3><p>x</p><p>p</p></div></article>
+<article class="potenciacao-painel" data-conteudo="cientifica" hidden><h2>Notação científica</h2><p>Escreva números muito grandes ou pequenos usando potência de base 10.</p><div class="potenciacao-exemplo"><h3>P</h3><p>o</p><p>t</p></div></article></section>
+<button class="botao-proxima-aula" type="button" onclick="window.location.href='aprender-potenciacao.html'">Próxima Aula <i data-lucide="arrow-right"></i></button>
+</main>
+<div id="fundoMenu"></div><div id="menuLateral"><h2>Menu</h2><a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+<a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+<a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+<a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+<a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+<a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+<a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+<a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+<a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+<a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a></div>
+<script src="js/script.js"></script>
+<script>
+(function(){
+ const botoes=document.querySelectorAll(".potenciacao-botao-topico");
+ const paineis=document.querySelectorAll(".potenciacao-painel");
+ botoes.forEach(function(botao){botao.addEventListener("click",function(){
+  const id=botao.dataset.topico;
+  botoes.forEach(function(item){const ativo=item===botao;item.classList.toggle("ativo",ativo);item.setAttribute("aria-pressed",String(ativo));});
+  paineis.forEach(function(painel){painel.hidden=painel.dataset.conteudo!==id;});
+ });});
+ if(window.lucide)lucide.createIcons();
+})();
+</script>
+</body></html>
