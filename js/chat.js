@@ -731,11 +731,14 @@
     async function carregarNotificacoesChat() {
         if (!listaNotificacoes) return;
 
-        let usuario = null;
+        let usuario = usuarioAtualId ? { id: usuarioAtualId } : null;
         try {
-            const { data: sessao, error: erroUsuario } = await supabaseClient.auth.getUser();
-            if (erroUsuario) throw erroUsuario;
-            usuario = sessao?.user || null;
+            if (!usuario) {
+                const { data: sessao, error: erroUsuario } = await supabaseClient.auth.getUser();
+                if (erroUsuario) throw erroUsuario;
+                usuario = sessao?.user || null;
+                usuarioAtualId = usuario?.id || null;
+            }
 
             if (usuario) {
                 const { data: preferencias, error: erroPreferencias } = await supabaseClient
