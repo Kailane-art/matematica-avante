@@ -74,3 +74,31 @@
     #configIdioma { min-width: 0; max-width: 46%; }
     .config-botao-secundario { padding: 9px; font-size: 12px; }
 }
+
+
+.config-conta-acoes { align-items: center; }
+.config-botao-perigoso {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex: 0 0 auto;
+    border: 1px solid #b91c1c;
+    border-radius: 9px;
+    padding: 10px 13px;
+    background: #fff1f2;
+    color: #991b1b;
+    cursor: pointer;
+    font-weight: 700;
+}
+.config-botao-perigoso svg { width: 17px; height: 17px; }
+.config-botao-perigoso:disabled { opacity: .6; cursor: wait; }
+.modo-escuro .config-botao-perigoso {
+    background: #451a1a;
+    border-color: #f87171;
+    color: #fecaca;
+}
+@media (max-width: 680px) {
+    .config-conta-acoes { flex-direction: column; }
+    .config-conta-acoes > button { width: 100%; }
+}
