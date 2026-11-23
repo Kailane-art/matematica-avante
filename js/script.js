@@ -135,6 +135,7 @@ if (menuLateral) {
     const linksExistentes = Array.from(menuLateral.querySelectorAll(".menu-item"));
     const linksUtilizados = new Set();
     const tituloMenu = menuLateral.querySelector("h2");
+    let ultimoItemMenu = tituloMenu;
 
     itensPadraoMenu.forEach(function(item) {
         let link = linksExistentes.find(function(elemento) {
@@ -161,10 +162,11 @@ if (menuLateral) {
         link.setAttribute("aria-label", item.texto);
         link.innerHTML = '<i data-lucide="' + item.icone + '"></i><span>' + item.texto + '</span>';
 
-        if (tituloMenu) {
-            tituloMenu.insertAdjacentElement("afterend", link);
+        if (ultimoItemMenu) {
+            ultimoItemMenu.insertAdjacentElement("afterend", link);
+            ultimoItemMenu = link;
         } else {
-            menuLateral.insertBefore(link, menuLateral.firstChild);
+            menuLateral.appendChild(link);
         }
     });
 
