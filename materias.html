@@ -153,11 +153,12 @@ Escolha um assunto para começar seus estudos.
     </div>
 
     <div class="materia-item">
-        <button class="materia-botao materia-indisponivel" type="button" disabled>
+        <button class="materia-botao" type="button" onclick="window.location.href='estatistica.html'">
             <i data-lucide="chart-column"></i>
             <span class="materia-nome">Estatística</span>
-            <span class="materia-selo">Em desenvolvimento</span>
+            <span class="materia-barra" role="progressbar" aria-label="Progresso em Estatística" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressoEstatisticaBarra"></span></span>
         </button>
+        <span class="materia-status" id="progressoEstatisticaTexto">Carregando progresso...</span>
     </div>
 
     <div class="materia-item">
@@ -391,6 +392,13 @@ lucide.createIcons();
             texto: document.getElementById("progressoPorcentagemTexto"),
             barra: document.getElementById("progressoPorcentagemBarra"),
             tipos: ["pct_conceito","pct_calculo","pct_aumento","pct_desconto","pct_variacao","pct_juros_simples","pct_juros_compostos","pct_lucro_prejuizo","pct_sucessivos","pct_orcamento"],
+            totalQuestoes: 50
+        },
+        {
+            nome: "Estatística",
+            texto: document.getElementById("progressoEstatisticaTexto"),
+            barra: document.getElementById("progressoEstatisticaBarra"),
+            tipos: ["est_conceito","est_populacao_amostra","est_variaveis","est_tabelas","est_graficos","est_frequencia","est_media","est_mediana","est_moda","est_amplitude"],
             totalQuestoes: 50
         }
     ];
