@@ -7630,3 +7630,275 @@ body {
     }
 }
 
+
+
+/* PROBABILIDADE */
+.pagina-probabilidade .pagina-probabilidade-conteudo {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 22px 20px 70px;
+}
+
+.pagina-probabilidade .probabilidade-navegacao {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    max-width: 560px;
+    margin: 0 auto 24px;
+}
+
+.pagina-probabilidade .probabilidade-botao-topico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 62px;
+    justify-self: center;
+    border: 1px solid #c9dcf7;
+    border-radius: 14px;
+    background: #e8f1ff;
+    color: #1e4f9a;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.pagina-probabilidade .probabilidade-botao-topico svg {
+    width: 25px;
+    height: 25px;
+    stroke-width: 2;
+}
+
+.pagina-probabilidade .probabilidade-botao-topico:hover {
+    transform: translateY(-2px);
+    background: #d5e7ff;
+    box-shadow: 0 5px 12px rgba(30, 79, 154, .12);
+}
+
+.pagina-probabilidade .probabilidade-botao-topico.ativo {
+    border-color: #1e56ad;
+    background: #1e56ad;
+    color: #fff;
+    box-shadow: 0 5px 14px rgba(30, 86, 173, .22);
+}
+
+.pagina-probabilidade .probabilidade-painel[hidden] {
+    display: none !important;
+}
+
+.pagina-probabilidade .probabilidade-painel {
+    padding: 26px;
+    border: 1px solid #dce8f8;
+    border-left: 5px solid #4169e1;
+    border-radius: 18px;
+    background: #fff;
+    color: #334155;
+    box-shadow: 0 7px 20px rgba(15, 43, 82, .07);
+}
+
+.pagina-probabilidade .probabilidade-painel > h2 {
+    margin: 0 0 12px;
+    color: #1e3a8a;
+    font-size: 25px;
+}
+
+.pagina-probabilidade .probabilidade-painel > p {
+    margin: 0 0 20px;
+    color: #526176;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.pagina-probabilidade .probabilidade-exemplo {
+    margin-top: 13px;
+    padding: 17px 18px;
+    border-radius: 13px;
+    background: #eef4ff;
+}
+
+.pagina-probabilidade .probabilidade-exemplo h3 {
+    margin: 0 0 7px;
+    color: #1e4f9a;
+    font-size: 16px;
+}
+
+.pagina-probabilidade .probabilidade-exemplo p {
+    margin: 0;
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.pagina-probabilidade .probabilidade-exemplo p + p {
+    margin-top: 7px;
+}
+
+.modo-escuro.pagina-probabilidade .probabilidade-botao-topico {
+    border-color: #315782;
+    background: #17365e;
+    color: #dbeafe;
+}
+
+.modo-escuro.pagina-probabilidade .probabilidade-botao-topico:hover {
+    background: #204a7c;
+}
+
+.modo-escuro.pagina-probabilidade .probabilidade-botao-topico.ativo {
+    border-color: #60a5fa;
+    background: #1d5ca8;
+    color: #fff;
+}
+
+.modo-escuro.pagina-probabilidade .probabilidade-painel {
+    border-color: #29466e;
+    border-left-color: #60a5fa;
+    background: #132b4c;
+    color: #e5edf8;
+}
+
+.modo-escuro.pagina-probabilidade .probabilidade-painel > h2 {
+    color: #bfdbfe;
+}
+
+.modo-escuro.pagina-probabilidade .probabilidade-painel > p {
+    color: #d0dced;
+}
+
+.modo-escuro.pagina-probabilidade .probabilidade-exemplo {
+    background: #1b3b65;
+}
+
+.modo-escuro.pagina-probabilidade .probabilidade-exemplo h3 {
+    color: #93c5fd;
+}
+
+.modo-escuro.pagina-probabilidade .probabilidade-exemplo p {
+    color: #e1eaf6;
+}
+
+@media (max-width: 480px) {
+    .pagina-probabilidade .pagina-probabilidade-conteudo {
+        padding: 18px 14px 55px;
+    }
+
+    .pagina-probabilidade .probabilidade-navegacao {
+        gap: 8px;
+        margin-bottom: 19px;
+    }
+
+    .pagina-probabilidade .probabilidade-botao-topico {
+        max-width: 54px;
+        border-radius: 12px;
+    }
+
+    .pagina-probabilidade .probabilidade-botao-topico svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .pagina-probabilidade .probabilidade-painel {
+        padding: 20px 17px;
+    }
+
+    .pagina-probabilidade .probabilidade-painel > h2 {
+        font-size: 22px;
+    }
+}
+
+
+
+
+
+
+
+
+
+/* APRENDER PROBABILIDADE */
+.pagina-aprender-probabilidade .aprender-geometria-conteudo {
+    width: min(100% - 32px, 1000px);
+    margin: 0 auto 40px;
+}
+
+.pagina-aprender-probabilidade .geometria-topicos {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    margin: 20px auto 16px;
+}
+
+.pagina-aprender-probabilidade .geometria-topicos button {
+    min-width: 0;
+    min-height: 66px;
+    padding: 9px 6px;
+    border-radius: 10px;
+    background: #1E3A8A;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 12px;
+    line-height: 1.2;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.pagina-aprender-probabilidade .geometria-topicos button svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.pagina-aprender-probabilidade .geometria-topicos button span {
+    display: block;
+}
+
+.pagina-aprender-probabilidade .geometria-topicos button:hover,
+.pagina-aprender-probabilidade .geometria-topicos button.ativo {
+    background: #294ec5;
+    transform: translateY(-2px);
+}
+
+.pagina-aprender-probabilidade .geometria-topicos button.ativo {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+}
+
+.pagina-aprender-probabilidade .mensagem-geometria,
+.pagina-aprender-probabilidade .geometria-regra-xp {
+    text-align: center;
+    color: #52627a;
+    margin: 14px 0;
+    font-size: 14px;
+}
+
+.pagina-aprender-probabilidade .geometria-exercicios {
+    margin-top: 18px;
+}
+
+.pagina-aprender-probabilidade .geometria-exercicios[hidden] {
+    display: none !important;
+}
+
+.modo-escuro.pagina-aprender-probabilidade .mensagem-geometria,
+.modo-escuro.pagina-aprender-probabilidade .geometria-regra-xp {
+    color: #cbdaf0;
+}
+
+@media (max-width: 700px) {
+    .pagina-aprender-probabilidade .geometria-topicos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .pagina-aprender-probabilidade .geometria-topicos button {
+        min-height: 58px;
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+    .pagina-aprender-probabilidade .geometria-topicos {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
