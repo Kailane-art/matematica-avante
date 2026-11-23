@@ -144,11 +144,12 @@ Escolha um assunto para começar seus estudos.
     </div>
 
     <div class="materia-item">
-        <button class="materia-botao materia-indisponivel" type="button" disabled>
-            <i data-lucide="wallet"></i>
+        <button class="materia-botao" type="button" onclick="window.location.href='porcentagem.html'">
+            <i data-lucide="percent"></i>
             <span class="materia-nome">Porcentagem e Matemática Financeira</span>
-            <span class="materia-selo">Em desenvolvimento</span>
+            <span class="materia-barra" role="progressbar" aria-label="Progresso em Porcentagem e Matemática Financeira" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressoPorcentagemBarra"></span></span>
         </button>
+        <span class="materia-status" id="progressoPorcentagemTexto">Carregando progresso...</span>
     </div>
 
     <div class="materia-item">
@@ -383,6 +384,13 @@ lucide.createIcons();
             texto: document.getElementById("progressoPotenciacaoTexto"),
             barra: document.getElementById("progressoPotenciacaoBarra"),
             tipos: ["pot_conceito","pot_propriedades","pot_expoentes","pot_sinais","pot_raiz_quadrada","pot_raiz_cubica","pot_radicais","pot_operacoes","pot_expoente_fracionario","pot_cientifica"],
+            totalQuestoes: 50
+        },
+        {
+            nome: "Porcentagem e Matemática Financeira",
+            texto: document.getElementById("progressoPorcentagemTexto"),
+            barra: document.getElementById("progressoPorcentagemBarra"),
+            tipos: ["pct_conceito","pct_calculo","pct_aumento","pct_desconto","pct_variacao","pct_juros_simples","pct_juros_compostos","pct_lucro_prejuizo","pct_sucessivos","pct_orcamento"],
             totalQuestoes: 50
         }
     ];
