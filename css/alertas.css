@@ -32,7 +32,7 @@
 .alertas-vazio-icone svg { width:27px; height:27px; }
 .alertas-vazio h3 { margin:0 0 7px; color:#1e293b; font-size:16px; }
 .alertas-vazio p { max-width:380px; margin:0; color:#64748b; font-size:13px; line-height:1.55; }
-.modo-escuro.pagina-alertas { background:#0b1d3a; color:#f8fafc; }
+.modo-escuro.pagina-alertas { background:#12366f; color:#f8fafc; }
 .modo-escuro .alertas-cabecalho,.modo-escuro .alertas-compositor,.modo-escuro .alertas-lista { background:#13294b; border-color:#29466d; }
 .modo-escuro .alertas-cabecalho h1,.modo-escuro .alertas-introducao h2,.modo-escuro .alertas-compositor h2,.modo-escuro .alertas-lista h2,.modo-escuro .alertas-vazio h3 { color:#f8fafc; }
 .modo-escuro .alertas-introducao p,.modo-escuro .alertas-lista-cabecalho p,.modo-escuro .alertas-compositor-titulo p,.modo-escuro .alertas-aviso-etapa,.modo-escuro .alertas-vazio p { color:#c3d0e3; }
