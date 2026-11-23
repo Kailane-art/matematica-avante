@@ -5279,3 +5279,29 @@ body {
         #12366f 100%
     );
 }
+
+
+/* PÁGINA SOBRE - CARTÕES AZUIS NO MODO ESCURO */
+.modo-escuro.pagina-sobre .card-sobre,
+.modo-escuro.pagina-sobre .sobre-faq details,
+.modo-escuro.pagina-sobre .sobre-contato-item {
+    border-color: #3978c4;
+    background: #174b8a;
+}
+
+.modo-escuro.pagina-sobre .card-sobre:hover {
+    border-color: #60a5fa;
+    background: #1d5ca8;
+}
+
+.modo-escuro.pagina-sobre .sobre-historia {
+    border-color: #3978c4;
+    background: linear-gradient(115deg, #1b5595, #16457f);
+}
+
+.modo-escuro.pagina-sobre .sobre-icone,
+.modo-escuro.pagina-sobre .sobre-contato-icone {
+    border-color: #4b8bd3;
+    background: linear-gradient(145deg, #2367ad, #1b5595);
+    color: #eaf5ff;
+}
