@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprender Probabilidade - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css?v=20261123-aprenderprobabilidade1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-aprender-probabilidade">
+
+<header>
+    <button id="voltarPagina" type="button" aria-label="Voltar">
+        <i data-lucide="arrow-left"></i>
+    </button>
+    <h1>Atividades de Probabilidade</h1>
+    <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+        <i data-lucide="menu"></i>
+    </button>
+</header>
+
+<main class="aprender-geometria-conteudo">
+    <div class="titulo-operacoes">
+        <h2>Aprender</h2>
+        <p>Escolha um conteúdo de Probabilidade para praticar.</p>
+    </div>
+
+    <nav class="materias operacoes geometria-topicos" aria-label="Conteúdos de Probabilidade">
+<button type="button" data-topico="conceito" aria-label="Conceito de Probabilidade" aria-pressed="false" title="Conceito de Probabilidade"><i data-lucide="dice-5"></i><span>Conceito de Probabilidade</span></button>
+<button type="button" data-topico="experimentos" aria-label="Experimentos aleatórios" aria-pressed="false" title="Experimentos aleatórios"><i data-lucide="shuffle"></i><span>Experimentos aleatórios</span></button>
+<button type="button" data-topico="espaco-amostral" aria-label="Espaço amostral" aria-pressed="false" title="Espaço amostral"><i data-lucide="grid-3x3"></i><span>Espaço amostral</span></button>
+<button type="button" data-topico="eventos" aria-label="Eventos" aria-pressed="false" title="Eventos"><i data-lucide="target"></i><span>Eventos</span></button>
+<button type="button" data-topico="uniao-intersecao" aria-label="União e interseção de eventos" aria-pressed="false" title="União e interseção de eventos"><i data-lucide="git-merge"></i><span>União e interseção de eventos</span></button>
+<button type="button" data-topico="complementar" aria-label="Evento complementar" aria-pressed="false" title="Evento complementar"><i data-lucide="circle-minus"></i><span>Evento complementar</span></button>
+<button type="button" data-topico="calculo" aria-label="Cálculo de probabilidade" aria-pressed="false" title="Cálculo de probabilidade"><i data-lucide="calculator"></i><span>Cálculo de probabilidade</span></button>
+<button type="button" data-topico="condicional" aria-label="Probabilidade condicional" aria-pressed="false" title="Probabilidade condicional"><i data-lucide="git-branch"></i><span>Probabilidade condicional</span></button>
+<button type="button" data-topico="independencia" aria-label="Eventos independentes e dependentes" aria-pressed="false" title="Eventos independentes e dependentes"><i data-lucide="workflow"></i><span>Eventos independentes e dependentes</span></button>
+<button type="button" data-topico="binomial" aria-label="Distribuição binomial" aria-pressed="false" title="Distribuição binomial"><i data-lucide="chart-no-axes-column"></i><span>Distribuição binomial</span></button>
+</nav>
+
+    <p id="mensagemCarregamentoEstatistica" class="mensagem-geometria" role="status">Selecione um conteúdo para começar.</p>
+    <div id="probabilidadeAtividades" class="geometria-atividades"></div>
+</main>
+
+<div id="fundoMenu"></div>
+<div id="menuLateral">
+    <h2>Menu</h2>
+    <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+    <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+    <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+    <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+    <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+    <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+    <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+    <a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+    <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+    <a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a>
+</div>
+
+<script src="js/script.js?v=20261123-probabilidade1"></script>
+<script>
+(function () {
+    const conteudos = [{"id":"conceito","activityType":"prob_conceito","titulo":"Conceito de Probabilidade","icone":"dice-5","descricao":"Entenda o que é probabilidade e como medir a chance de um acontecimento.","questoes":[{"pergunta":"Probabilidade estuda principalmente:","opcoes":{"a":"A chance de acontecimentos ocorrerem","b":"A área de figuras planas","c":"A velocidade dos objetos"}},{"pergunta":"Uma probabilidade pode ser representada por:","opcoes":{"a":"Apenas números negativos","b":"Fração, decimal ou porcentagem","c":"Somente números maiores que 100"}},{"pergunta":"Se um evento é impossível, sua probabilidade é:","opcoes":{"a":"0","b":"0,5","c":"1"}},{"pergunta":"Se um evento é certo, sua probabilidade é:","opcoes":{"a":"0","b":"0,25","c":"1"}},{"pergunta":"Uma probabilidade de 0,25 equivale a:","opcoes":{"a":"25%","b":"2,5%","c":"250%"}}]},{"id":"experimentos","activityType":"prob_experimentos","titulo":"Experimentos aleatórios","icone":"shuffle","descricao":"Identifique experimentos aleatórios e reconheça situações cujo resultado não pode ser previsto com certeza.","questoes":[{"pergunta":"Qual situação é um experimento aleatório?","opcoes":{"a":"Calcular 2 + 2","b":"Lançar um dado e observar o resultado","c":"Contar os lados de um quadrado"}},{"pergunta":"Em um experimento aleatório, antes de realizá-lo:","opcoes":{"a":"O resultado é sempre conhecido","b":"Todos os resultados são iguais","c":"Não é possível saber com certeza qual resultado ocorrerá"}},{"pergunta":"Ao lançar uma moeda, qual resultado pode ocorrer?","opcoes":{"a":"Cara ou coroa","b":"Somente cara","c":"Números de 1 a 6"}},{"pergunta":"Retirar uma carta de um baralho embaralhado é:","opcoes":{"a":"Uma operação determinística","b":"Um experimento aleatório","c":"Uma medição de comprimento"}},{"pergunta":"Repetir muitas vezes um experimento aleatório ajuda a:","opcoes":{"a":"Garantir sempre o mesmo resultado","b":"Eliminar todos os resultados possíveis","c":"Observar padrões de frequência"}}]},{"id":"espaco-amostral","activityType":"prob_espaco_amostral","titulo":"Espaço amostral","icone":"grid-3x3","descricao":"Aprenda a listar todos os resultados possíveis de um experimento.","questoes":[{"pergunta":"O espaço amostral é:","opcoes":{"a":"O conjunto de todos os resultados possíveis","b":"Apenas o resultado mais provável","c":"O resultado que já aconteceu"}},{"pergunta":"Ao lançar um dado comum, quantos resultados existem no espaço amostral?","opcoes":{"a":"4","b":"6","c":"8"}},{"pergunta":"Ao lançar uma moeda, o espaço amostral é:","opcoes":{"a":"{1, 2, 3, 4, 5, 6}","b":"{cara, coroa}","c":"{cara}"}},{"pergunta":"Ao lançar um dado, qual conjunto representa o espaço amostral?","opcoes":{"a":"{0, 1}","b":"{1, 2, 3}","c":"{1, 2, 3, 4, 5, 6}"}},{"pergunta":"Ao lançar duas moedas, qual é um resultado possível?","opcoes":{"a":"Cara e coroa","b":"Somente 6","c":"Número 3"}}]},{"id":"eventos","activityType":"prob_eventos","titulo":"Eventos","icone":"target","descricao":"Diferencie eventos simples, compostos, certos e impossíveis.","questoes":[{"pergunta":"Ao lançar um dado, obter o número 4 é um evento:","opcoes":{"a":"Simples","b":"Impossível","c":"Certo"}},{"pergunta":"Ao lançar um dado, obter número par é um evento:","opcoes":{"a":"Impossível","b":"Composto","c":"Certo"}},{"pergunta":"No lançamento de um dado comum, obter 7 é:","opcoes":{"a":"Certo","b":"Possível","c":"Impossível"}},{"pergunta":"No lançamento de um dado comum, obter número menor que 7 é:","opcoes":{"a":"Certo","b":"Impossível","c":"Simples"}},{"pergunta":"Um evento é composto quando:","opcoes":{"a":"Tem apenas um resultado favorável","b":"Reúne dois ou mais resultados possíveis","c":"Não possui resultados"}}]},{"id":"uniao-intersecao","activityType":"prob_uniao_intersecao","titulo":"União e interseção de eventos","icone":"git-merge","descricao":"Entenda quando ocorre pelo menos um evento e quando dois eventos acontecem juntos.","questoes":[{"pergunta":"A união dos eventos A e B representa:","opcoes":{"a":"A ocorrência de A ou de B, ou de ambos","b":"A ocorrência obrigatória apenas de A e B juntos","c":"A ausência dos dois eventos"}},{"pergunta":"A interseção de A e B representa:","opcoes":{"a":"A ocorrência somente de A","b":"A ocorrência simultânea de A e B","c":"A ocorrência de qualquer evento diferente"}},{"pergunta":"Em um dado, A = obter par e B = obter número maior que 3. A interseção é:","opcoes":{"a":"{2, 4, 6}","b":"{5}","c":"{4, 6}"}},{"pergunta":"Se A = {1, 2} e B = {2, 3}, então A união B é:","opcoes":{"a":"{1, 2, 3}","b":"{2}","c":"{1, 3}"}},{"pergunta":"Se A = {1, 2} e B = {2, 3}, então A interseção B é:","opcoes":{"a":"{1, 2, 3}","b":"{2}","c":"{1, 3}"}}]},{"id":"complementar","activityType":"prob_complementar","titulo":"Evento complementar","icone":"circle-minus","descricao":"Calcule a chance de um evento não acontecer usando a probabilidade complementar.","questoes":[{"pergunta":"A probabilidade do complementar de A é:","opcoes":{"a":"P(A) + 1","b":"1 − P(A)","c":"P(A) × 2"}},{"pergunta":"Se P(A) = 0,3, então P(não A) é:","opcoes":{"a":"0,3","b":"0,7","c":"1,3"}},{"pergunta":"Se a chance de chover é 40%, a chance de não chover é:","opcoes":{"a":"40%","b":"50%","c":"60%"}},{"pergunta":"Se um evento certo tem probabilidade 1, seu complementar tem probabilidade:","opcoes":{"a":"0","b":"0,5","c":"1"}},{"pergunta":"A soma das probabilidades de um evento e de seu complementar é:","opcoes":{"a":"0","b":"1","c":"2"}}]},{"id":"calculo","activityType":"prob_calculo","titulo":"Cálculo de probabilidade","icone":"calculator","descricao":"Use a razão entre resultados favoráveis e resultados possíveis em situações equiprováveis.","questoes":[{"pergunta":"A fórmula básica da probabilidade é:","opcoes":{"a":"Favoráveis ÷ possíveis","b":"Possíveis ÷ favoráveis","c":"Favoráveis + possíveis"}},{"pergunta":"Em um dado justo, a chance de sair 2 é:","opcoes":{"a":"1/2","b":"1/6","c":"2/6"}},{"pergunta":"Em uma urna há 3 bolas vermelhas e 2 azuis. A chance de retirar uma vermelha é:","opcoes":{"a":"2/5","b":"3/5","c":"1/5"}},{"pergunta":"Ao retirar ao acaso um número de 1 a 10, a chance de sair maior que 7 é:","opcoes":{"a":"3/10","b":"7/10","c":"1/10"}},{"pergunta":"Uma caixa tem 4 bolas verdes em 8 bolas no total. A probabilidade de retirar verde é:","opcoes":{"a":"1/4","b":"1/2","c":"3/4"}}]},{"id":"condicional","activityType":"prob_condicional","titulo":"Probabilidade condicional","icone":"git-branch","descricao":"Calcule a chance de um evento sabendo que outro já ocorreu.","questoes":[{"pergunta":"Probabilidade condicional considera:","opcoes":{"a":"Uma informação ou condição já conhecida","b":"Somente eventos impossíveis","c":"Apenas resultados negativos"}},{"pergunta":"A notação P(A|B) significa:","opcoes":{"a":"Probabilidade de B sabendo que A ocorreu","b":"Probabilidade de A sabendo que B ocorreu","c":"Soma das probabilidades de A e B"}},{"pergunta":"Em uma turma, 10 alunos praticam esporte e 6 desses são meninas. Sabendo que o aluno escolhido pratica esporte, o grupo considerado é:","opcoes":{"a":"Todos os alunos da escola","b":"Somente os 10 que praticam esporte","c":"Somente os meninos"}},{"pergunta":"Se P(A e B) = 0,2 e P(B) = 0,5, então P(A|B) é:","opcoes":{"a":"0,1","b":"0,4","c":"0,7"}},{"pergunta":"A probabilidade condicional pode mudar quando:","opcoes":{"a":"Recebemos uma informação adicional","b":"O espaço amostral nunca muda","c":"Todos os eventos são impossíveis"}}]},{"id":"independencia","activityType":"prob_independencia","titulo":"Eventos independentes e dependentes","icone":"workflow","descricao":"Descubra se a ocorrência de um evento altera a probabilidade de outro.","questoes":[{"pergunta":"Dois eventos são independentes quando:","opcoes":{"a":"Um não altera a probabilidade do outro","b":"Os dois sempre acontecem juntos","c":"Um impede o outro"}},{"pergunta":"Lançar uma moeda e depois lançar um dado são experimentos:","opcoes":{"a":"Dependentes","b":"Independentes","c":"Impossíveis"}},{"pergunta":"Retirar duas cartas sem reposição geralmente gera eventos:","opcoes":{"a":"Independentes","b":"Dependentes","c":"Certos"}},{"pergunta":"Para eventos independentes, P(A e B) é:","opcoes":{"a":"P(A) + P(B)","b":"P(A) × P(B)","c":"P(A) − P(B)"}},{"pergunta":"Se P(A)=0,5 e P(B)=0,2, e são independentes, P(A e B) é:","opcoes":{"a":"0,1","b":"0,7","c":"0,3"}}]},{"id":"binomial","activityType":"prob_binomial","titulo":"Distribuição binomial","icone":"chart-no-axes-column","descricao":"Conheça situações com número fixo de tentativas independentes e dois resultados possíveis.","questoes":[{"pergunta":"A distribuição binomial é usada quando há:","opcoes":{"a":"Número fixo de tentativas, independentes e com dois resultados possíveis","b":"Tentativas sem resultados definidos","c":"Somente resultados contínuos"}},{"pergunta":"Em um experimento binomial, cada tentativa tem:","opcoes":{"a":"Três resultados obrigatórios","b":"Dois resultados possíveis, como sucesso ou fracasso","c":"Um resultado certo"}},{"pergunta":"Se a chance de sucesso é 0,3, a chance de fracasso é:","opcoes":{"a":"0,3","b":"0,6","c":"0,7"}},{"pergunta":"Lançar uma moeda 5 vezes e contar quantas caras aparecem pode ser modelado por:","opcoes":{"a":"Distribuição binomial","b":"Geometria plana","c":"Média ponderada"}},{"pergunta":"Na distribuição binomial, o número de tentativas é:","opcoes":{"a":"Ilimitado e variável","b":"Fixado previamente","c":"Sempre igual a 2"}}]}];
+
+    const areaAtividades = document.getElementById("probabilidadeAtividades");
+    const mensagemCarregamento = document.getElementById("mensagemCarregamentoEstatistica");
+    const botoesTopicos = document.querySelectorAll(".geometria-topicos button");
+    const estados = new Map();
+    const tiposAtividade = conteudos.map(function (item) { return item.activityType; });
+
+    let usuarioAtual = null;
+    let xpTotal = 0;
+    let carregamentoConcluido = false;
+
+    function criarElemento(tag, classe, texto) {
+        const elemento = document.createElement(tag);
+        if (classe) elemento.className = classe;
+        if (texto !== undefined) elemento.textContent = texto;
+        return elemento;
+    }
+
+    function atualizarXPExibido() {
+        estados.forEach(function (estado) { estado.xp.textContent = String(xpTotal); });
+    }
+
+    function atualizarPontuacao(estado) {
+        estado.pontuacao.textContent = "Pontuação: " + estado.acertos + "/5";
+    }
+
+    function bloquearQuestao(questaoElemento, bloquear) {
+        questaoElemento.querySelectorAll("button[data-option-id]").forEach(function (botao) {
+            botao.disabled = bloquear;
+            if (bloquear) botao.classList.add("resposta-bloqueada");
+            else botao.classList.remove("resposta-bloqueada");
+        });
+    }
+
+    function aplicarTentativa(estado, numero, tentativa) {
+        if (estado.respondidas.has(numero)) return;
+        estado.respondidas.set(numero, tentativa);
+
+        const questaoElemento = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questaoElemento) return;
+
+        bloquearQuestao(questaoElemento, true);
+        const botaoSelecionado = questaoElemento.querySelector('[data-option-id="' + tentativa.selected_option_id + '"]');
+        if (tentativa.is_correct) estado.acertos++;
+
+        if (botaoSelecionado) {
+            botaoSelecionado.classList.add(tentativa.is_correct ? "resposta-correta" : "resposta-errada");
+        }
+        atualizarPontuacao(estado);
+    }
+
+    function verificarConclusao(estado) {
+        if (estado.respondidas.size !== 5) return;
+        estado.resultado.textContent = estado.acertos === 5
+            ? "Parabéns! Você acertou todas as questões deste conteúdo!"
+            : "Atividade concluída! Você acertou " + estado.acertos + " de 5 questões.";
+    }
+
+    function criarAtividade(conteudo) {
+        const painel = criarElemento("section", "exercicios-basico geometria-exercicios");
+        painel.hidden = true;
+
+        const cabecalho = criarElemento("div", "titulo-exercicios");
+        const icone = document.createElement("i");
+        icone.setAttribute("data-lucide", conteudo.icone);
+        cabecalho.appendChild(icone);
+        cabecalho.appendChild(criarElemento("h2", "", conteudo.titulo));
+        painel.appendChild(cabecalho);
+        painel.appendChild(criarElemento("p", "subtitulo-exercicios", conteudo.descricao));
+        painel.appendChild(criarElemento("p", "geometria-regra-xp", "Responda às 5 questões. Cada acerto vale 10 XP."));
+
+        conteudo.questoes.forEach(function (questao, indice) {
+            const numero = indice + 1;
+            const blocoQuestao = criarElemento("div", "questao");
+            blocoQuestao.dataset.numero = String(numero);
+
+            const enunciado = document.createElement("p");
+            enunciado.appendChild(criarElemento("strong", "", numero + "."));
+            enunciado.appendChild(document.createTextNode(" " + questao.pergunta));
+            blocoQuestao.appendChild(enunciado);
+
+            const alternativas = criarElemento("div", "alternativas");
+            Object.entries(questao.opcoes).forEach(function ([letra, texto]) {
+                const botao = criarElemento("button", "", texto);
+                botao.type = "button";
+                botao.dataset.optionId = letra;
+                botao.disabled = true;
+                botao.addEventListener("click", function () {
+                    responderQuestao(conteudo, numero, letra, botao);
+                });
+                alternativas.appendChild(botao);
+            });
+
+            blocoQuestao.appendChild(alternativas);
+            painel.appendChild(blocoQuestao);
+        });
+
+        const resultado = criarElemento("div", "resultado-exercicios");
+        const pontuacao = criarElemento("h2", "", "Pontuação: 0/5");
+        const mensagem = criarElemento("p", "");
+        mensagem.setAttribute("aria-live", "polite");
+        const linhaXP = document.createElement("p");
+        linhaXP.appendChild(document.createTextNode("XP total: "));
+        const xp = criarElemento("strong", "", "0");
+        linhaXP.appendChild(xp);
+        resultado.appendChild(pontuacao);
+        resultado.appendChild(mensagem);
+        resultado.appendChild(linhaXP);
+        painel.appendChild(resultado);
+
+        const estado = { painel, pontuacao, resultado: mensagem, xp, respondidas: new Map(), acertos: 0 };
+        estados.set(conteudo.activityType, estado);
+        areaAtividades.appendChild(painel);
+    }
+
+    conteudos.forEach(criarAtividade);
+
+    function selecionarConteudo(id) {
+        const selecionado = conteudos.find(function (item) { return item.id === id; });
+        if (!selecionado) return;
+
+        botoesTopicos.forEach(function (botao) {
+            const ativo = botao.dataset.topico === id;
+            botao.classList.toggle("ativo", ativo);
+            botao.setAttribute("aria-pressed", String(ativo));
+        });
+
+        conteudos.forEach(function (item) {
+            estados.get(item.activityType).painel.hidden = item.id !== id;
+        });
+
+        mensagemCarregamento.textContent = carregamentoConcluido
+            ? "Atividade selecionada. Seu progresso fica salvo."
+            : "Carregando seu progresso...";
+    }
+
+    botoesTopicos.forEach(function (botao) {
+        botao.addEventListener("click", function () { selecionarConteudo(botao.dataset.topico); });
+    });
+
+    async function carregarEstadoEstatistica() {
+        try {
+            if (!supabaseClient) throw new Error("Conexão com o Supabase indisponível.");
+
+            const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+            if (erroUsuario || !user) throw new Error("Sessão não autenticada.");
+            usuarioAtual = user;
+
+            const [resultadoXP, resultadoTentativas] = await Promise.all([
+                supabaseClient.from("user_progress").select("total_xp").eq("user_id", user.id).maybeSingle(),
+                supabaseClient.from("user_question_attempts")
+                    .select("activity_type, question_id, selected_option_id, is_correct")
+                    .eq("user_id", user.id).in("activity_type", tiposAtividade)
+            ]);
+
+            if (resultadoXP.error) throw resultadoXP.error;
+            if (resultadoTentativas.error) throw resultadoTentativas.error;
+            xpTotal = Number(resultadoXP.data?.total_xp || 0);
+
+            (resultadoTentativas.data || []).forEach(function (tentativa) {
+                const estado = estados.get(tentativa.activity_type);
+                const numero = Number(tentativa.question_id);
+                if (!estado || !Number.isInteger(numero) || numero < 1 || numero > 5) return;
+                aplicarTentativa(estado, numero, tentativa);
+            });
+
+            estados.forEach(function (estado) {
+                for (let numero = 1; numero <= 5; numero++) {
+                    if (!estado.respondidas.has(numero)) {
+                        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+                        if (questao) bloquearQuestao(questao, false);
+                    }
+                }
+                if (estado.respondidas.size > 0) estado.resultado.textContent = "Seu progresso anterior foi carregado.";
+                verificarConclusao(estado);
+            });
+
+            atualizarXPExibido();
+            carregamentoConcluido = true;
+            mensagemCarregamento.textContent = "Escolha um conteúdo para começar. Seu progresso fica salvo.";
+        } catch (erro) {
+            console.error("Erro ao carregar atividades de Probabilidade:", erro);
+            mensagemCarregamento.textContent = "Não foi possível carregar seu progresso. Atualize a página e tente novamente.";
+        }
+    }
+
+    async function responderQuestao(conteudo, numero, optionId, botao) {
+        const estado = estados.get(conteudo.activityType);
+        if (!carregamentoConcluido || !usuarioAtual || !estado || estado.respondidas.has(numero) || !botao || botao.disabled) return;
+
+        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questao) return;
+
+        bloquearQuestao(questao, true);
+        estado.resultado.textContent = "Registrando sua resposta...";
+
+        try {
+            const { data, error } = await supabaseClient.rpc("submit_operation_answer", {
+                p_activity_type: conteudo.activityType,
+                p_question_id: String(numero),
+                p_option_id: optionId
+            });
+            if (error) throw error;
+            if (!data) throw new Error("O banco não retornou um resultado.");
+
+            xpTotal = Number(data.total_xp || 0);
+            atualizarXPExibido();
+
+            if (data.already_answered) {
+                const { data: tentativa, error: erroTentativa } = await supabaseClient
+                    .from("user_question_attempts")
+                    .select("question_id, selected_option_id, is_correct")
+                    .eq("user_id", usuarioAtual.id)
+                    .eq("activity_type", conteudo.activityType)
+                    .eq("question_id", String(numero))
+                    .maybeSingle();
+                if (erroTentativa) throw erroTentativa;
+                if (tentativa) aplicarTentativa(estado, numero, tentativa);
+                estado.resultado.textContent = "Esta questão já foi respondida anteriormente.";
+                verificarConclusao(estado);
+                return;
+            }
+
+            aplicarTentativa(estado, numero, { selected_option_id: optionId, is_correct: data.correct });
+            estado.resultado.textContent = data.correct
+                ? "Resposta correta! Você ganhou " + data.xp_awarded + " XP."
+                : "Resposta incorreta. Continue estudando!";
+            verificarConclusao(estado);
+        } catch (erro) {
+            console.error("Erro ao registrar resposta de Funções:", erro);
+            bloquearQuestao(questao, false);
+            estado.resultado.textContent = "Não foi possível registrar sua resposta. Tente novamente.";
+        }
+    }
+
+    carregarEstadoEstatistica();
+    if (window.lucide) lucide.createIcons();
+})();
+</script>
+</body>
+</html>
