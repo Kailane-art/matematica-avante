@@ -355,6 +355,7 @@
             await atualizarEstadoPartida();
             if (intervaloAtualizacao) window.clearInterval(intervaloAtualizacao);
             intervaloAtualizacao = window.setInterval(async () => {
+                if (document.hidden) return;
                 try {
                     await atualizarEstadoPartida();
                     await atualizarPainel();
@@ -391,7 +392,9 @@
         await carregarAmigos();
         await atualizarPainel();
         if (intervaloAtualizacao) window.clearInterval(intervaloAtualizacao);
-        intervaloAtualizacao = window.setInterval(atualizarPainel, 5000);
+        intervaloAtualizacao = window.setInterval(() => {
+            if (!document.hidden) atualizarPainel();
+        }, 5000);
 
         const desafioSolicitado = new URLSearchParams(window.location.search).get("desafio");
         if (desafioSolicitado && /^[0-9a-f-]{36}$/i.test(desafioSolicitado)) {
