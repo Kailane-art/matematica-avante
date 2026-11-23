@@ -2,439 +2,46 @@
 <html lang="pt-BR" class="verificando-sessao">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Geometria - Matemática Avante</title>
-
 <link rel="stylesheet" href="css/style.css">
-
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 
 <body>
 
 <header>
-
-<button id="voltarPagina" type="button">
-
-<i data-lucide="arrow-left"></i>
-
-</button>
-
-<h1>
-Geometria
-</h1>
-
-
-
+    <button id="voltarPagina" type="button">
+        <i data-lucide="arrow-left"></i>
+    </button>
+    <h1>Geometria</h1>
 </header>
 
-
 <!-- TÍTULO -->
-
 <div class="titulo-operacoes">
-
-    <h2>
-        Aprenda Geometria
-    </h2>
-
+    <h2>Aprenda Geometria</h2>
     <p>
         <small>A geometria analisa formas, dimensões, posições e medidas dos objetos, permitindo entender melhor o espaço que nos cerca.</small>
     </p>
-
 </div>
 
-
-<!-- CONTEÚDO -->
-
 <main class="pagina-basico">
-
-
-    <!-- ELEMENTOS BÁSICOS -->
-
-    <section class="operacao-card" id="elementos-basicos">
-
-        <div class="operacao-titulo">
-
-            <i data-lucide="drafting-compass"></i>
-
-            <h2>
-                Elementos básicos da Geometria
-            </h2>
-
-        </div>
-
-        <p>
-            A Geometria é a área da Matemática que estuda as formas,
-            os tamanhos, as posições e as medidas dos objetos.
-            Alguns elementos são fundamentais para começar esse estudo.
-        </p>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Ponto</span>
-
-            <strong>
-                A
-            </strong>
-
-            <p>
-                Representa uma posição no espaço. Não possui comprimento,
-                largura ou altura.
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Reta</span>
-
-            <strong>
-                ←────────────→
-            </strong>
-
-            <p>
-                É formada por infinitos pontos e se prolonga
-                indefinidamente nos dois sentidos.
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Segmento de reta</span>
-
-            <strong>
-                A ───────── B
-            </strong>
-
-            <p>
-                É uma parte da reta limitada por dois pontos,
-                chamados extremidades.
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Semirreta</span>
-
-            <strong>
-                A ─────────→
-            </strong>
-
-            <p>
-                Possui um ponto de origem e se prolonga infinitamente
-                em apenas um sentido.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- FIGURAS PLANAS -->
-
-    <section class="operacao-card" id="figuras-planas">
-
-        <div class="operacao-titulo">
-
-            <i data-lucide="shapes"></i>
-
-            <h2>
-                Figuras planas
-            </h2>
-
-        </div>
-
-        <p>
-            As figuras planas são formas geométricas que possuem
-            duas dimensões: comprimento e largura.
-        </p>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Triângulo</span>
-
-            <strong>
-                3 lados
-            </strong>
-
-            <p>
-                É uma figura formada por três lados e três vértices.
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Quadrado</span>
-
-            <strong>
-                4 lados iguais
-            </strong>
-
-            <p>
-                Possui quatro lados de mesma medida e quatro ângulos retos.
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Retângulo</span>
-
-            <strong>
-                4 lados
-            </strong>
-
-            <p>
-                Possui quatro ângulos retos e lados opostos com medidas iguais.
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Círculo</span>
-
-            <strong>
-                Forma arredondada
-            </strong>
-
-            <p>
-                É uma região plana limitada por uma circunferência.
-                Não possui lados retos nem vértices.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- ÂNGULOS -->
-
-    <section class="operacao-card" id="angulos">
-
-        <div class="operacao-titulo">
-
-            <i data-lucide="angle"></i>
-
-            <h2>
-                Ângulos
-            </h2>
-
-        </div>
-
-        <p>
-            Um ângulo é formado por duas semirretas que possuem
-            a mesma origem. Sua medida é expressa em graus (°).
-        </p>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Ângulo agudo</span>
-
-            <strong>
-                Menor que 90°
-            </strong>
-
-            <p>
-                É um ângulo com abertura menor que um ângulo reto.
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Ângulo reto</span>
-
-            <strong>
-                90°
-            </strong>
-
-            <p>
-                É encontrado, por exemplo, nos quatro cantos de um quadrado.
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Ângulo obtuso</span>
-
-            <strong>
-                Maior que 90° e menor que 180°
-            </strong>
-
-            <p>
-                Possui uma abertura maior que a de um ângulo reto.
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Ângulo raso</span>
-
-            <strong>
-                180°
-            </strong>
-
-            <p>
-                Forma uma linha reta.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- PERÍMETRO E ÁREA -->
-
-    <section class="operacao-card" id="perimetro-area">
-
-        <div class="operacao-titulo">
-
-            <i data-lucide="ruler"></i>
-
-            <h2>
-                Perímetro e área
-            </h2>
-
-        </div>
-
-        <p>
-            Perímetro e área são medidas diferentes.
-            O perímetro representa o contorno de uma figura,
-            enquanto a área representa a superfície que ela ocupa.
-        </p>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Perímetro do quadrado</span>
-
-            <strong>
-                P = 4 × lado
-            </strong>
-
-            <p>
-                Para calcular o perímetro, somamos os quatro lados.
-                Se cada lado mede 5 cm, temos:
-                4 × 5 = 20 cm.
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Área do quadrado</span>
-
-            <strong>
-                A = lado × lado
-            </strong>
-
-            <p>
-                Se o lado mede 5 cm, a área será:
-                5 × 5 = 25 cm².
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Perímetro do retângulo</span>
-
-            <strong>
-                P = 2 × (base + altura)
-            </strong>
-
-            <p>
-                Se a base mede 6 cm e a altura mede 3 cm:
-                2 × (6 + 3) = 18 cm.
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Área do retângulo</span>
-
-            <strong>
-                A = base × altura
-            </strong>
-
-            <p>
-                Se a base mede 6 cm e a altura mede 3 cm:
-                6 × 3 = 18 cm².
-            </p>
-
-        </div>
-
-
-        <div class="exemplo-operacao">
-
-            <span>Área do triângulo</span>
-
-            <strong>
-                A = (base × altura) ÷ 2
-            </strong>
-
-            <p>
-                Se a base mede 6 cm e a altura mede 4 cm:
-                (6 × 4) ÷ 2 = 12 cm².
-            </p>
-
-        </div>
-
-    </section>
-
-
     <button
         class="botao-proxima-aula"
         onclick="window.location.href='aprender-geometria.html'"
     >
-
         Próxima Aula
-
         <i data-lucide="arrow-right"></i>
-
     </button>
-
 </main>
 
-
 <script src="js/script.js"></script>
-
 <script>
-
 lucide.createIcons();
-
 </script>
 
-
 </body>
-
-  </html>
-  
+</html>
