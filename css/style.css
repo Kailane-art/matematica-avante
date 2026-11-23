@@ -3133,15 +3133,11 @@ html.verificando-sessao::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f4f8ff;
-    color: #1E3A8A;
+    background: #12366f;
+    color: #ffffff;
     font-size: 17px;
     font-weight: 600;
-} 
-html.verificando-sessao:has(body.modo-escuro)::before {
-    background: #0b1d3a;
-    color: #e5e7eb;
-} 
+}
 
 
 /* =====================================================
