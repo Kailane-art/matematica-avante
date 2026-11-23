@@ -992,3 +992,17 @@
         font-size: 12px;
     }
 }
+
+
+/* Indicador de resultados adicionais na pesquisa de perfis */
+.chat-resultado-mais {
+    padding: 4px 2px 2px;
+    color: #3158c9;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.modo-escuro .chat-resultado-mais {
+    color: #a9c1ff;
+}
