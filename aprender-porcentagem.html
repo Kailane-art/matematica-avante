@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprender Porcentagem e Matemática Financeira - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css?v=20261123-aprenderporcentagem1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-aprender-porcentagem">
+
+<header>
+    <button id="voltarPagina" type="button" aria-label="Voltar">
+        <i data-lucide="arrow-left"></i>
+    </button>
+    <h1>Atividades de Porcentagem e Matemática Financeira</h1>
+    <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+        <i data-lucide="menu"></i>
+    </button>
+</header>
+
+<main class="aprender-geometria-conteudo">
+    <div class="titulo-operacoes">
+        <h2>Aprender</h2>
+        <p>Escolha um conteúdo de Porcentagem e Matemática Financeira para praticar.</p>
+    </div>
+
+    <nav class="materias operacoes geometria-topicos" aria-label="Conteúdos de Porcentagem e Matemática Financeira">
+<button type="button" data-topico="conceito" aria-label="Conceito de porcentagem" aria-pressed="false" title="Conceito de porcentagem"><i data-lucide="percent"></i><span>Conceito de porcentagem</span></button>
+<button type="button" data-topico="calculo" aria-label="Calculando porcentagem" aria-pressed="false" title="Calculando porcentagem"><i data-lucide="calculator"></i><span>Calculando porcentagem</span></button>
+<button type="button" data-topico="aumento" aria-label="Aumento percentual" aria-pressed="false" title="Aumento percentual"><i data-lucide="trending-up"></i><span>Aumento percentual</span></button>
+<button type="button" data-topico="desconto" aria-label="Desconto percentual" aria-pressed="false" title="Desconto percentual"><i data-lucide="badge-percent"></i><span>Desconto percentual</span></button>
+<button type="button" data-topico="variacao" aria-label="Variação percentual" aria-pressed="false" title="Variação percentual"><i data-lucide="chart-no-axes-combined"></i><span>Variação percentual</span></button>
+<button type="button" data-topico="juros-simples" aria-label="Juros simples" aria-pressed="false" title="Juros simples"><i data-lucide="calendar-clock"></i><span>Juros simples</span></button>
+<button type="button" data-topico="juros-compostos" aria-label="Juros compostos" aria-pressed="false" title="Juros compostos"><i data-lucide="chart-no-axes-combined"></i><span>Juros compostos</span></button>
+<button type="button" data-topico="lucro-prejuizo" aria-label="Lucro e prejuízo" aria-pressed="false" title="Lucro e prejuízo"><i data-lucide="scale"></i><span>Lucro e prejuízo</span></button>
+<button type="button" data-topico="sucessivos" aria-label="Aumentos e descontos sucessivos" aria-pressed="false" title="Aumentos e descontos sucessivos"><i data-lucide="repeat"></i><span>Aumentos e descontos sucessivos</span></button>
+<button type="button" data-topico="orcamento" aria-label="Orçamento e planejamento financeiro" aria-pressed="false" title="Orçamento e planejamento financeiro"><i data-lucide="wallet"></i><span>Orçamento e planejamento financeiro</span></button>
+</nav>
+
+    <p id="mensagemCarregamentoPorcentagem" class="mensagem-geometria" role="status">Selecione um conteúdo para começar.</p>
+    <div id="porcentagemAtividades" class="geometria-atividades"></div>
+</main>
+
+<div id="fundoMenu"></div>
+<div id="menuLateral">
+    <h2>Menu</h2>
+    <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+    <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+    <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+    <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+    <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+    <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+    <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+    <a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+    <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+    <a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a>
+</div>
+
+<script src="js/script.js?v=20261123-porcentagem1"></script>
+<script>
+(function () {
+    const conteudos = [{"id":"conceito","activityType":"pct_conceito","titulo":"Conceito de porcentagem","icone":"percent","descricao":"Entenda o símbolo %, a ideia de partes em cada 100 e as representações percentuais.","questoes":[{"pergunta":"O que significa 25%?","opcoes":{"a":"25 partes de 10","b":"25 partes de cada 100","c":"25 partes de 1.000"}},{"pergunta":"Qual fração representa 50%?","opcoes":{"a":"1/2","b":"1/5","c":"1/4"}},{"pergunta":"100% de uma quantidade representa:","opcoes":{"a":"A metade","b":"O dobro","c":"A quantidade inteira"}},{"pergunta":"Qual número decimal corresponde a 10%?","opcoes":{"a":"0,1","b":"1,0","c":"0,01"}},{"pergunta":"25% pode ser escrito como:","opcoes":{"a":"25/10","b":"25/100","c":"100/25"}}]},{"id":"calculo","activityType":"pct_calculo","titulo":"Calculando porcentagem","icone":"calculator","descricao":"Calcule uma porcentagem de um valor usando fração, número decimal ou divisão por 100.","questoes":[{"pergunta":"Quanto é 20% de 150?","opcoes":{"a":"30","b":"20","c":"35"}},{"pergunta":"Quanto é 15% de 200?","opcoes":{"a":"15","b":"20","c":"30"}},{"pergunta":"Quanto é 25% de 80?","opcoes":{"a":"25","b":"15","c":"20"}},{"pergunta":"Quanto é 5% de 300?","opcoes":{"a":"15","b":"30","c":"5"}},{"pergunta":"Quanto é 40% de 90?","opcoes":{"a":"30","b":"36","c":"40"}}]},{"id":"aumento","activityType":"pct_aumento","titulo":"Aumento percentual","icone":"trending-up","descricao":"Descubra o valor final depois de acrescentar uma porcentagem ao preço ou à quantidade inicial.","questoes":[{"pergunta":"Um produto custa R$ 100 e aumenta 20%. Qual é o novo preço?","opcoes":{"a":"R$ 110","b":"R$ 120","c":"R$ 100"}},{"pergunta":"Uma conta de R$ 50 aumenta 10%. Qual é o novo valor?","opcoes":{"a":"R$ 55","b":"R$ 60","c":"R$ 51"}},{"pergunta":"Um valor de R$ 200 aumenta 25%. Quanto passa a valer?","opcoes":{"a":"R$ 225","b":"R$ 240","c":"R$ 250"}},{"pergunta":"Um item de R$ 80 sofre aumento de 15%. Qual é o preço final?","opcoes":{"a":"R$ 88","b":"R$ 92","c":"R$ 95"}},{"pergunta":"Um salário de R$ 1.200 aumenta 5%. Qual é o novo salário?","opcoes":{"a":"R$ 1.260","b":"R$ 1.250","c":"R$ 1.300"}}]},{"id":"desconto","activityType":"pct_desconto","titulo":"Desconto percentual","icone":"badge-percent","descricao":"Calcule quanto será retirado de um preço e encontre o valor que será pago após o desconto.","questoes":[{"pergunta":"Um produto de R$ 100 recebe 20% de desconto. Qual é o preço final?","opcoes":{"a":"R$ 90","b":"R$ 70","c":"R$ 80"}},{"pergunta":"Uma compra de R$ 200 recebe 10% de desconto. Quanto será pago?","opcoes":{"a":"R$ 180","b":"R$ 190","c":"R$ 160"}},{"pergunta":"Um item de R$ 80 tem desconto de 25%. Qual é o preço final?","opcoes":{"a":"R$ 65","b":"R$ 60","c":"R$ 55"}},{"pergunta":"Um produto de R$ 150 recebe 30% de desconto. Quanto custa agora?","opcoes":{"a":"R$ 120","b":"R$ 115","c":"R$ 105"}},{"pergunta":"Uma peça de R$ 60 tem 50% de desconto. Qual é o preço final?","opcoes":{"a":"R$ 30","b":"R$ 40","c":"R$ 20"}}]},{"id":"variacao","activityType":"pct_variacao","titulo":"Variação percentual","icone":"chart-no-axes-combined","descricao":"Compare o valor inicial e o final para descobrir a porcentagem de aumento ou diminuição.","questoes":[{"pergunta":"Um valor passa de 50 para 60. Qual foi o aumento percentual?","opcoes":{"a":"10%","b":"20%","c":"15%"}},{"pergunta":"Um preço cai de 80 para 60. Qual foi a diminuição percentual?","opcoes":{"a":"20%","b":"30%","c":"25%"}},{"pergunta":"Uma quantidade passa de 100 para 125. Qual foi o aumento percentual?","opcoes":{"a":"25%","b":"20%","c":"15%"}},{"pergunta":"Um valor cai de 200 para 150. Qual foi a diminuição percentual?","opcoes":{"a":"20%","b":"25%","c":"30%"}},{"pergunta":"Uma quantidade passa de 40 para 50. Qual foi o aumento percentual?","opcoes":{"a":"10%","b":"20%","c":"25%"}}]},{"id":"juros-simples","activityType":"pct_juros_simples","titulo":"Juros simples","icone":"calendar-clock","descricao":"Aprenda a calcular juros que incidem sempre sobre o capital inicial, usando J = C × i × t.","questoes":[{"pergunta":"R$ 1.000 aplicados a 2% ao mês por 3 meses geram quanto de juros simples?","opcoes":{"a":"R$ 20","b":"R$ 60","c":"R$ 600"}},{"pergunta":"R$ 500 a 4% ao mês por 2 meses geram quanto de juros simples?","opcoes":{"a":"R$ 40","b":"R$ 20","c":"R$ 80"}},{"pergunta":"R$ 1.200 a 5% ao ano por 2 anos geram quanto de juros simples?","opcoes":{"a":"R$ 60","b":"R$ 100","c":"R$ 120"}},{"pergunta":"R$ 800 a 3% ao mês por 5 meses geram quanto de juros simples?","opcoes":{"a":"R$ 120","b":"R$ 80","c":"R$ 150"}},{"pergunta":"Qual fórmula calcula os juros simples?","opcoes":{"a":"J = C + i + t","b":"J = C × i × t","c":"J = C ÷ i"}}]},{"id":"juros-compostos","activityType":"pct_juros_compostos","titulo":"Juros compostos","icone":"chart-no-axes-combined","descricao":"Entenda os juros sobre juros: a cada período, os juros são incorporados ao saldo e passam a render também.","questoes":[{"pergunta":"R$ 1.000 aplicados a 10% ao ano por 1 ano resultam em qual montante?","opcoes":{"a":"R$ 1.100","b":"R$ 1.010","c":"R$ 1.200"}},{"pergunta":"R$ 1.000 a 10% ao ano por 2 anos, em juros compostos, resultam em:","opcoes":{"a":"R$ 1.200","b":"R$ 1.210","c":"R$ 1.100"}},{"pergunta":"R$ 2.000 a 5% ao ano por 1 ano resultam em qual montante?","opcoes":{"a":"R$ 2.050","b":"R$ 2.200","c":"R$ 2.100"}},{"pergunta":"Qual fórmula representa o montante em juros compostos?","opcoes":{"a":"M = C × (1 + i)ᵗ","b":"M = C × i × t","c":"M = C − i"}},{"pergunta":"R$ 1.000 a 20% ao ano por 2 anos resultam em:","opcoes":{"a":"R$ 1.400","b":"R$ 1.440","c":"R$ 1.200"}}]},{"id":"lucro-prejuizo","activityType":"pct_lucro_prejuizo","titulo":"Lucro e prejuízo","icone":"scale","descricao":"Compare o preço de venda com o custo para identificar lucro ou prejuízo e calcular sua porcentagem.","questoes":[{"pergunta":"Uma pessoa compra um item por R$ 50 e vende por R$ 70. Qual é o lucro?","opcoes":{"a":"R$ 10","b":"R$ 15","c":"R$ 20"}},{"pergunta":"Um produto custa R$ 100 e é vendido por R$ 80. Qual é o prejuízo?","opcoes":{"a":"R$ 20","b":"R$ 10","c":"R$ 30"}},{"pergunta":"Um produto comprado por R$ 200 é vendido por R$ 250. Qual é o lucro percentual sobre o custo?","opcoes":{"a":"20%","b":"25%","c":"50%"}},{"pergunta":"Um item custa R$ 80 e é vendido por R$ 100. Qual é o lucro percentual sobre o custo?","opcoes":{"a":"20%","b":"30%","c":"25%"}},{"pergunta":"Um produto comprado por R$ 120 é vendido por R$ 90. Qual é o prejuízo em reais?","opcoes":{"a":"R$ 30","b":"R$ 20","c":"R$ 40"}}]},{"id":"sucessivos","activityType":"pct_sucessivos","titulo":"Aumentos e descontos sucessivos","icone":"repeat","descricao":"Calcule alterações percentuais aplicadas uma depois da outra, sempre sobre o valor atualizado.","questoes":[{"pergunta":"Um produto de R$ 100 recebe dois descontos seguidos de 10%. Qual é o preço final?","opcoes":{"a":"R$ 80","b":"R$ 81","c":"R$ 90"}},{"pergunta":"Um valor de R$ 100 aumenta 20% e depois diminui 20%. Qual é o valor final?","opcoes":{"a":"R$ 96","b":"R$ 100","c":"R$ 104"}},{"pergunta":"Um produto de R$ 200 recebe dois descontos sucessivos de 10%. Qual é o preço final?","opcoes":{"a":"R$ 160","b":"R$ 170","c":"R$ 162"}},{"pergunta":"Um valor de R$ 100 recebe dois aumentos sucessivos de 10%. Qual é o valor final?","opcoes":{"a":"R$ 121","b":"R$ 120","c":"R$ 110"}},{"pergunta":"Um produto de R$ 100 recebe dois descontos sucessivos de 50%. Qual é o preço final?","opcoes":{"a":"R$ 50","b":"R$ 25","c":"R$ 0"}}]},{"id":"orcamento","activityType":"pct_orcamento","titulo":"Orçamento e planejamento financeiro","icone":"wallet","descricao":"Organize receitas, despesas e metas de economia para tomar decisões financeiras mais conscientes.","questoes":[{"pergunta":"Uma pessoa recebe R$ 2.000 e gasta R$ 1.500. Quanto sobra?","opcoes":{"a":"R$ 400","b":"R$ 600","c":"R$ 500"}},{"pergunta":"Quanto representa guardar 10% de uma renda de R$ 1.500?","opcoes":{"a":"R$ 150","b":"R$ 100","c":"R$ 200"}},{"pergunta":"Uma pessoa gasta R$ 300 com alimentação, R$ 200 com transporte e R$ 150 com contas. Quanto gastou ao todo?","opcoes":{"a":"R$ 600","b":"R$ 650","c":"R$ 700"}},{"pergunta":"Se a renda mensal é R$ 1.200 e as despesas fixas somam R$ 900, quanto resta antes das outras despesas?","opcoes":{"a":"R$ 200","b":"R$ 400","c":"R$ 300"}},{"pergunta":"Como calcular o saldo de um orçamento?","opcoes":{"a":"Receitas menos despesas","b":"Despesas mais receitas","c":"Receitas divididas pelas despesas"}}]}];
+
+    const areaAtividades = document.getElementById("porcentagemAtividades");
+    const mensagemCarregamento = document.getElementById("mensagemCarregamentoPorcentagem");
+    const botoesTopicos = document.querySelectorAll(".geometria-topicos button");
+    const estados = new Map();
+    const tiposAtividade = conteudos.map(function (item) { return item.activityType; });
+
+    let usuarioAtual = null;
+    let xpTotal = 0;
+    let carregamentoConcluido = false;
+
+    function criarElemento(tag, classe, texto) {
+        const elemento = document.createElement(tag);
+        if (classe) elemento.className = classe;
+        if (texto !== undefined) elemento.textContent = texto;
+        return elemento;
+    }
+
+    function atualizarXPExibido() {
+        estados.forEach(function (estado) { estado.xp.textContent = String(xpTotal); });
+    }
+
+    function atualizarPontuacao(estado) {
+        estado.pontuacao.textContent = "Pontuação: " + estado.acertos + "/5";
+    }
+
+    function bloquearQuestao(questaoElemento, bloquear) {
+        questaoElemento.querySelectorAll("button[data-option-id]").forEach(function (botao) {
+            botao.disabled = bloquear;
+            if (bloquear) botao.classList.add("resposta-bloqueada");
+            else botao.classList.remove("resposta-bloqueada");
+        });
+    }
+
+    function aplicarTentativa(estado, numero, tentativa) {
+        if (estado.respondidas.has(numero)) return;
+        estado.respondidas.set(numero, tentativa);
+
+        const questaoElemento = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questaoElemento) return;
+
+        bloquearQuestao(questaoElemento, true);
+        const botaoSelecionado = questaoElemento.querySelector('[data-option-id="' + tentativa.selected_option_id + '"]');
+        if (tentativa.is_correct) estado.acertos++;
+
+        if (botaoSelecionado) {
+            botaoSelecionado.classList.add(tentativa.is_correct ? "resposta-correta" : "resposta-errada");
+        }
+        atualizarPontuacao(estado);
+    }
+
+    function verificarConclusao(estado) {
+        if (estado.respondidas.size !== 5) return;
+        estado.resultado.textContent = estado.acertos === 5
+            ? "Parabéns! Você acertou todas as questões deste conteúdo!"
+            : "Atividade concluída! Você acertou " + estado.acertos + " de 5 questões.";
+    }
+
+    function criarAtividade(conteudo) {
+        const painel = criarElemento("section", "exercicios-basico geometria-exercicios");
+        painel.hidden = true;
+
+        const cabecalho = criarElemento("div", "titulo-exercicios");
+        const icone = document.createElement("i");
+        icone.setAttribute("data-lucide", conteudo.icone);
+        cabecalho.appendChild(icone);
+        cabecalho.appendChild(criarElemento("h2", "", conteudo.titulo));
+        painel.appendChild(cabecalho);
+        painel.appendChild(criarElemento("p", "subtitulo-exercicios", conteudo.descricao));
+        painel.appendChild(criarElemento("p", "geometria-regra-xp", "Responda às 5 questões. Cada acerto vale 10 XP."));
+
+        conteudo.questoes.forEach(function (questao, indice) {
+            const numero = indice + 1;
+            const blocoQuestao = criarElemento("div", "questao");
+            blocoQuestao.dataset.numero = String(numero);
+
+            const enunciado = document.createElement("p");
+            enunciado.appendChild(criarElemento("strong", "", numero + "."));
+            enunciado.appendChild(document.createTextNode(" " + questao.pergunta));
+            blocoQuestao.appendChild(enunciado);
+
+            const alternativas = criarElemento("div", "alternativas");
+            Object.entries(questao.opcoes).forEach(function ([letra, texto]) {
+                const botao = criarElemento("button", "", texto);
+                botao.type = "button";
+                botao.dataset.optionId = letra;
+                botao.disabled = true;
+                botao.addEventListener("click", function () {
+                    responderQuestao(conteudo, numero, letra, botao);
+                });
+                alternativas.appendChild(botao);
+            });
+
+            blocoQuestao.appendChild(alternativas);
+            painel.appendChild(blocoQuestao);
+        });
+
+        const resultado = criarElemento("div", "resultado-exercicios");
+        const pontuacao = criarElemento("h2", "", "Pontuação: 0/5");
+        const mensagem = criarElemento("p", "");
+        mensagem.setAttribute("aria-live", "polite");
+        const linhaXP = document.createElement("p");
+        linhaXP.appendChild(document.createTextNode("XP total: "));
+        const xp = criarElemento("strong", "", "0");
+        linhaXP.appendChild(xp);
+        resultado.appendChild(pontuacao);
+        resultado.appendChild(mensagem);
+        resultado.appendChild(linhaXP);
+        painel.appendChild(resultado);
+
+        const estado = { painel, pontuacao, resultado: mensagem, xp, respondidas: new Map(), acertos: 0 };
+        estados.set(conteudo.activityType, estado);
+        areaAtividades.appendChild(painel);
+    }
+
+    conteudos.forEach(criarAtividade);
+
+    function selecionarConteudo(id) {
+        const selecionado = conteudos.find(function (item) { return item.id === id; });
+        if (!selecionado) return;
+
+        botoesTopicos.forEach(function (botao) {
+            const ativo = botao.dataset.topico === id;
+            botao.classList.toggle("ativo", ativo);
+            botao.setAttribute("aria-pressed", String(ativo));
+        });
+
+        conteudos.forEach(function (item) {
+            estados.get(item.activityType).painel.hidden = item.id !== id;
+        });
+
+        mensagemCarregamento.textContent = carregamentoConcluido
+            ? "Atividade selecionada. Seu progresso fica salvo."
+            : "Carregando seu progresso...";
+    }
+
+    botoesTopicos.forEach(function (botao) {
+        botao.addEventListener("click", function () { selecionarConteudo(botao.dataset.topico); });
+    });
+
+    async function carregarEstadoPorcentagem() {
+        try {
+            if (!supabaseClient) throw new Error("Conexão com o Supabase indisponível.");
+
+            const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+            if (erroUsuario || !user) throw new Error("Sessão não autenticada.");
+            usuarioAtual = user;
+
+            const [resultadoXP, resultadoTentativas] = await Promise.all([
+                supabaseClient.from("user_progress").select("total_xp").eq("user_id", user.id).maybeSingle(),
+                supabaseClient.from("user_question_attempts")
+                    .select("activity_type, question_id, selected_option_id, is_correct")
+                    .eq("user_id", user.id).in("activity_type", tiposAtividade)
+            ]);
+
+            if (resultadoXP.error) throw resultadoXP.error;
+            if (resultadoTentativas.error) throw resultadoTentativas.error;
+            xpTotal = Number(resultadoXP.data?.total_xp || 0);
+
+            (resultadoTentativas.data || []).forEach(function (tentativa) {
+                const estado = estados.get(tentativa.activity_type);
+                const numero = Number(tentativa.question_id);
+                if (!estado || !Number.isInteger(numero) || numero < 1 || numero > 5) return;
+                aplicarTentativa(estado, numero, tentativa);
+            });
+
+            estados.forEach(function (estado) {
+                for (let numero = 1; numero <= 5; numero++) {
+                    if (!estado.respondidas.has(numero)) {
+                        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+                        if (questao) bloquearQuestao(questao, false);
+                    }
+                }
+                if (estado.respondidas.size > 0) estado.resultado.textContent = "Seu progresso anterior foi carregado.";
+                verificarConclusao(estado);
+            });
+
+            atualizarXPExibido();
+            carregamentoConcluido = true;
+            mensagemCarregamento.textContent = "Escolha um conteúdo para começar. Seu progresso fica salvo.";
+        } catch (erro) {
+            console.error("Erro ao carregar atividades de Porcentagem e Matemática Financeira:", erro);
+            mensagemCarregamento.textContent = "Não foi possível carregar seu progresso. Atualize a página e tente novamente.";
+        }
+    }
+
+    async function responderQuestao(conteudo, numero, optionId, botao) {
+        const estado = estados.get(conteudo.activityType);
+        if (!carregamentoConcluido || !usuarioAtual || !estado || estado.respondidas.has(numero) || !botao || botao.disabled) return;
+
+        const questao = estado.painel.querySelector('.questao[data-numero="' + numero + '"]');
+        if (!questao) return;
+
+        bloquearQuestao(questao, true);
+        estado.resultado.textContent = "Registrando sua resposta...";
+
+        try {
+            const { data, error } = await supabaseClient.rpc("submit_operation_answer", {
+                p_activity_type: conteudo.activityType,
+                p_question_id: String(numero),
+                p_option_id: optionId
+            });
+            if (error) throw error;
+            if (!data) throw new Error("O banco não retornou um resultado.");
+
+            xpTotal = Number(data.total_xp || 0);
+            atualizarXPExibido();
+
+            if (data.already_answered) {
+                const { data: tentativa, error: erroTentativa } = await supabaseClient
+                    .from("user_question_attempts")
+                    .select("question_id, selected_option_id, is_correct")
+                    .eq("user_id", usuarioAtual.id)
+                    .eq("activity_type", conteudo.activityType)
+                    .eq("question_id", String(numero))
+                    .maybeSingle();
+                if (erroTentativa) throw erroTentativa;
+                if (tentativa) aplicarTentativa(estado, numero, tentativa);
+                estado.resultado.textContent = "Esta questão já foi respondida anteriormente.";
+                verificarConclusao(estado);
+                return;
+            }
+
+            aplicarTentativa(estado, numero, { selected_option_id: optionId, is_correct: data.correct });
+            estado.resultado.textContent = data.correct
+                ? "Resposta correta! Você ganhou " + data.xp_awarded + " XP."
+                : "Resposta incorreta. Continue estudando!";
+            verificarConclusao(estado);
+        } catch (erro) {
+            console.error("Erro ao registrar resposta de Funções:", erro);
+            bloquearQuestao(questao, false);
+            estado.resultado.textContent = "Não foi possível registrar sua resposta. Tente novamente.";
+        }
+    }
+
+    carregarEstadoPorcentagem();
+    if (window.lucide) lucide.createIcons();
+})();
+</script>
+</body>
+</html>
