@@ -5918,6 +5918,7 @@ body {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px;
+    max-width: 900px;
     margin: 20px auto 16px;
 }
 
@@ -5925,6 +5926,7 @@ body {
     min-width: 0;
     min-height: 66px;
     padding: 9px 6px;
+    border: none;
     border-radius: 10px;
     background: #1E3A8A;
     color: #fff;
@@ -5934,7 +5936,9 @@ body {
     justify-content: center;
     gap: 5px;
     font-size: 12px;
+    font-weight: 700;
     line-height: 1.2;
+    transition: 0.3s;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
 }
 
@@ -5942,6 +5946,8 @@ body {
     width: 20px;
     height: 20px;
     flex-shrink: 0;
+    stroke-width: 2.5;
+    margin-bottom: 5px;
 }
 
 .pagina-aprender-basico .operacoes-topicos button span {
@@ -5976,6 +5982,12 @@ body {
 
 .modo-escuro.pagina-aprender-basico .mensagem-aprender-basico {
     color: #cbdaf0;
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+    .pagina-aprender-basico .operacoes-topicos {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 700px) {
