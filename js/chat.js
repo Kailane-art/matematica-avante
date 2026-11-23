@@ -172,67 +172,99 @@
         }
 
         card.append(...elementosCard);
-        resultadoPesquisa.replaceChildren(card);
-        areaResultado.hidden = false;
-
-        atualizarIcones();
+        return card;
     }
 
-    if (formularioPesquisa) {
-        formularioPesquisa.addEventListener("submit", async function(event) {
-            event.preventDefault();
+    let temporizadorPesquisaChat = null;
+    let requisicaoPesquisaChat = 0;
 
-            const username = (campoPesquisa.value || "")
-                .trim()
-                .replace(/^@/, "")
-                .toLowerCase();
+    async function executarPesquisaChat(imediata) {
+        const termo = (campoPesquisa?.value || "")
+            .trim()
+            .replace(/^@/, "")
+            .toLowerCase();
 
-            if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
-                mostrarStatusPesquisa("Digite um @username válido, com 3 a 20 caracteres.");
-                return;
-            }
+        if (temporizadorPesquisaChat) {
+            clearTimeout(temporizadorPesquisaChat);
+            temporizadorPesquisaChat = null;
+        }
 
-            if (!supabaseClient) {
-                mostrarStatusPesquisa("Não foi possível conectar ao serviço de perfis.");
-                return;
-            }
+        const requisicaoAtual = ++requisicaoPesquisaChat;
 
-            mostrarStatusPesquisa("Pesquisando perfil...");
+        if (!termo) {
+            if (resultadoPesquisa) resultadoPesquisa.replaceChildren();
+            if (areaResultado) areaResultado.hidden = true;
+            return;
+        }
+
+        if (termo.length > 40) {
+            mostrarStatusPesquisa("A pesquisa pode ter no máximo 40 caracteres.");
+            return;
+        }
+
+        if (!supabaseClient) {
+            mostrarStatusPesquisa("Não foi possível conectar ao serviço de perfis.");
+            return;
+        }
+
+        const pesquisar = async () => {
+            if (requisicaoAtual !== requisicaoPesquisaChat) return;
+            mostrarStatusPesquisa("Procurando usuários...");
 
             try {
+                await carregarFavoritosUsuario();
+
                 const { data, error } = await supabaseClient.rpc(
-                    "get_public_profile",
-                    { p_username: username }
+                    "search_public_profiles",
+                    { p_query: termo }
                 );
 
                 if (error) throw error;
-
-                const perfil = Array.isArray(data) ? data[0] : data;
-
-                if (!perfil) {
-                    mostrarStatusPesquisa("Nenhum perfil encontrado com esse username.");
-                    return;
-                }
+                if (requisicaoAtual !== requisicaoPesquisaChat) return;
 
                 const { data: sessao } = await supabaseClient.auth.getUser();
+                const perfis = (Array.isArray(data) ? data : [])
+                    .filter(perfil => !sessao?.user?.id || perfil.id !== sessao.user.id);
 
-                if (sessao && sessao.user && perfil.id === sessao.user.id) {
-                    mostrarStatusPesquisa("Esse é o seu próprio perfil.");
+                if (!perfis.length) {
+                    mostrarStatusPesquisa("Nenhum usuário encontrado com esse início de nome ou username.");
                     return;
                 }
 
-                await carregarFavoritosUsuario();
-                criarResultadoPerfil(perfil);
+                resultadoPesquisa.replaceChildren(
+                    ...perfis.map(criarResultadoPerfil)
+                );
+                areaResultado.hidden = false;
+                atualizarIcones();
 
             } catch (erro) {
-                console.error("Erro ao pesquisar perfil no Chat:", erro);
+                if (requisicaoAtual !== requisicaoPesquisaChat) return;
+                console.error("Erro ao pesquisar perfis no Chat:", erro);
                 mostrarStatusPesquisa("Não foi possível pesquisar agora. Tente novamente.");
             }
+        };
+
+        if (imediata) {
+            await pesquisar();
+        } else {
+            temporizadorPesquisaChat = setTimeout(pesquisar, 250);
+        }
+    }
+
+    if (campoPesquisa) {
+        campoPesquisa.addEventListener("input", function() {
+            executarPesquisaChat(false);
         });
     }
 
-
-    // =========================================
+    if (formularioPesquisa) {
+        formularioPesquisa.addEventListener("submit", function(event) {
+            event.preventDefault();
+            executarPesquisaChat(true);
+        });
+    }
+    
+        // =========================================
     // AMIZADES E SOLICITAÇÕES
     // =========================================
 
