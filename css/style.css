@@ -5261,21 +5261,21 @@ body {
 }
 
 
-/* PÁGINA SOBRE - GRADIENTE CONTÍNUO ROYAL BLUE → AZUL-MARINHO */
+/* PÁGINA SOBRE - GRADIENTES CLARO E ESCURO */
 .pagina-sobre {
     background: linear-gradient(
         180deg,
-        #4169e1 0%,
-        #2454a6 52%,
-        #12366f 100%
+        #edf5ff 0%,
+        #d8e8ff 52%,
+        #bfd7f5 100%
     );
 }
 
 .modo-escuro.pagina-sobre {
     background: linear-gradient(
         180deg,
-        #244f9a 0%,
-        #173d70 55%,
-        #0b1d36 100%
+        #4169e1 0%,
+        #2454a6 52%,
+        #12366f 100%
     );
 }
