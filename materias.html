@@ -370,6 +370,20 @@ lucide.createIcons();
             barra: document.getElementById("progressoFuncoesBarra"),
             tipos: ["fn_conceito", "fn_elementos", "fn_lei_formacao", "fn_valor", "fn_plano_cartesiano", "fn_graficos", "fn_afim", "fn_quadratica", "fn_zeros", "fn_variacao"],
             totalQuestoes: 50
+        },
+        {
+            nome: "Frações e Decimais",
+            texto: document.getElementById("progressoFracoesTexto"),
+            barra: document.getElementById("progressoFracoesBarra"),
+            tipos: ["frac_conceito","frac_equivalentes","frac_simplificacao","frac_comparacao","frac_adicao","frac_subtracao","frac_multiplicacao","frac_divisao","frac_decimais","frac_conversao"],
+            totalQuestoes: 50
+        },
+        {
+            nome: "Potenciação e Radiciação",
+            texto: document.getElementById("progressoPotenciacaoTexto"),
+            barra: document.getElementById("progressoPotenciacaoBarra"),
+            tipos: ["pot_conceito","pot_propriedades","pot_expoentes","pot_sinais","pot_raiz_quadrada","pot_raiz_cubica","pot_radicais","pot_operacoes","pot_expoente_fracionario","pot_cientifica"],
+            totalQuestoes: 50
         }
     ];
 
@@ -394,20 +408,6 @@ lucide.createIcons();
 
         const todosTipos = materiasValidas.reduce(function(lista, materia) {
             return lista.concat(materia.tipos);
-        },
-        {
-            nome: "Frações e Decimais",
-            texto: document.getElementById("progressoFracoesTexto"),
-            barra: document.getElementById("progressoFracoesBarra"),
-            tipos: ["frac_conceito","frac_equivalentes","frac_simplificacao","frac_comparacao","frac_adicao","frac_subtracao","frac_multiplicacao","frac_divisao","frac_decimais","frac_conversao"],
-            totalQuestoes: 50
-        },
-        {
-            nome: "Potenciação e Radiciação",
-            texto: document.getElementById("progressoPotenciacaoTexto"),
-            barra: document.getElementById("progressoPotenciacaoBarra"),
-            tipos: ["pot_conceito","pot_propriedades","pot_expoentes","pot_sinais","pot_raiz_quadrada","pot_raiz_cubica","pot_radicais","pot_operacoes","pot_expoente_fracionario","pot_cientifica"],
-            totalQuestoes: 50
         }, []);
 
         const { data, error } = await supabaseClient
