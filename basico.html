@@ -1,360 +1,175 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="verificando-sessao">
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Básico da Matemática</title>
-
-<link rel="stylesheet" href="css/style.css">
-
+<link rel="stylesheet" href="css/style.css?v=20261123-basico-nav1">
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
-
-
-<body>
-
+<body class="pagina-basico-interativa">
 
 <header>
-
-    <button id="voltarPagina" type="button" class="icon-button">
+    <button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar">
         <i data-lucide="arrow-left"></i>
     </button>
-
-
-    <h1>
-        Básico da Matemática
-    </h1>
-
-
-    
-
-
-    <button id="botaoMenu" type="button" class="icon-button">
+    <h1>Básico da Matemática</h1>
+    <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
         <i data-lucide="menu"></i>
     </button>
-
 </header>
-
-
 
 <main class="pagina-basico">
 
-
-    <!-- INTRODUÇÃO -->
-
-    <section class="basico-introducao">
-
-        <h2>
-            Aprenda o básico da Matemática
-        </h2>
-
-        <p>
-            A matemática começa com quatro operações principais:
-            adição, subtração, multiplicação e divisão.
-        </p>
-
-    </section>
-
-
-
-    <!-- ADIÇÃO -->
-
-    <section class="operacao-card">
-
-        <div class="operacao-titulo">
-
+    <nav class="basico-navegacao" aria-label="Operações matemáticas">
+        <button class="basico-botao-topico" type="button" data-topico="adicao" aria-label="Adição" title="Adição" aria-pressed="false">
             <i data-lucide="plus"></i>
-
-            <h2>
-                Adição
-            </h2>
-
-        </div>
-
-        <p>
-            A adição é usada quando queremos juntar ou aumentar valores.
-            Ela mostra o resultado de colocar quantidades juntas.
-        </p>
-
-        <div class="exemplo-operacao">
-
-            <span>Exemplo</span>
-
-            <strong>
-                5 + 3 = 8
-            </strong>
-
-            <p>
-                Isso significa que juntando 5 com mais 3, temos 8.
-            </p>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- SUBTRAÇÃO -->
-
-    <section class="operacao-card">
-
-        <div class="operacao-titulo">
-
-            <i data-lucide="minus"></i>
-
-            <h2>
-                Subtração
-            </h2>
-
-        </div>
-
-        <p>
-            A subtração é usada quando precisamos retirar uma quantidade
-            ou descobrir a diferença entre dois valores.
-        </p>
-
-        <div class="exemplo-operacao">
-
-            <span>Exemplo</span>
-
-            <strong>
-                10 - 4 = 6
-            </strong>
-
-            <p>
-                Isso significa que, retirando 4 de 10, sobram 6.
-            </p>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- MULTIPLICAÇÃO -->
-
-    <section class="operacao-card">
-
-        <div class="operacao-titulo">
-
-            <i data-lucide="x"></i>
-
-            <h2>
-                Multiplicação
-            </h2>
-
-        </div>
-
-        <p>
-            A multiplicação é uma forma mais rápida de fazer uma soma repetida.
-            Ela representa grupos com a mesma quantidade.
-        </p>
-
-        <div class="exemplo-operacao">
-
-            <span>Exemplo</span>
-
-            <strong>
-                3 × 4 = 12
-            </strong>
-
-            <p>
-                Isso significa que temos 3 grupos de 4, formando 12 ao todo.
-            </p>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- DIVISÃO -->
-
-    <section class="operacao-card">
-
-        <div class="operacao-titulo">
-
-            <i data-lucide="divide"></i>
-
-            <h2>
-                Divisão
-            </h2>
-
-        </div>
-
-        <p>
-            A divisão é usada para repartir uma quantidade em partes iguais
-            ou descobrir quantas vezes um valor cabe dentro de outro.
-        </p>
-
-        <div class="exemplo-operacao">
-
-            <span>Exemplo</span>
-
-            <strong>
-                12 ÷ 3 = 4
-            </strong>
-
-            <p>
-                Isso significa que dividindo 12 em 3 partes iguais,
-                cada parte terá 4.
-            </p>
-
-        </div>
-
-    </section>
-
-        <button
-            class="botao-proxima-aula"
-            onclick="proximaAula()"
-        >
-
-            Próxima Aula
-
-            <i data-lucide="arrow-right"></i>
-
         </button>
+        <button class="basico-botao-topico" type="button" data-topico="subtracao" aria-label="Subtração" title="Subtração" aria-pressed="false">
+            <i data-lucide="minus"></i>
+        </button>
+        <button class="basico-botao-topico" type="button" data-topico="multiplicacao" aria-label="Multiplicação" title="Multiplicação" aria-pressed="false">
+            <i data-lucide="x"></i>
+        </button>
+        <button class="basico-botao-topico" type="button" data-topico="divisao" aria-label="Divisão" title="Divisão" aria-pressed="false">
+            <i data-lucide="divide"></i>
+        </button>
+    </nav>
 
-<!-- MENU LATERAL -->
+    <section class="basico-paineis" aria-live="polite">
+        <article class="basico-painel" data-conteudo="adicao" hidden>
+            <div class="operacao-titulo">
+                <i data-lucide="plus"></i>
+                <h2>Adição</h2>
+            </div>
+            <p>A adição é usada quando queremos juntar ou aumentar valores. Ela mostra o resultado de colocar quantidades juntas.</p>
+            <div class="exemplo-operacao">
+                <span>Exemplo</span>
+                <strong>5 + 3 = 8</strong>
+                <p>Isso significa que juntando 5 com mais 3, temos 8.</p>
+            </div>
+        </article>
 
-<div id="fundoMenu"></div>
+        <article class="basico-painel" data-conteudo="subtracao" hidden>
+            <div class="operacao-titulo">
+                <i data-lucide="minus"></i>
+                <h2>Subtração</h2>
+            </div>
+            <p>A subtração é usada quando precisamos retirar uma quantidade ou descobrir a diferença entre dois valores.</p>
+            <div class="exemplo-operacao">
+                <span>Exemplo</span>
+                <strong>10 - 4 = 6</strong>
+                <p>Isso significa que, retirando 4 de 10, sobram 6.</p>
+            </div>
+        </article>
 
+        <article class="basico-painel" data-conteudo="multiplicacao" hidden>
+            <div class="operacao-titulo">
+                <i data-lucide="x"></i>
+                <h2>Multiplicação</h2>
+            </div>
+            <p>A multiplicação é uma forma mais rápida de fazer uma soma repetida. Ela representa grupos com a mesma quantidade.</p>
+            <div class="exemplo-operacao">
+                <span>Exemplo</span>
+                <strong>3 × 4 = 12</strong>
+                <p>Isso significa que temos 3 grupos de 4, formando 12 ao todo.</p>
+            </div>
+        </article>
 
-<div id="menuLateral">
+        <article class="basico-painel" data-conteudo="divisao" hidden>
+            <div class="operacao-titulo">
+                <i data-lucide="divide"></i>
+                <h2>Divisão</h2>
+            </div>
+            <p>A divisão é usada para repartir uma quantidade em partes iguais ou descobrir quantas vezes um valor cabe dentro de outro.</p>
+            <div class="exemplo-operacao">
+                <span>Exemplo</span>
+                <strong>12 ÷ 3 = 4</strong>
+                <p>Isso significa que dividindo 12 em 3 partes iguais, cada parte terá 4.</p>
+            </div>
+        </article>
+    </section>
 
-    <h2>
-        Menu
-    </h2>
+    <button class="botao-proxima-aula" onclick="proximaAula()">
+        Próxima Aula
+        <i data-lucide="arrow-right"></i>
+    </button>
 
-    <a href="inicio.html" class="menu-item">
-
-        <i data-lucide="house"></i>
-
-        <span>
-            Voltar ao início
-        </span>
-
-    </a>
-
-
-
-    <a href="perfil.html" class="menu-item">
-
-        <i data-lucide="user-round"></i>
-
-        <span>
-            Perfil
-        </span>
-
-    </a>
-
-<a href="chat.html" class="menu-item">
-
-    <i data-lucide="messages-square"></i>
-
-    <span>Chat</span>
-
-</a>
-
-
-    <a href="materias.html" class="menu-item">
-
-        <i data-lucide="book-open"></i>
-
-        <span>
-            Matérias
-        </span>
-
-    </a>
-
-
-    <a href="atividades.html" class="menu-item">
-
-        <i data-lucide="clipboard-list"></i>
-
-        <span>
-            Atividades
-        </span>
-
-    </a>
-
-
-    <a href="professores.html" class="menu-item">
-
-        <i data-lucide="graduation-cap"></i>
-
-        <span>
-            Professores
-        </span>
-
-    </a>
-
-
-    
-
-
-    
-
-
-    <a href="planos.html" class="menu-item">
-
-        <i data-lucide="credit-card"></i>
-
-        <span>
-            Planos e Assinaturas
-        </span>
-
-    </a>
-
-
-    <a href="configuracoes.html" class="menu-item">
-
-<i data-lucide="settings"></i>
-
-        <span>
-            Configurações
-        </span>
-
-    </a>
-
-
-    <a href="sobre.html" class="menu-item">
-
-        <i data-lucide="info"></i>
-
-        <span>
-            Sobre
-        </span>
-
-    </a>
-
-<a href="alertas.html" class="menu-item">
-    <i data-lucide="megaphone"></i>
-    <span>Alertas e Eventos</span>
-</a>
-
-
-</div>
-
-
-
-<!-- SCRIPTS -->
+    <!-- MENU LATERAL -->
+    <div id="fundoMenu"></div>
+    <div id="menuLateral">
+        <h2>Menu</h2>
+        <a href="inicio.html" class="menu-item">
+            <i data-lucide="house"></i>
+            <span>Voltar ao início</span>
+        </a>
+        <a href="perfil.html" class="menu-item">
+            <i data-lucide="user-round"></i>
+            <span>Perfil</span>
+        </a>
+        <a href="chat.html" class="menu-item">
+            <i data-lucide="messages-square"></i>
+            <span>Chat</span>
+        </a>
+        <a href="materias.html" class="menu-item">
+            <i data-lucide="book-open"></i>
+            <span>Matérias</span>
+        </a>
+        <a href="atividades.html" class="menu-item">
+            <i data-lucide="clipboard-list"></i>
+            <span>Atividades</span>
+        </a>
+        <a href="professores.html" class="menu-item">
+            <i data-lucide="graduation-cap"></i>
+            <span>Professores</span>
+        </a>
+        <a href="planos.html" class="menu-item">
+            <i data-lucide="credit-card"></i>
+            <span>Planos e Assinaturas</span>
+        </a>
+        <a href="configuracoes.html" class="menu-item">
+            <i data-lucide="settings"></i>
+            <span>Configurações</span>
+        </a>
+        <a href="sobre.html" class="menu-item">
+            <i data-lucide="info"></i>
+            <span>Sobre</span>
+        </a>
+        <a href="alertas.html" class="menu-item">
+            <i data-lucide="megaphone"></i>
+            <span>Alertas e Eventos</span>
+        </a>
+    </div>
+</main>
 
 <script src="js/script.js"></script>
-
-
 <script>
+(function () {
+    const botoes = document.querySelectorAll(".basico-botao-topico");
+    const paineis = document.querySelectorAll(".basico-painel");
 
-    lucide.createIcons();
+    botoes.forEach(function (botao) {
+        botao.addEventListener("click", function () {
+            const topicoSelecionado = botao.dataset.topico;
 
+            botoes.forEach(function (item) {
+                const selecionado = item === botao;
+                item.classList.toggle("ativo", selecionado);
+                item.setAttribute("aria-pressed", String(selecionado));
+            });
+
+            paineis.forEach(function (painel) {
+                painel.hidden = painel.dataset.conteudo !== topicoSelecionado;
+            });
+        });
+    });
+
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+})();
 </script>
-
-
 </body>
-
-</html>  
+</html>
