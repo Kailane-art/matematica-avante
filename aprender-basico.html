@@ -1,150 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="verificando-sessao">
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-<title>Atividades - Básico da Matemática</title>
-
-
-<link rel="stylesheet" href="css/style.css">
-
-
-<script src="https://unpkg.com/lucide@latest"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprender Matemática Básica - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css?v=20261123-aprenderbasico1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 
-
-<body>
-
+<body class="pagina-aprender-basico">
 
 <header>
+    <button id="voltarPagina" type="button" aria-label="Voltar">
+        <i data-lucide="arrow-left"></i>
+    </button>
+    <h1>Atividades de Matemática</h1>
+    <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+        <i data-lucide="menu"></i>
+    </button>
+</header>
 
+<main class="aprender-basico-conteudo">
+    <div class="titulo-operacoes">
+        <h2>Aprender</h2>
+        <p>Escolha uma operação para praticar.</p>
+    </div>
 
-<button id="voltarPagina" type="button">
+    <nav class="operacoes-topicos" aria-label="Operações matemáticas">
+        <button type="button" data-operacao="adicao" aria-label="Adição" aria-pressed="false" title="Adição">
+            <i data-lucide="plus"></i><span>Adição</span>
+        </button>
+        <button type="button" data-operacao="subtracao" aria-label="Subtração" aria-pressed="false" title="Subtração">
+            <i data-lucide="minus"></i><span>Subtração</span>
+        </button>
+        <button type="button" data-operacao="multiplicacao" aria-label="Multiplicação" aria-pressed="false" title="Multiplicação">
+            <i data-lucide="x"></i><span>Multiplicação</span>
+        </button>
+        <button type="button" data-operacao="divisao" aria-label="Divisão" aria-pressed="false" title="Divisão">
+            <i data-lucide="divide"></i><span>Divisão</span>
+        </button>
+    </nav>
 
-<i data-lucide="arrow-left"></i>
-
-</button>
-
-
-
-<h1>
-Atividades de Matemática
-</h1>
-
-
-
-
-
-
-<button id="botaoMenu" type="button" class="icon-button">
-
-<i data-lucide="menu"></i>
-
-</button>
-
-
-
-</header>          <div class="titulo-operacoes">
-
-    <h2>
-        Aprender
-    </h2>
-
-    <p>
-        Escolha uma operação para estudar.
+    <p id="mensagemCarregamentoBasico" class="mensagem-aprender-basico" role="status">
+        Selecione uma operação para começar.
     </p>
 
-</div> 
-
-
-
-
-
-<div class="materias operacoes">
-
-
-
-
-
-<button onclick="window.location.href='adicao.html'">
-
-<i data-lucide="plus"></i>
-
-<br>
-
-Adição
-
-</button>
-
-
-
-
-
-
-<button onclick="window.location.href='subtracao.html'">
-
-<i data-lucide="minus"></i>
-
-<br>
-
-Subtração
-
-</button>
-
-
-
-
-
-
-<button onclick="window.location.href='multiplicacao.html'">
-
-<i data-lucide="x"></i>
-
-<br>
-
-Multiplicação
-
-</button>
-
-
-
-
-
-
-<button onclick="window.location.href='divisao.html'">
-
-<i data-lucide="divide"></i>
-
-<br>
-
-Divisão
-
-</button>
-
-
-
-
-
-</div>       </section>
-
-
-
-
-
+    <div id="basicoAtividades" class="basico-atividades"></div>
+</main>
 
 <!-- MENU LATERAL -->
-
 <div id="fundoMenu"></div>
-
 <div id="menuLateral">
-
     <h2>Menu</h2>
 
     <a href="inicio.html" class="menu-item">
@@ -157,13 +65,10 @@ Divisão
         <span>Perfil</span>
     </a>
 
-<a href="chat.html" class="menu-item">
-
-    <i data-lucide="messages-square"></i>
-
-    <span>Chat</span>
-
-</a>
+    <a href="chat.html" class="menu-item">
+        <i data-lucide="messages-square"></i>
+        <span>Chat</span>
+    </a>
 
     <a href="materias.html" class="menu-item">
         <i data-lucide="book-open"></i>
@@ -186,8 +91,7 @@ Divisão
     </a>
 
     <a href="configuracoes.html" class="menu-item">
-
-<i data-lucide="settings"></i>
+        <i data-lucide="settings"></i>
         <span>Configurações</span>
     </a>
 
@@ -196,32 +100,414 @@ Divisão
         <span>Sobre</span>
     </a>
 
-<a href="alertas.html" class="menu-item">
-    <i data-lucide="megaphone"></i>
-    <span>Alertas e Eventos</span>
-</a>
-
-
+    <a href="alertas.html" class="menu-item">
+        <i data-lucide="megaphone"></i>
+        <span>Alertas e Eventos</span>
+    </a>
 </div>
 
-
 <script src="js/script.js"></script>
-
-
-
-
-
 <script>
+(function () {
+    const operacoes = [
+        {
+            id: "adicao",
+            titulo: "Adição",
+            descricao: "Resolva as questões de adição. Cada acerto vale 10 XP.",
+            icone: "plus",
+            questoes: [
+                { pergunta: "Quanto é 8 + 5?", opcoes: { a: "12", b: "13", c: "14" } },
+                { pergunta: "Quanto é 12 + 7?", opcoes: { a: "18", b: "19", c: "20" } },
+                { pergunta: "Quanto é 24 + 16?", opcoes: { a: "40", b: "38", c: "42" } },
+                { pergunta: "Quanto é 35 + 28?", opcoes: { a: "62", b: "63", c: "64" } },
+                { pergunta: "Quanto é 126 + 47?", opcoes: { a: "163", b: "172", c: "173" } }
+            ]
+        },
+        {
+            id: "subtracao",
+            titulo: "Subtração",
+            descricao: "Resolva as questões de subtração. Cada acerto vale 10 XP.",
+            icone: "minus",
+            questoes: [
+                { pergunta: "Quanto é 9 - 4?", opcoes: { a: "4", b: "5", c: "6" } },
+                { pergunta: "Quanto é 15 - 7?", opcoes: { a: "7", b: "8", c: "9" } },
+                { pergunta: "Quanto é 32 - 18?", opcoes: { a: "14", b: "16", c: "12" } },
+                { pergunta: "Quanto é 50 - 26?", opcoes: { a: "26", b: "23", c: "24" } },
+                { pergunta: "Quanto é 103 - 58?", opcoes: { a: "43", b: "45", c: "47" } }
+            ]
+        },
+        {
+            id: "multiplicacao",
+            titulo: "Multiplicação",
+            descricao: "Resolva as questões de multiplicação. Cada acerto vale 10 XP.",
+            icone: "x",
+            questoes: [
+                { pergunta: "Quanto é 6 × 4?", opcoes: { a: "20", b: "24", c: "28" } },
+                { pergunta: "Quanto é 7 × 8?", opcoes: { a: "54", b: "56", c: "64" } },
+                { pergunta: "Quanto é 12 × 5?", opcoes: { a: "60", b: "55", c: "65" } },
+                { pergunta: "Quanto é 14 × 6?", opcoes: { a: "82", b: "84", c: "86" } },
+                { pergunta: "Quanto é 23 × 4?", opcoes: { a: "88", b: "92", c: "96" } }
+            ]
+        },
+        {
+            id: "divisao",
+            titulo: "Divisão",
+            descricao: "Resolva as questões de divisão. Cada acerto vale 10 XP.",
+            icone: "divide",
+            questoes: [
+                { pergunta: "Quanto é 20 ÷ 4?", opcoes: { a: "4", b: "5", c: "6" } },
+                { pergunta: "Quanto é 56 ÷ 7?", opcoes: { a: "6", b: "8", c: "9" } },
+                { pergunta: "Quanto é 72 ÷ 8?", opcoes: { a: "9", b: "8", c: "7" } },
+                { pergunta: "Quanto é 96 ÷ 12?", opcoes: { a: "6", b: "8", c: "10" } },
+                { pergunta: "Quanto é 144 ÷ 12?", opcoes: { a: "10", b: "12", c: "14" } }
+            ]
+        }
+    ];
 
-lucide.createIcons();
+    const areaAtividades = document.getElementById("basicoAtividades");
+    const mensagemCarregamento = document.getElementById("mensagemCarregamentoBasico");
+    const botoesOperacoes = document.querySelectorAll(".operacoes-topicos button");
+    const estados = new Map();
 
+    let usuarioAtual = null;
+    let xpTotal = 0;
+    let carregamentoConcluido = false;
+
+    function criarElemento(tag, classe, texto) {
+        const elemento = document.createElement(tag);
+        if (classe) elemento.className = classe;
+        if (texto !== undefined) elemento.textContent = texto;
+        return elemento;
+    }
+
+    function atualizarXPExibido() {
+        estados.forEach(function (estado) {
+            estado.xp.textContent = String(xpTotal);
+        });
+    }
+
+    function atualizarPontuacao(estado) {
+        estado.pontuacao.textContent = "Pontuação: " + estado.acertos + "/5";
+    }
+
+    function bloquearQuestao(questaoElemento, bloquear) {
+        questaoElemento.querySelectorAll("button[data-option-id]").forEach(function (botao) {
+            botao.disabled = bloquear;
+            if (bloquear) {
+                botao.classList.add("resposta-bloqueada");
+            } else {
+                botao.classList.remove("resposta-bloqueada");
+            }
+        });
+    }
+
+    function aplicarTentativa(estado, numero, tentativa) {
+        if (estado.respondidas.has(numero)) return;
+
+        estado.respondidas.set(numero, tentativa);
+        const questaoElemento = estado.painel.querySelector(
+            '.questao[data-numero="' + numero + '"]'
+        );
+
+        if (!questaoElemento) return;
+
+        bloquearQuestao(questaoElemento, true);
+
+        const botaoSelecionado = questaoElemento.querySelector(
+            '[data-option-id="' + tentativa.selected_option_id + '"]'
+        );
+
+        if (tentativa.is_correct) estado.acertos++;
+
+        if (botaoSelecionado) {
+            botaoSelecionado.classList.add(
+                tentativa.is_correct ? "resposta-correta" : "resposta-errada"
+            );
+        }
+
+        atualizarPontuacao(estado);
+    }
+
+    function verificarConclusao(estado) {
+        if (estado.respondidas.size !== 5) return;
+
+        if (estado.acertos === 5) {
+            estado.resultado.textContent = "Parabéns! Você acertou todas as questões desta operação!";
+        } else {
+            estado.resultado.textContent =
+                "Atividade concluída! Você acertou " + estado.acertos + " de 5 questões.";
+        }
+    }
+
+    function criarAtividade(operacao) {
+        const painel = criarElemento("section", "exercicios-basico basico-exercicios");
+        painel.hidden = true;
+
+        const cabecalho = criarElemento("div", "titulo-exercicios");
+        const icone = document.createElement("i");
+        icone.setAttribute("data-lucide", operacao.icone);
+        cabecalho.appendChild(icone);
+        cabecalho.appendChild(criarElemento("h2", "", operacao.titulo));
+        painel.appendChild(cabecalho);
+
+        painel.appendChild(criarElemento("p", "subtitulo-exercicios", operacao.descricao));
+
+        operacao.questoes.forEach(function (questao, indice) {
+            const numero = indice + 1;
+            const blocoQuestao = criarElemento("div", "questao");
+            blocoQuestao.dataset.numero = String(numero);
+
+            const enunciado = document.createElement("p");
+            enunciado.appendChild(criarElemento("strong", "", numero + "."));
+            enunciado.appendChild(document.createTextNode(" " + questao.pergunta));
+            blocoQuestao.appendChild(enunciado);
+
+            const alternativas = criarElemento("div", "alternativas");
+
+            Object.entries(questao.opcoes).forEach(function ([letra, texto]) {
+                const botao = criarElemento("button", "", texto);
+                botao.type = "button";
+                botao.dataset.optionId = letra;
+                botao.disabled = true;
+                botao.addEventListener("click", function () {
+                    responderQuestao(operacao, numero, letra, botao);
+                });
+                alternativas.appendChild(botao);
+            });
+
+            blocoQuestao.appendChild(alternativas);
+            painel.appendChild(blocoQuestao);
+        });
+
+        const resultado = criarElemento("div", "resultado-exercicios");
+        const pontuacao = criarElemento("h2", "", "Pontuação: 0/5");
+        const mensagem = criarElemento("p", "");
+        mensagem.setAttribute("aria-live", "polite");
+
+        const linhaXP = document.createElement("p");
+        linhaXP.appendChild(document.createTextNode("XP total: "));
+        const xp = criarElemento("strong", "", "0");
+        linhaXP.appendChild(xp);
+
+        resultado.appendChild(pontuacao);
+        resultado.appendChild(mensagem);
+        resultado.appendChild(linhaXP);
+        painel.appendChild(resultado);
+
+        const estado = {
+            painel: painel,
+            pontuacao: pontuacao,
+            resultado: mensagem,
+            xp: xp,
+            respondidas: new Map(),
+            acertos: 0
+        };
+
+        estados.set(operacao.id, estado);
+        areaAtividades.appendChild(painel);
+    }
+
+    operacoes.forEach(criarAtividade);
+
+    function selecionarOperacao(id) {
+        const operacaoSelecionada = operacoes.find(function (item) {
+            return item.id === id;
+        });
+
+        if (!operacaoSelecionada) return;
+
+        botoesOperacoes.forEach(function (botao) {
+            const selecionado = botao.dataset.operacao === id;
+            botao.classList.toggle("ativo", selecionado);
+            botao.setAttribute("aria-pressed", String(selecionado));
+        });
+
+        operacoes.forEach(function (item) {
+            estados.get(item.id).painel.hidden = item.id !== id;
+        });
+
+        mensagemCarregamento.textContent = carregamentoConcluido
+            ? "Operação selecionada. Seu progresso fica salvo."
+            : "Carregando seu progresso...";
+    }
+
+    botoesOperacoes.forEach(function (botao) {
+        botao.addEventListener("click", function () {
+            selecionarOperacao(botao.dataset.operacao);
+        });
+    });
+
+    async function carregarEstadoBasico() {
+        try {
+            if (!supabaseClient) {
+                throw new Error("Conexão com o Supabase indisponível.");
+            }
+
+            const { data: { user }, error: erroUsuario } =
+                await supabaseClient.auth.getUser();
+
+            if (erroUsuario || !user) {
+                throw new Error("Sessão não autenticada.");
+            }
+
+            usuarioAtual = user;
+
+            const tiposAtividade = operacoes.map(function (item) {
+                return item.id;
+            });
+
+            const [resultadoXP, resultadoTentativas] = await Promise.all([
+                supabaseClient
+                    .from("user_progress")
+                    .select("total_xp")
+                    .eq("user_id", user.id)
+                    .maybeSingle(),
+
+                supabaseClient
+                    .from("user_question_attempts")
+                    .select("activity_type, question_id, selected_option_id, is_correct")
+                    .eq("user_id", user.id)
+                    .in("activity_type", tiposAtividade)
+            ]);
+
+            if (resultadoXP.error) throw resultadoXP.error;
+            if (resultadoTentativas.error) throw resultadoTentativas.error;
+
+            xpTotal = Number(resultadoXP.data?.total_xp || 0);
+
+            (resultadoTentativas.data || []).forEach(function (tentativa) {
+                const estado = estados.get(tentativa.activity_type);
+                const numero = Number(tentativa.question_id);
+
+                if (
+                    !estado ||
+                    !Number.isInteger(numero) ||
+                    numero < 1 ||
+                    numero > 5
+                ) {
+                    return;
+                }
+
+                aplicarTentativa(estado, numero, tentativa);
+            });
+
+            estados.forEach(function (estado) {
+                for (let numero = 1; numero <= 5; numero++) {
+                    if (!estado.respondidas.has(numero)) {
+                        const questao = estado.painel.querySelector(
+                            '.questao[data-numero="' + numero + '"]'
+                        );
+                        if (questao) bloquearQuestao(questao, false);
+                    }
+                }
+
+                if (estado.respondidas.size > 0) {
+                    estado.resultado.textContent = "Seu progresso anterior foi carregado.";
+                }
+
+                verificarConclusao(estado);
+            });
+
+            atualizarXPExibido();
+            carregamentoConcluido = true;
+            mensagemCarregamento.textContent =
+                "Escolha uma operação para começar. Seu progresso fica salvo.";
+        } catch (erro) {
+            console.error("Erro ao carregar atividades do Básico:", erro);
+            mensagemCarregamento.textContent =
+                "Não foi possível carregar seu progresso. Atualize a página e tente novamente.";
+        }
+    }
+
+    async function responderQuestao(operacao, numero, optionId, botao) {
+        const estado = estados.get(operacao.id);
+
+        if (
+            !carregamentoConcluido ||
+            !usuarioAtual ||
+            !estado ||
+            estado.respondidas.has(numero) ||
+            !botao ||
+            botao.disabled
+        ) {
+            return;
+        }
+
+        const questao = estado.painel.querySelector(
+            '.questao[data-numero="' + numero + '"]'
+        );
+
+        if (!questao) return;
+
+        bloquearQuestao(questao, true);
+        estado.resultado.textContent = "Registrando sua resposta...";
+
+        try {
+            const { data, error } = await supabaseClient.rpc(
+                "submit_operation_answer",
+                {
+                    p_activity_type: operacao.id,
+                    p_question_id: String(numero),
+                    p_option_id: optionId
+                }
+            );
+
+            if (error) throw error;
+            if (!data) throw new Error("O banco não retornou um resultado.");
+
+            xpTotal = Number(data.total_xp || 0);
+            atualizarXPExibido();
+
+            if (data.already_answered) {
+                const { data: tentativa, error: erroTentativa } =
+                    await supabaseClient
+                        .from("user_question_attempts")
+                        .select("question_id, selected_option_id, is_correct")
+                        .eq("user_id", usuarioAtual.id)
+                        .eq("activity_type", operacao.id)
+                        .eq("question_id", String(numero))
+                        .maybeSingle();
+
+                if (erroTentativa) throw erroTentativa;
+
+                if (tentativa) {
+                    aplicarTentativa(estado, numero, tentativa);
+                }
+
+                estado.resultado.textContent =
+                    "Esta questão já foi respondida anteriormente.";
+                verificarConclusao(estado);
+                return;
+            }
+
+            aplicarTentativa(estado, numero, {
+                selected_option_id: optionId,
+                is_correct: data.correct
+            });
+
+            if (data.correct) {
+                estado.resultado.textContent =
+                    "Resposta correta! Você ganhou " + data.xp_awarded + " XP.";
+            } else {
+                estado.resultado.textContent = "Resposta incorreta. Continue estudando!";
+            }
+
+            verificarConclusao(estado);
+        } catch (erro) {
+            console.error("Erro ao registrar resposta do Básico:", erro);
+            bloquearQuestao(questao, false);
+            estado.resultado.textContent =
+                "Não foi possível registrar sua resposta. Tente novamente.";
+        }
+    }
+
+    carregarEstadoBasico();
+
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+})();
 </script>
 
-
-
-
-
-
 </body>
-
-</html>   
+</html>
