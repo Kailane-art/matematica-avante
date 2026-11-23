@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Álgebra - Matemática Avante</title>
+<link rel="stylesheet" href="css/style.css?v=20261123-algebra1">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="pagina-algebra">
+
+<header>
+    <button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar">
+        <i data-lucide="arrow-left"></i>
+    </button>
+    <h1>Álgebra</h1>
+    <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+        <i data-lucide="menu"></i>
+    </button>
+</header>
+
+<main class="pagina-algebra-conteudo">
+    <nav class="algebra-navegacao" aria-label="Conteúdos de Álgebra">
+        <button class="algebra-botao-topico" type="button" data-topico="linguagem" aria-label="Linguagem algébrica" title="Linguagem algébrica" aria-pressed="false"><i data-lucide="languages"></i></button>
+        <button class="algebra-botao-topico" type="button" data-topico="expressoes" aria-label="Expressões algébricas" title="Expressões algébricas" aria-pressed="false"><i data-lucide="variable"></i></button>
+        <button class="algebra-botao-topico" type="button" data-topico="valor-numerico" aria-label="Valor numérico" title="Valor numérico" aria-pressed="false"><i data-lucide="calculator"></i></button>
+        <button class="algebra-botao-topico" type="button" data-topico="monomios" aria-label="Monômios" title="Monômios" aria-pressed="false"><i data-lucide="hash"></i></button>
+        <button class="algebra-botao-topico" type="button" data-topico="polinomios" aria-label="Polinômios" title="Polinômios" aria-pressed="false"><i data-lucide="list-ordered"></i></button>
+        <button class="algebra-botao-topico" type="button" data-topico="operacoes" aria-label="Operações com polinômios" title="Operações com polinômios" aria-pressed="false"><i data-lucide="plus-minus"></i></button>
+        <button class="algebra-botao-topico" type="button" data-topico="produtos-notaveis" aria-label="Produtos notáveis" title="Produtos notáveis" aria-pressed="false"><i data-lucide="square-function"></i></button>
+        <button class="algebra-botao-topico" type="button" data-topico="fatoracao" aria-label="Fatoração" title="Fatoração" aria-pressed="false"><i data-lucide="git-branch"></i></button>
+        <button class="algebra-botao-topico" type="button" data-topico="equacoes" aria-label="Equações do primeiro grau" title="Equações do primeiro grau" aria-pressed="false"><i data-lucide="equal"></i></button>
+        <button class="algebra-botao-topico" type="button" data-topico="sistemas" aria-label="Sistemas de equações" title="Sistemas de equações" aria-pressed="false"><i data-lucide="network"></i></button>
+    </nav>
+
+    <section class="algebra-paineis" aria-live="polite">
+        <article class="algebra-painel" data-conteudo="linguagem" hidden>
+            <h2>Linguagem algébrica</h2>
+            <p>A linguagem algébrica representa situações matemáticas usando letras, números e operações. As letras representam valores que podem ser desconhecidos ou variar.</p>
+            <div class="algebra-exemplo"><h3>Da linguagem comum para a algébrica</h3><p>O dobro de um número: 2x.</p><p>Um número aumentado em 5: x + 5.</p><p>A metade de um número: x ÷ 2.</p></div>
+            <div class="algebra-exemplo"><h3>Por que usar letras?</h3><p>Elas permitem escrever regras gerais e resolver problemas mesmo quando ainda não conhecemos o valor de uma quantidade.</p></div>
+        </article>
+
+        <article class="algebra-painel" data-conteudo="expressoes" hidden>
+            <h2>Expressões algébricas</h2>
+            <p>Uma expressão algébrica é uma combinação de números, letras e operações matemáticas, sem necessariamente apresentar uma igualdade.</p>
+            <div class="algebra-exemplo"><h3>Exemplos</h3><p>3x + 2 é uma expressão algébrica.</p><p>5a − 4b é outra expressão algébrica.</p></div>
+            <div class="algebra-exemplo"><h3>Termos</h3><p>Os termos são separados pelos sinais de adição ou subtração. Em 3x + 2, os termos são 3x e 2.</p></div>
+            <div class="algebra-exemplo"><h3>Atenção</h3><p>Em 4x, a multiplicação entre 4 e x está indicada mesmo sem o símbolo ×.</p></div>
+        </article>
+
+        <article class="algebra-painel" data-conteudo="valor-numerico" hidden>
+            <h2>Valor numérico de uma expressão</h2>
+            <p>Para encontrar o valor numérico, substituímos cada letra pelo número indicado e efetuamos as operações respeitando a ordem correta.</p>
+            <div class="algebra-exemplo"><h3>Exemplo</h3><p>Considere 2x + 3, com x = 4.</p><p>Substituindo: 2 × 4 + 3 = 8 + 3 = 11.</p><p>O valor numérico da expressão é 11.</p></div>
+            <div class="algebra-exemplo"><h3>Dica</h3><p>Use parênteses ao substituir valores negativos para evitar erros de sinais.</p></div>
+        </article>
+
+        <article class="algebra-painel" data-conteudo="monomios" hidden>
+            <h2>Monômios</h2>
+            <p>Monômio é uma expressão algébrica formada por um único termo. Ele possui um coeficiente numérico e uma parte literal, formada por letras e expoentes.</p>
+            <div class="algebra-exemplo"><h3>Exemplo</h3><p>Em −5x²y, o coeficiente é −5 e a parte literal é x²y.</p></div>
+            <div class="algebra-exemplo"><h3>Grau do monômio</h3><p>Quando há uma única variável, o grau é seu expoente. Em 3x², o grau é 2.</p><p>Com mais de uma variável, somamos os expoentes. Em 2a³b², o grau é 3 + 2 = 5.</p></div>
+            <div class="algebra-exemplo"><h3>Monômios semelhantes</h3><p>Possuem a mesma parte literal, com as mesmas variáveis elevadas aos mesmos expoentes. Exemplo: 3x² e −7x².</p></div>
+        </article>
+
+        <article class="algebra-painel" data-conteudo="polinomios" hidden>
+            <h2>Polinômios</h2>
+            <p>Polinômio é uma expressão algébrica formada pela soma ou subtração de monômios. Cada parcela é chamada de termo.</p>
+            <div class="algebra-exemplo"><h3>Exemplo</h3><p>4x² − 3x + 7 é um polinômio com três termos.</p></div>
+            <div class="algebra-exemplo"><h3>Classificação pelo número de termos</h3><p>Monômio: um termo. Binômio: dois termos. Trinômio: três termos.</p></div>
+            <div class="algebra-exemplo"><h3>Grau do polinômio</h3><p>É o maior expoente da variável depois de simplificar a expressão. Em 4x³ + 2x − 1, o grau é 3.</p></div>
+        </article>
+
+        <article class="algebra-painel" data-conteudo="operacoes" hidden>
+            <h2>Operações com polinômios</h2>
+            <p>Podemos somar e subtrair polinômios agrupando termos semelhantes. Na multiplicação, aplicamos a propriedade distributiva.</p>
+            <div class="algebra-exemplo"><h3>Adição</h3><p>(3x + 2) + (2x + 5) = 5x + 7.</p></div>
+            <div class="algebra-exemplo"><h3>Subtração</h3><p>(5x + 6) − (2x + 1) = 3x + 5. Ao retirar os parênteses precedidos de menos, os sinais dos termos internos mudam.</p></div>
+            <div class="algebra-exemplo"><h3>Multiplicação</h3><p>2x(x + 3) = 2x² + 6x. O fator de fora multiplica cada termo de dentro dos parênteses.</p></div>
+        </article>
+
+        <article class="algebra-painel" data-conteudo="produtos-notaveis" hidden>
+            <h2>Produtos notáveis</h2>
+            <p>São multiplicações algébricas que aparecem com frequência e podem ser resolvidas usando fórmulas conhecidas.</p>
+            <div class="algebra-exemplo"><h3>Quadrado da soma</h3><p>(a + b)² = a² + 2ab + b².</p></div>
+            <div class="algebra-exemplo"><h3>Quadrado da diferença</h3><p>(a − b)² = a² − 2ab + b².</p></div>
+            <div class="algebra-exemplo"><h3>Produto da soma pela diferença</h3><p>(a + b)(a − b) = a² − b².</p></div>
+            <div class="algebra-exemplo"><h3>Exemplo</h3><p>(x + 3)² = x² + 6x + 9.</p></div>
+        </article>
+
+        <article class="algebra-painel" data-conteudo="fatoracao" hidden>
+            <h2>Fatoração</h2>
+            <p>Fatorar é transformar uma expressão em um produto de fatores. É uma operação inversa ao desenvolvimento de produtos.</p>
+            <div class="algebra-exemplo"><h3>Fator comum</h3><p>6x + 9 = 3(2x + 3). O fator comum 3 foi colocado em evidência.</p></div>
+            <div class="algebra-exemplo"><h3>Diferença de dois quadrados</h3><p>a² − b² = (a + b)(a − b).</p></div>
+            <div class="algebra-exemplo"><h3>Trinômio quadrado perfeito</h3><p>a² + 2ab + b² = (a + b)².</p></div>
+        </article>
+
+        <article class="algebra-painel" data-conteudo="equacoes" hidden>
+            <h2>Equações do primeiro grau</h2>
+            <p>Uma equação é uma igualdade que contém uma ou mais incógnitas. Resolver significa encontrar o valor que torna a igualdade verdadeira.</p>
+            <div class="algebra-exemplo"><h3>Exemplo resolvido</h3><p>2x + 4 = 12.</p><p>Subtraindo 4 dos dois lados: 2x = 8.</p><p>Dividindo os dois lados por 2: x = 4.</p></div>
+            <div class="algebra-exemplo"><h3>Princípio da igualdade</h3><p>O mesmo valor deve ser somado, subtraído, multiplicado ou dividido nos dois lados da igualdade (com divisão por número diferente de zero).</p></div>
+        </article>
+
+        <article class="algebra-painel" data-conteudo="sistemas" hidden>
+            <h2>Sistemas de equações</h2>
+            <p>Um sistema reúne duas ou mais equações que devem ser verdadeiras ao mesmo tempo. A solução é o conjunto de valores que satisfaz todas elas.</p>
+            <div class="algebra-exemplo"><h3>Exemplo</h3><p>x + y = 10</p><p>x − y = 2</p><p>Somando as equações: 2x = 12, então x = 6. Substituindo na primeira: 6 + y = 10, logo y = 4.</p></div>
+            <div class="algebra-exemplo"><h3>Métodos de resolução</h3><p>Os métodos mais comuns são substituição, adição (eliminação) e comparação.</p></div>
+        </article>
+    </section>
+
+    <div id="fundoMenu"></div>
+    <div id="menuLateral">
+        <h2>Menu</h2>
+        <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+        <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+        <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+        <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+        <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+        <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+        <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+        <a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+        <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+        <a href="alertas.html" class="menu-item"><i data-lucide="megaphone"></i><span>Alertas e Eventos</span></a>
+    </div>
+</main>
+
+<script src="js/script.js"></script>
+<script>
+(function () {
+    const botoes = document.querySelectorAll(".algebra-botao-topico");
+    const paineis = document.querySelectorAll(".algebra-painel");
+
+    botoes.forEach(function (botao) {
+        botao.addEventListener("click", function () {
+            const topicoSelecionado = botao.dataset.topico;
+
+            botoes.forEach(function (item) {
+                const selecionado = item === botao;
+                item.classList.toggle("ativo", selecionado);
+                item.setAttribute("aria-pressed", String(selecionado));
+            });
+
+            paineis.forEach(function (painel) {
+                painel.hidden = painel.dataset.conteudo !== topicoSelecionado;
+            });
+        });
+    });
+
+    if (window.lucide) lucide.createIcons();
+})();
+</script>
+</body>
+</html>
