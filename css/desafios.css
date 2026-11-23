@@ -450,3 +450,21 @@
 .modo-escuro .desafio-botao-principal svg {
     color: #fff;
 }
+
+
+/* Campos de seleção em azul escuro vivo */
+.desafio-formulario select {
+    background: #123f91;
+    border-color: #2f63c7;
+    color: #fff;
+    color-scheme: dark;
+}
+.desafio-formulario select option {
+    background: #123f91;
+    color: #fff;
+}
+.modo-escuro .desafio-formulario select {
+    background: #123f91;
+    border-color: #4d7fe0;
+    color: #fff;
+}
