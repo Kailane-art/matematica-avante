@@ -168,6 +168,28 @@ document.querySelectorAll("#menuLateral .menu-item").forEach(function(item) {
     item.replaceWith(link);
 });
 
+// Remove do menu o link que aponta para a própria página aberta.
+// A regra também cobre links adicionados dinamicamente acima.
+let caminhoAtualMenu = window.location.pathname;
+while (caminhoAtualMenu.length > 1 && caminhoAtualMenu.endsWith("/")) {
+    caminhoAtualMenu = caminhoAtualMenu.slice(0, -1);
+}
+
+document.querySelectorAll("#menuLateral a.menu-item[href]").forEach(function(link) {
+    try {
+        let caminhoDestino = new URL(link.getAttribute("href"), window.location.href).pathname;
+        while (caminhoDestino.length > 1 && caminhoDestino.endsWith("/")) {
+            caminhoDestino = caminhoDestino.slice(0, -1);
+        }
+
+        if (caminhoDestino === caminhoAtualMenu) {
+            link.remove();
+        }
+    } catch (erro) {
+        console.warn("Não foi possível verificar um link do menu lateral:", erro);
+    }
+});
+
 
 
 
