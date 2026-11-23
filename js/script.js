@@ -204,6 +204,13 @@ if (menuLateral) {
         }
     });
 
+    // Na página inicial, o acesso ao perfil permanece pelo avatar do cabeçalho.
+    if (paginaAtual === "inicio.html") {
+        menuLateral.querySelectorAll('a.menu-item[href="perfil.html"]').forEach(function(link) {
+            link.remove();
+        });
+    }
+
     if (window.lucide && typeof window.lucide.createIcons === "function") {
         window.lucide.createIcons();
     }
