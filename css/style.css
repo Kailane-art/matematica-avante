@@ -5259,3 +5259,25 @@ body {
 .modo-escuro.pagina-sobre .sobre-contato-item:hover {
     border-color: #3989d8;
 }
+
+
+/* PÁGINA SOBRE - FUNDO AZUL-MARINHO VIVO E EQUILIBRADO */
+.pagina-sobre {
+    background: linear-gradient(
+        180deg,
+        #123b70 0%,
+        #194b83 48%,
+        #f3f8ff 48%,
+        #f3f8ff 100%
+    );
+}
+
+.modo-escuro.pagina-sobre {
+    background: linear-gradient(
+        180deg,
+        #092a50 0%,
+        #103a68 48%,
+        #071b36 48%,
+        #071b36 100%
+    );
+}
