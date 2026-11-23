@@ -178,7 +178,14 @@
     let temporizadorPesquisaChat = null;
     let requisicaoPesquisaChat = 0;
 
-    async function executarPesquisaChat(imediata) {
+    function adicionarIndicadorMais(texto) {
+        const indicador = document.createElement("div");
+        indicador.className = "chat-resultado-mais";
+        indicador.textContent = texto;
+        resultadoPesquisa.appendChild(indicador);
+    }
+
+    async function executarPesquisaChat(imediata, completa = false) {
         const termo = (campoPesquisa?.value || "")
             .trim()
             .replace(/^@/, "")
@@ -214,26 +221,39 @@
             try {
                 await carregarFavoritosUsuario();
 
-                const { data, error } = await supabaseClient.rpc(
-                    "search_public_profiles",
-                    { p_query: termo }
-                );
+                const [respostaPerfis, respostaContagem, respostaSessao] = await Promise.all([
+                    supabaseClient.rpc("search_public_profiles", { p_query: termo }),
+                    supabaseClient.rpc("count_public_profiles", { p_query: termo }),
+                    supabaseClient.auth.getUser()
+                ]);
 
-                if (error) throw error;
+                if (respostaPerfis.error) throw respostaPerfis.error;
+                if (respostaContagem.error) throw respostaContagem.error;
+                if (respostaSessao.error) throw respostaSessao.error;
                 if (requisicaoAtual !== requisicaoPesquisaChat) return;
 
-                const { data: sessao } = await supabaseClient.auth.getUser();
-                const perfis = (Array.isArray(data) ? data : [])
-                    .filter(perfil => !sessao?.user?.id || perfil.id !== sessao.user.id);
+                const perfis = (Array.isArray(respostaPerfis.data) ? respostaPerfis.data : [])
+                    .filter(perfil => !respostaSessao.data?.user?.id || perfil.id !== respostaSessao.data.user.id);
+
+                const totalPerfis = Math.max(0, Number(respostaContagem.data) || 0);
 
                 if (!perfis.length) {
                     mostrarStatusPesquisa("Nenhum usuário encontrado com esse início de nome ou username.");
                     return;
                 }
 
+                const perfisVisiveis = completa ? perfis.slice(0, 20) : perfis.slice(0, 3);
+
                 resultadoPesquisa.replaceChildren(
-                    ...perfis.map(criarResultadoPerfil)
+                    ...perfisVisiveis.map(criarResultadoPerfil)
                 );
+
+                if (!completa && totalPerfis > 3) {
+                    adicionarIndicadorMais("Mais...");
+                } else if (completa && totalPerfis > 20) {
+                    adicionarIndicadorMais("Mais (" + (totalPerfis - 20) + ")");
+                }
+
                 areaResultado.hidden = false;
                 atualizarIcones();
 
@@ -253,14 +273,14 @@
 
     if (campoPesquisa) {
         campoPesquisa.addEventListener("input", function() {
-            executarPesquisaChat(false);
+            executarPesquisaChat(false, false);
         });
     }
 
     if (formularioPesquisa) {
         formularioPesquisa.addEventListener("submit", function(event) {
             event.preventDefault();
-            executarPesquisaChat(true);
+            executarPesquisaChat(true, true);
         });
     }
     
