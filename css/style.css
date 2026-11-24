@@ -8374,3 +8374,30 @@ body.pagina-perfil-publico #tituloDestaquePerfilPublico[hidden] {
     background: #3b1d24;
     border-color: #ef4444;
 }
+
+
+/* PERFIL PÚBLICO — CONTADOR DE TROFÉUS POR VITÓRIAS EM DESAFIOS */
+body.pagina-perfil-publico #trofeusPerfilPublico:not([hidden]) {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    margin: 3px auto;
+    padding: 7px 12px;
+    border: 1px solid #d4a017;
+    border-radius: 999px;
+    color: #9a6700;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.3;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+body.pagina-perfil-publico #trofeusPerfilPublico[hidden] {
+    display: none !important;
+}
+
+.modo-escuro body.pagina-perfil-publico #trofeusPerfilPublico:not([hidden]) {
+    color: #facc15;
+    border-color: #a87916;
+}
