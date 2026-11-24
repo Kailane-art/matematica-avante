@@ -8238,3 +8238,118 @@ body {
         flex-direction: column;
     }
 }
+
+
+/* =====================================================
+   PERFIL PÚBLICO — TÍTULOS E CLASSIFICAÇÕES
+   ===================================================== */
+
+.secao-titulos-conquistados {
+    width: min(100%, 520px);
+    margin: 12px auto 4px;
+    text-align: center;
+}
+
+.secao-titulos-conquistados h4 {
+    margin: 8px 0 12px;
+    color: #334155;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.lista-titulos-conquistados {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.item-titulo-conquistado {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    padding: 7px 11px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.raridade-comum {
+    color: #ffffff !important;
+    background: #334155;
+    border-color: #e2e8f0;
+}
+
+.raridade-raro {
+    color: #2563eb !important;
+    background: #eff6ff;
+    border-color: #93c5fd;
+}
+
+.raridade-epico {
+    color: #db2777 !important;
+    background: #fdf2f8;
+    border-color: #f9a8d4;
+}
+
+.raridade-lendario {
+    color: #a16207 !important;
+    background: #fefce8;
+    border-color: #facc15;
+}
+
+.raridade-mitico {
+    color: #dc2626 !important;
+    background: #fef2f2;
+    border-color: #fca5a5;
+}
+
+#seloPerfilPublico.raridade-comum,
+#seloPerfilPublico.raridade-raro,
+#seloPerfilPublico.raridade-epico,
+#seloPerfilPublico.raridade-lendario,
+#seloPerfilPublico.raridade-mitico {
+    display: inline-block;
+    padding: 7px 12px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-weight: 800;
+}
+
+.modo-escuro .secao-titulos-conquistados h4 {
+    color: #e2e8f0;
+}
+
+.modo-escuro .raridade-comum {
+    color: #ffffff !important;
+    background: #334155;
+    border-color: #cbd5e1;
+}
+
+.modo-escuro .raridade-raro {
+    color: #93c5fd !important;
+    background: #102442;
+    border-color: #3b82f6;
+}
+
+.modo-escuro .raridade-epico {
+    color: #f9a8d4 !important;
+    background: #3b1b32;
+    border-color: #ec4899;
+}
+
+.modo-escuro .raridade-lendario {
+    color: #facc15 !important;
+    background: #3b2c12;
+    border-color: #eab308;
+}
+
+.modo-escuro .raridade-mitico {
+    color: #fca5a5 !important;
+    background: #3b1d24;
+    border-color: #ef4444;
+}
