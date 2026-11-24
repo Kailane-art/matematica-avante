@@ -8264,6 +8264,16 @@ body {
     gap: 8px;
 }
 
+/* Centraliza o título em relação ao cartão do perfil público. */
+body.pagina-perfil-publico #tituloDestaquePerfilPublico:not([hidden]) {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    margin: 3px auto;
+    text-align: center;
+    box-sizing: border-box;
+}
+
 /* O título público precisa respeitar o atributo hidden mesmo com display flex. */
 body.pagina-perfil-publico #tituloDestaquePerfilPublico[hidden] {
     display: none !important;
