@@ -2817,6 +2817,231 @@ const TITULOS_CONQUISTAS = {
 
 window.MA_TITULOS_CONQUISTAS = TITULOS_CONQUISTAS;
 
+/* ================================================
+   NOTIFICAÇÕES DE NOVOS TÍTULOS
+   Detecta novas conquistas do usuário sem repetir
+   títulos que já foram notificados neste navegador.
+================================================ */
+
+const DESCRICOES_TITULOS_CONQUISTAS = {
+    genio_calculos: "Acertar 50 questões consecutivas.",
+    lenda_constancia: "Estudar durante 100 dias consecutivos.",
+    elite_matematica: "Acumular 10.000 XP.",
+    perfeccionista: "Concluir uma fase com 100% de acertos.",
+    mestre_basico: "Concluir todas as questões de Matemática Básica.",
+    mestre_geometria: "Concluir todas as questões de Geometria.",
+    mestre_algebra: "Concluir todas as questões de Álgebra.",
+    mestre_funcoes: "Concluir todas as questões de Funções.",
+    mestre_fracoes: "Concluir todas as questões de Frações e Decimais.",
+    mestre_potenciacao: "Concluir todas as questões de Potenciação e Radiciação.",
+    mestre_porcentagem: "Concluir todas as questões de Porcentagem e Matemática Financeira.",
+    mestre_estatistica: "Concluir todas as questões de Estatística.",
+    mestre_probabilidade: "Concluir todas as questões de Probabilidade.",
+    mestre_trigonometria: "Concluir todas as questões de Trigonometria.",
+    estudante_dedicado: "Manter uma sequência de 8 dias consecutivos de estudo.",
+    estrategista_matematico: "Concluir as 10 fases do nível 3.",
+    guardiao_constancia: "Manter uma sequência de 30 dias consecutivos de estudo.",
+    mestre_matematica: "Concluir as 10 fases do nível 5."
+};
+
+let maTitulosNotificadosUsuario = null;
+let maVerificacaoTitulosEmAndamento = false;
+let maFilaNotificacoesTitulos = [];
+let maNotificacaoTituloVisivel = false;
+
+function maPrepararNotificacaoTitulo() {
+    if (document.getElementById("maNotificacaoNovoTitulo")) return;
+
+    const estilo = document.createElement("style");
+    estilo.id = "maEstiloNotificacaoNovoTitulo";
+    estilo.textContent = `
+        #maNotificacaoNovoTitulo {
+            position: fixed;
+            z-index: 10050;
+            top: max(18px, env(safe-area-inset-top));
+            right: 16px;
+            width: min(390px, calc(100vw - 32px));
+            padding: 18px 44px 17px 18px;
+            border: 1px solid rgba(255, 213, 79, .55);
+            border-left: 5px solid #f4c542;
+            border-radius: 14px;
+            background: #17345f;
+            color: #fff;
+            box-shadow: 0 12px 34px rgba(0, 0, 0, .28);
+            opacity: 0;
+            transform: translateY(-12px);
+            transition: opacity .25s ease, transform .25s ease;
+            pointer-events: none;
+        }
+        #maNotificacaoNovoTitulo.ma-visivel {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        #maNotificacaoNovoTitulo .ma-notificacao-titulo-chamada {
+            margin: 0 0 7px;
+            font-size: 15px;
+            line-height: 1.4;
+            font-weight: 750;
+        }
+        #maNotificacaoNovoTitulo .ma-notificacao-titulo-nome {
+            display: block;
+            margin-top: 3px;
+            color: #ffdc72;
+            font-size: 17px;
+            font-weight: 800;
+        }
+        #maNotificacaoNovoTitulo .ma-notificacao-titulo-descricao {
+            margin: 0;
+            color: rgba(255,255,255,.76);
+            font-size: 11px;
+            line-height: 1.45;
+        }
+        #maNotificacaoNovoTitulo .ma-fechar-notificacao-titulo {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            border: 0;
+            padding: 4px 7px;
+            background: transparent;
+            color: #fff;
+            font-size: 21px;
+            line-height: 1;
+            cursor: pointer;
+        }
+        @media (max-width: 480px) {
+            #maNotificacaoNovoTitulo {
+                top: max(12px, env(safe-area-inset-top));
+                right: 12px;
+                width: calc(100vw - 24px);
+            }
+        }
+    `;
+    document.head.appendChild(estilo);
+
+    const notificacao = document.createElement("section");
+    notificacao.id = "maNotificacaoNovoTitulo";
+    notificacao.setAttribute("role", "status");
+    notificacao.setAttribute("aria-live", "polite");
+
+    const fechar = document.createElement("button");
+    fechar.type = "button";
+    fechar.className = "ma-fechar-notificacao-titulo";
+    fechar.setAttribute("aria-label", "Fechar notificação");
+    fechar.textContent = "×";
+    fechar.addEventListener("click", maFecharNotificacaoTitulo);
+
+    const chamada = document.createElement("p");
+    chamada.className = "ma-notificacao-titulo-chamada";
+
+    const nome = document.createElement("strong");
+    nome.className = "ma-notificacao-titulo-nome";
+
+    const descricao = document.createElement("p");
+    descricao.className = "ma-notificacao-titulo-descricao";
+
+    chamada.textContent = "Parabéns! Você acabou de receber o título";
+    chamada.appendChild(nome);
+    notificacao.append(fechar, chamada, descricao);
+    document.body.appendChild(notificacao);
+}
+
+let maTemporizadorNotificacaoTitulo = null;
+
+function maFecharNotificacaoTitulo() {
+    const notificacao = document.getElementById("maNotificacaoNovoTitulo");
+    if (notificacao) notificacao.classList.remove("ma-visivel");
+    clearTimeout(maTemporizadorNotificacaoTitulo);
+    maNotificacaoTituloVisivel = false;
+    setTimeout(maExibirProximaNotificacaoTitulo, 280);
+}
+
+function maExibirProximaNotificacaoTitulo() {
+    if (maNotificacaoTituloVisivel || !maFilaNotificacoesTitulos.length) return;
+
+    const item = maFilaNotificacoesTitulos.shift();
+    maPrepararNotificacaoTitulo();
+
+    const notificacao = document.getElementById("maNotificacaoNovoTitulo");
+    const nome = notificacao.querySelector(".ma-notificacao-titulo-nome");
+    const descricao = notificacao.querySelector(".ma-notificacao-titulo-descricao");
+
+    nome.textContent = item.nome;
+    descricao.textContent = item.descricao;
+    notificacao.classList.add("ma-visivel");
+    maNotificacaoTituloVisivel = true;
+
+    maTemporizadorNotificacaoTitulo = setTimeout(maFecharNotificacaoTitulo, 8500);
+}
+
+function maMostrarNotificacaoNovoTitulo(chave) {
+    const titulo = TITULOS_CONQUISTAS[chave];
+    if (!titulo) return;
+
+    maFilaNotificacoesTitulos.push({
+        nome: titulo.nome,
+        descricao: DESCRICOES_TITULOS_CONQUISTAS[chave] || "Você desbloqueou uma nova conquista."
+    });
+    maExibirProximaNotificacaoTitulo();
+}
+
+async function maVerificarNovosTitulos() {
+    if (!supabaseClient || maVerificacaoTitulosEmAndamento) return;
+    maVerificacaoTitulosEmAndamento = true;
+
+    try {
+        const { data: { user }, error: erroUsuario } = await obterUsuarioAutenticado();
+        if (erroUsuario || !user) return;
+
+        if (maTitulosNotificadosUsuario !== user.id) {
+            maTitulosNotificadosUsuario = user.id;
+        }
+
+        const chaveArmazenamento = "ma:titulos-notificados:" + user.id;
+        const { data, error } = await supabaseClient
+            .from("user_achievements")
+            .select("achievement_key")
+            .eq("user_id", user.id);
+
+        if (error) throw error;
+
+        const chavesAtuais = (data || [])
+            .map(function(item) { return item.achievement_key; })
+            .filter(function(chave) { return Boolean(TITULOS_CONQUISTAS[chave]); });
+
+        const registroAnterior = localStorage.getItem(chaveArmazenamento);
+
+        if (registroAnterior === null) {
+            localStorage.setItem(chaveArmazenamento, JSON.stringify(chavesAtuais));
+            return;
+        }
+
+        let chavesNotificadas;
+        try {
+            chavesNotificadas = new Set(JSON.parse(registroAnterior));
+        } catch (erroFormato) {
+            chavesNotificadas = new Set(chavesAtuais);
+        }
+
+        chavesAtuais.forEach(function(chave) {
+            if (!chavesNotificadas.has(chave)) {
+                maMostrarNotificacaoNovoTitulo(chave);
+                chavesNotificadas.add(chave);
+            }
+        });
+
+        localStorage.setItem(chaveArmazenamento, JSON.stringify(Array.from(chavesNotificadas)));
+    } catch (erro) {
+        console.error("Não foi possível verificar novos títulos:", erro);
+    } finally {
+        maVerificacaoTitulosEmAndamento = false;
+    }
+}
+
+maVerificarNovosTitulos();
+setInterval(maVerificarNovosTitulos, 12000);
+
+
 const botaoSalvarPerfil =
     document.getElementById("salvarPerfil");
 
