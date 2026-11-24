@@ -8264,6 +8264,11 @@ body {
     gap: 8px;
 }
 
+/* O título público precisa respeitar o atributo hidden mesmo com display flex. */
+body.pagina-perfil-publico #tituloDestaquePerfilPublico[hidden] {
+    display: none !important;
+}
+
 .item-titulo-conquistado {
     display: inline-flex;
     align-items: center;
