@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil público - Matemática Avante</title>
-    <link rel="stylesheet" href="css/style.css?v=20261124-titulos1">
+    <link rel="stylesheet" href="css/style.css?v=20261124-titulos2">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="manifest" href="manifest.webmanifest">
@@ -48,11 +48,7 @@
         <p id="nivelPerfilPublico" class="nivel-perfil-publico" hidden></p>
 
         <p id="seloPerfilPublico" class="selo-perfil-publico" hidden></p>
-
-        <section id="secaoTitulosConquistadosPerfil" class="secao-titulos-conquistados" hidden aria-labelledby="tituloTitulosConquistadosPerfil">
-            <h4 id="tituloTitulosConquistadosPerfil">Títulos conquistados</h4>
-            <div id="listaTitulosConquistadosPerfil" class="lista-titulos-conquistados"></div>
-        </section>
+        <p id="tituloDestaquePerfilPublico" class="item-titulo-conquistado" hidden></p>
 
         <p id="bioPerfilPublico"></p>
 
@@ -124,7 +120,7 @@
 
 </main>
 
-<script src="js/script.js?v=20261124-titulos1"></script>
+<script src="js/script.js?v=20261124-titulos2"></script>
     <script src="js/notificacoes-push.js"></script>
 
 <script>
@@ -635,48 +631,6 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
     });
 }
 
-async function carregarTitulosConquistadosPerfil(nomeUsuario, tituloDestaque) {
-    const secao = document.getElementById("secaoTitulosConquistadosPerfil");
-    const lista = document.getElementById("listaTitulosConquistadosPerfil");
-    if (!secao || !lista) return;
-
-    lista.replaceChildren();
-
-    try {
-        const { data, error } = await supabaseClient.rpc(
-            "get_public_profile_achievements",
-            { p_username: nomeUsuario }
-        );
-
-        if (error) throw error;
-
-        const catalogo = window.MA_TITULOS_CONQUISTAS || {};
-
-        (data || []).forEach(function(conquista) {
-            if (conquista.achievement_key === tituloDestaque) return;
-
-            const titulo = catalogo[conquista.achievement_key];
-            if (!titulo) return;
-
-            const item = document.createElement("span");
-            item.className = "item-titulo-conquistado raridade-" + titulo.raridade;
-            item.textContent = titulo.nome;
-            item.title = "Classificação: " + titulo.classificacao;
-            item.setAttribute(
-                "aria-label",
-                titulo.nome + ", classificação " + titulo.classificacao
-            );
-
-            lista.appendChild(item);
-        });
-
-        secao.hidden = lista.childElementCount === 0;
-    } catch (erro) {
-        console.warn("Não foi possível carregar os títulos conquistados:", erro);
-        secao.hidden = true;
-    }
-}
-
 async function carregarPerfilPublico() {
 
     const status = document.getElementById("statusPerfilPublico");
@@ -773,30 +727,10 @@ async function carregarPerfilPublico() {
         }
 
         const selo = document.getElementById("seloPerfilPublico");
-        const titulosDisponiveis = window.MA_TITULOS_CONQUISTAS || {};
-        const tituloSelecionado = titulosDisponiveis[perfil.featured_title] || null;
-
-        selo.classList.remove(
-            "selo-dev-nome",
-            "titulo-nivel5",
-            "titulo-estudante-dedicado",
-            "titulo-estrategista-matematico",
-            "titulo-guardiao-constancia",
-            "raridade-comum",
-            "raridade-raro",
-            "raridade-epico",
-            "raridade-lendario",
-            "raridade-mitico"
-        );
-
+        selo.classList.remove("selo-dev-nome");
         selo.removeAttribute("title");
 
-        if (tituloSelecionado) {
-            selo.textContent = "Título em destaque: " + tituloSelecionado.nome;
-            selo.classList.add("raridade-" + tituloSelecionado.raridade);
-            selo.title = "Classificação: " + tituloSelecionado.classificacao;
-            selo.hidden = false;
-        } else if (perfil.tipo_usuario === "dev") {
+        if (perfil.tipo_usuario === "dev") {
             selo.textContent = "⚡ Selo: Coração da Matrix";
             selo.classList.add("selo-dev-nome");
             selo.hidden = false;
@@ -805,7 +739,28 @@ async function carregarPerfilPublico() {
             selo.hidden = true;
         }
 
-        await carregarTitulosConquistadosPerfil(nomeUsuario, perfil.featured_title);
+        const elementoTitulo = document.getElementById("tituloDestaquePerfilPublico");
+        const titulosDisponiveis = window.MA_TITULOS_CONQUISTAS || {};
+        const tituloSelecionado = titulosDisponiveis[perfil.featured_title] || null;
+
+        elementoTitulo.classList.remove(
+            "raridade-comum",
+            "raridade-raro",
+            "raridade-epico",
+            "raridade-lendario",
+            "raridade-mitico"
+        );
+        elementoTitulo.removeAttribute("title");
+
+        if (tituloSelecionado) {
+            elementoTitulo.textContent = "Título: " + tituloSelecionado.nome;
+            elementoTitulo.classList.add("raridade-" + tituloSelecionado.raridade);
+            elementoTitulo.title = "Classificação: " + tituloSelecionado.classificacao;
+            elementoTitulo.hidden = false;
+        } else {
+            elementoTitulo.textContent = "";
+            elementoTitulo.hidden = true;
+        }
 
         await configurarFavoritoPerfil(perfil.id, sessaoAtual?.user?.id, ehProprioPerfil);
         await configurarPainelAdministrativoPerfil(ehProprioPerfil);
