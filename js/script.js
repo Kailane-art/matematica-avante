@@ -2795,11 +2795,27 @@ const campoEditarTituloDestaque =
     document.getElementById("editarTituloDestaque");
 
 const TITULOS_CONQUISTAS = {
-    estudante_dedicado: "Estudante Dedicado",
-    estrategista_matematico: "Estrategista Matemático",
-    guardiao_constancia: "Guardião da Constância",
-    mestre_matematica: "Mestre da Matemática"
+    genio_calculos: { nome: "Gênio dos Cálculos", raridade: "mitico", classificacao: "Mítico" },
+    lenda_constancia: { nome: "Lenda da Constância", raridade: "mitico", classificacao: "Mítico" },
+    elite_matematica: { nome: "Elite Matemática", raridade: "lendario", classificacao: "Lendário" },
+    perfeccionista: { nome: "Perfeccionista", raridade: "epico", classificacao: "Épico" },
+    mestre_basico: { nome: "Mestre da Matemática Básica", raridade: "comum", classificacao: "Comum" },
+    mestre_geometria: { nome: "Mestre da Geometria", raridade: "raro", classificacao: "Raro" },
+    mestre_algebra: { nome: "Mestre da Álgebra", raridade: "epico", classificacao: "Épico" },
+    mestre_funcoes: { nome: "Mestre das Funções", raridade: "epico", classificacao: "Épico" },
+    mestre_fracoes: { nome: "Mestre das Frações", raridade: "raro", classificacao: "Raro" },
+    mestre_potenciacao: { nome: "Mestre da Potenciação", raridade: "raro", classificacao: "Raro" },
+    mestre_porcentagem: { nome: "Mestre da Porcentagem", raridade: "raro", classificacao: "Raro" },
+    mestre_estatistica: { nome: "Mestre da Estatística", raridade: "raro", classificacao: "Raro" },
+    mestre_probabilidade: { nome: "Mestre da Probabilidade", raridade: "raro", classificacao: "Raro" },
+    mestre_trigonometria: { nome: "Mestre da Trigonometria", raridade: "epico", classificacao: "Épico" },
+    estudante_dedicado: { nome: "Estudante Dedicado", raridade: "comum", classificacao: "Comum" },
+    estrategista_matematico: { nome: "Estrategista Matemático", raridade: "raro", classificacao: "Raro" },
+    guardiao_constancia: { nome: "Guardião da Constância", raridade: "epico", classificacao: "Épico" },
+    mestre_matematica: { nome: "Mestre da Matemática", raridade: "lendario", classificacao: "Lendário" }
 };
+
+window.MA_TITULOS_CONQUISTAS = TITULOS_CONQUISTAS;
 
 const botaoSalvarPerfil =
     document.getElementById("salvarPerfil");
@@ -2857,7 +2873,7 @@ async function abrirModalEditarPerfil() {
         const { data, error } = await supabaseClient
             .from("profiles")
             .select(
-                "display_name, username, bio, link, username_changed_at"
+                "display_name, username, bio, link, username_changed_at, featured_title"
             )
             .eq("id", user.id)
             .single();
@@ -2897,12 +2913,7 @@ async function abrirModalEditarPerfil() {
             opcaoVazia.textContent = "Não exibir título";
             campoEditarTituloDestaque.appendChild(opcaoVazia);
 
-            const ordemTitulos = [
-                "mestre_matematica",
-                "estrategista_matematico",
-                "estudante_dedicado",
-                "guardiao_constancia"
-            ];
+            const ordemTitulos = Object.keys(TITULOS_CONQUISTAS);
 
             ordemTitulos.forEach(function(chave) {
                 const possuiConquista = (conquistas || []).some(function(item) {
@@ -2913,7 +2924,7 @@ async function abrirModalEditarPerfil() {
 
                 const opcao = document.createElement("option");
                 opcao.value = chave;
-                opcao.textContent = TITULOS_CONQUISTAS[chave];
+                opcao.textContent = TITULOS_CONQUISTAS[chave].nome + " (" + TITULOS_CONQUISTAS[chave].classificacao + ")";
                 campoEditarTituloDestaque.appendChild(opcao);
             });
 
