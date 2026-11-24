@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil público - Matemática Avante</title>
-    <link rel="stylesheet" href="css/style.css?v=20261122-titulos1">
+    <link rel="stylesheet" href="css/style.css?v=20261123-exclusaoadmin1">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="manifest" href="manifest.webmanifest">
@@ -94,7 +94,17 @@
                 <button id="botaoRebaixarProfessor" type="button" hidden>Mudar professor para aluno</button>
                 <button id="botaoReativarConta" type="button" hidden>Reativar conta</button>
                 <button id="botaoRetirarSuspensao" type="button" hidden>Retirar suspensão</button>
+                <button id="botaoExcluirConta" type="button">Excluir conta definitivamente</button>
             </div>
+            <form id="formExclusaoDefinitivaAdmin" class="form-suspensao-admin form-exclusao-definitiva-admin" hidden>
+                <p>Esta ação excluirá permanentemente a conta e os dados associados. Não será possível recuperar o usuário.</p>
+                <label for="confirmarUsernameExclusaoAdmin">Digite @<span id="usernameConfirmacaoExclusaoAdmin"></span> para confirmar</label>
+                <input id="confirmarUsernameExclusaoAdmin" name="confirmar_username" type="text" autocomplete="off" spellcheck="false" placeholder="@nome de usuário" required>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarExclusaoAdmin" type="submit">Excluir definitivamente</button>
+                    <button id="cancelarExclusaoAdmin" type="button">Cancelar</button>
+                </div>
+            </form>
             <form id="formSuspensaoAdmin" class="form-suspensao-admin" hidden>
                 <label for="diasSuspensaoAdmin">Quantidade de dias da suspensão</label>
                 <input id="diasSuspensaoAdmin" name="dias" type="number" min="1" max="3650" step="1" inputmode="numeric" placeholder="Ex.: 7" required>
@@ -385,6 +395,11 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
     const botaoRetirarSuspensao = document.getElementById("botaoRetirarSuspensao");
     const botaoSuspender = document.getElementById("botaoSuspenderConta");
     const botaoBanir = document.getElementById("botaoBanirConta");
+    const botaoExcluir = document.getElementById("botaoExcluirConta");
+    const formExclusao = document.getElementById("formExclusaoDefinitivaAdmin");
+    const campoConfirmacaoExclusao = document.getElementById("confirmarUsernameExclusaoAdmin");
+    const botaoConfirmarExclusao = document.getElementById("confirmarExclusaoAdmin");
+    const botaoCancelarExclusao = document.getElementById("cancelarExclusaoAdmin");
 
     if (!botao || !painel || !usuarioAtualEhDev || ehProprioPerfil || !perfilPublicoAtual?.id) {
         if (botao) botao.hidden = true;
@@ -434,6 +449,8 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
     botao.onclick = function() {
         painel.hidden = false;
         formSuspensao.hidden = true;
+        formExclusao.hidden = true;
+        campoConfirmacaoExclusao.value = "";
         mensagem.textContent = "";
     };
 
@@ -452,6 +469,55 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
         campoDias.value = "";
         campoDias.focus();
         mensagem.textContent = "";
+    };
+
+    document.getElementById("usernameConfirmacaoExclusaoAdmin").textContent = perfilPublicoAtual.username;
+
+    botaoExcluir.onclick = function() {
+        formSuspensao.hidden = true;
+        formExclusao.hidden = false;
+        campoConfirmacaoExclusao.value = "";
+        mensagem.textContent = "A exclusão será permanente. Confira o nome de usuário antes de confirmar.";
+        campoConfirmacaoExclusao.focus();
+    };
+
+    botaoCancelarExclusao.onclick = function() {
+        formExclusao.hidden = true;
+        campoConfirmacaoExclusao.value = "";
+        mensagem.textContent = "";
+    };
+
+    formExclusao.onsubmit = async function(evento) {
+        evento.preventDefault();
+        const nomeDigitado = campoConfirmacaoExclusao.value.trim().replace(/^@/, "");
+        if (nomeDigitado.toLowerCase() !== String(perfilPublicoAtual.username || "").toLowerCase()) {
+            mensagem.textContent = "O nome de usuário digitado não corresponde ao perfil selecionado.";
+            campoConfirmacaoExclusao.focus();
+            return;
+        }
+
+        const confirmar = window.confirm(
+            "ATENÇÃO: a conta @" + perfilPublicoAtual.username +
+            " e seus dados associados serão excluídos definitivamente. Esta ação não pode ser desfeita. Continuar?"
+        );
+        if (!confirmar) return;
+
+        botaoConfirmarExclusao.disabled = true;
+        botaoExcluir.disabled = true;
+        mensagem.textContent = "Excluindo conta e removendo os arquivos associados...";
+
+        try {
+            await executarAcaoAdministrativaPerfil("delete", {
+                confirm_username: campoConfirmacaoExclusao.value.trim()
+            });
+            painel.hidden = true;
+            window.alert("A conta @" + perfilPublicoAtual.username + " foi excluída definitivamente.");
+            window.location.replace("index.html");
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível excluir a conta.";
+            botaoConfirmarExclusao.disabled = false;
+            botaoExcluir.disabled = false;
+        }
     };
 
     formSuspensao.onsubmit = async function(evento) {
