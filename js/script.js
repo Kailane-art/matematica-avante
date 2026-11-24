@@ -2856,93 +2856,66 @@ function maPrepararNotificacaoTitulo() {
     estilo.id = "maEstiloNotificacaoNovoTitulo";
     estilo.textContent = `
         #maNotificacaoNovoTitulo {
-            position: fixed;
-            z-index: 10050;
-            top: max(18px, env(safe-area-inset-top));
-            right: 16px;
-            width: min(390px, calc(100vw - 32px));
-            padding: 18px 44px 17px 18px;
-            border: 1px solid rgba(255, 213, 79, .55);
-            border-left: 5px solid #f4c542;
-            border-radius: 14px;
-            background: #17345f;
-            color: #fff;
-            box-shadow: 0 12px 34px rgba(0, 0, 0, .28);
-            opacity: 0;
-            transform: translateY(-12px);
-            transition: opacity .25s ease, transform .25s ease;
-            pointer-events: none;
+            position: fixed; inset: 0; z-index: 10050;
+            display: flex; align-items: center; justify-content: center;
+            padding: 22px; background: rgba(5, 13, 28, .72);
+            opacity: 0; visibility: hidden;
+            transition: opacity .25s ease, visibility .25s ease;
         }
-        #maNotificacaoNovoTitulo.ma-visivel {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
+        #maNotificacaoNovoTitulo.ma-visivel { opacity: 1; visibility: visible; }
+        #maNotificacaoNovoTitulo .ma-cartao-notificacao-titulo {
+            position: relative; width: min(420px, 100%); padding: 30px 24px 25px;
+            border: 1px solid rgba(255, 213, 79, .65); border-top: 5px solid #f4c542;
+            border-radius: 20px; background: #17345f; color: #fff; text-align: center;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, .42);
+            transform: translateY(14px) scale(.97); transition: transform .25s ease;
         }
-        #maNotificacaoNovoTitulo .ma-notificacao-titulo-chamada {
-            margin: 0 0 7px;
-            font-size: 15px;
-            line-height: 1.4;
-            font-weight: 750;
-        }
-        #maNotificacaoNovoTitulo .ma-notificacao-titulo-nome {
-            display: block;
-            margin-top: 3px;
-            color: #ffdc72;
-            font-size: 17px;
-            font-weight: 800;
-        }
-        #maNotificacaoNovoTitulo .ma-notificacao-titulo-descricao {
-            margin: 0;
-            color: rgba(255,255,255,.76);
-            font-size: 11px;
-            line-height: 1.45;
-        }
-        #maNotificacaoNovoTitulo .ma-fechar-notificacao-titulo {
-            position: absolute;
-            top: 8px;
-            right: 10px;
-            border: 0;
-            padding: 4px 7px;
-            background: transparent;
-            color: #fff;
-            font-size: 21px;
-            line-height: 1;
-            cursor: pointer;
-        }
+        #maNotificacaoNovoTitulo.ma-visivel .ma-cartao-notificacao-titulo { transform: translateY(0) scale(1); }
+        #maNotificacaoNovoTitulo .ma-icone-conquista { display: block; margin: 0 auto 13px; font-size: 38px; }
+        #maNotificacaoNovoTitulo .ma-notificacao-titulo-chamada { margin: 0 0 9px; font-size: 18px; line-height: 1.45; font-weight: 750; }
+        #maNotificacaoNovoTitulo .ma-notificacao-titulo-nome { display: block; margin-top: 7px; color: #ffdc72; font-size: 23px; line-height: 1.3; font-weight: 800; }
+        #maNotificacaoNovoTitulo .ma-notificacao-titulo-descricao { margin: 12px 0 20px; color: rgba(255,255,255,.76); font-size: 11px; line-height: 1.5; }
+        #maNotificacaoNovoTitulo .ma-fechar-notificacao-titulo { min-width: 120px; border: 0; border-radius: 9px; padding: 10px 20px; background: #f4c542; color: #172b4d; font-size: 14px; font-weight: 750; cursor: pointer; }
         @media (max-width: 480px) {
-            #maNotificacaoNovoTitulo {
-                top: max(12px, env(safe-area-inset-top));
-                right: 12px;
-                width: calc(100vw - 24px);
-            }
+            #maNotificacaoNovoTitulo .ma-cartao-notificacao-titulo { padding: 27px 19px 22px; }
+            #maNotificacaoNovoTitulo .ma-notificacao-titulo-chamada { font-size: 16px; }
+            #maNotificacaoNovoTitulo .ma-notificacao-titulo-nome { font-size: 21px; }
         }
     `;
     document.head.appendChild(estilo);
 
     const notificacao = document.createElement("section");
     notificacao.id = "maNotificacaoNovoTitulo";
-    notificacao.setAttribute("role", "status");
+    notificacao.setAttribute("role", "dialog");
+    notificacao.setAttribute("aria-modal", "true");
     notificacao.setAttribute("aria-live", "polite");
+
+    const cartao = document.createElement("div");
+    cartao.className = "ma-cartao-notificacao-titulo";
+    const icone = document.createElement("span");
+    icone.className = "ma-icone-conquista";
+    icone.textContent = "🏆";
+
+    const chamada = document.createElement("p");
+    chamada.className = "ma-notificacao-titulo-chamada";
+    const nome = document.createElement("strong");
+    nome.className = "ma-notificacao-titulo-nome";
+    const descricao = document.createElement("p");
+    descricao.className = "ma-notificacao-titulo-descricao";
 
     const fechar = document.createElement("button");
     fechar.type = "button";
     fechar.className = "ma-fechar-notificacao-titulo";
-    fechar.setAttribute("aria-label", "Fechar notificação");
-    fechar.textContent = "×";
+    fechar.textContent = "Fechar";
     fechar.addEventListener("click", maFecharNotificacaoTitulo);
-
-    const chamada = document.createElement("p");
-    chamada.className = "ma-notificacao-titulo-chamada";
-
-    const nome = document.createElement("strong");
-    nome.className = "ma-notificacao-titulo-nome";
-
-    const descricao = document.createElement("p");
-    descricao.className = "ma-notificacao-titulo-descricao";
 
     chamada.textContent = "Parabéns! Você acabou de receber o título";
     chamada.appendChild(nome);
-    notificacao.append(fechar, chamada, descricao);
+    cartao.append(icone, chamada, descricao, fechar);
+    notificacao.appendChild(cartao);
+    notificacao.addEventListener("click", function(evento) {
+        if (evento.target === notificacao) maFecharNotificacaoTitulo();
+    });
     document.body.appendChild(notificacao);
 }
 
@@ -2971,7 +2944,7 @@ function maExibirProximaNotificacaoTitulo() {
     notificacao.classList.add("ma-visivel");
     maNotificacaoTituloVisivel = true;
 
-    maTemporizadorNotificacaoTitulo = setTimeout(maFecharNotificacaoTitulo, 8500);
+    // A janela permanece aberta até o usuário pressionar Fechar.
 }
 
 function maMostrarNotificacaoNovoTitulo(chave) {
