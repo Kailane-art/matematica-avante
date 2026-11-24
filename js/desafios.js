@@ -19,7 +19,8 @@
         fracoes: "Frações",
         porcentagem: "Porcentagem",
         equacoes: "Equações",
-        geometria: "Geometria plana"
+        geometria: "Geometria plana",
+        misturar: "Conteúdos misturados"
     };
 
     let usuarioAtual = null;
