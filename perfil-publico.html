@@ -632,6 +632,28 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
     });
 }
 
+async function atualizarTrofeusPerfilPublico(nomeUsuario) {
+    const elementoTrofeus = document.getElementById("trofeusPerfilPublico");
+    if (!elementoTrofeus) return;
+
+    try {
+        const { data: quantidadeTrofeus, error: erroTrofeus } = await supabaseClient.rpc(
+            "get_public_profile_trophies",
+            { p_username: nomeUsuario }
+        );
+
+        if (erroTrofeus) throw erroTrofeus;
+
+        const totalTrofeus = Number(quantidadeTrofeus) || 0;
+        elementoTrofeus.textContent = totalTrofeus > 0
+            ? "🏆 Troféus: " + totalTrofeus
+            : "";
+        elementoTrofeus.hidden = totalTrofeus <= 0;
+    } catch (erro) {
+        console.warn("Não foi possível carregar os troféus do perfil:", erro);
+    }
+}
+
 async function carregarPerfilPublico() {
 
     const status = document.getElementById("statusPerfilPublico");
@@ -763,26 +785,10 @@ async function carregarPerfilPublico() {
             elementoTitulo.hidden = true;
         }
 
-        const elementoTrofeus = document.getElementById("trofeusPerfilPublico");
-        elementoTrofeus.textContent = "";
-        elementoTrofeus.hidden = true;
-
-        try {
-            const { data: quantidadeTrofeus, error: erroTrofeus } = await supabaseClient.rpc(
-                "get_public_profile_trophies",
-                { p_username: nomeUsuario }
-            );
-
-            if (erroTrofeus) throw erroTrofeus;
-
-            const totalTrofeus = Number(quantidadeTrofeus) || 0;
-            if (totalTrofeus > 0) {
-                elementoTrofeus.textContent = "🏆 Troféus: " + totalTrofeus;
-                elementoTrofeus.hidden = false;
-            }
-        } catch (erro) {
-            console.warn("Não foi possível carregar os troféus do perfil:", erro);
-        }
+        await atualizarTrofeusPerfilPublico(nomeUsuario);
+        setInterval(function() {
+            atualizarTrofeusPerfilPublico(nomeUsuario);
+        }, 30000);
 
         await configurarFavoritoPerfil(perfil.id, sessaoAtual?.user?.id, ehProprioPerfil);
         await configurarPainelAdministrativoPerfil(ehProprioPerfil);
