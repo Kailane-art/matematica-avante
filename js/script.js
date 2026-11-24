@@ -2812,7 +2812,11 @@ const TITULOS_CONQUISTAS = {
     estudante_dedicado: { nome: "Estudante Dedicado", raridade: "comum", classificacao: "Comum" },
     estrategista_matematico: { nome: "Estrategista Matemático", raridade: "raro", classificacao: "Raro" },
     guardiao_constancia: { nome: "Guardião da Constância", raridade: "epico", classificacao: "Épico" },
-    mestre_matematica: { nome: "Mestre da Matemática", raridade: "lendario", classificacao: "Lendário" }
+    mestre_matematica: { nome: "Mestre da Matemática", raridade: "lendario", classificacao: "Lendário" },
+    the_chosen_one: { nome: "The Chosen One", raridade: "mitico", classificacao: "Mítico" },
+    invicto: { nome: "Invicto", raridade: "lendario", classificacao: "Lendário" },
+    unbroken: { nome: "Unbroken", raridade: "mitico", classificacao: "Mítico" },
+    the_fallen: { nome: "The Fallen", raridade: "mitico", classificacao: "Mítico" }
 };
 
 window.MA_TITULOS_CONQUISTAS = TITULOS_CONQUISTAS;
@@ -2841,7 +2845,11 @@ const DESCRICOES_TITULOS_CONQUISTAS = {
     estudante_dedicado: "Manter uma sequência de 8 dias consecutivos de estudo.",
     estrategista_matematico: "Concluir as 10 fases do nível 3.",
     guardiao_constancia: "Manter uma sequência de 30 dias consecutivos de estudo.",
-    mestre_matematica: "Concluir as 10 fases do nível 5."
+    mestre_matematica: "Concluir as 10 fases do nível 5.",
+    the_chosen_one: "Vencer 100 desafios contra outros usuários.",
+    invicto: "Vencer 10 desafios consecutivos contra outros usuários.",
+    unbroken: "Vencer 50 desafios consecutivos contra outros usuários.",
+    the_fallen: "Perder 50 desafios consecutivos contra outros usuários."
 };
 
 let maTitulosNotificadosUsuario = null;
