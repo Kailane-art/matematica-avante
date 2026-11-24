@@ -8376,28 +8376,41 @@ body.pagina-perfil-publico #tituloDestaquePerfilPublico[hidden] {
 }
 
 
-/* PERFIL PÚBLICO — CONTADOR DE TROFÉUS POR VITÓRIAS EM DESAFIOS */
-body.pagina-perfil-publico #trofeusPerfilPublico:not([hidden]) {
+/* PERFIL PÚBLICO — NÍVEL E TROFÉUS NA MESMA LINHA */
+body.pagina-perfil-publico .nivel-trofeus-perfil-publico {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px 14px;
+    width: 100%;
+    margin: 0;
+}
+
+body.pagina-perfil-publico .nivel-trofeus-perfil-publico #nivelPerfilPublico,
+body.pagina-perfil-publico .nivel-trofeus-perfil-publico #trofeusPerfilPublico:not([hidden]) {
+    display: inline-flex;
+    align-items: center;
     width: fit-content;
     max-width: 100%;
-    margin: 3px auto;
-    padding: 7px 12px;
-    border: 1px solid #d4a017;
-    border-radius: 999px;
-    color: #9a6700;
-    font-size: 14px;
-    font-weight: 800;
-    line-height: 1.3;
-    text-align: center;
+    margin: 0;
+    padding: 3px 0;
+    line-height: 1.35;
     box-sizing: border-box;
 }
 
-body.pagina-perfil-publico #trofeusPerfilPublico[hidden] {
+body.pagina-perfil-publico .nivel-trofeus-perfil-publico #trofeusPerfilPublico:not([hidden]) {
+    color: #9a6700;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: center;
+}
+
+body.pagina-perfil-publico #trofeusPerfilPublico[hidden],
+body.pagina-perfil-publico #nivelPerfilPublico[hidden] {
     display: none !important;
 }
 
-.modo-escuro body.pagina-perfil-publico #trofeusPerfilPublico:not([hidden]) {
+.modo-escuro body.pagina-perfil-publico .nivel-trofeus-perfil-publico #trofeusPerfilPublico:not([hidden]) {
     color: #facc15;
-    border-color: #a87916;
 }
