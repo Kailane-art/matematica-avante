@@ -5319,6 +5319,12 @@ body {
 
 
 /* PÁGINA MATÉRIAS - GRADE E PROGRESSO */
+/* Remove as esferas decorativas apenas da página Matérias. */
+.pagina-materias .hero::before,
+.pagina-materias .hero::after {
+    content: none;
+    display: none;
+}
 .pagina-materias .hero {
     max-width: 1120px;
     margin: 0 auto;
