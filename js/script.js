@@ -354,6 +354,51 @@ function obterUsuarioAutenticado() {
     return verificacaoUsuarioEmAndamento;
 }
 
+// Verifica periodicamente se a conta autenticada continua autorizada.
+// Esta verificação encerra a sessão na interface; a proteção de API continua
+// dependendo da validade do JWT e das permissões/RLS do banco.
+let verificacaoRestricaoEmAndamento = false;
+
+async function verificarRestricaoContaAtual() {
+    if (!supabaseClient || paginaLogin || verificacaoRestricaoEmAndamento) return;
+
+    verificacaoRestricaoEmAndamento = true;
+
+    try {
+        const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+        if (erroUsuario || !user) return;
+
+        const { data: acessoPermitido, error: erroRestricao } = await supabaseClient
+            .rpc("ma_check_current_account_access");
+
+        if (erroRestricao) {
+            console.error("Não foi possível verificar a restrição da conta:", erroRestricao);
+            return;
+        }
+
+        if (acessoPermitido !== true) {
+            await supabaseClient.auth.signOut({ scope: "local" });
+            localStorage.removeItem("nomeUsuario");
+            localStorage.removeItem("tipoUsuario");
+            localStorage.removeItem("fotoPerfil");
+            window.location.replace("index.html");
+        }
+    } catch (erro) {
+        console.error("Falha ao verificar o acesso da conta:", erro);
+    } finally {
+        verificacaoRestricaoEmAndamento = false;
+    }
+}
+
+if (supabaseClient && !paginaLogin) {
+    verificarRestricaoContaAtual();
+    setInterval(verificarRestricaoContaAtual, 15000);
+
+    document.addEventListener("visibilitychange", function() {
+        if (!document.hidden) verificarRestricaoContaAtual();
+    });
+}
+
 /* ================================================
    PRESENÇA ONLINE GLOBAL
    Supabase Realtime Presence, sem persistir status no banco.
