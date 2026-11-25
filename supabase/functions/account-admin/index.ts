@@ -190,7 +190,7 @@ Deno.serve(async (req) => {
     if (body.action === "suspend") {
       const days = Number(body.days);
       if (!Number.isSafeInteger(days) || days < 1 || days > 3650) return reply({ error: "Informe de 1 a 3650 dias." }, 400);
-      const { data: current, error: currentError } = await admin.from("account_restrictions").select("restriction_type")
+      const { data: current, error: currentError } = await admin.from("account_restrictions").select("*")
         .eq("user_id", targetId).maybeSingle();
       if (currentError) throw currentError;
       if (current?.restriction_type === "pending_deletion") return reply({ error: "A conta está aguardando exclusão." }, 409);
@@ -201,13 +201,24 @@ Deno.serve(async (req) => {
       });
       if (saveError) throw saveError;
       const { error: banError } = await admin.auth.admin.updateUserById(targetId, { ban_duration: String(days * 24) + "h" });
-      if (banError) { await admin.from("account_restrictions").delete().eq("user_id", targetId); throw banError; }
+      if (banError) {
+        if (current) {
+          const { error: restoreRestrictionError } = await admin.from("account_restrictions").upsert(current);
+          if (restoreRestrictionError) {
+            throw new Error("A operação falhou e não foi possível restaurar a restrição anterior. A nova restrição foi mantida por segurança.");
+          }
+        } else {
+          const { error: cleanupRestrictionError } = await admin.from("account_restrictions").delete().eq("user_id", targetId);
+          if (cleanupRestrictionError) throw cleanupRestrictionError;
+        }
+        throw banError;
+      }
       const sessionsRevoked = await revokeUserSessions(targetId);
       return reply({ success: true, expires_at: expires, sessions_revoked: sessionsRevoked });
     }
 
     if (body.action === "ban") {
-      const { data: current, error: currentError } = await admin.from("account_restrictions").select("restriction_type")
+      const { data: current, error: currentError } = await admin.from("account_restrictions").select("*")
         .eq("user_id", targetId).maybeSingle();
       if (currentError) throw currentError;
       if (current?.restriction_type === "pending_deletion") return reply({ error: "Esta conta já está banida e aguardando o prazo de exclusão." }, 409);
@@ -220,7 +231,18 @@ Deno.serve(async (req) => {
       });
       if (saveError) throw saveError;
       const { error: banError } = await admin.auth.admin.updateUserById(targetId, { ban_duration: "876000h" });
-      if (banError) { await admin.from("account_restrictions").delete().eq("user_id", targetId); throw banError; }
+      if (banError) {
+        if (current) {
+          const { error: restoreRestrictionError } = await admin.from("account_restrictions").upsert(current);
+          if (restoreRestrictionError) {
+            throw new Error("A operação falhou e não foi possível restaurar a restrição anterior. A nova restrição foi mantida por segurança.");
+          }
+        } else {
+          const { error: cleanupRestrictionError } = await admin.from("account_restrictions").delete().eq("user_id", targetId);
+          if (cleanupRestrictionError) throw cleanupRestrictionError;
+        }
+        throw banError;
+      }
       const sessionsRevoked = await revokeUserSessions(targetId);
       return reply({ success: true, expires_at: expires, sessions_revoked: sessionsRevoked });
     }
