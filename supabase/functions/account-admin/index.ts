@@ -10,6 +10,14 @@ const cors = {
 };
 const reply = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: cors });
 
+async function revokeUserSessions(userId: string) {
+  const { data, error } = await admin.rpc("ma_revoke_user_sessions", {
+    p_user_id: userId
+  });
+  if (error) throw error;
+  return Number(data) || 0;
+}
+
 async function removeAccountStorageObjects(userId: string, avatarPath: string | null) {
   const { data: ownedObjects, error } = await admin.rpc("ma_get_account_storage_objects_for_cleanup", {
     p_user_id: userId
@@ -182,7 +190,8 @@ Deno.serve(async (req) => {
       if (saveError) throw saveError;
       const { error: banError } = await admin.auth.admin.updateUserById(targetId, { ban_duration: String(days * 24) + "h" });
       if (banError) { await admin.from("account_restrictions").delete().eq("user_id", targetId); throw banError; }
-      return reply({ success: true, expires_at: expires });
+      const sessionsRevoked = await revokeUserSessions(targetId);
+      return reply({ success: true, expires_at: expires, sessions_revoked: sessionsRevoked });
     }
 
     if (body.action === "ban") {
@@ -200,7 +209,8 @@ Deno.serve(async (req) => {
       if (saveError) throw saveError;
       const { error: banError } = await admin.auth.admin.updateUserById(targetId, { ban_duration: "876000h" });
       if (banError) { await admin.from("account_restrictions").delete().eq("user_id", targetId); throw banError; }
-      return reply({ success: true, expires_at: expires });
+      const sessionsRevoked = await revokeUserSessions(targetId);
+      return reply({ success: true, expires_at: expires, sessions_revoked: sessionsRevoked });
     }
 
     if (body.action === "restore") {
