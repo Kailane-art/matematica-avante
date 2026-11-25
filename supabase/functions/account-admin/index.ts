@@ -107,6 +107,18 @@ Deno.serve(async (req) => {
     if (!token) return reply({ error: "Sessão não encontrada." }, 401);
     const { data: authData, error: authError } = await admin.auth.getUser(token);
     if (authError || !authData.user) return reply({ error: "Sessão inválida." }, 401);
+    const { data: actorRestriction, error: actorRestrictionError } = await admin
+      .from("account_restrictions")
+      .select("restriction_type, expires_at")
+      .eq("user_id", authData.user.id)
+      .maybeSingle();
+    if (actorRestrictionError) throw actorRestrictionError;
+    const actorRestricted = actorRestriction?.restriction_type === "pending_deletion" ||
+      (actorRestriction?.restriction_type === "temporary_suspension" &&
+        new Date(actorRestriction.expires_at).getTime() > Date.now());
+    if (actorRestricted) {
+      return reply({ error: "Sua conta possui uma restrição ativa e não pode executar ações administrativas." }, 403);
+    }
     const { data: actor, error: actorError } = await admin.from("profiles").select("tipo_usuario")
       .eq("id", authData.user.id).maybeSingle();
     if (actorError || actor?.tipo_usuario !== "dev") return reply({ error: "Somente contas DEV podem executar ações administrativas." }, 403);
