@@ -377,6 +377,13 @@ async function verificarRestricaoContaAtual() {
         }
 
         if (acessoPermitido !== true) {
+            // Encerra canais Realtime já abertos; a autorização deles fica em cache por conexão.
+            try {
+                await supabaseClient.removeAllChannels();
+            } catch (erroCanais) {
+                console.error("Não foi possível encerrar todos os canais Realtime:", erroCanais);
+            }
+
             await supabaseClient.auth.signOut({ scope: "local" });
             localStorage.removeItem("nomeUsuario");
             localStorage.removeItem("tipoUsuario");
