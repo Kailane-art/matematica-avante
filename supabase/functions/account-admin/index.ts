@@ -11,7 +11,7 @@ const cors = {
 const reply = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: cors });
 
 async function revokeUserSessions(userId: string) {
-  const { data, error } = await admin.rpc("ma_revoke_user_sessions", {
+  const { data, error } = await admin.rpc("ma_revoke_account_sessions", {
     p_user_id: userId
   });
   if (error) throw error;
