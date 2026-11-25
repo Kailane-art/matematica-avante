@@ -55,6 +55,10 @@ async function cleanupExpiredAccounts() {
       const { data: existingUser, error: lookupError } = await admin.auth.admin.getUserById(account.user_id);
       if (lookupError) {
         if (/not found|user not found/i.test(lookupError.message || "")) {
+          const { data: profile, error: profileError } = await admin.from("profiles")
+            .select("avatar_path").eq("id", account.user_id).maybeSingle();
+          if (profileError) throw profileError;
+          await removeAccountStorageObjects(account.user_id, profile?.avatar_path || null);
           const { error: cleanupError } = await admin.from("account_restrictions").delete().eq("user_id", account.user_id);
           if (cleanupError) throw cleanupError;
           continue;
@@ -62,11 +66,10 @@ async function cleanupExpiredAccounts() {
         throw lookupError;
       }
       if (!existingUser.user) throw new Error("Conta não encontrada no Auth.");
-      const { data: profile } = await admin.from("profiles").select("avatar_path").eq("id", account.user_id).maybeSingle();
-      if (profile?.avatar_path) {
-        const { error: storageError } = await admin.storage.from("avatars").remove([profile.avatar_path]);
-        if (storageError) throw storageError;
-      }
+      const { data: profile, error: profileError } = await admin.from("profiles")
+        .select("avatar_path").eq("id", account.user_id).maybeSingle();
+      if (profileError) throw profileError;
+      await removeAccountStorageObjects(account.user_id, profile?.avatar_path || null);
       const { error: deleteError } = await admin.auth.admin.deleteUser(account.user_id);
       if (deleteError) throw deleteError;
       const { error: restrictionError } = await admin.from("account_restrictions").delete().eq("user_id", account.user_id);
