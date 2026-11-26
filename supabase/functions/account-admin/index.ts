@@ -21,15 +21,6 @@ async function revokeUserSessions(userId: string) {
   return Number(data) || 0;
 }
 
-async function hasDevPermission(userId: string, permission: string) {
-  const { data, error } = await admin.rpc("ma_user_has_dev_permission", {
-    p_user_id: userId,
-    p_permission: permission
-  });
-  if (error) throw error;
-  return data === true;
-}
-
 async function removeAccountStorageObjects(userId: string, avatarPath: string | null) {
   const { data: ownedObjects, error } = await admin.rpc("ma_get_account_storage_objects_for_cleanup", {
     p_user_id: userId
@@ -131,208 +122,9 @@ Deno.serve(async (req) => {
     if (actorRestricted) {
       return reply({ error: "Sua conta possui uma restrição ativa e não pode executar ações administrativas." }, 403);
     }
-    const requestedAction = String(body?.action || "");
-
-    if (requestedAction === "submit_message_report") {
-      const messageId = String(body.message_id || "");
-      const reason = String(body.reason || "");
-      const details = body.details == null ? null : String(body.details);
-      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(messageId)) {
-        return reply({ error: "Mensagem inválida para denúncia." }, 400);
-      }
-      if (details && details.length > 1000) {
-        return reply({ error: "O relato adicional deve ter no máximo 1000 caracteres." }, 400);
-      }
-      const { data: reportId, error: reportError } = await admin.rpc("ma_submit_message_report", {
-        p_reporter_id: authData.user.id,
-        p_message_id: messageId,
-        p_reason: reason,
-        p_details: details
-      });
-      if (reportError) {
-        const status = /já registrou uma denúncia/i.test(reportError.message || "") ? 409 : 400;
-        return reply({ error: reportError.message || "Não foi possível registrar a denúncia." }, status);
-      }
-      return reply({ success: true, report_id: reportId });
-    }
-
     const { data: actor, error: actorError } = await admin.from("profiles").select("tipo_usuario")
       .eq("id", authData.user.id).maybeSingle();
     if (actorError || actor?.tipo_usuario !== "dev") return reply({ error: "Somente contas DEV podem executar ações administrativas." }, 403);
-
-    if (requestedAction === "get_access") {
-      const permissionNames = [
-        "users.manage", "users.restrict", "users.delete",
-        "teachers.manage", "xp.manage", "chats.moderate",
-        "premium.manage", "stats.view", "announcements.manage",
-        "audit.view", "tasks.manage", "moderation.access",
-        "tasks.view", "dev.manage"
-      ];
-      const permissions: Record<string, boolean> = {};
-      for (const permission of permissionNames) {
-        permissions[permission] = await hasDevPermission(authData.user.id, permission);
-      }
-
-      let role = "moderator";
-      if (authData.user.id === PRIMARY_DEV_USER_ID) {
-        role = "primary";
-      } else {
-        const { data: roleData, error: roleError } = await admin
-          .from("dev_access_roles")
-          .select("role")
-          .eq("user_id", authData.user.id)
-          .maybeSingle();
-        if (roleError) throw roleError;
-        role = roleData?.role || "moderator";
-      }
-      return reply({ role, permissions });
-    }
-
-    if (requestedAction === "list_users") {
-      if (!(await hasDevPermission(authData.user.id, "users.manage"))) {
-        return reply({ error: "Sua conta DEV não pode consultar a lista de usuários." }, 403);
-      }
-      const search = String(body.search || "").trim().replace(/^@/, "").slice(0, 80);
-      const type = String(body.type || "all");
-      if (!["all", "aluno", "professor", "dev"].includes(type)) {
-        return reply({ error: "Filtro de tipo de conta inválido." }, 400);
-      }
-
-      const buildQuery = () => {
-        let query = admin.from("profiles")
-          .select("id, display_name, username, tipo_usuario, status_professor, created_at")
-          .order("created_at", { ascending: false })
-          .limit(30);
-        if (type !== "all") query = query.eq("tipo_usuario", type);
-        return query;
-      };
-
-      let users: any[] = [];
-      if (search) {
-        const [byUsername, byName] = await Promise.all([
-          buildQuery().ilike("username", "%" + search + "%"),
-          buildQuery().ilike("display_name", "%" + search + "%")
-        ]);
-        if (byUsername.error) throw byUsername.error;
-        if (byName.error) throw byName.error;
-        const unique = new Map<string, any>();
-        for (const user of [...(byUsername.data || []), ...(byName.data || [])]) unique.set(user.id, user);
-        users = [...unique.values()]
-          .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-          .slice(0, 30);
-      } else {
-        const { data, error } = await buildQuery();
-        if (error) throw error;
-        users = data || [];
-      }
-
-      const userIds = users.map((user) => user.id);
-      const restrictionsResult = userIds.length
-        ? await admin.from("account_restrictions")
-            .select("user_id, restriction_type, expires_at")
-            .in("user_id", userIds)
-        : { data: [], error: null };
-      if (restrictionsResult.error) throw restrictionsResult.error;
-      const restrictions = new Map((restrictionsResult.data || []).map((item) => [item.user_id, item]));
-      return reply({
-        users: users.map((user) => ({
-          ...user,
-          restriction: restrictions.get(user.id) || null
-        })),
-        limit: 30
-      });
-    }
-
-    if (requestedAction === "list_teachers") {
-      if (!(await hasDevPermission(authData.user.id, "teachers.manage"))) {
-        return reply({ error: "Sua conta DEV não pode consultar os professores." }, 403);
-      }
-      const { data, error } = await admin.from("profiles")
-        .select("id, display_name, username, status_professor, created_at")
-        .eq("tipo_usuario", "professor")
-        .order("created_at", { ascending: false })
-        .limit(100);
-      if (error) throw error;
-      return reply({ teachers: data || [], limit: 100 });
-    }
-
-    if (requestedAction === "list_teacher_requests") {
-      if (!(await hasDevPermission(authData.user.id, "teachers.manage"))) {
-        return reply({ error: "Sua conta DEV não pode consultar solicitações de professores." }, 403);
-      }
-
-      const { data: assignments, error: assignmentsError } = await admin
-        .from("teacher_request_messages")
-        .select("request_id, message_id")
-        .eq("recipient_id", authData.user.id);
-      if (assignmentsError) throw assignmentsError;
-
-      const requestIds = [...new Set((assignments || []).map((item) => item.request_id))];
-      if (!requestIds.length) return reply({ requests: [] });
-
-      const { data, error } = await admin.from("teacher_requests")
-        .select("id, user_id, full_name, username, formation, institution, specialties, other_specialty, experience, status, created_at")
-        .in("id", requestIds)
-        .order("created_at", { ascending: false })
-        .limit(100);
-      if (error) throw error;
-
-      const messageByRequest = new Map((assignments || []).map((item) => [item.request_id, item.message_id]));
-      return reply({
-        requests: (data || []).map((request) => ({
-          ...request,
-          message_id: messageByRequest.get(request.id) || null
-        }))
-      });
-    }
-
-    if (requestedAction === "list_moderation_reports") {
-      if (!(await hasDevPermission(authData.user.id, "moderation.access"))) {
-        return reply({ error: "Sua conta DEV não pode acessar a fila de denúncias." }, 403);
-      }
-      const { data, error } = await admin.rpc("ma_list_moderation_reports", {
-        p_actor_id: authData.user.id
-      });
-      if (error) throw error;
-      return reply({ reports: data || [] });
-    }
-
-    if (requestedAction === "get_moderation_report") {
-      if (!(await hasDevPermission(authData.user.id, "chats.moderate"))) {
-        return reply({ error: "Sua conta DEV não pode consultar o conteúdo das denúncias." }, 403);
-      }
-      const reportId = String(body.report_id || "");
-      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(reportId)) {
-        return reply({ error: "Denúncia inválida." }, 400);
-      }
-      const { data, error } = await admin.rpc("ma_get_moderation_report", {
-        p_actor_id: authData.user.id,
-        p_report_id: reportId
-      });
-      if (error) throw error;
-      return reply({ report: data });
-    }
-
-    if (requestedAction === "update_moderation_report") {
-      if (!(await hasDevPermission(authData.user.id, "chats.moderate"))) {
-        return reply({ error: "Sua conta DEV não pode atualizar denúncias." }, 403);
-      }
-      const reportId = String(body.report_id || "");
-      const status = String(body.status || "");
-      const note = body.note == null ? null : String(body.note);
-      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(reportId)) {
-        return reply({ error: "Denúncia inválida." }, 400);
-      }
-      if (note && note.length > 1000) return reply({ error: "A observação deve ter no máximo 1000 caracteres." }, 400);
-      const { data, error } = await admin.rpc("ma_update_moderation_report", {
-        p_actor_id: authData.user.id,
-        p_report_id: reportId,
-        p_status: status,
-        p_note: note
-      });
-      if (error) throw error;
-      return reply(data);
-    }
 
     const targetId = String(body?.target_user_id || "");
     if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(targetId) || targetId === authData.user.id) {
@@ -342,21 +134,6 @@ Deno.serve(async (req) => {
       .eq("id", targetId).maybeSingle();
     if (targetError || !target) return reply({ error: "Perfil não encontrado." }, 404);
 
-    const actionPermissions: Record<string, string> = {
-      status: "users.manage",
-      suspend: "users.restrict",
-      ban: "users.restrict",
-      restore: "users.restrict",
-      unsuspend: "users.restrict",
-      demote: "teachers.manage",
-      delete: "users.delete",
-      set_dev_role: "dev.manage"
-    };
-    const requiredPermission = actionPermissions[String(body.action)];
-    if (requiredPermission && !(await hasDevPermission(authData.user.id, requiredPermission))) {
-      return reply({ error: "Sua conta DEV não possui permissão para esta ação." }, 403);
-    }
-
     const actionsRestrictedForDevTargets = ["ban", "suspend", "restore", "unsuspend"];
     if (
       target.tipo_usuario === "dev" &&
@@ -364,23 +141,6 @@ Deno.serve(async (req) => {
       authData.user.id !== PRIMARY_DEV_USER_ID
     ) {
       return reply({ error: "Somente a DEV principal pode banir, suspender ou reativar outra conta DEV." }, 403);
-    }
-
-    if (body.action === "set_dev_role") {
-      if (target.tipo_usuario !== "dev") {
-        return reply({ error: "O cargo só pode ser atribuído a outra conta DEV." }, 409);
-      }
-      const role = String(body.role || "");
-      if (!["administrator", "moderator"].includes(role)) {
-        return reply({ error: "Cargo DEV inválido." }, 400);
-      }
-      const { data, error } = await admin.rpc("ma_set_dev_role", {
-        p_actor_id: authData.user.id,
-        p_target_user_id: targetId,
-        p_role: role
-      });
-      if (error) throw error;
-      return reply(data);
     }
 
     if (body.action === "delete") {
