@@ -419,6 +419,7 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil, idUsuarioAt
     botaoReativar.hidden = !podeGerenciarRestricaoDoAlvo;
     botaoRetirarSuspensao.hidden = !podeGerenciarRestricaoDoAlvo;
     botaoRebaixar.hidden = perfilPublicoAtual.tipo_usuario !== "professor";
+    botaoExcluir.hidden = !usuarioAtualEhDevPrincipal;
     mensagem.textContent = "";
     estado.textContent = "Verificando situação da conta...";
 
