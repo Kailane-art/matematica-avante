@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel DEV - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css?v=20261125-painel-dev1">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        .painel-dev-pagina { min-height: 100vh; background: #f4f8ff; color: #17243a; }
+        .painel-dev-pagina.modo-escuro { background: #0b1d3a; color: #e5edf8; }
+        .painel-dev-cabecalho { gap: 12px; }
+        .painel-dev-cabecalho h1 { font-size: 21px; text-align: center; }
+        .painel-dev-conteudo { width: min(1120px, calc(100% - 32px)); margin: 28px auto 60px; }
+        .painel-dev-apresentacao { padding: 25px; border-radius: 18px; background: linear-gradient(135deg, #102b55, #1e3a8a); color: #fff; box-shadow: 0 8px 24px rgba(15, 35, 70, .16); }
+        .painel-dev-apresentacao-linha { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .painel-dev-apresentacao h2 { margin: 0 0 8px; font-size: clamp(24px, 4vw, 34px); }
+        .painel-dev-apresentacao p { margin: 0; color: #dbeafe; line-height: 1.55; }
+        .painel-dev-selo { display: inline-flex; align-items: center; gap: 7px; padding: 8px 12px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; white-space: nowrap; font-size: 13px; font-weight: 700; }
+        .painel-dev-secao-titulo { margin: 28px 0 14px; font-size: 19px; color: inherit; }
+        .painel-dev-grade { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+        .painel-dev-modulo { display: flex; align-items: flex-start; gap: 13px; min-width: 0; padding: 18px; border: 1px solid #d8e2f0; border-radius: 14px; background: #fff; color: #17243a; }
+        .painel-dev-icone { display: grid; place-items: center; flex: 0 0 42px; width: 42px; height: 42px; border-radius: 12px; background: #e8efff; color: #1e3a8a; }
+        .painel-dev-icone svg { width: 21px; height: 21px; }
+        .painel-dev-modulo h3 { margin: 1px 0 6px; font-size: 15px; }
+        .painel-dev-modulo p { margin: 0; color: #64748b; font-size: 13px; line-height: 1.45; }
+        .painel-dev-status { display: inline-block; margin-top: 10px; color: #64748b; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+        .painel-dev-nota { margin-top: 22px; padding: 15px 17px; border-left: 4px solid #1e3a8a; border-radius: 8px; background: #e8efff; color: #243b60; font-size: 13px; line-height: 1.55; }
+        .modo-escuro .painel-dev-conteudo { color: #e5edf8; }
+        .modo-escuro .painel-dev-modulo { background: #132b4c; border-color: #29466e; color: #e5edf8; }
+        .modo-escuro .painel-dev-icone { background: #1b3b65; color: #bfdbfe; }
+        .modo-escuro .painel-dev-modulo p { color: #c3d2e6; }
+        .modo-escuro .painel-dev-status { color: #a9bdd8; }
+        .modo-escuro .painel-dev-nota { background: #132b4c; border-left-color: #60a5fa; color: #dbeafe; }
+        #estadoAcessoPainel { width: min(560px, calc(100% - 32px)); margin: 70px auto; padding: 24px; text-align: center; border-radius: 14px; background: #fff; color: #17243a; }
+        #estadoAcessoPainel p { margin-top: 10px; line-height: 1.5; }
+        @media (max-width: 760px) { .painel-dev-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 520px) {
+            .painel-dev-conteudo { width: min(100% - 22px, 1120px); margin-top: 18px; }
+            .painel-dev-apresentacao { padding: 20px 17px; }
+            .painel-dev-apresentacao-linha { align-items: flex-start; flex-direction: column; }
+            .painel-dev-grade { grid-template-columns: 1fr; gap: 10px; }
+            .painel-dev-modulo { padding: 15px; }
+            .painel-dev-cabecalho h1 { font-size: 17px; }
+        }
+    </style>
+</head>
+<body class="painel-dev-pagina">
+    <header class="painel-dev-cabecalho">
+        <button id="voltarPagina" type="button" aria-label="Voltar"><i data-lucide="arrow-left"></i></button>
+        <h1>Painel de Administração</h1>
+        <button id="modoEscuro" type="button" aria-label="Alternar tema"><i data-lucide="moon"></i></button>
+        <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu"><i data-lucide="menu"></i></button>
+    </header>
+
+    <nav id="menuLateral" aria-label="Menu principal">
+        <h2>Menu</h2>
+    </nav>
+    <div id="fundoMenu"></div>
+
+    <div id="estadoAcessoPainel" role="status" aria-live="polite">
+        <i data-lucide="shield-check"></i>
+        <h2>Verificando acesso</h2>
+        <p>Confirmando a sessão e o nível da conta...</p>
+    </div>
+
+    <main id="conteudoPainelDev" class="painel-dev-conteudo" hidden>
+        <section class="painel-dev-apresentacao">
+            <div class="painel-dev-apresentacao-linha">
+                <div>
+                    <h2>Central de comando</h2>
+                    <p>Administração e acompanhamento do Matemática Avante.</p>
+                </div>
+                <span class="painel-dev-selo"><i data-lucide="shield-check"></i> ACESSO DEV</span>
+            </div>
+        </section>
+
+        <h2 class="painel-dev-secao-titulo">Módulos administrativos</h2>
+        <section class="painel-dev-grade" aria-label="Módulos administrativos">
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="users"></i></span><div><h3>Gerenciamento de usuários</h3><p>Contas, perfis, permissões e situação dos usuários.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="shield-alert"></i></span><div><h3>Segurança e acesso</h3><p>Restrições, sessões, bloqueios e controles de segurança.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="graduation-cap"></i></span><div><h3>Gerenciamento de professores</h3><p>Solicitações, aprovações e permissões de professores.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="trophy"></i></span><div><h3>XP, níveis e títulos</h3><p>Conquistas, pontuação, raridades e sequências.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="messages-square"></i></span><div><h3>Chats e amizades</h3><p>Denúncias, solicitações e ferramentas de moderação.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="crown"></i></span><div><h3>Premium e assinaturas</h3><p>Benefícios, concessões e situação das assinaturas.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="chart-no-axes-combined"></i></span><div><h3>Estatísticas gerais</h3><p>Indicadores de utilização e crescimento da plataforma.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="bell"></i></span><div><h3>Comunicados e notificações</h3><p>Envios individuais, coletivos e comunicados.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="clipboard-list"></i></span><div><h3>Logs e auditoria</h3><p>Histórico de ações, responsáveis e alterações.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="crown"></i></span><div><h3>Administração DEV</h3><p>Hierarquia, níveis de acesso e controles exclusivos da DEV principal.</p><span class="painel-dev-status">Planejado</span></div></article>
+        </section>
+
+        <h2 class="painel-dev-secao-titulo">Ferramentas complementares</h2>
+        <section class="painel-dev-grade" aria-label="Ferramentas complementares">
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="siren"></i></span><div><h3>Central de emergência</h3><p>Controles de resposta a incidentes, restritos à DEV principal.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="inbox"></i></span><div><h3>Central de tarefas</h3><p>Solicitações, denúncias, aprovações e alertas pendentes.</p><span class="painel-dev-status">Planejado</span></div></article>
+        </section>
+
+        <aside class="painel-dev-nota">Esta é a estrutura inicial do painel. Os módulos serão ativados gradualmente, com permissões verificadas no backend antes de disponibilizar operações administrativas.</aside>
+    </main>
+
+    <script src="js/script.js?v=20261125-restricoes-realtime1"></script>
+    <script>
+        (async function protegerPainelDev() {
+            const estado = document.getElementById("estadoAcessoPainel");
+            const conteudo = document.getElementById("conteudoPainelDev");
+
+            function negarAcesso(mensagem, destino) {
+                estado.innerHTML = "<i data-lucide='shield-x'></i><h2>Acesso não autorizado</h2><p>" + mensagem + "</p>";
+                if (window.lucide) window.lucide.createIcons();
+                setTimeout(function() {
+                    window.location.replace(destino);
+                }, 1400);
+            }
+
+            try {
+                if (!supabaseClient) throw new Error("Não foi possível conectar ao serviço de autenticação.");
+
+                const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+                if (erroUsuario || !user) {
+                    negarAcesso("Entre na sua conta para continuar.", "index.html");
+                    return;
+                }
+
+                const { data: perfil, error: erroPerfil } = await supabaseClient
+                    .from("profiles")
+                    .select("tipo_usuario")
+                    .eq("id", user.id)
+                    .single();
+
+                if (erroPerfil || !perfil) {
+                    throw erroPerfil || new Error("Não foi possível confirmar o tipo da conta.");
+                }
+
+                if (perfil.tipo_usuario !== "dev") {
+                    negarAcesso("Esta página está disponível somente para contas DEV.", "inicio.html");
+                    return;
+                }
+
+                estado.hidden = true;
+                conteudo.hidden = false;
+                document.documentElement.classList.remove("verificando-sessao");
+                if (window.lucide) window.lucide.createIcons();
+            } catch (erro) {
+                console.error("Falha ao verificar acesso ao Painel DEV:", erro);
+                negarAcesso("Não foi possível validar suas permissões. O acesso foi bloqueado por segurança.", "index.html");
+            }
+        })();
+    </script>
+</body>
+</html>
