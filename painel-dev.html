@@ -37,6 +37,32 @@
         .modo-escuro .painel-dev-nota { background: #132b4c; border-left-color: #60a5fa; color: #dbeafe; }
         #estadoAcessoPainel { width: min(560px, calc(100% - 32px)); margin: 70px auto; padding: 24px; text-align: center; border-radius: 14px; background: #fff; color: #17243a; }
         #estadoAcessoPainel p { margin-top: 10px; line-height: 1.5; }
+        .painel-dev-operacional { margin: 24px 0; padding: 20px; border: 1px solid #d8e2f0; border-radius: 16px; background: #fff; color: #17243a; }
+        .painel-dev-abas { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+        .painel-dev-aba { padding: 10px 15px; border: 1px solid #cbd5e1; border-radius: 10px; background: #f8fafc; color: #1e3a8a; font-weight: 700; cursor: pointer; }
+        .painel-dev-aba[aria-selected="true"] { background: #1e3a8a; border-color: #1e3a8a; color: #fff; }
+        .painel-dev-filtros { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 16px; }
+        .painel-dev-filtros input, .painel-dev-filtros select { min-width: 0; flex: 1 1 190px; padding: 11px 12px; border: 1px solid #cbd5e1; border-radius: 9px; background: #fff; color: #17243a; }
+        .painel-dev-filtros button, .painel-dev-acao { padding: 10px 14px; border: 0; border-radius: 9px; background: #1e3a8a; color: #fff; font-weight: 700; cursor: pointer; }
+        .painel-dev-lista { display: grid; gap: 10px; }
+        .painel-dev-registro { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px; border: 1px solid #d8e2f0; border-radius: 12px; background: #f8fafc; }
+        .painel-dev-registro strong { display: block; color: #17243a; }
+        .painel-dev-registro small, .painel-dev-registro p { display: block; margin: 4px 0 0; color: #64748b; font-size: 13px; line-height: 1.45; }
+        .painel-dev-registro a { flex: 0 0 auto; color: #1d4ed8; font-weight: 700; text-decoration: none; }
+        .painel-dev-vazio { padding: 18px; text-align: center; color: #64748b; }
+        .painel-dev-subtitulo { margin: 22px 0 10px; font-size: 16px; }
+        .painel-dev-estado { min-height: 22px; margin: 8px 0; color: #64748b; font-size: 13px; }
+        .modo-escuro .painel-dev-operacional { background: #132b4c; border-color: #29466e; color: #e5edf8; }
+        .modo-escuro .painel-dev-aba { background: #102542; border-color: #36577f; color: #dbeafe; }
+        .modo-escuro .painel-dev-aba[aria-selected="true"] { background: #2563a8; border-color: #2563a8; color: #fff; }
+        .modo-escuro .painel-dev-filtros input, .modo-escuro .painel-dev-filtros select { background: #0b1d3a; border-color: #36577f; color: #e5edf8; }
+        .modo-escuro .painel-dev-registro { background: #0f2544; border-color: #29466e; }
+        .modo-escuro .painel-dev-registro strong { color: #e5edf8; }
+        .modo-escuro .painel-dev-registro small, .modo-escuro .painel-dev-registro p, .modo-escuro .painel-dev-vazio, .modo-escuro .painel-dev-estado { color: #b8c9df; }
+        .modo-escuro .painel-dev-registro a { color: #93c5fd; }
+        .painel-dev-abrir-modulo { margin-top: 10px; padding: 7px 11px; border: 0; border-radius: 8px; background: #1e3a8a; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .modo-escuro .painel-dev-abrir-modulo { background: #2563a8; }
+        @media (max-width: 600px) { .painel-dev-registro { align-items: flex-start; flex-direction: column; } }
         @media (max-width: 760px) { .painel-dev-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
         @media (max-width: 520px) {
             .painel-dev-conteudo { width: min(100% - 22px, 1120px); margin-top: 18px; }
@@ -78,11 +104,46 @@
             </div>
         </section>
 
+        <section id="areaGerenciamento" class="painel-dev-operacional" hidden>
+            <h2 class="painel-dev-secao-titulo" style="margin-top:0">Gerenciamento</h2>
+            <div class="painel-dev-abas" role="tablist" aria-label="Módulos de gerenciamento">
+                <button id="abaUsuariosDev" class="painel-dev-aba" type="button" role="tab" aria-selected="true" aria-controls="painelUsuariosDev">Usuários</button>
+                <button id="abaProfessoresDev" class="painel-dev-aba" type="button" role="tab" aria-selected="false" aria-controls="painelProfessoresDev" hidden>Professores</button>
+            </div>
+
+            <section id="painelUsuariosDev" role="tabpanel" aria-labelledby="abaUsuariosDev">
+                <h3 class="painel-dev-subtitulo">Contas da plataforma</h3>
+                <p>Pesquise por nome ou nome de usuário. As ações administrativas detalhadas continuam no perfil de cada conta.</p>
+                <form id="formBuscaUsuariosDev" class="painel-dev-filtros">
+                    <input id="buscaUsuariosDev" type="search" maxlength="80" placeholder="Nome ou @nome de usuário" aria-label="Pesquisar usuários">
+                    <select id="filtroTipoUsuarioDev" aria-label="Filtrar tipo de conta">
+                        <option value="all">Todos os tipos</option>
+                        <option value="aluno">Alunos</option>
+                        <option value="professor">Professores</option>
+                        <option value="dev">DEV</option>
+                    </select>
+                    <button type="submit">Pesquisar</button>
+                </form>
+                <p id="estadoUsuariosDev" class="painel-dev-estado" role="status" aria-live="polite"></p>
+                <div id="listaUsuariosDev" class="painel-dev-lista"></div>
+            </section>
+
+            <section id="painelProfessoresDev" role="tabpanel" aria-labelledby="abaProfessoresDev" hidden>
+                <h3 class="painel-dev-subtitulo">Solicitações de professor</h3>
+                <p>As decisões continuam sendo feitas na conversa original, preservando a validação da solicitação e o registro da mensagem.</p>
+                <p id="estadoSolicitacoesProfessorDev" class="painel-dev-estado" role="status" aria-live="polite"></p>
+                <div id="listaSolicitacoesProfessorDev" class="painel-dev-lista"></div>
+                <h3 class="painel-dev-subtitulo">Professores cadastrados</h3>
+                <p id="estadoProfessoresDev" class="painel-dev-estado" role="status" aria-live="polite"></p>
+                <div id="listaProfessoresDev" class="painel-dev-lista"></div>
+            </section>
+        </section>
+
         <h2 class="painel-dev-secao-titulo">Módulos administrativos</h2>
         <section class="painel-dev-grade" aria-label="Módulos administrativos">
-            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="users"></i></span><div><h3>Gerenciamento de usuários</h3><p>Contas, perfis, permissões e situação dos usuários.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article id="cardModuloUsuarios" class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="users"></i></span><div><h3>Gerenciamento de usuários</h3><p>Contas, perfis, permissões e situação dos usuários.</p><span class="painel-dev-status">Disponível</span><br><button class="painel-dev-abrir-modulo" type="button" data-abrir-modulo="usuarios">Abrir módulo</button></div></article>
             <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="shield-alert"></i></span><div><h3>Segurança e acesso</h3><p>Restrições, sessões, bloqueios e controles de segurança.</p><span class="painel-dev-status">Planejado</span></div></article>
-            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="graduation-cap"></i></span><div><h3>Gerenciamento de professores</h3><p>Solicitações, aprovações e permissões de professores.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article id="cardModuloProfessores" class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="graduation-cap"></i></span><div><h3>Gerenciamento de professores</h3><p>Solicitações, aprovações e permissões de professores.</p><span class="painel-dev-status">Disponível</span><br><button class="painel-dev-abrir-modulo" type="button" data-abrir-modulo="professores">Abrir módulo</button></div></article>
             <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="trophy"></i></span><div><h3>XP, níveis e títulos</h3><p>Conquistas, pontuação, raridades e sequências.</p><span class="painel-dev-status">Planejado</span></div></article>
             <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="messages-square"></i></span><div><h3>Chats e amizades</h3><p>Denúncias, solicitações e ferramentas de moderação.</p><span class="painel-dev-status">Planejado</span></div></article>
             <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="crown"></i></span><div><h3>Premium e assinaturas</h3><p>Benefícios, concessões e situação das assinaturas.</p><span class="painel-dev-status">Planejado</span></div></article>
@@ -139,6 +200,15 @@
                     return;
                 }
 
+                const { data: acesso, error: erroAcesso } = await supabaseClient.functions.invoke("account-admin", {
+                    body: { action: "get_access" }
+                });
+                if (erroAcesso || acesso?.error || !acesso?.permissions) {
+                    throw erroAcesso || new Error(acesso?.error || "Não foi possível consultar as permissões administrativas.");
+                }
+                window.maDevPermissions = acesso.permissions;
+                window.maDevRole = acesso.role;
+
                 estado.hidden = true;
                 conteudo.hidden = false;
                 document.documentElement.classList.remove("verificando-sessao");
@@ -147,6 +217,214 @@
                 console.error("Falha ao verificar acesso ao Painel DEV:", erro);
                 negarAcesso("Não foi possível validar suas permissões. O acesso foi bloqueado por segurança.", "index.html");
             }
+        })();
+    </script>
+ 
+    <script>
+        (function iniciarGerenciamentoPainelDev() {
+            const permissoes = window.maDevPermissions || {};
+            const area = document.getElementById("areaGerenciamento");
+            const abaUsuarios = document.getElementById("abaUsuariosDev");
+            const abaProfessores = document.getElementById("abaProfessoresDev");
+            const painelUsuarios = document.getElementById("painelUsuariosDev");
+            const painelProfessores = document.getElementById("painelProfessoresDev");
+            const cardUsuarios = document.getElementById("cardModuloUsuarios");
+            const cardProfessores = document.getElementById("cardModuloProfessores");
+            const podeUsuarios = permissoes["users.manage"] === true;
+            const podeProfessores = permissoes["teachers.manage"] === true;
+
+            if (cardUsuarios) cardUsuarios.hidden = !podeUsuarios;
+            if (cardProfessores) cardProfessores.hidden = !podeProfessores;
+            abaUsuarios.hidden = !podeUsuarios;
+            abaProfessores.hidden = !podeProfessores;
+            area.hidden = !podeUsuarios && !podeProfessores;
+            painelUsuarios.hidden = !podeUsuarios;
+            painelProfessores.hidden = !podeProfessores;
+
+            const roleNames = {
+                primary: "DEV principal",
+                administrator: "DEV administrador",
+                moderator: "DEV moderador"
+            };
+            const selo = document.querySelector(".painel-dev-selo");
+            if (selo) selo.textContent = roleNames[window.maDevRole] || "ACESSO DEV";
+
+            function abrirAba(nome) {
+                const usuarios = nome === "usuarios" && podeUsuarios;
+                const professores = nome === "professores" && podeProfessores;
+                painelUsuarios.hidden = !usuarios;
+                painelProfessores.hidden = !professores;
+                abaUsuarios.setAttribute("aria-selected", String(usuarios));
+                abaProfessores.setAttribute("aria-selected", String(professores));
+                if (professores) {
+                    carregarSolicitacoesProfessor();
+                    carregarProfessores();
+                } else if (usuarios) {
+                    carregarUsuarios();
+                }
+            }
+
+            abaUsuarios.addEventListener("click", () => abrirAba("usuarios"));
+            abaProfessores.addEventListener("click", () => abrirAba("professores"));
+            document.querySelectorAll("[data-abrir-modulo]").forEach(botao => {
+                botao.addEventListener("click", () => {
+                    area.hidden = false;
+                    abrirAba(botao.dataset.abrirModulo);
+                    area.scrollIntoView({ behavior: "smooth", block: "start" });
+                });
+            });
+
+            async function chamarAdmin(action, extras = {}) {
+                const { data, error } = await supabaseClient.functions.invoke("account-admin", {
+                    body: { action, ...extras }
+                });
+                if (error) throw error;
+                if (data?.error) throw new Error(data.error);
+                return data;
+            }
+
+            function criarRegistro(titulo, subtitulo, detalhes, url, textoLink = "Abrir perfil") {
+                const item = document.createElement("article");
+                item.className = "painel-dev-registro";
+                const dados = document.createElement("div");
+                const nome = document.createElement("strong");
+                nome.textContent = titulo;
+                const usuario = document.createElement("small");
+                usuario.textContent = subtitulo;
+                dados.append(nome, usuario);
+                if (detalhes) {
+                    const descricao = document.createElement("p");
+                    descricao.textContent = detalhes;
+                    dados.appendChild(descricao);
+                }
+                item.appendChild(dados);
+                if (url) {
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.textContent = textoLink;
+                    item.appendChild(link);
+                }
+                return item;
+            }
+
+            function urlPerfil(username) {
+                return "perfil-publico.html?usuario=" + encodeURIComponent(username);
+            }
+
+            function textoRestricao(restriction) {
+                if (!restriction) return "Sem restrição administrativa ativa";
+                const expires = restriction.expires_at ? new Date(restriction.expires_at) : null;
+                if (restriction.restriction_type === "pending_deletion") {
+                    return "Banida, prazo até " + (expires ? expires.toLocaleString("pt-BR") : "não informado");
+                }
+                if (restriction.restriction_type === "temporary_suspension" && expires && expires.getTime() > Date.now()) {
+                    return "Suspensa até " + expires.toLocaleString("pt-BR");
+                }
+                return "Sem restrição ativa";
+            }
+
+            async function carregarUsuarios() {
+                const estado = document.getElementById("estadoUsuariosDev");
+                const lista = document.getElementById("listaUsuariosDev");
+                estado.textContent = "Carregando usuários...";
+                lista.replaceChildren();
+                try {
+                    const data = await chamarAdmin("list_users", {
+                        search: document.getElementById("buscaUsuariosDev").value.trim(),
+                        type: document.getElementById("filtroTipoUsuarioDev").value
+                    });
+                    if (!data.users?.length) {
+                        estado.textContent = "Nenhum usuário encontrado.";
+                        return;
+                    }
+                    estado.textContent = data.users.length + " usuário(s) encontrado(s), limite de " + data.limit + " por consulta.";
+                    const fragmento = document.createDocumentFragment();
+                    data.users.forEach(user => {
+                        const tipo = user.tipo_usuario === "dev" ? "DEV" : user.tipo_usuario === "professor" ? "Professor" : "Aluno";
+                        const item = criarRegistro(
+                            user.display_name || user.username,
+                            "@" + user.username + " · " + tipo,
+                            textoRestricao(user.restriction),
+                            urlPerfil(user.username)
+                        );
+                        fragmento.appendChild(item);
+                    });
+                    lista.replaceChildren(fragmento);
+                } catch (erro) {
+                    estado.textContent = erro.message || "Não foi possível carregar os usuários.";
+                }
+            }
+
+            async function carregarProfessores() {
+                const estado = document.getElementById("estadoProfessoresDev");
+                const lista = document.getElementById("listaProfessoresDev");
+                estado.textContent = "Carregando professores...";
+                lista.replaceChildren();
+                try {
+                    const data = await chamarAdmin("list_teachers");
+                    if (!data.teachers?.length) {
+                        estado.textContent = "Nenhum professor cadastrado.";
+                        return;
+                    }
+                    estado.textContent = data.teachers.length + " professor(es) listado(s), limite de " + data.limit + ".";
+                    const fragmento = document.createDocumentFragment();
+                    data.teachers.forEach(teacher => {
+                        fragmento.appendChild(criarRegistro(
+                            teacher.display_name || teacher.username,
+                            "@" + teacher.username + " · " + (teacher.status_professor || "Professor ativo"),
+                            "Cadastro em " + new Date(teacher.created_at).toLocaleDateString("pt-BR"),
+                            urlPerfil(teacher.username)
+                        ));
+                    });
+                    lista.replaceChildren(fragmento);
+                } catch (erro) {
+                    estado.textContent = erro.message || "Não foi possível carregar os professores.";
+                }
+            }
+
+            async function carregarSolicitacoesProfessor() {
+                const estado = document.getElementById("estadoSolicitacoesProfessorDev");
+                const lista = document.getElementById("listaSolicitacoesProfessorDev");
+                estado.textContent = "Carregando solicitações atribuídas a esta conta...";
+                lista.replaceChildren();
+                try {
+                    const data = await chamarAdmin("list_teacher_requests");
+                    if (!data.requests?.length) {
+                        estado.textContent = "Nenhuma solicitação atribuída a esta conta.";
+                        return;
+                    }
+                    estado.textContent = data.requests.length + " solicitação(ões) encontrada(s).";
+                    const fragmento = document.createDocumentFragment();
+                    data.requests.forEach(request => {
+                        const especialidades = Array.isArray(request.specialties) ? request.specialties.join(", ") : "";
+                        const detalhes = [
+                            request.formation,
+                            request.institution,
+                            especialidades,
+                            request.experience
+                        ].filter(Boolean).join(" · ");
+                        const item = criarRegistro(
+                            request.full_name || request.username,
+                            "@" + request.username + " · " + (request.status || "Pendente"),
+                            detalhes,
+                            "conversa.html?usuario=" + encodeURIComponent(request.username),
+                            "Abrir solicitação"
+                        );
+                        fragmento.appendChild(item);
+                    });
+                    lista.replaceChildren(fragmento);
+                } catch (erro) {
+                    estado.textContent = erro.message || "Não foi possível carregar as solicitações.";
+                }
+            }
+
+            document.getElementById("formBuscaUsuariosDev").addEventListener("submit", evento => {
+                evento.preventDefault();
+                carregarUsuarios();
+            });
+
+            if (podeUsuarios) carregarUsuarios();
+            else if (podeProfessores) abrirAba("professores");
         })();
     </script>
 </body>
