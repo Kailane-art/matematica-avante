@@ -63,6 +63,17 @@
         .modo-escuro .painel-dev-registro a { color: #93c5fd; }
         .painel-dev-abrir-modulo { margin-top: 10px; padding: 7px 11px; border: 0; border-radius: 8px; background: #1e3a8a; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
         .modo-escuro .painel-dev-abrir-modulo { background: #2563a8; }
+        .painel-dev-registro-denuncia { flex-wrap: wrap; }
+        .painel-dev-denuncia-detalhe { flex: 1 1 100%; min-width: 0; margin-top: 8px; padding: 14px; border-radius: 10px; background: #edf3fc; color: #243b60; }
+        .painel-dev-denuncia-detalhe p { margin: 7px 0; font-size: 13px; line-height: 1.5; }
+        .painel-dev-denuncia-mensagem { margin: 8px 0; padding: 10px; border-left: 3px solid #1e3a8a; border-radius: 6px; background: #fff; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; line-height: 1.5; }
+        .painel-dev-denuncia-acoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .painel-dev-denuncia-acoes button { padding: 8px 11px; border: 0; border-radius: 8px; background: #1e3a8a; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .painel-dev-denuncia-acoes button.resolver { background: #15803d; }
+        .painel-dev-denuncia-acoes button.descartar { background: #b91c1c; }
+        .painel-dev-denuncia-acoes button:disabled { opacity: .55; cursor: wait; }
+        .modo-escuro .painel-dev-denuncia-detalhe { background: #0b1d3a; color: #e5edf8; }
+        .modo-escuro .painel-dev-denuncia-mensagem { background: #18365b; border-left-color: #60a5fa; color: #e5edf8; }
         @media (max-width: 600px) { .painel-dev-registro { align-items: flex-start; flex-direction: column; } }
         @media (max-width: 760px) { .painel-dev-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
         @media (max-width: 520px) {
@@ -110,6 +121,7 @@
             <div class="painel-dev-abas" role="tablist" aria-label="Módulos de gerenciamento">
                 <button id="abaUsuariosDev" class="painel-dev-aba" type="button" role="tab" aria-selected="true" aria-controls="painelUsuariosDev">Usuários</button>
                 <button id="abaProfessoresDev" class="painel-dev-aba" type="button" role="tab" aria-selected="false" aria-controls="painelProfessoresDev" hidden>Professores</button>
+                <button id="abaModeracaoDev" class="painel-dev-aba" type="button" role="tab" aria-selected="false" aria-controls="painelModeracaoDev" hidden>Denúncias</button>
             </div>
 
             <section id="painelUsuariosDev" role="tabpanel" aria-labelledby="abaUsuariosDev">
@@ -138,6 +150,13 @@
                 <p id="estadoProfessoresDev" class="painel-dev-estado" role="status" aria-live="polite"></p>
                 <div id="listaProfessoresDev" class="painel-dev-lista"></div>
             </section>
+
+            <section id="painelModeracaoDev" role="tabpanel" aria-labelledby="abaModeracaoDev" hidden>
+                <h3 class="painel-dev-subtitulo">Denúncias de mensagens</h3>
+                <p>Somente mensagens denunciadas pelos participantes aparecem nesta fila. O conteúdo é liberado apenas para DEV com permissão de moderação.</p>
+                <p id="estadoDenunciasDev" class="painel-dev-estado" role="status" aria-live="polite"></p>
+                <div id="listaDenunciasDev" class="painel-dev-lista"></div>
+            </section>
         </section>
 
         <h2 class="painel-dev-secao-titulo">Módulos administrativos</h2>
@@ -146,7 +165,7 @@
             <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="shield-alert"></i></span><div><h3>Segurança e acesso</h3><p>Restrições, sessões, bloqueios e controles de segurança.</p><span class="painel-dev-status">Planejado</span></div></article>
             <article id="cardModuloProfessores" class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="graduation-cap"></i></span><div><h3>Gerenciamento de professores</h3><p>Solicitações, aprovações e permissões de professores.</p><span class="painel-dev-status">Disponível</span><br><button class="painel-dev-abrir-modulo" type="button" data-abrir-modulo="professores">Abrir módulo</button></div></article>
             <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="trophy"></i></span><div><h3>XP, níveis e títulos</h3><p>Conquistas, pontuação, raridades e sequências.</p><span class="painel-dev-status">Planejado</span></div></article>
-            <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="messages-square"></i></span><div><h3>Chats e amizades</h3><p>Denúncias, solicitações e ferramentas de moderação.</p><span class="painel-dev-status">Planejado</span></div></article>
+            <article id="cardModuloModeracao" class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="messages-square"></i></span><div><h3>Chats e amizades</h3><p>Denúncias de mensagens e ferramentas de moderação.</p><span class="painel-dev-status">Disponível</span><br><button class="painel-dev-abrir-modulo" type="button" data-abrir-modulo="moderacao">Abrir módulo</button></div></article>
             <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="crown"></i></span><div><h3>Premium e assinaturas</h3><p>Benefícios, concessões e situação das assinaturas.</p><span class="painel-dev-status">Planejado</span></div></article>
             <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="chart-no-axes-combined"></i></span><div><h3>Estatísticas gerais</h3><p>Indicadores de utilização e crescimento da plataforma.</p><span class="painel-dev-status">Planejado</span></div></article>
             <article class="painel-dev-modulo"><span class="painel-dev-icone"><i data-lucide="bell"></i></span><div><h3>Comunicados e notificações</h3><p>Envios individuais, coletivos e comunicados.</p><span class="painel-dev-status">Planejado</span></div></article>
@@ -228,20 +247,28 @@
             const area = document.getElementById("areaGerenciamento");
             const abaUsuarios = document.getElementById("abaUsuariosDev");
             const abaProfessores = document.getElementById("abaProfessoresDev");
+            const abaModeracao = document.getElementById("abaModeracaoDev");
             const painelUsuarios = document.getElementById("painelUsuariosDev");
             const painelProfessores = document.getElementById("painelProfessoresDev");
+            const painelModeracao = document.getElementById("painelModeracaoDev");
             const cardUsuarios = document.getElementById("cardModuloUsuarios");
             const cardProfessores = document.getElementById("cardModuloProfessores");
+            const cardModeracao = document.getElementById("cardModuloModeracao");
             const podeUsuarios = permissoes["users.manage"] === true;
             const podeProfessores = permissoes["teachers.manage"] === true;
+            const podeModeracao = permissoes["moderation.access"] === true;
+            const podeModerarConteudo = permissoes["chats.moderate"] === true;
 
             if (cardUsuarios) cardUsuarios.hidden = !podeUsuarios;
             if (cardProfessores) cardProfessores.hidden = !podeProfessores;
+            if (cardModeracao) cardModeracao.hidden = !podeModeracao;
             abaUsuarios.hidden = !podeUsuarios;
             abaProfessores.hidden = !podeProfessores;
-            area.hidden = !podeUsuarios && !podeProfessores;
+            abaModeracao.hidden = !podeModeracao;
+            area.hidden = !podeUsuarios && !podeProfessores && !podeModeracao;
             painelUsuarios.hidden = !podeUsuarios;
             painelProfessores.hidden = !podeProfessores;
+            painelModeracao.hidden = !podeModeracao;
 
             const roleNames = {
                 primary: "DEV principal",
@@ -254,20 +281,26 @@
             function abrirAba(nome) {
                 const usuarios = nome === "usuarios" && podeUsuarios;
                 const professores = nome === "professores" && podeProfessores;
+                const moderacao = nome === "moderacao" && podeModeracao;
                 painelUsuarios.hidden = !usuarios;
                 painelProfessores.hidden = !professores;
+                painelModeracao.hidden = !moderacao;
                 abaUsuarios.setAttribute("aria-selected", String(usuarios));
                 abaProfessores.setAttribute("aria-selected", String(professores));
+                abaModeracao.setAttribute("aria-selected", String(moderacao));
                 if (professores) {
                     carregarSolicitacoesProfessor();
                     carregarProfessores();
                 } else if (usuarios) {
                     carregarUsuarios();
+                } else if (moderacao) {
+                    carregarDenuncias();
                 }
             }
 
             abaUsuarios.addEventListener("click", () => abrirAba("usuarios"));
             abaProfessores.addEventListener("click", () => abrirAba("professores"));
+            abaModeracao.addEventListener("click", () => abrirAba("moderacao"));
             document.querySelectorAll("[data-abrir-modulo]").forEach(botao => {
                 botao.addEventListener("click", () => {
                     area.hidden = false;
@@ -384,6 +417,162 @@
                 }
             }
 
+            function rotuloMotivoDenuncia(reason) {
+                const labels = {
+                    harassment: "Assédio ou bullying",
+                    spam: "Spam",
+                    threat: "Ameaça ou intimidação",
+                    inappropriate: "Conteúdo impróprio",
+                    scam: "Golpe ou fraude",
+                    other: "Outro motivo"
+                };
+                return labels[reason] || "Motivo não identificado";
+            }
+
+            function rotuloStatusDenuncia(status) {
+                const labels = {
+                    open: "Aberta",
+                    in_review: "Em análise",
+                    resolved: "Resolvida",
+                    dismissed: "Descartada"
+                };
+                return labels[status] || status;
+            }
+
+            async function carregarDenuncias() {
+                const estado = document.getElementById("estadoDenunciasDev");
+                const lista = document.getElementById("listaDenunciasDev");
+                estado.textContent = "Carregando denúncias...";
+                lista.replaceChildren();
+                try {
+                    const data = await chamarAdmin("list_moderation_reports");
+                    if (!data.reports?.length) {
+                        estado.textContent = "Nenhuma denúncia registrada.";
+                        return;
+                    }
+                    estado.textContent = data.reports.length + " denúncia(s) encontrada(s), limite de 100.";
+                    const fragmento = document.createDocumentFragment();
+                    data.reports.forEach(report => {
+                        const item = document.createElement("article");
+                        item.className = "painel-dev-registro painel-dev-registro-denuncia";
+                        const dados = document.createElement("div");
+                        const titulo = document.createElement("strong");
+                        titulo.textContent = "Mensagem de @" + (report.reported_username || "conta removida");
+                        const subtitulo = document.createElement("small");
+                        subtitulo.textContent = rotuloMotivoDenuncia(report.reason) + " · " +
+                            rotuloStatusDenuncia(report.status) + " · " +
+                            new Date(report.created_at).toLocaleString("pt-BR");
+                        const relator = document.createElement("p");
+                        relator.textContent = "Denunciada por @" + (report.reporter_username || "conta removida");
+                        dados.append(titulo, subtitulo, relator);
+                        const botao = document.createElement("button");
+                        botao.type = "button";
+                        botao.className = "painel-dev-acao";
+                        botao.textContent = "Analisar";
+                        botao.disabled = !podeModerarConteudo;
+                        botao.title = podeModerarConteudo ? "Consultar o conteúdo denunciado" : "Sua função não permite abrir o conteúdo da mensagem";
+                        botao.addEventListener("click", () => abrirDetalhesDenuncia(report.id, item, botao));
+                        item.append(dados, botao);
+                        fragmento.appendChild(item);
+                    });
+                    lista.replaceChildren(fragmento);
+                } catch (erro) {
+                    estado.textContent = erro.message || "Não foi possível carregar as denúncias.";
+                }
+            }
+
+            async function abrirDetalhesDenuncia(reportId, item, botao) {
+                botao.disabled = true;
+                try {
+                    const data = await chamarAdmin("get_moderation_report", { report_id: reportId });
+                    const report = data.report;
+                    let detalhe = item.querySelector(".painel-dev-denuncia-detalhe");
+                    if (detalhe) detalhe.remove();
+                    detalhe = document.createElement("div");
+                    detalhe.className = "painel-dev-denuncia-detalhe";
+
+                    const cabecalho = document.createElement("strong");
+                    cabecalho.textContent = "Mensagem denunciada";
+                    const mensagem = document.createElement("div");
+                    mensagem.className = "painel-dev-denuncia-mensagem";
+                    mensagem.textContent = report.message_snapshot || "Conteúdo não disponível.";
+                    const contexto = document.createElement("p");
+                    contexto.textContent = "De: @" + (report.reported_username || "conta removida") +
+                        " · Denunciada por: @" + (report.reporter_username || "conta removida");
+                    const motivo = document.createElement("p");
+                    motivo.textContent = "Motivo: " + rotuloMotivoDenuncia(report.reason);
+                    const relato = document.createElement("p");
+                    relato.textContent = "Relato adicional: " + (report.details || "Não informado.");
+                    detalhe.append(cabecalho, mensagem, contexto, motivo, relato);
+
+                    if (report.resolution_note) {
+                        const observacao = document.createElement("p");
+                        observacao.textContent = "Última observação: " + report.resolution_note;
+                        detalhe.appendChild(observacao);
+                    }
+
+                    const acoes = document.createElement("div");
+                    acoes.className = "painel-dev-denuncia-acoes";
+
+                    async function atualizarStatus(status, rotulo, exigirNota) {
+                        const nota = window.prompt(
+                            exigirNota
+                                ? "Informe a justificativa obrigatória para " + rotulo.toLowerCase() + ":"
+                                : "Observação interna (opcional):"
+                        );
+                        if (nota === null) return;
+                        if (exigirNota && !nota.trim()) {
+                            window.alert("A justificativa é obrigatória para encerrar uma denúncia.");
+                            return;
+                        }
+                        acoes.querySelectorAll("button").forEach(botaoAcao => botaoAcao.disabled = true);
+                        try {
+                            await chamarAdmin("update_moderation_report", {
+                                report_id: reportId,
+                                status,
+                                note: nota.trim() || null
+                            });
+                            window.alert("Denúncia atualizada: " + rotuloStatusDenuncia(status) + ".");
+                            carregarDenuncias();
+                        } catch (erro) {
+                            window.alert(erro.message || "Não foi possível atualizar a denúncia.");
+                            acoes.querySelectorAll("button").forEach(botaoAcao => botaoAcao.disabled = false);
+                        }
+                    }
+
+                    if (report.status !== "in_review") {
+                        const assumir = document.createElement("button");
+                        assumir.type = "button";
+                        assumir.textContent = "Marcar em análise";
+                        assumir.addEventListener("click", () => atualizarStatus("in_review", "marcar em análise", false));
+                        acoes.appendChild(assumir);
+                    }
+                    if (report.status !== "resolved") {
+                        const resolver = document.createElement("button");
+                        resolver.type = "button";
+                        resolver.className = "resolver";
+                        resolver.textContent = "Resolver";
+                        resolver.addEventListener("click", () => atualizarStatus("resolved", "resolver", true));
+                        acoes.appendChild(resolver);
+                    }
+                    if (report.status !== "dismissed") {
+                        const descartar = document.createElement("button");
+                        descartar.type = "button";
+                        descartar.className = "descartar";
+                        descartar.textContent = "Descartar";
+                        descartar.addEventListener("click", () => atualizarStatus("dismissed", "descartar", true));
+                        acoes.appendChild(descartar);
+                    }
+                    detalhe.appendChild(acoes);
+                    item.appendChild(detalhe);
+                    botao.textContent = "Atualizar detalhes";
+                } catch (erro) {
+                    window.alert(erro.message || "Não foi possível abrir a denúncia.");
+                } finally {
+                    botao.disabled = false;
+                }
+            }
+
             async function carregarSolicitacoesProfessor() {
                 const estado = document.getElementById("estadoSolicitacoesProfessorDev");
                 const lista = document.getElementById("listaSolicitacoesProfessorDev");
@@ -427,6 +616,7 @@
 
             if (podeUsuarios) carregarUsuarios();
             else if (podeProfessores) abrirAba("professores");
+            else if (podeModeracao) abrirAba("moderacao");
         }
         window.addEventListener("maDevAccessReady", iniciarGerenciamentoPainelDev, { once: true });
         if (window.maDevPermissions) iniciarGerenciamentoPainelDev();
