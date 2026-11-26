@@ -21,6 +21,15 @@ async function revokeUserSessions(userId: string) {
   return Number(data) || 0;
 }
 
+async function hasDevPermission(userId: string, permission: string) {
+  const { data, error } = await admin.rpc("ma_user_has_dev_permission", {
+    p_user_id: userId,
+    p_permission: permission
+  });
+  if (error) throw error;
+  return data === true;
+}
+
 async function removeAccountStorageObjects(userId: string, avatarPath: string | null) {
   const { data: ownedObjects, error } = await admin.rpc("ma_get_account_storage_objects_for_cleanup", {
     p_user_id: userId
@@ -134,6 +143,21 @@ Deno.serve(async (req) => {
       .eq("id", targetId).maybeSingle();
     if (targetError || !target) return reply({ error: "Perfil não encontrado." }, 404);
 
+    const actionPermissions: Record<string, string> = {
+      status: "users.manage",
+      suspend: "users.restrict",
+      ban: "users.restrict",
+      restore: "users.restrict",
+      unsuspend: "users.restrict",
+      demote: "teachers.manage",
+      delete: "users.delete",
+      set_dev_role: "dev.manage"
+    };
+    const requiredPermission = actionPermissions[String(body.action)];
+    if (requiredPermission && !(await hasDevPermission(authData.user.id, requiredPermission))) {
+      return reply({ error: "Sua conta DEV não possui permissão para esta ação." }, 403);
+    }
+
     const actionsRestrictedForDevTargets = ["ban", "suspend", "restore", "unsuspend"];
     if (
       target.tipo_usuario === "dev" &&
@@ -141,6 +165,23 @@ Deno.serve(async (req) => {
       authData.user.id !== PRIMARY_DEV_USER_ID
     ) {
       return reply({ error: "Somente a DEV principal pode banir, suspender ou reativar outra conta DEV." }, 403);
+    }
+
+    if (body.action === "set_dev_role") {
+      if (target.tipo_usuario !== "dev") {
+        return reply({ error: "O cargo só pode ser atribuído a outra conta DEV." }, 409);
+      }
+      const role = String(body.role || "");
+      if (!["administrator", "moderator"].includes(role)) {
+        return reply({ error: "Cargo DEV inválido." }, 400);
+      }
+      const { data, error } = await admin.rpc("ma_set_dev_role", {
+        p_actor_id: authData.user.id,
+        p_target_user_id: targetId,
+        p_role: role
+      });
+      if (error) throw error;
+      return reply(data);
     }
 
     if (body.action === "delete") {
