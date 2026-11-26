@@ -372,57 +372,6 @@
         }
     }
 
-    async function denunciarMensagem(mensagem, botao) {
-        const motivos = [
-            ["1", "Assédio ou bullying", "harassment"],
-            ["2", "Spam ou mensagens repetitivas", "spam"],
-            ["3", "Ameaça ou intimidação", "threat"],
-            ["4", "Conteúdo impróprio", "inappropriate"],
-            ["5", "Golpe ou tentativa de fraude", "scam"],
-            ["6", "Outro motivo", "other"]
-        ];
-        const escolha = window.prompt(
-            "Por que deseja denunciar esta mensagem?\\n" +
-            motivos.map(item => item[0] + " - " + item[1]).join("\\n") +
-            "\\n\\nDigite o número correspondente:"
-        );
-        if (escolha === null) return;
-        const motivo = motivos.find(item => item[0] === escolha.trim());
-        if (!motivo) {
-            window.alert("Selecione um dos motivos listados.");
-            return;
-        }
-
-        const detalhes = window.prompt("Relato adicional (opcional, até 1000 caracteres):");
-        if (detalhes === null) return;
-        if (detalhes.length > 1000) {
-            window.alert("O relato adicional deve ter no máximo 1000 caracteres.");
-            return;
-        }
-
-        botao.disabled = true;
-        try {
-            const { data, error } = await supabaseClient.functions.invoke("account-admin", {
-                body: {
-                    action: "submit_message_report",
-                    message_id: mensagem.id,
-                    reason: motivo[2],
-                    details: detalhes.trim() || null
-                }
-            });
-            if (error) throw error;
-            if (data?.error || !data?.success) {
-                throw new Error(data?.error || "Não foi possível registrar a denúncia.");
-            }
-            window.alert("Denúncia registrada. A equipe de moderação poderá analisar a mensagem denunciada.");
-        } catch (erro) {
-            console.error("Erro ao denunciar mensagem:", erro);
-            window.alert(erro.message || "Não foi possível registrar a denúncia.");
-        } finally {
-            botao.disabled = false;
-        }
-    }
-
     function renderizarMensagem(mensagem) {
         if (!mensagem || mensagensRenderizadas.has(mensagem.id) || mensagensOcultasPendentes.has(mensagem.id)) return;
         mensagensRenderizadas.add(mensagem.id);
@@ -475,7 +424,7 @@
             } else {
                 renderizarAcoesConviteDesafio(marcadorDesafio[1], acoes);
             }
-        } else if (somenteLeitura && mensagem.sender_id === usuarioAtual.id) {
+        } else if (somenteLeitura) {
             item.append(texto, horario);
         } else {
             const botaoAcoes = document.createElement("button");
@@ -503,10 +452,6 @@
                 botao.addEventListener("click", function(event) {
                     event.stopPropagation();
                     menu.hidden = true;
-                    if (acao === "denunciar") {
-                        denunciarMensagem(mensagem, botao);
-                        return;
-                    }
                     if (acao === "todos" && !window.confirm("Apagar esta mensagem para você e para o outro usuário?")) return;
                     executarAcaoMensagem(mensagem, item, acao);
                 });
@@ -514,14 +459,9 @@
             }
 
             if (mensagem.sender_id === usuarioAtual.id) {
-                if (!somenteLeitura) {
-                    adicionarAcao("Apagar para todos", "todos", true);
-                    adicionarAcao("Apagar para mim", "mim", false);
-                }
-            } else {
-                adicionarAcao("Denunciar mensagem", "denunciar", true);
-                if (!somenteLeitura) adicionarAcao("Apagar para mim", "mim", false);
+                adicionarAcao("Apagar para todos", "todos", true);
             }
+            adicionarAcao("Apagar para mim", "mim", false);
 
             item.append(texto, horario, botaoAcoes, menu);
         }
