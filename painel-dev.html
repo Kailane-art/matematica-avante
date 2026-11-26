@@ -209,6 +209,7 @@
                 }
                 window.maDevPermissions = acesso.permissions;
                 window.maDevRole = acesso.role;
+                window.dispatchEvent(new Event("maDevAccessReady"));
 
                 estado.hidden = true;
                 conteudo.hidden = false;
@@ -222,7 +223,7 @@
     </script>
  
     <script>
-        (function iniciarGerenciamentoPainelDev() {
+        function iniciarGerenciamentoPainelDev() {
             const permissoes = window.maDevPermissions || {};
             const area = document.getElementById("areaGerenciamento");
             const abaUsuarios = document.getElementById("abaUsuariosDev");
@@ -426,7 +427,9 @@
 
             if (podeUsuarios) carregarUsuarios();
             else if (podeProfessores) abrirAba("professores");
-        })();
+        }
+        window.addEventListener("maDevAccessReady", iniciarGerenciamentoPainelDev, { once: true });
+        if (window.maDevPermissions) iniciarGerenciamentoPainelDev();
     </script>
 </body>
 </html>
