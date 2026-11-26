@@ -135,6 +135,134 @@ Deno.serve(async (req) => {
       .eq("id", authData.user.id).maybeSingle();
     if (actorError || actor?.tipo_usuario !== "dev") return reply({ error: "Somente contas DEV podem executar ações administrativas." }, 403);
 
+    const requestedAction = String(body?.action || "");
+
+    if (requestedAction === "get_access") {
+      const permissionNames = [
+        "users.manage", "users.restrict", "users.delete",
+        "teachers.manage", "xp.manage", "chats.moderate",
+        "premium.manage", "stats.view", "announcements.manage",
+        "audit.view", "tasks.manage", "moderation.access",
+        "tasks.view", "dev.manage"
+      ];
+      const permissions: Record<string, boolean> = {};
+      for (const permission of permissionNames) {
+        permissions[permission] = await hasDevPermission(authData.user.id, permission);
+      }
+
+      let role = "moderator";
+      if (authData.user.id === PRIMARY_DEV_USER_ID) {
+        role = "primary";
+      } else {
+        const { data: roleData, error: roleError } = await admin
+          .from("dev_access_roles")
+          .select("role")
+          .eq("user_id", authData.user.id)
+          .maybeSingle();
+        if (roleError) throw roleError;
+        role = roleData?.role || "moderator";
+      }
+      return reply({ role, permissions });
+    }
+
+    if (requestedAction === "list_users") {
+      if (!(await hasDevPermission(authData.user.id, "users.manage"))) {
+        return reply({ error: "Sua conta DEV não pode consultar a lista de usuários." }, 403);
+      }
+      const search = String(body.search || "").trim().slice(0, 80);
+      const type = String(body.type || "all");
+      if (!["all", "aluno", "professor", "dev"].includes(type)) {
+        return reply({ error: "Filtro de tipo de conta inválido." }, 400);
+      }
+
+      const buildQuery = () => {
+        let query = admin.from("profiles")
+          .select("id, display_name, username, tipo_usuario, status_professor, created_at")
+          .order("created_at", { ascending: false })
+          .limit(30);
+        if (type !== "all") query = query.eq("tipo_usuario", type);
+        return query;
+      };
+
+      let users: any[] = [];
+      if (search) {
+        const [byUsername, byName] = await Promise.all([
+          buildQuery().ilike("username", "%" + search + "%"),
+          buildQuery().ilike("display_name", "%" + search + "%")
+        ]);
+        if (byUsername.error) throw byUsername.error;
+        if (byName.error) throw byName.error;
+        const unique = new Map<string, any>();
+        for (const user of [...(byUsername.data || []), ...(byName.data || [])]) unique.set(user.id, user);
+        users = [...unique.values()]
+          .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+          .slice(0, 30);
+      } else {
+        const { data, error } = await buildQuery();
+        if (error) throw error;
+        users = data || [];
+      }
+
+      const userIds = users.map((user) => user.id);
+      const restrictionsResult = userIds.length
+        ? await admin.from("account_restrictions")
+            .select("user_id, restriction_type, expires_at")
+            .in("user_id", userIds)
+        : { data: [], error: null };
+      if (restrictionsResult.error) throw restrictionsResult.error;
+      const restrictions = new Map((restrictionsResult.data || []).map((item) => [item.user_id, item]));
+      return reply({
+        users: users.map((user) => ({
+          ...user,
+          restriction: restrictions.get(user.id) || null
+        })),
+        limit: 30
+      });
+    }
+
+    if (requestedAction === "list_teachers") {
+      if (!(await hasDevPermission(authData.user.id, "teachers.manage"))) {
+        return reply({ error: "Sua conta DEV não pode consultar os professores." }, 403);
+      }
+      const { data, error } = await admin.from("profiles")
+        .select("id, display_name, username, status_professor, created_at")
+        .eq("tipo_usuario", "professor")
+        .order("created_at", { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      return reply({ teachers: data || [], limit: 100 });
+    }
+
+    if (requestedAction === "list_teacher_requests") {
+      if (!(await hasDevPermission(authData.user.id, "teachers.manage"))) {
+        return reply({ error: "Sua conta DEV não pode consultar solicitações de professores." }, 403);
+      }
+
+      const { data: assignments, error: assignmentsError } = await admin
+        .from("teacher_request_messages")
+        .select("request_id, message_id")
+        .eq("recipient_id", authData.user.id);
+      if (assignmentsError) throw assignmentsError;
+
+      const requestIds = [...new Set((assignments || []).map((item) => item.request_id))];
+      if (!requestIds.length) return reply({ requests: [] });
+
+      const { data, error } = await admin.from("teacher_requests")
+        .select("id, user_id, full_name, username, formation, institution, specialties, other_specialty, experience, status, created_at")
+        .in("id", requestIds)
+        .order("created_at", { ascending: false })
+        .limit(100);
+      if (error) throw error;
+
+      const messageByRequest = new Map((assignments || []).map((item) => [item.request_id, item.message_id]));
+      return reply({
+        requests: (data || []).map((request) => ({
+          ...request,
+          message_id: messageByRequest.get(request.id) || null
+        }))
+      });
+    }
+
     const targetId = String(body?.target_user_id || "");
     if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(targetId) || targetId === authData.user.id) {
       return reply({ error: "Usuário de destino inválido." }, 400);
