@@ -10,6 +10,9 @@ const cors = {
 };
 const reply = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: cors });
 
+// Identificador imutável da conta DEV principal. Não usar username para autorização.
+const PRIMARY_DEV_USER_ID = "356e82f3-2ad0-4932-bc2c-e328bc7066d2";
+
 async function revokeUserSessions(userId: string) {
   const { data, error } = await admin.rpc("ma_revoke_account_sessions", {
     p_user_id: userId
@@ -130,6 +133,15 @@ Deno.serve(async (req) => {
     const { data: target, error: targetError } = await admin.from("profiles").select("id, username, tipo_usuario")
       .eq("id", targetId).maybeSingle();
     if (targetError || !target) return reply({ error: "Perfil não encontrado." }, 404);
+
+    const actionsRestrictedForDevTargets = ["ban", "suspend", "restore", "unsuspend"];
+    if (
+      target.tipo_usuario === "dev" &&
+      actionsRestrictedForDevTargets.includes(String(body.action)) &&
+      authData.user.id !== PRIMARY_DEV_USER_ID
+    ) {
+      return reply({ error: "Somente a DEV principal pode banir, suspender ou reativar outra conta DEV." }, 403);
+    }
 
     if (body.action === "delete") {
       const typedUsername = String(body.confirm_username || "").trim().replace(/^@/, "");
