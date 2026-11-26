@@ -169,7 +169,7 @@ Deno.serve(async (req) => {
       if (!(await hasDevPermission(authData.user.id, "users.manage"))) {
         return reply({ error: "Sua conta DEV não pode consultar a lista de usuários." }, 403);
       }
-      const search = String(body.search || "").trim().slice(0, 80);
+      const search = String(body.search || "").trim().replace(/^@/, "").slice(0, 80);
       const type = String(body.type || "all");
       if (!["all", "aluno", "professor", "dev"].includes(type)) {
         return reply({ error: "Filtro de tipo de conta inválido." }, 400);
