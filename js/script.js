@@ -332,6 +332,41 @@ if (window.supabase && window.supabase.createClient) {
     );
 }
 
+
+// Adiciona o acesso ao Painel DEV somente após confirmar o tipo da conta no banco.
+async function adicionarAcessoPainelDevAoMenu() {
+    if (!menuLateral || paginaAtual === "painel-dev.html" || !supabaseClient) return;
+
+    try {
+        const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+        if (erroUsuario || !user) return;
+
+        const { data: perfil, error: erroPerfil } = await supabaseClient
+            .from("profiles")
+            .select("tipo_usuario")
+            .eq("id", user.id)
+            .single();
+
+        if (erroPerfil || perfil?.tipo_usuario !== "dev") return;
+        if (menuLateral.querySelector('a.menu-item[href="painel-dev.html"]')) return;
+
+        const linkPainelDev = document.createElement("a");
+        linkPainelDev.className = "menu-item";
+        linkPainelDev.href = "painel-dev.html";
+        linkPainelDev.setAttribute("aria-label", "Painel DEV");
+        linkPainelDev.innerHTML = '<i data-lucide="shield-check"></i><span>Painel DEV</span>';
+        menuLateral.appendChild(linkPainelDev);
+
+        if (window.lucide && typeof window.lucide.createIcons === "function") {
+            window.lucide.createIcons();
+        }
+    } catch (erro) {
+        console.error("Não foi possível verificar o acesso ao Painel DEV no menu:", erro);
+    }
+}
+
+adicionarAcessoPainelDevAoMenu();
+
 // Compartilha apenas verificações de sessão simultâneas.
 // A promessa é descartada ao terminar, evitando manter dados de usuário em cache.
 let verificacaoUsuarioEmAndamento = null;
