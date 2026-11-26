@@ -387,7 +387,7 @@ async function executarAcaoAdministrativaPerfil(action, extras = {}) {
     return data;
 }
 
-async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
+async function configurarPainelAdministrativoPerfil(ehProprioPerfil, idUsuarioAtual) {
     const botao = document.getElementById("botaoInformacaoAdminPerfil");
     const painel = document.getElementById("painelAdministrativoPerfil");
     const estado = document.getElementById("estadoAdminPerfil");
@@ -411,6 +411,13 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
     }
 
     botao.hidden = false;
+    const alvoEhDev = perfilPublicoAtual.tipo_usuario === "dev";
+    const usuarioAtualEhDevPrincipal = idUsuarioAtual === "356e82f3-2ad0-4932-bc2c-e328bc7066d2";
+    const podeGerenciarRestricaoDoAlvo = !alvoEhDev || usuarioAtualEhDevPrincipal;
+    botaoSuspender.hidden = !podeGerenciarRestricaoDoAlvo;
+    botaoBanir.hidden = !podeGerenciarRestricaoDoAlvo;
+    botaoReativar.hidden = !podeGerenciarRestricaoDoAlvo;
+    botaoRetirarSuspensao.hidden = !podeGerenciarRestricaoDoAlvo;
     botaoRebaixar.hidden = perfilPublicoAtual.tipo_usuario !== "professor";
     mensagem.textContent = "";
     estado.textContent = "Verificando situação da conta...";
@@ -448,6 +455,14 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil) {
         botaoReativar.hidden = true;
         botaoRetirarSuspensao.hidden = true;
         botaoRebaixar.hidden = perfilPublicoAtual.tipo_usuario !== "professor";
+    }
+
+    if (!podeGerenciarRestricaoDoAlvo) {
+        botaoSuspender.hidden = true;
+        botaoBanir.hidden = true;
+        botaoReativar.hidden = true;
+        botaoRetirarSuspensao.hidden = true;
+        formSuspensao.hidden = true;
     }
 
     botao.onclick = function() {
@@ -793,7 +808,7 @@ async function carregarPerfilPublico() {
         }, 30000);
 
         await configurarFavoritoPerfil(perfil.id, sessaoAtual?.user?.id, ehProprioPerfil);
-        await configurarPainelAdministrativoPerfil(ehProprioPerfil);
+        await configurarPainelAdministrativoPerfil(ehProprioPerfil, sessaoAtual?.user?.id);
         bio.textContent = perfil.bio || "Este usuário ainda não adicionou uma bio.";
 
         if (perfil.avatar_path) {
