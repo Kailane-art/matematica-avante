@@ -131,11 +131,34 @@ Deno.serve(async (req) => {
     if (actorRestricted) {
       return reply({ error: "Sua conta possui uma restrição ativa e não pode executar ações administrativas." }, 403);
     }
+    const requestedAction = String(body?.action || "");
+
+    if (requestedAction === "submit_message_report") {
+      const messageId = String(body.message_id || "");
+      const reason = String(body.reason || "");
+      const details = body.details == null ? null : String(body.details);
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(messageId)) {
+        return reply({ error: "Mensagem inválida para denúncia." }, 400);
+      }
+      if (details && details.length > 1000) {
+        return reply({ error: "O relato adicional deve ter no máximo 1000 caracteres." }, 400);
+      }
+      const { data: reportId, error: reportError } = await admin.rpc("ma_submit_message_report", {
+        p_reporter_id: authData.user.id,
+        p_message_id: messageId,
+        p_reason: reason,
+        p_details: details
+      });
+      if (reportError) {
+        const status = /já registrou uma denúncia/i.test(reportError.message || "") ? 409 : 400;
+        return reply({ error: reportError.message || "Não foi possível registrar a denúncia." }, status);
+      }
+      return reply({ success: true, report_id: reportId });
+    }
+
     const { data: actor, error: actorError } = await admin.from("profiles").select("tipo_usuario")
       .eq("id", authData.user.id).maybeSingle();
     if (actorError || actor?.tipo_usuario !== "dev") return reply({ error: "Somente contas DEV podem executar ações administrativas." }, 403);
-
-    const requestedAction = String(body?.action || "");
 
     if (requestedAction === "get_access") {
       const permissionNames = [
@@ -261,6 +284,54 @@ Deno.serve(async (req) => {
           message_id: messageByRequest.get(request.id) || null
         }))
       });
+    }
+
+    if (requestedAction === "list_moderation_reports") {
+      if (!(await hasDevPermission(authData.user.id, "moderation.access"))) {
+        return reply({ error: "Sua conta DEV não pode acessar a fila de denúncias." }, 403);
+      }
+      const { data, error } = await admin.rpc("ma_list_moderation_reports", {
+        p_actor_id: authData.user.id
+      });
+      if (error) throw error;
+      return reply({ reports: data || [] });
+    }
+
+    if (requestedAction === "get_moderation_report") {
+      if (!(await hasDevPermission(authData.user.id, "chats.moderate"))) {
+        return reply({ error: "Sua conta DEV não pode consultar o conteúdo das denúncias." }, 403);
+      }
+      const reportId = String(body.report_id || "");
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(reportId)) {
+        return reply({ error: "Denúncia inválida." }, 400);
+      }
+      const { data, error } = await admin.rpc("ma_get_moderation_report", {
+        p_actor_id: authData.user.id,
+        p_report_id: reportId
+      });
+      if (error) throw error;
+      return reply({ report: data });
+    }
+
+    if (requestedAction === "update_moderation_report") {
+      if (!(await hasDevPermission(authData.user.id, "chats.moderate"))) {
+        return reply({ error: "Sua conta DEV não pode atualizar denúncias." }, 403);
+      }
+      const reportId = String(body.report_id || "");
+      const status = String(body.status || "");
+      const note = body.note == null ? null : String(body.note);
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(reportId)) {
+        return reply({ error: "Denúncia inválida." }, 400);
+      }
+      if (note && note.length > 1000) return reply({ error: "A observação deve ter no máximo 1000 caracteres." }, 400);
+      const { data, error } = await admin.rpc("ma_update_moderation_report", {
+        p_actor_id: authData.user.id,
+        p_report_id: reportId,
+        p_status: status,
+        p_note: note
+      });
+      if (error) throw error;
+      return reply(data);
     }
 
     const targetId = String(body?.target_user_id || "");
