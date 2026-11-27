@@ -157,6 +157,22 @@
         .modo-escuro .painel-dev-botao,
         .modo-escuro .painel-dev-botao:disabled { border-color: #38516e; background: #203650; color: #c0ccda; }
         .modo-escuro .painel-dev-modulo-especial { border-color: #38516e; background: linear-gradient(145deg, #142a45, #183251); }
+        .painel-dev-listagem[hidden] { display: none !important; }
+        .painel-dev-filtros { display: grid; grid-template-columns: minmax(0, 1fr) 190px auto; gap: 10px; margin: 18px 0; }
+        .painel-dev-filtros input, .painel-dev-filtros select { min-width: 0; width: 100%; padding: 12px 14px; border: 1px solid #cbd8e8; border-radius: 10px; background: #fff; color: #24364b; font: inherit; }
+        .painel-dev-estado { color: #63758b; margin: 12px 0; }
+        .painel-dev-usuarios { display: grid; gap: 10px; }
+        .painel-dev-usuario { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; border: 1px solid #dce5ef; border-radius: 12px; background: #fff; }
+        .painel-dev-usuario strong { display: block; color: #20364f; }
+        .painel-dev-usuario small { display: block; margin-top: 4px; color: #718096; }
+        .painel-dev-usuario a { color: #1769bd; font-weight: 600; text-decoration: none; white-space: nowrap; }
+        .modo-escuro .painel-dev-filtros input, .modo-escuro .painel-dev-filtros select, .modo-escuro .painel-dev-usuario { background: #172b43; border-color: #38516e; color: #e3edf8; }
+        .modo-escuro .painel-dev-usuario strong { color: #e3edf8; }
+        .modo-escuro .painel-dev-usuario small, .modo-escuro .painel-dev-estado { color: #a9bad0; }
+        @media (max-width: 680px) {
+            .painel-dev-filtros { grid-template-columns: 1fr; }
+            .painel-dev-usuario { align-items: flex-start; flex-direction: column; }
+        }
         @media (max-width: 680px) {
             .painel-dev-header { padding: 16px 0; }
             .painel-dev-conteudo { padding-top: 6px; }
@@ -198,7 +214,7 @@
                     <div class="painel-dev-modulo-conteudo">
                         <h3>Gerenciamento de usuários</h3>
                         <p>Consulta e administração das contas cadastradas na plataforma.</p>
-                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                        <button id="abrirGerenciamentoUsuarios" class="painel-dev-botao" type="button">Abrir módulo</button>
                     </div>
                 </article>
                 <article class="painel-dev-modulo">
@@ -276,6 +292,25 @@
             </div>
         </section>
 
+        <section id="moduloUsuarios" class="painel-dev-secao painel-dev-listagem" hidden>
+            <div class="painel-dev-secao-cabecalho">
+                <h2>Gerenciamento de usuários</h2>
+                <p>Consulta de contas cadastradas. Esta área não permite alterar, suspender ou excluir usuários.</p>
+            </div>
+            <form id="formBuscaUsuarios" class="painel-dev-filtros">
+                <input id="buscaUsuarios" type="search" maxlength="80" placeholder="Pesquisar por nome ou @username" aria-label="Pesquisar usuários">
+                <select id="filtroTipoUsuario" aria-label="Filtrar por tipo de conta">
+                    <option value="all">Todos os tipos</option>
+                    <option value="aluno">Alunos</option>
+                    <option value="professor">Professores</option>
+                    <option value="dev">DEV</option>
+                </select>
+                <button class="painel-dev-botao" type="submit">Pesquisar</button>
+            </form>
+            <p id="estadoListaUsuarios" class="painel-dev-estado" role="status">Carregando usuários...</p>
+            <div id="listaUsuarios" class="painel-dev-usuarios"></div>
+        </section>
+
         <section class="painel-dev-secao">
             <div class="painel-dev-secao-cabecalho">
                 <h2>Ferramentas complementares</h2>
@@ -316,9 +351,105 @@
         <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
     </div>
 
-    <script src="js/script.js?v=20261125-painel-dev2"></script>
+    <script src="js/script.js?v=20261126-painel-users1"></script>
     <script>
         if (window.lucide) lucide.createIcons();
+
+        (() => {
+            const botao = document.getElementById("abrirGerenciamentoUsuarios");
+            const modulo = document.getElementById("moduloUsuarios");
+            const formulario = document.getElementById("formBuscaUsuarios");
+            const campoBusca = document.getElementById("buscaUsuarios");
+            const filtroTipo = document.getElementById("filtroTipoUsuario");
+            const estado = document.getElementById("estadoListaUsuarios");
+            const lista = document.getElementById("listaUsuarios");
+            let carregando = false;
+
+            function mostrarEstado(mensagem) {
+                estado.textContent = mensagem;
+            }
+
+            function renderizarUsuarios(usuarios) {
+                lista.replaceChildren();
+                if (!usuarios.length) {
+                    mostrarEstado("Nenhum usuário encontrado.");
+                    return;
+                }
+
+                mostrarEstado(usuarios.length === 30
+                    ? "Exibindo até 30 resultados. Refine a pesquisa para localizar outras contas."
+                    : usuarios.length + " usuário(s) encontrado(s).");
+
+                usuarios.forEach((usuario) => {
+                    const item = document.createElement("article");
+                    item.className = "painel-dev-usuario";
+
+                    const informacoes = document.createElement("div");
+                    const nome = document.createElement("strong");
+                    nome.textContent = usuario.display_name || usuario.username || "Usuário sem nome";
+                    const detalhes = document.createElement("small");
+                    const tipo = usuario.tipo_usuario === "dev" ? "DEV" :
+                        usuario.tipo_usuario === "professor" ? "Professor" : "Aluno";
+                    detalhes.textContent = "@" + (usuario.username || "sem-username") + " · " + tipo;
+                    informacoes.append(nome, detalhes);
+
+                    const link = document.createElement("a");
+                    link.href = "perfil-publico.html?usuario=" + encodeURIComponent(usuario.username || "");
+                    link.textContent = "Ver perfil";
+
+                    item.append(informacoes, link);
+                    lista.appendChild(item);
+                });
+            }
+
+            async function carregarUsuarios() {
+                if (carregando) return;
+                if (!supabaseClient) {
+                    mostrarEstado("Não foi possível conectar ao serviço de usuários.");
+                    return;
+                }
+
+                carregando = true;
+                lista.replaceChildren();
+                mostrarEstado("Carregando usuários...");
+
+                try {
+                    const { data: sessaoData, error: sessaoErro } = await supabaseClient.auth.getSession();
+                    if (sessaoErro || !sessaoData.session) {
+                        throw new Error("Sua sessão não está disponível. Entre novamente.");
+                    }
+
+                    const { data, error } = await supabaseClient.functions.invoke("account-admin", {
+                        body: {
+                            action: "list_users",
+                            search: campoBusca.value.trim(),
+                            user_type: filtroTipo.value
+                        }
+                    });
+
+                    if (error) throw error;
+                    if (data?.error) throw new Error(data.error);
+                    renderizarUsuarios(Array.isArray(data?.users) ? data.users : []);
+                } catch (erro) {
+                    console.error("Erro ao carregar usuários:", erro);
+                    mostrarEstado(erro.message || "Não foi possível carregar os usuários.");
+                } finally {
+                    carregando = false;
+                }
+            }
+
+            botao.addEventListener("click", () => {
+                const vaiAbrir = modulo.hidden;
+                modulo.hidden = !vaiAbrir;
+                botao.textContent = vaiAbrir ? "Fechar módulo" : "Abrir módulo";
+                if (vaiAbrir) carregarUsuarios();
+            });
+
+            formulario.addEventListener("submit", (evento) => {
+                evento.preventDefault();
+                carregarUsuarios();
+            });
+        })();
     </script>
 </body>
 </html>
