@@ -126,6 +126,35 @@ Deno.serve(async (req) => {
       .eq("id", authData.user.id).maybeSingle();
     if (actorError || actor?.tipo_usuario !== "dev") return reply({ error: "Somente contas DEV podem executar ações administrativas." }, 403);
 
+    if (body.action === "list_users") {
+      // A listagem geral de perfis fica restrita à DEV principal.
+      if (authData.user.id !== PRIMARY_DEV_USER_ID) {
+        return reply({ error: "Somente a DEV principal pode consultar a lista geral de usuários." }, 403);
+      }
+
+      const search = String(body.search || "").trim().slice(0, 80)
+        .replace(/[,%()]/g, " ").replace(/\\/g, " ").replace(/^@/, "").trim();
+      const userType = String(body.user_type || "all");
+      if (!["all", "aluno", "professor", "dev"].includes(userType)) {
+        return reply({ error: "Filtro de tipo de conta inválido." }, 400);
+      }
+
+      let query = admin.from("profiles")
+        .select("id, display_name, username, tipo_usuario, status_professor, created_at")
+        .order("created_at", { ascending: false })
+        .limit(30);
+
+      if (userType !== "all") query = query.eq("tipo_usuario", userType);
+      if (search) {
+        const pattern = "%" + search + "%";
+        query = query.or("display_name.ilike." + pattern + ",username.ilike." + pattern);
+      }
+
+      const { data: users, error: usersError } = await query;
+      if (usersError) throw usersError;
+      return reply({ users: users || [] });
+    }
+
     const targetId = String(body?.target_user_id || "");
     if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(targetId) || targetId === authData.user.id) {
       return reply({ error: "Usuário de destino inválido." }, 400);
