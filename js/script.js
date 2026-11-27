@@ -336,7 +336,7 @@ if (window.supabase && window.supabase.createClient) {
 // Exibe o acesso ao Painel DEV somente após confirmar o tipo de conta no banco.
 // O localStorage não é usado como fonte de autorização.
 async function adicionarAcessoPainelDev() {
-    if (!menuLateral || paginaLogin || !supabaseClient) return;
+    if (!menuLateral || paginaLogin || paginaAtual === "painel-dev.html" || !supabaseClient) return;
 
     try {
         const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
