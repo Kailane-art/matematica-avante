@@ -333,6 +333,43 @@ if (window.supabase && window.supabase.createClient) {
 }
 
 
+// Exibe o acesso ao Painel DEV somente após confirmar o tipo de conta no banco.
+// O localStorage não é usado como fonte de autorização.
+async function adicionarAcessoPainelDev() {
+    if (!menuLateral || paginaLogin || !supabaseClient) return;
+
+    try {
+        const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+        if (erroUsuario || !user) return;
+
+        const { data: perfil, error: erroPerfil } = await supabaseClient
+            .from("profiles")
+            .select("tipo_usuario")
+            .eq("id", user.id)
+            .single();
+
+        if (erroPerfil || !perfil || perfil.tipo_usuario !== "dev") return;
+
+        if (menuLateral.querySelector('a.menu-item[href="painel-dev.html"]')) return;
+
+        const linkPainel = document.createElement("a");
+        linkPainel.className = "menu-item";
+        linkPainel.href = "painel-dev.html";
+        linkPainel.setAttribute("aria-label", "Painel DEV");
+        linkPainel.innerHTML = '<i data-lucide="shield-check"></i><span>Painel DEV</span>';
+        menuLateral.appendChild(linkPainel);
+
+        if (window.lucide && typeof window.lucide.createIcons === "function") {
+            window.lucide.createIcons();
+        }
+    } catch (erro) {
+        console.error("Não foi possível verificar o acesso ao Painel DEV:", erro);
+    }
+}
+
+adicionarAcessoPainelDev();
+
+
 // Compartilha apenas verificações de sessão simultâneas.
 // A promessa é descartada ao terminar, evitando manter dados de usuário em cache.
 let verificacaoUsuarioEmAndamento = null;
