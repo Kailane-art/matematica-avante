@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#12366f">
+    <title>Painel DEV - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css?v=20261122-streak1">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .pagina-painel-dev {
+            min-height: 100vh;
+            background: #f3f7fc;
+            color: #183153;
+        }
+        .painel-dev-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: min(1160px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 22px 0;
+        }
+        .painel-dev-header .icon-button {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            flex: 0 0 42px;
+            border: 1px solid #d6e2f1;
+            border-radius: 12px;
+            background: #fff;
+            color: #17447e;
+            cursor: pointer;
+        }
+        .painel-dev-header-text { flex: 1; min-width: 0; }
+        .painel-dev-header h1 { margin: 0; color: #153b70; font-size: clamp(20px, 4vw, 27px); }
+        .painel-dev-header p { margin: 4px 0 0; color: #64748b; font-size: 13px; }
+        .painel-dev-conteudo {
+            width: min(1160px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 12px 0 56px;
+        }
+        .painel-dev-apresentacao {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(22px, 4vw, 34px);
+            border-radius: 22px;
+            background: linear-gradient(125deg, #12366f, #1e56a0 65%, #3479bd);
+            color: #fff;
+            box-shadow: 0 12px 28px rgba(18, 54, 111, .16);
+        }
+        .painel-dev-apresentacao::after {
+            content: "";
+            position: absolute;
+            width: 210px;
+            height: 210px;
+            right: -65px;
+            top: -105px;
+            border: 1px solid rgba(255,255,255,.17);
+            border-radius: 50%;
+            box-shadow: 0 0 0 25px rgba(255,255,255,.045), 0 0 0 52px rgba(255,255,255,.035);
+            pointer-events: none;
+        }
+        .painel-dev-etiqueta {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 13px;
+            padding: 6px 10px;
+            border: 1px solid rgba(255,255,255,.24);
+            border-radius: 999px;
+            background: rgba(255,255,255,.10);
+            color: #e7f1ff;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+        .painel-dev-apresentacao h2 { margin: 0 0 9px; font-size: clamp(23px, 4vw, 32px); }
+        .painel-dev-apresentacao p { max-width: 690px; margin: 0; color: #e1edff; font-size: 15px; line-height: 1.65; }
+        .painel-dev-secao { margin-top: 30px; }
+        .painel-dev-secao-cabecalho { margin-bottom: 15px; }
+        .painel-dev-secao-cabecalho h2 { margin: 0; color: #183b68; font-size: 20px; }
+        .painel-dev-secao-cabecalho p { margin: 5px 0 0; color: #64748b; font-size: 13px; line-height: 1.5; }
+        .painel-dev-grade {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+        .painel-dev-modulo {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            min-width: 0;
+            padding: 19px;
+            border: 1px solid #dce6f2;
+            border-radius: 17px;
+            background: #fff;
+            box-shadow: 0 4px 13px rgba(23, 55, 91, .045);
+        }
+        .painel-dev-modulo-icone {
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            border-radius: 13px;
+            background: #eaf2ff;
+            color: #20569a;
+        }
+        .painel-dev-modulo-icone svg { width: 21px; height: 21px; }
+        .painel-dev-modulo-conteudo { flex: 1; min-width: 0; }
+        .painel-dev-modulo h3 { margin: 1px 0 6px; color: #1b3d68; font-size: 15px; }
+        .painel-dev-modulo p { min-height: 38px; margin: 0 0 13px; color: #64748b; font-size: 13px; line-height: 1.5; }
+        .painel-dev-botao {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 35px;
+            padding: 8px 12px;
+            border: 1px solid #d8e2ef;
+            border-radius: 9px;
+            background: #f1f5f9;
+            color: #64748b;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: not-allowed;
+            opacity: 1;
+        }
+        .painel-dev-botao:disabled { color: #64748b; background: #f1f5f9; }
+        .painel-dev-modulo-status {
+            display: block;
+            margin-top: 8px;
+            color: #8a6415;
+            font-size: 11px;
+            font-weight: 800;
+        }
+        .painel-dev-modulo-status::before { content: "•"; margin-right: 6px; color: #d49a27; }
+        .painel-dev-modulo-especial {
+            border-color: #c9d9ed;
+            background: linear-gradient(145deg, #fff, #f5f9ff);
+        }
+        .modo-escuro.pagina-painel-dev { background: #0d1b2e; color: #e5edf8; }
+        .modo-escuro .painel-dev-header h1,
+        .modo-escuro .painel-dev-secao-cabecalho h2 { color: #e5efff; }
+        .modo-escuro .painel-dev-header p,
+        .modo-escuro .painel-dev-secao-cabecalho p { color: #a9bbd2; }
+        .modo-escuro .painel-dev-header .icon-button,
+        .modo-escuro .painel-dev-modulo { border-color: #294361; background: #142a45; color: #e5edf8; }
+        .modo-escuro .painel-dev-modulo h3 { color: #e5efff; }
+        .modo-escuro .painel-dev-modulo p { color: #b5c5d9; }
+        .modo-escuro .painel-dev-modulo-icone { background: #203d62; color: #a9ceff; }
+        .modo-escuro .painel-dev-botao,
+        .modo-escuro .painel-dev-botao:disabled { border-color: #38516e; background: #203650; color: #c0ccda; }
+        .modo-escuro .painel-dev-modulo-especial { border-color: #38516e; background: linear-gradient(145deg, #142a45, #183251); }
+        @media (max-width: 680px) {
+            .painel-dev-header { padding: 16px 0; }
+            .painel-dev-conteudo { padding-top: 6px; }
+            .painel-dev-grade { grid-template-columns: 1fr; gap: 11px; }
+            .painel-dev-modulo { padding: 16px; }
+            .painel-dev-modulo p { min-height: 0; }
+        }
+    </style>
+</head>
+<body class="pagina-painel-dev">
+    <header class="painel-dev-header">
+        <button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar">
+            <i data-lucide="arrow-left"></i>
+        </button>
+        <div class="painel-dev-header-text">
+            <h1>Painel DEV</h1>
+            <p>Central de administração do Matemática Avante</p>
+        </div>
+        <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+            <i data-lucide="menu"></i>
+        </button>
+    </header>
+
+    <main class="painel-dev-conteudo">
+        <section class="painel-dev-apresentacao">
+            <span class="painel-dev-etiqueta"><i data-lucide="shield-check"></i> Área de desenvolvimento</span>
+            <h2>Central de controle</h2>
+            <p>Reúna em um só lugar as ferramentas de administração, acompanhamento e manutenção da plataforma. Os módulos serão liberados gradualmente.</p>
+        </section>
+
+        <section class="painel-dev-secao">
+            <div class="painel-dev-secao-cabecalho">
+                <h2>Administração da plataforma</h2>
+                <p>Os módulos abaixo já têm seus espaços reservados. Suas funcionalidades serão implementadas em etapas.</p>
+            </div>
+            <div class="painel-dev-grade">
+                <article class="painel-dev-modulo">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="users"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>Gerenciamento de usuários</h3>
+                        <p>Consulta e administração das contas cadastradas na plataforma.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+                <article class="painel-dev-modulo">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="graduation-cap"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>Gerenciamento de professores</h3>
+                        <p>Acompanhamento de professores e solicitações de cadastro.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+                <article class="painel-dev-modulo">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="shield-check"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>Segurança e controle de acesso</h3>
+                        <p>Controles de segurança, restrições e proteção das contas.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+                <article class="painel-dev-modulo">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="trophy"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>XP, níveis e títulos</h3>
+                        <p>Ferramentas para acompanhar e administrar o progresso dos usuários.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+                <article class="painel-dev-modulo">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="messages-square"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>Chats e amizades</h3>
+                        <p>Recursos de acompanhamento e moderação das interações.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+                <article class="painel-dev-modulo">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="gem"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>Premium e assinaturas</h3>
+                        <p>Consulta e gerenciamento dos recursos e assinaturas Premium.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+                <article class="painel-dev-modulo">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="chart-no-axes-combined"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>Estatísticas gerais</h3>
+                        <p>Indicadores de uso, atividade e crescimento da plataforma.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+                <article class="painel-dev-modulo">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="bell"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>Comunicados e notificações</h3>
+                        <p>Organização de avisos e comunicados destinados aos usuários.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+                <article class="painel-dev-modulo">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="clipboard-list"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>Logs e auditoria</h3>
+                        <p>Histórico de ações administrativas e eventos importantes.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+                <article class="painel-dev-modulo">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="crown"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>Administração exclusiva da DEV principal</h3>
+                        <p>Controles reservados à conta principal do projeto.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="painel-dev-secao">
+            <div class="painel-dev-secao-cabecalho">
+                <h2>Ferramentas complementares</h2>
+                <p>Áreas de apoio para situações especiais e organização do trabalho administrativo.</p>
+            </div>
+            <div class="painel-dev-grade">
+                <article class="painel-dev-modulo painel-dev-modulo-especial">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="siren"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>Central de emergência</h3>
+                        <p>Acesso rápido a ferramentas para situações críticas da plataforma.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+                <article class="painel-dev-modulo painel-dev-modulo-especial">
+                    <span class="painel-dev-modulo-icone"><i data-lucide="list-checks"></i></span>
+                    <div class="painel-dev-modulo-conteudo">
+                        <h3>Central de tarefas administrativas</h3>
+                        <p>Organização e acompanhamento das tarefas da equipe DEV.</p>
+                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <div id="fundoMenu"></div>
+    <div id="menuLateral">
+        <h2>Menu</h2>
+        <a href="inicio.html" class="menu-item"><i data-lucide="house"></i><span>Voltar ao início</span></a>
+        <a href="perfil.html" class="menu-item"><i data-lucide="user-round"></i><span>Perfil</span></a>
+        <a href="chat.html" class="menu-item"><i data-lucide="messages-square"></i><span>Chat</span></a>
+        <a href="materias.html" class="menu-item"><i data-lucide="book-open"></i><span>Matérias</span></a>
+        <a href="atividades.html" class="menu-item"><i data-lucide="clipboard-list"></i><span>Atividades</span></a>
+        <a href="professores.html" class="menu-item"><i data-lucide="graduation-cap"></i><span>Professores</span></a>
+        <a href="planos.html" class="menu-item"><i data-lucide="credit-card"></i><span>Planos e Assinaturas</span></a>
+        <a href="configuracoes.html" class="menu-item"><i data-lucide="settings"></i><span>Configurações</span></a>
+        <a href="sobre.html" class="menu-item"><i data-lucide="info"></i><span>Sobre</span></a>
+    </div>
+
+    <script src="js/script.js?v=20261125-painel-dev2"></script>
+    <script>
+        if (window.lucide) lucide.createIcons();
+    </script>
+</body>
+</html>
