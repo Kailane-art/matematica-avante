@@ -302,6 +302,54 @@
         }
 
 
+        .painel-professor-botao-abertura {
+            display: block;
+            width: 100%;
+            border: 1px solid #e1e9f7;
+            color: inherit;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+            transition: border-color .18s ease, box-shadow .18s ease;
+        }
+        .painel-professor-botao-abertura:hover,
+        .painel-professor-botao-abertura:focus-visible {
+            border-color: #4169e1;
+            box-shadow: 0 7px 20px rgba(30, 58, 138, .12);
+        }
+        .painel-professor-abertura-textos {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            gap: 5px;
+            min-width: 0;
+        }
+        .painel-professor-abertura-textos strong {
+            color: #1e3a8a;
+            font-size: 16px;
+        }
+        .painel-professor-abertura-textos small {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+        .painel-professor-abertura-seta {
+            flex: 0 0 auto;
+            color: #3159bd;
+            transition: transform .18s ease;
+        }
+        .painel-professor-botao-abertura[aria-expanded="true"] .painel-professor-abertura-seta {
+            transform: rotate(180deg);
+        }
+        .painel-professor-botao-abertura .painel-professor-card-cabecalho {
+            margin: 0;
+        }
+        .modo-escuro .painel-professor-abertura-textos strong { color: #fff; }
+        .modo-escuro .painel-professor-abertura-textos small { color: #dbeafe; }
+        .modo-escuro .painel-professor-botao-abertura { border-color: rgba(255,255,255,.12); }
+        .modo-escuro .painel-professor-botao-abertura:hover,
+        .modo-escuro .painel-professor-botao-abertura:focus-visible { border-color: #93b4ff; }
+
         .painel-professor-form-card h3,
         .plano-professor-lista-cabecalho h3 { margin: 0 0 16px; color: #1e3a8a; font-size: 17px; }
         .plano-professor-campos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
@@ -483,14 +531,6 @@
                         <span class="painel-professor-status">Em preparação</span>
                     </article>
 
-                    <article class="painel-professor-card">
-                        <div class="painel-professor-card-cabecalho">
-                            <span class="painel-professor-card-icone"><i data-lucide="tags"></i></span>
-                            <h3>Planos e preços</h3>
-                        </div>
-                        <p>Cadastre e gerencie os serviços, valores, modalidades e condições dos seus planos.</p>
-                        <span class="painel-professor-status">Disponível</span>
-                    </article>
 
                     <article class="painel-professor-card">
                         <div class="painel-professor-card-cabecalho">
@@ -537,7 +577,20 @@
                     <p>Cadastre e gerencie os serviços que você oferece. Os planos ainda não serão exibidos para contratação nesta etapa.</p>
                 </div>
 
-                <div class="painel-professor-card painel-professor-form-card">
+                <button type="button" id="abrirFormularioPlanosProfessor"
+                    class="painel-professor-card painel-professor-botao-abertura"
+                    aria-expanded="false" aria-controls="formularioPlanoProfessorContainer">
+                    <span class="painel-professor-card-cabecalho">
+                        <span class="painel-professor-card-icone"><i data-lucide="tags"></i></span>
+                        <span class="painel-professor-abertura-textos">
+                            <strong>Planos e preços</strong>
+                            <small id="estadoBotaoPlanosProfessor">Clique para cadastrar ou editar seus planos.</small>
+                        </span>
+                        <i class="painel-professor-abertura-seta" data-lucide="chevron-down" aria-hidden="true"></i>
+                    </span>
+                </button>
+
+                <div id="formularioPlanoProfessorContainer" class="painel-professor-card painel-professor-form-card" hidden>
                     <h3 id="tituloFormularioPlano">Cadastrar novo plano</h3>
                     <form id="formPlanoProfessor">
                         <input type="hidden" id="planoProfessorId">
@@ -615,7 +668,7 @@
 
     <script src="js/script.js?v=20261128-painel-professor1"></script>
     <script src="js/notificacoes-push.js"></script>
-    <script src="js/painel-professor.js?v=20261128-planos2"></script>
+    <script src="js/painel-professor.js?v=20261128-planos3"></script>
 
 </body>
 </html>
