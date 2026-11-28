@@ -257,9 +257,22 @@
             await carregarPlanos();
         } catch (erro) {
             console.error("Erro ao salvar plano do professor:", erro);
-            if (erro && erro.code === "23514" && String(erro.message || "").includes("Limite de 2 planos")) {
-                mostrarMensagem("Você já atingiu o limite de 2 planos cadastrados.", true);
-                await carregarPlanos();
+
+            const detalhesErro = [
+                erro && erro.code,
+                erro && erro.message,
+                erro && erro.details,
+                erro && erro.hint
+            ].filter(Boolean).join(" ").toLowerCase();
+
+            await carregarPlanos();
+
+            const erroDeLimite =
+                detalhesErro.includes("limite de 2 planos") ||
+                (!estavaEditando && planos.length >= LIMITE_PLANOS);
+
+            if (erroDeLimite) {
+                mostrarMensagem("Só é possível cadastrar até 2 planos. Edite um dos planos existentes para alterar suas informações.", true);
             } else {
                 mostrarMensagem("Não foi possível salvar o plano. Verifique os dados e tente novamente.", true);
             }
