@@ -1376,6 +1376,27 @@
                 return botaoAcao;
             }
 
+            async function consultarSituacaoContaProfessor(professorId, elemento) {
+                try {
+                    const { data, error } = await supabaseClient.functions.invoke("account-admin", {
+                        body: { action: "status", target_user_id: professorId }
+                    });
+                    if (error) throw error;
+                    if (data?.error) throw new Error(data.error);
+                    const restricao = data?.restriction;
+                    if (restricao?.restriction_type === "pending_deletion") {
+                        elemento.textContent = "Situação da conta: Banida, aguardando exclusão até " + formatarData(restricao.expires_at);
+                    } else if (restricao?.restriction_type === "temporary_suspension") {
+                        elemento.textContent = "Situação da conta: Suspensa até " + formatarData(restricao.expires_at);
+                    } else {
+                        elemento.textContent = "Situação da conta: Sem restrição administrativa ativa.";
+                    }
+                } catch (erro) {
+                    console.error("Erro ao consultar situação do professor:", erro);
+                    elemento.textContent = "Situação da conta: Não foi possível consultar.";
+                }
+            }
+
             function renderizarProfessores() {
                 listaProfessores.replaceChildren();
                 const termo = busca.value.trim().toLocaleLowerCase("pt-BR");
@@ -1404,10 +1425,22 @@
                     identidade.append(nome, username);
                     const status = document.createElement("span");
                     status.className = "painel-dev-professor-status aprovada";
-                    status.textContent = "Ativo";
+                    status.textContent = "Professor";
                     cabecalho.append(identidade, status);
                     const detalhes = document.createElement("div");
                     detalhes.className = "painel-dev-professor-detalhes";
+                    const solicitacaoAprovada = solicitacoes
+                        .filter(item => item.user_id === professor.id && item.status === "aprovada")
+                        .sort((a, b) => new Date(b.decided_at || b.created_at) - new Date(a.decided_at || a.created_at))[0];
+                    if (solicitacaoAprovada) {
+                        const dataCadastro = document.createElement("p");
+                        dataCadastro.textContent = "Cadastro aprovado em: " + formatarData(solicitacaoAprovada.decided_at || solicitacaoAprovada.created_at);
+                        detalhes.appendChild(dataCadastro);
+                    }
+                    const situacaoConta = document.createElement("p");
+                    situacaoConta.textContent = "Situação da conta: consultando...";
+                    detalhes.appendChild(situacaoConta);
+                    consultarSituacaoContaProfessor(professor.id, situacaoConta);
                     if (professor.formation) {
                         const formacao = document.createElement("p");
                         formacao.textContent = "Formação: " + professor.formation;
