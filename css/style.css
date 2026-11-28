@@ -8600,3 +8600,41 @@ body.modo-escuro.pagina-perfil-publico .botao-assinar-plano-professor {
 body.modo-escuro.pagina-perfil-publico .botao-assinar-plano-professor:hover {
     background: #dbeafe;
 }
+
+/* PERFIL PÚBLICO — BOTÕES DE AMIZADE COMPACTOS E LADO A LADO */
+body.pagina-perfil-publico #acoesPerfilPublico {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    column-gap: 8px;
+    row-gap: 8px;
+    width: 100%;
+}
+
+body.pagina-perfil-publico #acoesPerfilPublico > button {
+    display: inline-flex;
+    flex: 0 1 auto;
+    width: auto !important;
+    min-width: 0;
+    min-height: 36px;
+    padding: 7px 10px;
+    gap: 5px;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+body.pagina-perfil-publico #acoesPerfilPublico > button svg {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+}
+
+body.pagina-perfil-publico #acoesPerfilPublico > p {
+    flex: 0 0 100%;
+    width: 100%;
+    margin: 0;
+}
+
