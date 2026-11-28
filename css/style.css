@@ -1209,6 +1209,11 @@ header svg {
     color: #777;
 }
 
+/* Oculta o SVG gerado pelo Lucide quando a foto do perfil estiver carregada. */
+.avatar-link.com-foto > svg {
+    display: none !important;
+}
+
 #avatarInicio[src]:not([src=""]) {
     display: block;
 }
