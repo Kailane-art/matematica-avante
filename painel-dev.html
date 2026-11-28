@@ -212,6 +212,43 @@
         .painel-dev-progressao-item { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 12px; border:1px solid #e0e8f2; border-radius:11px; background:#f7faff; color:#24364b; font-size:12px; overflow-wrap:anywhere; }
         .painel-dev-progressao-item small { color:#718096; text-align:right; }
         .painel-dev-progressao-item strong { color:#1e3a8a; }
+
+        .painel-dev-professores-acoes { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin:14px 0; }
+        .painel-dev-professores-acoes button, .painel-dev-professor-botoes button { min-height:38px; padding:9px 12px; border:1px solid #4169e1; border-radius:11px; background:#294ec5; color:#fff; font:inherit; font-size:12px; font-weight:750; cursor:pointer; }
+        .painel-dev-professores-resumo { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+        .painel-dev-professores-resumo .painel-dev-seguranca-indicador { min-width:0; padding:13px 9px; text-align:center; }
+        .painel-dev-professores-resumo .painel-dev-seguranca-indicador strong { font-size:24px; }
+        .painel-dev-professores-listas { display:grid; gap:16px; margin-top:18px; }
+        .painel-dev-professores-bloco { min-width:0; padding:15px; border:1px solid #d5e0ef; border-radius:16px; background:#fff; color:#24364b; }
+        .painel-dev-professores-bloco h3 { margin:0 0 12px; color:#1e3a8a; font-size:16px; }
+        .painel-dev-professores-filtros { display:grid; grid-template-columns:minmax(0,1fr) 190px; gap:10px; margin:14px 0; }
+        .painel-dev-professores-filtros input, .painel-dev-professores-filtros select { min-width:0; width:100%; box-sizing:border-box; padding:11px 12px; border:1px solid #cbd8e8; border-radius:10px; background:#fff; color:#24364b; font:inherit; }
+        .painel-dev-professores-itens { display:grid; gap:10px; }
+        .painel-dev-professor-item { min-width:0; padding:13px; border:1px solid #e0e8f2; border-radius:12px; background:#f7faff; color:#24364b; font-size:12px; line-height:1.55; overflow-wrap:anywhere; }
+        .painel-dev-professor-cabecalho { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+        .painel-dev-professor-cabecalho strong { display:block; color:#1e3a8a; font-size:14px; }
+        .painel-dev-professor-cabecalho small { display:block; margin-top:3px; color:#526176; }
+        .painel-dev-professor-status { flex:0 0 auto; padding:4px 8px; border-radius:20px; background:#e2e8f0; color:#334155; font-size:10px; font-weight:800; }
+        .painel-dev-professor-status.pendente { background:#fef3c7; color:#92400e; }
+        .painel-dev-professor-status.em_analise { background:#dbeafe; color:#1e40af; }
+        .painel-dev-professor-status.aprovada { background:#dcfce7; color:#166534; }
+        .painel-dev-professor-status.rejeitada { background:#fee2e2; color:#991b1b; }
+        .painel-dev-professor-detalhes { margin-top:10px; padding-top:10px; border-top:1px solid #dbe5f1; }
+        .painel-dev-professor-detalhes p { margin:5px 0; }
+        .painel-dev-professor-detalhes a { color:#1d4ed8; font-weight:700; }
+        .painel-dev-professor-botoes { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+        .painel-dev-professor-botoes button:disabled { cursor:not-allowed; opacity:.55; }
+        .painel-dev-professor-botoes .rejeitar { border-color:#b91c1c; background:#991b1b; }
+        .painel-dev-professor-botoes .analise { border-color:#1d4ed8; background:#1e40af; }
+        .modo-escuro .painel-dev-professores-bloco { border-color:#294361; background:#142a45; color:#e5edf8; }
+        .modo-escuro .painel-dev-professores-bloco h3 { color:#bfdbfe; }
+        .modo-escuro .painel-dev-professores-filtros input, .modo-escuro .painel-dev-professores-filtros select { border-color:#38516e; background:#172b43; color:#e5edf8; }
+        .modo-escuro .painel-dev-professor-item { border-color:#294361; background:#172b43; color:#e5edf8; }
+        .modo-escuro .painel-dev-professor-cabecalho strong { color:#bfdbfe; }
+        .modo-escuro .painel-dev-professor-cabecalho small { color:#a9bbd2; }
+        .modo-escuro .painel-dev-professor-detalhes { border-color:#38516e; }
+        @media(min-width:681px) { .painel-dev-professores-resumo { grid-template-columns:repeat(4,minmax(0,1fr)); } .painel-dev-professores-listas { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; } }
+        @media(max-width:520px) { .painel-dev-professores-filtros { grid-template-columns:1fr; } .painel-dev-professor-cabecalho { flex-direction:column; } }
         .modo-escuro .painel-dev-progressao-usuario { background:#203d62; color:#e5edf8; }
         .modo-escuro .painel-dev-progressao-usuario h3,.modo-escuro .painel-dev-progressao-usuario a { color:#bfdbfe; }
         .modo-escuro .painel-dev-progressao-usuario p { color:#a9bbd2; }
@@ -322,9 +359,45 @@
                     <div class="painel-dev-modulo-conteudo">
                         <h3>Gerenciamento de professores</h3>
                         <p>Acompanhamento de professores e solicitações de cadastro.</p>
-                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                        <button id="abrirModuloProfessores" class="painel-dev-botao" type="button">Abrir módulo</button>
                     </div>
                 </article>
+                <section id="moduloProfessores" class="painel-dev-secao painel-dev-listagem" hidden>
+                    <div class="painel-dev-secao-cabecalho">
+                        <h2>Gerenciamento de professores</h2>
+                        <p>Acompanhe os professores cadastrados e analise as solicitações recebidas. As decisões usam o fluxo oficial já existente.</p>
+                    </div>
+                    <div class="painel-dev-professores-acoes">
+                        <p id="estadoGerenciamentoProfessores" class="painel-dev-estado" role="status">Abra o módulo para carregar os dados.</p>
+                        <button id="atualizarGerenciamentoProfessores" type="button">Atualizar dados</button>
+                    </div>
+                    <div class="painel-dev-professores-resumo">
+                        <article class="painel-dev-seguranca-indicador"><span>Professores cadastrados</span><strong id="totalProfessoresGerenciados">—</strong></article>
+                        <article class="painel-dev-seguranca-indicador"><span>Solicitações pendentes</span><strong id="totalSolicitacoesPendentes">—</strong></article>
+                        <article class="painel-dev-seguranca-indicador"><span>Em análise</span><strong id="totalSolicitacoesAnalise">—</strong></article>
+                        <article class="painel-dev-seguranca-indicador"><span>Rejeitadas</span><strong id="totalSolicitacoesRejeitadas">—</strong></article>
+                    </div>
+                    <div class="painel-dev-professores-filtros">
+                        <input id="buscaGerenciamentoProfessores" type="search" maxlength="80" placeholder="Pesquisar por nome ou @username" aria-label="Pesquisar professores e solicitações">
+                        <select id="filtroSolicitacoesProfessores" aria-label="Filtrar solicitações">
+                            <option value="todas">Todas as solicitações</option>
+                            <option value="pendente">Pendentes</option>
+                            <option value="em_analise">Em análise</option>
+                            <option value="aprovada">Aprovadas</option>
+                            <option value="rejeitada">Rejeitadas</option>
+                        </select>
+                    </div>
+                    <div class="painel-dev-professores-listas">
+                        <section class="painel-dev-professores-bloco">
+                            <h3>Professores cadastrados</h3>
+                            <div id="listaProfessoresGerenciados" class="painel-dev-professores-itens"><p>Nenhum dado carregado.</p></div>
+                        </section>
+                        <section class="painel-dev-professores-bloco">
+                            <h3>Solicitações de cadastro</h3>
+                            <div id="listaSolicitacoesProfessores" class="painel-dev-professores-itens"><p>Nenhum dado carregado.</p></div>
+                        </section>
+                    </div>
+                </section>
                 <article class="painel-dev-modulo">
                     <span class="painel-dev-modulo-icone"><i data-lucide="shield-check"></i></span>
                     <div class="painel-dev-modulo-conteudo">
@@ -1256,6 +1329,305 @@
                 if (vaiAbrir) carregarSeguranca();
             });
             atualizar.addEventListener("click", carregarSeguranca);
+        })();
+
+        (() => {
+            const botao = document.getElementById("abrirModuloProfessores");
+            const modulo = document.getElementById("moduloProfessores");
+            const estado = document.getElementById("estadoGerenciamentoProfessores");
+            const atualizar = document.getElementById("atualizarGerenciamentoProfessores");
+            const busca = document.getElementById("buscaGerenciamentoProfessores");
+            const filtro = document.getElementById("filtroSolicitacoesProfessores");
+            const listaProfessores = document.getElementById("listaProfessoresGerenciados");
+            const listaSolicitacoes = document.getElementById("listaSolicitacoesProfessores");
+            const statusNomes = {
+                pendente: "Pendente",
+                em_analise: "Em análise",
+                aprovada: "Aprovada",
+                rejeitada: "Rejeitada",
+                aprovado: "Aprovada"
+            };
+            let carregando = false;
+            let usuarioAtualId = null;
+            let professores = [];
+            let solicitacoes = [];
+            let mensagensSolicitacoes = new Map();
+
+            function formatarData(valor) {
+                if (!valor) return "Não informada";
+                const data = new Date(valor);
+                return Number.isNaN(data.getTime()) ? "Data indisponível" :
+                    new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(data);
+            }
+
+            function adicionarParagrafo(container, texto) {
+                const p = document.createElement("p");
+                p.textContent = texto;
+                container.appendChild(p);
+            }
+
+            function criarBotao(texto, classe, acao, desabilitado = false) {
+                const botaoAcao = document.createElement("button");
+                botaoAcao.type = "button";
+                botaoAcao.textContent = texto;
+                if (classe) botaoAcao.className = classe;
+                botaoAcao.disabled = desabilitado;
+                botaoAcao.addEventListener("click", acao);
+                return botaoAcao;
+            }
+
+            function renderizarProfessores() {
+                listaProfessores.replaceChildren();
+                const termo = busca.value.trim().toLocaleLowerCase("pt-BR");
+                const encontrados = professores.filter(professor =>
+                    !termo ||
+                    String(professor.display_name || "").toLocaleLowerCase("pt-BR").includes(termo) ||
+                    String(professor.username || "").toLocaleLowerCase("pt-BR").includes(termo)
+                );
+                if (!encontrados.length) {
+                    adicionarParagrafo(listaProfessores, professores.length
+                        ? "Nenhum professor corresponde à pesquisa."
+                        : "Ainda não há professores cadastrados.");
+                    return;
+                }
+
+                encontrados.forEach(professor => {
+                    const item = document.createElement("article");
+                    item.className = "painel-dev-professor-item";
+                    const cabecalho = document.createElement("div");
+                    cabecalho.className = "painel-dev-professor-cabecalho";
+                    const identidade = document.createElement("div");
+                    const nome = document.createElement("strong");
+                    nome.textContent = professor.display_name || "Professor";
+                    const username = document.createElement("small");
+                    username.textContent = "@" + (professor.username || "sem-username");
+                    identidade.append(nome, username);
+                    const status = document.createElement("span");
+                    status.className = "painel-dev-professor-status aprovada";
+                    status.textContent = "Ativo";
+                    cabecalho.append(identidade, status);
+                    const detalhes = document.createElement("div");
+                    detalhes.className = "painel-dev-professor-detalhes";
+                    if (professor.formation) {
+                        const formacao = document.createElement("p");
+                        formacao.textContent = "Formação: " + professor.formation;
+                        detalhes.appendChild(formacao);
+                    }
+                    if (Array.isArray(professor.specialties) && professor.specialties.length) {
+                        const especialidades = document.createElement("p");
+                        especialidades.textContent = "Especialidades: " + professor.specialties.join(", ");
+                        detalhes.appendChild(especialidades);
+                    }
+                    if (professor.bio) {
+                        const bio = document.createElement("p");
+                        bio.textContent = "Apresentação: " + professor.bio;
+                        detalhes.appendChild(bio);
+                    }
+                    const link = document.createElement("a");
+                    link.href = "perfil-publico.html?usuario=" + encodeURIComponent(professor.username || "");
+                    link.textContent = "Ver perfil público";
+                    detalhes.appendChild(link);
+                    item.append(cabecalho, detalhes);
+                    listaProfessores.appendChild(item);
+                });
+            }
+
+            function renderizarSolicitacoes() {
+                listaSolicitacoes.replaceChildren();
+                const termo = busca.value.trim().toLocaleLowerCase("pt-BR");
+                const statusFiltro = filtro.value;
+                const encontrados = solicitacoes.filter(solicitacao => {
+                    const correspondeTexto =
+                        !termo ||
+                        String(solicitacao.full_name || "").toLocaleLowerCase("pt-BR").includes(termo) ||
+                        String(solicitacao.username || "").toLocaleLowerCase("pt-BR").includes(termo);
+                    const correspondeStatus = statusFiltro === "todas" || solicitacao.status === statusFiltro;
+                    return correspondeTexto && correspondeStatus;
+                });
+
+                if (!encontrados.length) {
+                    adicionarParagrafo(listaSolicitacoes, solicitacoes.length
+                        ? "Nenhuma solicitação corresponde aos filtros."
+                        : "Nenhuma solicitação de cadastro foi recebida.");
+                    return;
+                }
+
+                encontrados.forEach(solicitacao => {
+                    const item = document.createElement("article");
+                    item.className = "painel-dev-professor-item";
+                    const cabecalho = document.createElement("div");
+                    cabecalho.className = "painel-dev-professor-cabecalho";
+                    const identidade = document.createElement("div");
+                    const nome = document.createElement("strong");
+                    nome.textContent = solicitacao.full_name || "Candidato a professor";
+                    const username = document.createElement("small");
+                    username.textContent = "@" + (solicitacao.username || "sem-username") +
+                        " · Enviada em " + formatarData(solicitacao.created_at);
+                    identidade.append(nome, username);
+                    const status = document.createElement("span");
+                    status.className = "painel-dev-professor-status " + (solicitacao.status || "");
+                    status.textContent = statusNomes[solicitacao.status] || solicitacao.status || "Desconhecido";
+                    cabecalho.append(identidade, status);
+
+                    const detalhes = document.createElement("div");
+                    detalhes.className = "painel-dev-professor-detalhes";
+                    const campos = [
+                        ["E-mail", solicitacao.email],
+                        ["Formação", solicitacao.formation],
+                        ["Instituição", solicitacao.institution],
+                        ["Especialidades", Array.isArray(solicitacao.specialties) ? solicitacao.specialties.join(", ") : ""],
+                        ["Outra especialidade", solicitacao.other_specialty],
+                        ["Experiência", solicitacao.experience],
+                        ["Telefone/WhatsApp", solicitacao.phone],
+                        ["Outro contato", solicitacao.other_contact]
+                    ];
+                    campos.forEach(([rotulo, valor]) => {
+                        if (!valor) return;
+                        const p = document.createElement("p");
+                        p.textContent = rotulo + ": " + valor;
+                        detalhes.appendChild(p);
+                    });
+                    const linkConversa = document.createElement("a");
+                    linkConversa.href = "conversa.html?usuario=" + encodeURIComponent(solicitacao.username || "");
+                    linkConversa.textContent = "Abrir conversa da solicitação";
+                    detalhes.appendChild(linkConversa);
+
+                    const botoes = document.createElement("div");
+                    botoes.className = "painel-dev-professor-botoes";
+                    const mensagemId = mensagensSolicitacoes.get(solicitacao.id);
+                    const decisaoFinal = ["aprovada", "rejeitada"].includes(solicitacao.status);
+                    if (!decisaoFinal) {
+                        const semVinculo = !mensagemId;
+                        botoes.append(
+                            criarBotao("Marcar em análise", "analise", () => decidirSolicitacao(solicitacao, "analise"), semVinculo || solicitacao.status === "em_analise"),
+                            criarBotao("Aprovar", "", () => decidirSolicitacao(solicitacao, "aprovar"), semVinculo),
+                            criarBotao("Rejeitar", "rejeitar", () => decidirSolicitacao(solicitacao, "reprovar"), semVinculo)
+                        );
+                        if (semVinculo) {
+                            const aviso = document.createElement("small");
+                            aviso.textContent = "Esta solicitação não possui vínculo de mensagem para sua conta DEV; a decisão deve ser feita pela conversa original.";
+                            botoes.appendChild(aviso);
+                        }
+                    } else {
+                        const decisao = document.createElement("p");
+                        decisao.textContent = "Decisão final registrada em " + formatarData(solicitacao.decided_at) + ".";
+                        detalhes.appendChild(decisao);
+                    }
+
+                    item.append(cabecalho, detalhes, botoes);
+                    listaSolicitacoes.appendChild(item);
+                });
+            }
+
+            function renderizarTudo() {
+                renderizarProfessores();
+                renderizarSolicitacoes();
+            }
+
+            async function decidirSolicitacao(solicitacao, decisao) {
+                if (carregando) return;
+                const rotulos = {
+                    aprovar: "aprovar",
+                    reprovar: "rejeitar",
+                    analise: "marcar esta solicitação como em análise"
+                };
+                if (!window.confirm("Deseja " + rotulos[decisao] + " a solicitação de @" + solicitacao.username + "?")) return;
+                const mensagemId = mensagensSolicitacoes.get(solicitacao.id);
+                if (!mensagemId) {
+                    estado.textContent = "Não foi encontrado o vínculo da solicitação com sua conta DEV. Abra a conversa original.";
+                    return;
+                }
+                carregando = true;
+                estado.textContent = "Registrando decisão da solicitação...";
+                atualizar.disabled = true;
+                try {
+                    const { data, error } = await supabaseClient.rpc("decide_teacher_request", {
+                        p_request_id: solicitacao.id,
+                        p_decision: decisao,
+                        p_message_id: mensagemId
+                    });
+                    if (error) throw error;
+                    const resultado = data === "aprovada" ? "Solicitação aprovada. A conta agora é de professor." :
+                        data === "rejeitada" ? "Solicitação rejeitada. A conta continua como aluno." :
+                        "Solicitação marcada como em análise.";
+                    estado.textContent = resultado;
+                    await carregarDados();
+                } catch (erro) {
+                    console.error("Erro ao decidir solicitação de professor:", erro);
+                    estado.textContent = erro.message || "Não foi possível registrar a decisão.";
+                } finally {
+                    carregando = false;
+                    atualizar.disabled = false;
+                }
+            }
+
+            async function carregarDados() {
+                if (carregando) return;
+                if (!supabaseClient) {
+                    estado.textContent = "A conexão com o banco não está disponível.";
+                    return;
+                }
+                carregando = true;
+                atualizar.disabled = true;
+                estado.textContent = "Verificando permissões e carregando dados...";
+                try {
+                    const { data: sessao, error: erroSessao } = await supabaseClient.auth.getUser();
+                    if (erroSessao || !sessao.user) throw new Error("Sua sessão expirou. Entre novamente.");
+                    const { data: perfil, error: erroPerfil } = await supabaseClient
+                        .from("profiles").select("tipo_usuario").eq("id", sessao.user.id).single();
+                    if (erroPerfil || !perfil || perfil.tipo_usuario !== "dev") {
+                        throw new Error("Acesso restrito a contas DEV.");
+                    }
+                    usuarioAtualId = sessao.user.id;
+                    const [resultadoSolicitacoes, resultadoMensagens, resultadoProfessores] = await Promise.all([
+                        supabaseClient.from("teacher_requests")
+                            .select("id,user_id,full_name,email,username,formation,institution,specialties,other_specialty,experience,phone,other_contact,status,created_at,reviewed_at,decided_at")
+                            .order("created_at", { ascending: false }),
+                        supabaseClient.from("teacher_request_messages")
+                            .select("request_id,message_id")
+                            .eq("recipient_id", usuarioAtualId),
+                        supabaseClient.rpc("get_public_teacher_profiles")
+                    ]);
+                    if (resultadoSolicitacoes.error) throw resultadoSolicitacoes.error;
+                    if (resultadoMensagens.error) throw resultadoMensagens.error;
+                    if (resultadoProfessores.error) throw resultadoProfessores.error;
+                    solicitacoes = Array.isArray(resultadoSolicitacoes.data) ? resultadoSolicitacoes.data : [];
+                    mensagensSolicitacoes = new Map((resultadoMensagens.data || []).map(item => [item.request_id, item.message_id]));
+                    professores = Array.isArray(resultadoProfessores.data) ? resultadoProfessores.data : [];
+                    document.getElementById("totalProfessoresGerenciados").textContent = String(professores.length);
+                    document.getElementById("totalSolicitacoesPendentes").textContent =
+                        String(solicitacoes.filter(item => item.status === "pendente").length);
+                    document.getElementById("totalSolicitacoesAnalise").textContent =
+                        String(solicitacoes.filter(item => item.status === "em_analise").length);
+                    document.getElementById("totalSolicitacoesRejeitadas").textContent =
+                        String(solicitacoes.filter(item => item.status === "rejeitada").length);
+                    estado.textContent = "Dados atualizados em " + formatarData(new Date().toISOString()) + ".";
+                    renderizarTudo();
+                    if (window.lucide) lucide.createIcons();
+                } catch (erro) {
+                    console.error("Erro ao carregar gerenciamento de professores:", erro);
+                    estado.textContent = erro.message || "Não foi possível carregar os dados de professores.";
+                    listaProfessores.replaceChildren();
+                    listaSolicitacoes.replaceChildren();
+                    adicionarParagrafo(listaProfessores, "Falha ao consultar professores.");
+                    adicionarParagrafo(listaSolicitacoes, "Falha ao consultar solicitações.");
+                } finally {
+                    carregando = false;
+                    atualizar.disabled = false;
+                }
+            }
+
+            function alternarModulo() {
+                const vaiAbrir = modulo.hidden;
+                modulo.hidden = !vaiAbrir;
+                botao.textContent = vaiAbrir ? "Fechar módulo" : "Abrir módulo";
+                if (vaiAbrir) carregarDados();
+            }
+
+            botao.addEventListener("click", alternarModulo);
+            atualizar.addEventListener("click", carregarDados);
+            busca.addEventListener("input", renderizarTudo);
+            filtro.addEventListener("change", renderizarSolicitacoes);
         })();
 
         (() => {
