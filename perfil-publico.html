@@ -94,6 +94,7 @@
             <p id="estadoAdminPerfil" class="estado-admin-perfil" role="status"></p>
             <div id="acoesAdminPerfil" class="acoes-admin-perfil">
                 <button id="botaoTornarDev" type="button" hidden>Tornar DEV</button>
+                <button id="botaoTornarAluno" type="button" hidden>Tornar aluno</button>
                 <button id="botaoSuspenderConta" type="button">Suspender conta</button>
                 <button id="botaoBanirConta" type="button">Banir conta</button>
                 <button id="botaoRebaixarProfessor" type="button" hidden>Mudar professor para aluno</button>
@@ -109,6 +110,22 @@
                     <button id="cancelarEtapaPromocaoDev" type="button">Cancelar</button>
                 </div>
             </div>
+            <div id="confirmacaoRebaixamentoDev" class="form-suspensao-admin" hidden>
+                <p><strong>Atenção:</strong> esta ação removerá os privilégios DEV desta conta e a transformará em aluno.</p>
+                <p>Deseja realmente alterar <strong id="nomeAlvoRebaixamentoDev"></strong> para aluno?</p>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarEtapaRebaixamentoDev" type="button">Confirmar</button>
+                    <button id="cancelarEtapaRebaixamentoDev" type="button">Cancelar</button>
+                </div>
+            </div>
+            <form id="formRebaixamentoDev" class="form-suspensao-admin" hidden>
+                <label for="comandoRebaixamentoDev">Digite exatamente <strong id="comandoEsperadoRebaixamentoDev"></strong> para finalizar</label>
+                <input id="comandoRebaixamentoDev" name="comando_rebaixamento" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="/TIA_ALUNO @username" required>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarRebaixamentoDev" type="submit">Tornar aluno</button>
+                    <button id="cancelarRebaixamentoDev" type="button">Cancelar</button>
+                </div>
+            </form>
             <form id="formPromocaoDev" class="form-suspensao-admin" hidden>
                 <label for="comandoPromocaoDev">Digite exatamente <strong id="comandoEsperadoPromocaoDev"></strong> para finalizar</label>
                 <input id="comandoPromocaoDev" name="comando_promocao" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="/TIA_DEV @username" required>
@@ -422,6 +439,13 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil, idUsuarioAt
     const botaoConfirmarExclusao = document.getElementById("confirmarExclusaoAdmin");
     const botaoCancelarExclusao = document.getElementById("cancelarExclusaoAdmin");
     const botaoTornarDev = document.getElementById("botaoTornarDev");
+    const botaoTornarAluno = document.getElementById("botaoTornarAluno");
+    const confirmacaoRebaixamentoDev = document.getElementById("confirmacaoRebaixamentoDev");
+    const botaoConfirmarEtapaRebaixamentoDev = document.getElementById("confirmarEtapaRebaixamentoDev");
+    const botaoCancelarEtapaRebaixamentoDev = document.getElementById("cancelarEtapaRebaixamentoDev");
+    const formRebaixamentoDev = document.getElementById("formRebaixamentoDev");
+    const campoComandoRebaixamentoDev = document.getElementById("comandoRebaixamentoDev");
+    const botaoConfirmarRebaixamentoDev = document.getElementById("confirmarRebaixamentoDev");
     const confirmacaoPromocaoDev = document.getElementById("confirmacaoPromocaoDev");
     const botaoConfirmarEtapaPromocaoDev = document.getElementById("confirmarEtapaPromocaoDev");
     const botaoCancelarEtapaPromocaoDev = document.getElementById("cancelarEtapaPromocaoDev");
@@ -438,6 +462,9 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil, idUsuarioAt
     const alvoEhDev = perfilPublicoAtual.tipo_usuario === "dev";
     const usuarioAtualEhDevPrincipal = idUsuarioAtual === "356e82f3-2ad0-4932-bc2c-e328bc7066d2";
     botaoTornarDev.hidden = !usuarioAtualEhDevPrincipal || alvoEhDev;
+    botaoTornarAluno.hidden = !usuarioAtualEhDevPrincipal || !alvoEhDev;
+    document.getElementById("nomeAlvoRebaixamentoDev").textContent = "@" + perfilPublicoAtual.username;
+    document.getElementById("comandoEsperadoRebaixamentoDev").textContent = "/TIA_ALUNO @" + perfilPublicoAtual.username;
     document.getElementById("nomeAlvoPromocaoDev").textContent = "@" + perfilPublicoAtual.username;
     document.getElementById("comandoEsperadoPromocaoDev").textContent = "/TIA_DEV @" + perfilPublicoAtual.username;
     const podeGerenciarRestricaoDoAlvo = !alvoEhDev || usuarioAtualEhDevPrincipal;
@@ -498,9 +525,67 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil, idUsuarioAt
         formExclusao.hidden = true;
         confirmacaoPromocaoDev.hidden = true;
         formPromocaoDev.hidden = true;
+        confirmacaoRebaixamentoDev.hidden = true;
+        formRebaixamentoDev.hidden = true;
+        campoComandoRebaixamentoDev.value = "";
         campoComandoPromocaoDev.value = "";
         campoConfirmacaoExclusao.value = "";
         mensagem.textContent = "";
+    };
+
+    botaoTornarAluno.onclick = function() {
+        if (!usuarioAtualEhDevPrincipal || perfilPublicoAtual?.tipo_usuario !== "dev") return;
+        confirmacaoRebaixamentoDev.hidden = false;
+        formRebaixamentoDev.hidden = true;
+        mensagem.textContent = "";
+    };
+
+    botaoCancelarEtapaRebaixamentoDev.onclick = function() {
+        confirmacaoRebaixamentoDev.hidden = true;
+        formRebaixamentoDev.hidden = true;
+        campoComandoRebaixamentoDev.value = "";
+        mensagem.textContent = "";
+    };
+
+    botaoConfirmarEtapaRebaixamentoDev.onclick = function() {
+        confirmacaoRebaixamentoDev.hidden = true;
+        formRebaixamentoDev.hidden = false;
+        campoComandoRebaixamentoDev.value = "";
+        campoComandoRebaixamentoDev.focus();
+    };
+
+    document.getElementById("cancelarRebaixamentoDev").onclick = function() {
+        formRebaixamentoDev.hidden = true;
+        confirmacaoRebaixamentoDev.hidden = true;
+        campoComandoRebaixamentoDev.value = "";
+        mensagem.textContent = "";
+    };
+
+    formRebaixamentoDev.onsubmit = async function(evento) {
+        evento.preventDefault();
+        const comandoEsperado = "/TIA_ALUNO @" + String(perfilPublicoAtual?.username || "");
+        if (!usuarioAtualEhDevPrincipal || perfilPublicoAtual?.tipo_usuario !== "dev") return;
+        if (campoComandoRebaixamentoDev.value !== comandoEsperado) {
+            mensagem.textContent = "O comando digitado não corresponde exatamente ao perfil selecionado.";
+            campoComandoRebaixamentoDev.focus();
+            return;
+        }
+
+        botaoConfirmarRebaixamentoDev.disabled = true;
+        botaoTornarAluno.disabled = true;
+        mensagem.textContent = "Removendo privilégios DEV...";
+        try {
+            await executarAcaoAdministrativaPerfil("demote_dev", {
+                confirmation_command: campoComandoRebaixamentoDev.value
+            });
+            mensagem.textContent = "A conta agora é do tipo aluno.";
+            window.alert("@" + perfilPublicoAtual.username + " agora é uma conta de aluno. As sessões anteriores foram revogadas.");
+            window.location.reload();
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível alterar esta conta para aluno.";
+            botaoConfirmarRebaixamentoDev.disabled = false;
+            botaoTornarAluno.disabled = false;
+        }
     };
 
     botaoTornarDev.onclick = function() {
