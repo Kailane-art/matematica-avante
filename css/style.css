@@ -8420,3 +8420,138 @@ body.pagina-perfil-publico #nivelPerfilPublico[hidden] {
 .modo-escuro body.pagina-perfil-publico .nivel-trofeus-perfil-publico #trofeusPerfilPublico:not([hidden]) {
     color: #facc15;
 }
+
+
+/* PERFIL PÚBLICO — PLANOS ATIVOS DO PROFESSOR */
+body.pagina-perfil-publico .planos-professor-publicos {
+    width: 100%;
+    margin: 24px 0 8px;
+    padding: 20px;
+    border: 1px solid #dbe5f5;
+    border-radius: 16px;
+    background: #f8fbff;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+body.pagina-perfil-publico .planos-professor-publicos[hidden],
+body.pagina-perfil-publico .plano-professor-publico [hidden] {
+    display: none !important;
+}
+
+body.pagina-perfil-publico .planos-professor-publicos-cabecalho h2 {
+    margin: 0;
+    color: #1e3a8a;
+    font-size: 20px;
+    text-align: left;
+}
+
+body.pagina-perfil-publico .planos-professor-publicos-cabecalho p,
+body.pagina-perfil-publico .estado-planos-professor-publicos {
+    margin: 7px 0 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+body.pagina-perfil-publico .lista-planos-professor-publicos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+    gap: 12px;
+    margin-top: 15px;
+}
+
+body.pagina-perfil-publico .plano-professor-publico {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #dbe5f5;
+    border-radius: 13px;
+    background: #fff;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+body.pagina-perfil-publico .plano-professor-publico h3 {
+    margin: 0;
+    color: #1e3a8a;
+    font-size: 16px;
+    text-align: left;
+}
+
+body.pagina-perfil-publico .plano-professor-publico-descricao {
+    margin: 8px 0 0;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+    white-space: pre-wrap;
+}
+
+body.pagina-perfil-publico .plano-professor-publico-preco {
+    display: block;
+    margin-top: 13px;
+    color: #1d4ed8;
+    font-size: 22px;
+    font-weight: 800;
+    text-align: left;
+}
+
+body.pagina-perfil-publico .plano-professor-publico-detalhes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 11px;
+}
+
+body.pagina-perfil-publico .plano-professor-publico-detalhes span {
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #eaf1ff;
+    color: #3159bd;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.modo-escuro body.pagina-perfil-publico .planos-professor-publicos {
+    border-color: rgba(255,255,255,.14);
+    background: #173d78;
+}
+
+.modo-escuro body.pagina-perfil-publico .planos-professor-publicos-cabecalho h2 {
+    color: #fff;
+}
+
+.modo-escuro body.pagina-perfil-publico .planos-professor-publicos-cabecalho p,
+.modo-escuro body.pagina-perfil-publico .estado-planos-professor-publicos {
+    color: #dbeafe;
+}
+
+.modo-escuro body.pagina-perfil-publico .plano-professor-publico {
+    border-color: rgba(255,255,255,.14);
+    background: #12366f;
+}
+
+.modo-escuro body.pagina-perfil-publico .plano-professor-publico h3,
+.modo-escuro body.pagina-perfil-publico .plano-professor-publico-preco {
+    color: #fff;
+}
+
+.modo-escuro body.pagina-perfil-publico .plano-professor-publico-descricao {
+    color: #dbeafe;
+}
+
+.modo-escuro body.pagina-perfil-publico .plano-professor-publico-detalhes span {
+    background: #244b8a;
+    color: #dbeafe;
+}
+
+@media (max-width: 520px) {
+    body.pagina-perfil-publico .planos-professor-publicos {
+        padding: 15px;
+    }
+
+    body.pagina-perfil-publico .lista-planos-professor-publicos {
+        grid-template-columns: 1fr;
+    }
+}
