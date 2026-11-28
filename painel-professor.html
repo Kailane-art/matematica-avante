@@ -603,6 +603,11 @@
                                 <label for="descricaoPlanoProfessor">Descrição</label>
                                 <textarea id="descricaoPlanoProfessor" name="description" rows="3" maxlength="1000" placeholder="Explique o que está incluído neste plano."></textarea>
                             </div>
+                            <div class="plano-professor-campo plano-professor-campo-largo">
+                                <label for="condicoesAdicionaisPlanoProfessor">Condições adicionais para o aluno</label>
+                                <textarea id="condicoesAdicionaisPlanoProfessor" name="additional_conditions" rows="4" maxlength="3000" placeholder="Opcional. Informe condições específicas deste plano, como regras de agendamento e organização das aulas."></textarea>
+                                <small>Essas condições serão apresentadas ao aluno antes do aceite e ficarão registradas na contratação.</small>
+                            </div>
                             <div class="plano-professor-campo">
                                 <label for="precoPlanoProfessor">Preço (R$) *</label>
                                 <input id="precoPlanoProfessor" name="price" type="number" min="0.01" max="1000000" step="0.01" required placeholder="0,00">
@@ -668,7 +673,7 @@
 
     <script src="js/script.js?v=20261128-painel-professor1"></script>
     <script src="js/notificacoes-push.js"></script>
-    <script src="js/painel-professor.js?v=20261128-mensagem-limite2planos"></script>
+    <script src="js/painel-professor.js?v=20261128-condicoes-contratacao1"></script>
 
 </body>
 </html>
