@@ -432,10 +432,6 @@
                                 <small>Os ajustes não alteram partidas, vitórias ou rankings.</small>
                             </section>
                         </div>
-                        <section class="painel-dev-seguranca-bloco painel-dev-progressao-historico">
-                            <h3>Histórico de troféus</h3>
-                            <div id="historicoTrofeusProgressao" class="painel-dev-progressao-lista"><p>Nenhum ajuste administrativo registrado.</p></div>
-                        </section>
                         <p id="mensagemAcaoProgressao" class="painel-dev-estado" role="status" aria-live="polite"></p>
                         <section class="painel-dev-seguranca-bloco painel-dev-progressao-titulos">
                             <h3>Títulos atuais</h3>
@@ -1420,22 +1416,6 @@
                 document.getElementById("detalhesTrofeusProgressao").textContent =
                     "Vitórias: " + Number(trofeus?.challenge_wins || 0) +
                     " · Ajustes: " + (ajusteTrofeus > 0 ? "+" : "") + ajusteTrofeus;
-
-                const historicoTrofeus = document.getElementById("historicoTrofeusProgressao");
-                historicoTrofeus.replaceChildren();
-                if (!trofeus?.recent_adjustments?.length) {
-                    historicoTrofeus.textContent = "Nenhum ajuste administrativo registrado.";
-                } else {
-                    trofeus.recent_adjustments.forEach(item => {
-                        const delta = Number(item.delta || 0);
-                        const descricao = (delta > 0 ? "+" : "") + delta + " troféu(s)";
-                        historicoTrofeus.appendChild(criarItem(
-                            descricao,
-                            "Por @" + (item.actor_username || "DEV") + " · " +
-                            new Date(item.created_at).toLocaleString("pt-BR")
-                        ));
-                    });
-                }
 
                 const listaTitulos = document.getElementById("listaTitulosProgressao");
                 listaTitulos.replaceChildren();
