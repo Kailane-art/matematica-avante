@@ -153,9 +153,13 @@
         .painel-dev-usuario small { display: block; margin-top: 4px; color: rgba(255,255,255,.88); }
         .painel-dev-usuario-acoes { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
         .painel-dev-usuario a { color: #fff; font-weight: 700; text-decoration: underline; white-space: nowrap; }
-        .painel-dev-usuario-info { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.65); border-radius: 50%; background: #294ec5; color: #fff !important; font-size: 19px; line-height: 1; text-decoration: none !important; }
+        .painel-dev-usuario-info { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.65); border-radius: 50%; background: #294ec5; color: #fff; cursor: pointer; }
+        .painel-dev-usuario-info svg { width: 19px; height: 19px; }
         .painel-dev-usuario-info:hover { background: #1e3a8a; }
-        .modo-escuro .painel-dev-usuario-info { border-color: #6b91ed; background: #294ec5; color: #fff !important; }
+        .modo-escuro .painel-dev-usuario-info { border-color: #6b91ed; background: #294ec5; color: #fff; }
+        .painel-dev-admin-overlay[hidden] { display: none !important; }
+        .painel-dev-admin-overlay { position: fixed; inset: 0; z-index: 11000; display: flex; align-items: center; justify-content: center; padding: 0; background: rgba(15, 23, 42, .72); }
+        .painel-dev-admin-frame { display: block; width: 100%; height: 100%; border: 0; background: transparent; }
         .modo-escuro .painel-dev-filtros input, .modo-escuro .painel-dev-filtros select, .modo-escuro .painel-dev-usuario { background: #172b43; border-color: #38516e; color: #e3edf8; }
         .modo-escuro .painel-dev-usuario strong { color: #e3edf8; }
         .modo-escuro .painel-dev-usuario small, .modo-escuro .painel-dev-estado { color: #a9bad0; }
@@ -321,6 +325,10 @@
         </section>
     </main>
 
+    <div id="painelDevAdminOverlay" class="painel-dev-admin-overlay" hidden>
+        <iframe id="painelDevAdminFrame" class="painel-dev-admin-frame" title="Informações administrativas do usuário"></iframe>
+    </div>
+
     <script src="js/script.js?v=20261127-painel-speed1"></script>
     <script>
         if (window.lucide) lucide.createIcons();
@@ -371,12 +379,13 @@
                     link.href = urlPerfil;
                     link.textContent = "Ver perfil";
 
-                    const botaoInfo = document.createElement("a");
+                    const botaoInfo = document.createElement("button");
+                    botaoInfo.type = "button";
                     botaoInfo.className = "painel-dev-usuario-info";
-                    botaoInfo.href = urlPerfil + "&abrirAdmin=1";
                     botaoInfo.innerHTML = '<i data-lucide="info"></i>';
                     botaoInfo.setAttribute("aria-label", "Abrir informações administrativas de @" + (usuario.username || "usuário"));
                     botaoInfo.title = "Informações administrativas";
+                    botaoInfo.addEventListener("click", () => abrirPainelAdminNoPainel(usuario.username));
 
                     acoes.append(link, botaoInfo);
                     item.append(informacoes, acoes);
@@ -385,6 +394,44 @@
 
                 if (window.lucide) lucide.createIcons();
             }
+
+            const overlayAdmin = document.getElementById("painelDevAdminOverlay");
+            const frameAdmin = document.getElementById("painelDevAdminFrame");
+
+            function fecharPainelAdminNoPainel() {
+                overlayAdmin.hidden = true;
+                frameAdmin.src = "about:blank";
+            }
+
+            function abrirPainelAdminNoPainel(username) {
+                if (!username) return;
+                overlayAdmin.hidden = false;
+                frameAdmin.src = "perfil-publico.html?usuario=" + encodeURIComponent(username) + "&abrirAdmin=1&modoPainelDev=1";
+            }
+
+            frameAdmin.addEventListener("load", () => {
+                try {
+                    const documento = frameAdmin.contentDocument;
+                    if (!documento) return;
+                    let estilo = documento.getElementById("estiloPainelDevEmbed");
+                    if (!estilo) {
+                        estilo = documento.createElement("style");
+                        estilo.id = "estiloPainelDevEmbed";
+                        documento.head.appendChild(estilo);
+                    }
+                    estilo.textContent = "html, body { background: transparent !important; } header, main.perfil-container > .card-perfil { display: none !important; } .painel-admin-perfil { background: transparent !important; }";
+                } catch (erro) {
+                    console.error("Não foi possível ajustar o painel administrativo incorporado:", erro);
+                }
+            });
+
+            overlayAdmin.addEventListener("click", (evento) => {
+                if (evento.target === overlayAdmin) fecharPainelAdminNoPainel();
+            });
+
+            document.addEventListener("keydown", (evento) => {
+                if (evento.key === "Escape" && !overlayAdmin.hidden) fecharPainelAdminNoPainel();
+            });
 
             async function carregarUsuarios() {
                 if (carregando) return;
