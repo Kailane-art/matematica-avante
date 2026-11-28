@@ -21,6 +21,7 @@
     const lista = document.getElementById("listaPlanosProfessor");
     const mensagem = document.getElementById("mensagemPlanosProfessor");
 
+    const LIMITE_PLANOS = 2;
     let usuarioAtual = null;
     let planos = [];
     let salvando = false;
@@ -55,6 +56,22 @@
         return elemento;
     }
 
+    function atualizarDisponibilidadeCadastro() {
+        const editando = Boolean(campoId.value);
+        const limiteAtingido = planos.length >= LIMITE_PLANOS;
+
+        botaoAbrirFormulario.disabled = limiteAtingido && !editando;
+
+        if (editando) {
+            estadoBotaoPlanos.textContent = "Editando um dos seus planos cadastrados.";
+        } else if (limiteAtingido) {
+            estadoBotaoPlanos.textContent = "Limite de 2 planos atingido. Edite os planos existentes.";
+        } else {
+            estadoBotaoPlanos.textContent =
+                "Você cadastrou " + planos.length + " de " + LIMITE_PLANOS + " planos.";
+        }
+    }
+
     function limparFormulario() {
         form.reset();
         campoId.value = "";
@@ -64,6 +81,7 @@
         botaoSalvar.textContent = "Salvar plano";
         botaoCancelar.hidden = true;
         mostrarMensagem("");
+        atualizarDisponibilidadeCadastro();
     }
 
     function definirFormularioAberto(aberto) {
@@ -72,6 +90,7 @@
         estadoBotaoPlanos.textContent = aberto
             ? "Formulário aberto. Clique aqui para recolher."
             : "Clique para cadastrar ou editar seus planos.";
+        if (!aberto) atualizarDisponibilidadeCadastro();
     }
 
     function preencherFormulario(plano) {
@@ -87,6 +106,7 @@
         botaoSalvar.textContent = "Salvar alterações";
         botaoCancelar.hidden = false;
         mostrarMensagem("Editando: " + plano.name);
+        atualizarDisponibilidadeCadastro();
         definirFormularioAberto(true);
         containerFormulario.scrollIntoView({ behavior: "smooth", block: "center" });
         campoNome.focus({ preventScroll: true });
@@ -94,6 +114,7 @@
 
     function renderizarPlanos() {
         lista.replaceChildren();
+        atualizarDisponibilidadeCadastro();
 
         if (!planos.length) {
             lista.appendChild(criarElemento("p", "plano-professor-estado", "Você ainda não cadastrou nenhum plano."));
@@ -171,6 +192,13 @@
         evento.preventDefault();
         if (salvando) return;
 
+        const estavaEditando = Boolean(campoId.value);
+        if (!estavaEditando && planos.length >= LIMITE_PLANOS) {
+            mostrarMensagem("Você já atingiu o limite de 2 planos. Edite um plano existente para fazer alterações.", true);
+            atualizarDisponibilidadeCadastro();
+            return;
+        }
+
         const nome = campoNome.value.trim();
         const preco = Number(campoPreco.value);
         const quantidade = campoAulas.value.trim() === "" ? null : Number(campoAulas.value);
@@ -207,7 +235,6 @@
             updated_at: new Date().toISOString()
         };
 
-        const estavaEditando = Boolean(campoId.value);
         salvando = true;
         botaoSalvar.disabled = true;
         botaoSalvar.textContent = "Salvando...";
@@ -230,7 +257,12 @@
             await carregarPlanos();
         } catch (erro) {
             console.error("Erro ao salvar plano do professor:", erro);
-            mostrarMensagem("Não foi possível salvar o plano. Verifique os dados e tente novamente.", true);
+            if (erro && erro.code === "23514" && String(erro.message || "").includes("Limite de 2 planos")) {
+                mostrarMensagem("Você já atingiu o limite de 2 planos cadastrados.", true);
+                await carregarPlanos();
+            } else {
+                mostrarMensagem("Não foi possível salvar o plano. Verifique os dados e tente novamente.", true);
+            }
         } finally {
             salvando = false;
             botaoSalvar.disabled = false;
@@ -239,6 +271,10 @@
     });
 
     botaoAbrirFormulario.addEventListener("click", function () {
+        if (planos.length >= LIMITE_PLANOS && !campoId.value) {
+            atualizarDisponibilidadeCadastro();
+            return;
+        }
         definirFormularioAberto(containerFormulario.hidden);
     });
     botaoCancelar.addEventListener("click", function () {
