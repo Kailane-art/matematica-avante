@@ -8638,3 +8638,52 @@ body.pagina-perfil-publico #acoesPerfilPublico > p {
     margin: 0;
 }
 
+
+
+/* PERFIL PÚBLICO — GRUPO FIXO PARA AÇÕES LADO A LADO */
+body.pagina-perfil-publico #acoesPerfilPublico:not([hidden]) {
+    display: block;
+    width: 100%;
+}
+
+body.pagina-perfil-publico #acoesPerfilPublico .grupo-botoes-amizade-perfil {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+}
+
+body.pagina-perfil-publico #acoesPerfilPublico .grupo-botoes-amizade-perfil > button {
+    display: inline-flex;
+    flex: 0 1 auto;
+    width: auto !important;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 36px;
+    margin: 0;
+    padding: 7px 10px;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+body.pagina-perfil-publico #acoesPerfilPublico .grupo-botoes-amizade-perfil > button[hidden] {
+    display: none !important;
+}
+
+body.pagina-perfil-publico #acoesPerfilPublico .grupo-botoes-amizade-perfil > button svg {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+}
+
+body.pagina-perfil-publico #acoesPerfilPublico > #mensagemAmizadePerfil {
+    display: block;
+    width: 100%;
+    margin: 8px 0 0;
+    text-align: center;
+}
