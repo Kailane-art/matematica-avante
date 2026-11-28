@@ -36,8 +36,8 @@
             cursor: pointer;
         }
         .painel-dev-header-text { flex: 1; min-width: 0; }
-        .painel-dev-header h1 { margin: 0; color: #153b70; font-size: clamp(20px, 4vw, 27px); }
-        .painel-dev-header p { margin: 4px 0 0; color: #64748b; font-size: 13px; }
+        .painel-dev-header h1 { margin: 0; color: #fff; font-size: clamp(20px, 4vw, 27px); }
+        .painel-dev-header p { margin: 4px 0 0; color: #dbeafe; font-size: 13px; }
         .painel-dev-conteudo {
             width: min(1160px, calc(100% - 32px));
             margin: 0 auto;
@@ -56,8 +56,8 @@
         .painel-dev-apresentacao h2 { margin: 0; color: #fff; font-size: clamp(23px, 4vw, 30px); }
         .painel-dev-secao { margin-top: 30px; }
         .painel-dev-secao-cabecalho { margin-bottom: 15px; }
-        .painel-dev-secao-cabecalho h2 { margin: 0; color: #183b68; font-size: 20px; }
-        .painel-dev-secao-cabecalho p { margin: 5px 0 0; color: #64748b; font-size: 13px; line-height: 1.5; }
+        .painel-dev-secao-cabecalho h2 { margin: 0; color: #fff; font-size: 20px; }
+        .painel-dev-secao-cabecalho p { margin: 5px 0 0; color: #dbeafe; font-size: 13px; line-height: 1.5; }
         .painel-dev-grade {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -97,7 +97,7 @@
             padding: 8px 12px;
             border: 1px solid rgba(255,255,255,.55);
             border-radius: 9px;
-            background: #1E3A8A;
+            background: #4169e1;
             color: #fff;
             font: inherit;
             font-size: 12px;
@@ -105,7 +105,7 @@
             cursor: not-allowed;
             opacity: 1;
         }
-        .painel-dev-botao:disabled { color: #fff; background: #1E3A8A; opacity: .9; }
+        .painel-dev-botao:disabled { color: #fff; background: #4169e1; opacity: 1; }
         .painel-dev-modulo-status {
             display: block;
             margin-top: 8px;
@@ -136,12 +136,12 @@
         .painel-dev-listagem[hidden] { display: none !important; }
         .painel-dev-filtros { display: grid; grid-template-columns: minmax(0, 1fr) 190px auto; gap: 10px; margin: 18px 0; }
         .painel-dev-filtros input, .painel-dev-filtros select { min-width: 0; width: 100%; padding: 12px 14px; border: 1px solid #cbd8e8; border-radius: 10px; background: #fff; color: #24364b; font: inherit; }
-        .painel-dev-estado { color: #63758b; margin: 12px 0; }
+        .painel-dev-estado { color: #dbeafe; margin: 12px 0; }
         .painel-dev-usuarios { display: grid; gap: 10px; }
-        .painel-dev-usuario { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; border: 1px solid #dce5ef; border-radius: 12px; background: #fff; }
-        .painel-dev-usuario strong { display: block; color: #20364f; }
-        .painel-dev-usuario small { display: block; margin-top: 4px; color: #718096; }
-        .painel-dev-usuario a { color: #1769bd; font-weight: 600; text-decoration: none; white-space: nowrap; }
+        .painel-dev-usuario { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; border: 1px solid rgba(255,255,255,.18); border-radius: 12px; background: #4169e1; color: #fff; }
+        .painel-dev-usuario strong { display: block; color: #fff; }
+        .painel-dev-usuario small { display: block; margin-top: 4px; color: rgba(255,255,255,.88); }
+        .painel-dev-usuario a { color: #fff; font-weight: 700; text-decoration: underline; white-space: nowrap; }
         .modo-escuro .painel-dev-filtros input, .modo-escuro .painel-dev-filtros select, .modo-escuro .painel-dev-usuario { background: #172b43; border-color: #38516e; color: #e3edf8; }
         .modo-escuro .painel-dev-usuario strong { color: #e3edf8; }
         .modo-escuro .painel-dev-usuario small, .modo-escuro .painel-dev-estado { color: #a9bad0; }
