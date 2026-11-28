@@ -318,9 +318,12 @@ Deno.serve(async (req) => {
 
     if (body.action === "demote") {
       if (target.tipo_usuario !== "professor") return reply({ error: "Esta conta não é de professor." }, 409);
-      const { error } = await admin.from("profiles").update({ tipo_usuario: "aluno" }).eq("id", targetId);
+      const { data: result, error } = await admin.rpc("ma_admin_demote_teacher", {
+        p_user_id: targetId,
+        p_actor_id: authData.user.id
+      });
       if (error) throw error;
-      return reply({ success: true });
+      return reply(result || { success: true });
     }
     return reply({ error: "Ação administrativa desconhecida." }, 400);
   } catch (error) {
