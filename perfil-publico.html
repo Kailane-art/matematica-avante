@@ -16,7 +16,7 @@
         }
     </style>
     <title>Perfil público - Matemática Avante</title>
-    <link rel="stylesheet" href="css/style.css?v=20261128-contratacao1">
+    <link rel="stylesheet" href="css/style.css?v=20261128-selosdev1">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="manifest" href="manifest.webmanifest">
@@ -1222,7 +1222,7 @@ async function carregarPerfilPublico() {
         }
 
         const selo = document.getElementById("seloPerfilPublico");
-        selo.classList.remove("selo-dev-nome");
+        selo.classList.remove("selo-dev-nome", "selo-dev-secundario");
         selo.removeAttribute("title");
 
         if (perfil.tipo_usuario === "dev") {
