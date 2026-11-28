@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="verificando-sessao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1E3A8A">
+    <title>Painel do Professor - Matemática Avante</title>
+    <link rel="stylesheet" href="css/style.css?v=20261127-professor1">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        html.verificando-sessao body { visibility: hidden; }
+
+        .pagina-painel-professor {
+            min-height: 100vh;
+            padding-bottom: 48px;
+            background: #f4f8ff;
+            color: #1f2937;
+        }
+
+        .painel-professor-cabecalho {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 17px max(16px, calc((100% - 1080px) / 2));
+            background: #1E3A8A;
+            color: #fff;
+        }
+
+        .painel-professor-cabecalho .icon-button {
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            border: 0;
+            border-radius: 50%;
+            background: #0b1d3a;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .painel-professor-cabecalho h1 {
+            flex: 1;
+            margin: 0;
+            color: #fff;
+            text-align: center;
+            font-size: clamp(19px, 3.5vw, 25px);
+        }
+
+        .painel-professor-cabecalho .espacador-cabecalho {
+            width: 44px;
+            flex: 0 0 44px;
+        }
+
+        .painel-professor-conteudo {
+            width: min(1080px, calc(100% - 32px));
+            margin: 0 auto;
+            padding-top: 28px;
+        }
+
+        .painel-professor-apresentacao {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(22px, 4vw, 34px);
+            border-radius: 22px;
+            background: linear-gradient(125deg, #1E3A8A, #4169e1);
+            color: #fff;
+            box-shadow: 0 10px 26px rgba(30, 58, 138, .18);
+        }
+
+        .painel-professor-apresentacao::after {
+            content: "";
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            right: -75px;
+            top: -105px;
+            border: 1px solid rgba(255,255,255,.16);
+            border-radius: 50%;
+            box-shadow: 0 0 0 28px rgba(255,255,255,.05), 0 0 0 58px rgba(255,255,255,.035);
+            pointer-events: none;
+        }
+
+        .painel-professor-etiqueta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            color: #dbeafe;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+        }
+
+        .painel-professor-apresentacao h2 {
+            max-width: 680px;
+            margin: 0;
+            color: #fff;
+            font-size: clamp(25px, 4.5vw, 36px);
+            line-height: 1.15;
+        }
+
+        .painel-professor-apresentacao p {
+            max-width: 650px;
+            margin: 12px 0 0;
+            color: #e5edff;
+            font-size: 15px;
+            line-height: 1.65;
+        }
+
+        .painel-professor-identificacao {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px 14px;
+            margin-top: 22px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .painel-professor-identificacao strong { font-size: 15px; }
+        .painel-professor-identificacao span { color: #dbeafe; }
+
+        .painel-professor-secao { margin-top: 30px; }
+
+        .painel-professor-titulo-secao {
+            margin-bottom: 14px;
+        }
+
+        .painel-professor-titulo-secao h2 {
+            margin: 0;
+            color: #1E3A8A;
+            font-size: 20px;
+        }
+
+        .painel-professor-titulo-secao p {
+            margin: 5px 0 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .painel-professor-indicadores {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 13px;
+            margin-top: 18px;
+        }
+
+        .painel-professor-indicador {
+            min-width: 0;
+            padding: 18px;
+            border: 1px solid #e1e9f7;
+            border-radius: 17px;
+            background: #fff;
+            box-shadow: 0 5px 16px rgba(15, 40, 90, .05);
+        }
+
+        .painel-professor-indicador-topo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .painel-professor-indicador-icone {
+            display: grid;
+            place-items: center;
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            border-radius: 11px;
+            background: #edf3ff;
+            color: #3159bd;
+        }
+
+        .painel-professor-indicador-icone svg { width: 18px; height: 18px; }
+
+        .painel-professor-indicador strong {
+            display: block;
+            margin-top: 13px;
+            color: #1E3A8A;
+            font-size: 25px;
+            line-height: 1.1;
+        }
+
+        .painel-professor-indicador small {
+            display: block;
+            margin-top: 6px;
+            color: #8491a5;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .painel-professor-grade {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .painel-professor-card {
+            min-width: 0;
+            padding: 21px;
+            border: 1px solid #e1e9f7;
+            border-radius: 18px;
+            background: #fff;
+            box-shadow: 0 5px 16px rgba(15, 40, 90, .05);
+        }
+
+        .painel-professor-card-cabecalho {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .painel-professor-card-icone {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            flex: 0 0 42px;
+            border-radius: 13px;
+            background: #edf3ff;
+            color: #3159bd;
+        }
+
+        .painel-professor-card-icone svg { width: 21px; height: 21px; }
+
+        .painel-professor-card h3 {
+            margin: 0;
+            color: #1e3a8a;
+            font-size: 16px;
+        }
+
+        .painel-professor-card p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .painel-professor-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 15px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .painel-professor-status::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #94a3b8;
+        }
+
+        .painel-professor-comissao {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 14px;
+            padding: 17px 19px;
+            border: 1px solid #dbe6fb;
+            border-radius: 16px;
+            background: #f8faff;
+        }
+
+        .painel-professor-comissao span {
+            color: #526176;
+            font-size: 13px;
+        }
+
+        .painel-professor-comissao strong {
+            color: #1E3A8A;
+            font-size: 22px;
+        }
+
+        .painel-professor-aviso {
+            margin-top: 18px;
+            padding: 13px 15px;
+            border-left: 3px solid #4169e1;
+            border-radius: 9px;
+            background: #edf3ff;
+            color: #526176;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .modo-escuro .pagina-painel-professor {
+            background: #12366f;
+            color: #fff;
+        }
+
+        .modo-escuro .painel-professor-titulo-secao h2 { color: #FFD54F; }
+        .modo-escuro .painel-professor-titulo-secao p { color: #dbeafe; }
+        .modo-escuro .painel-professor-indicador,
+        .modo-escuro .painel-professor-card {
+            border-color: rgba(255,255,255,.12);
+            background: #173d78;
+        }
+        .modo-escuro .painel-professor-indicador-topo,
+        .modo-escuro .painel-professor-card p,
+        .modo-escuro .painel-professor-indicador small { color: #dbeafe; }
+        .modo-escuro .painel-professor-indicador strong,
+        .modo-escuro .painel-professor-card h3 { color: #fff; }
+        .modo-escuro .painel-professor-indicador-icone,
+        .modo-escuro .painel-professor-card-icone { background: #244b8a; color: #dbeafe; }
+        .modo-escuro .painel-professor-status { background: #244b8a; color: #dbeafe; }
+        .modo-escuro .painel-professor-comissao { border-color: rgba(255,255,255,.14); background: #173d78; }
+        .modo-escuro .painel-professor-comissao span { color: #dbeafe; }
+        .modo-escuro .painel-professor-comissao strong { color: #fff; }
+        .modo-escuro .painel-professor-aviso { background: #173d78; color: #dbeafe; }
+
+        @media (max-width: 760px) {
+            .painel-professor-indicadores { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .painel-professor-grade { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 420px) {
+            .painel-professor-conteudo { width: min(100% - 24px, 1080px); padding-top: 18px; }
+            .painel-professor-indicador { padding: 14px; }
+            .painel-professor-indicador-topo { align-items: flex-start; }
+            .painel-professor-indicador strong { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="pagina-painel-professor">
+        <header class="painel-professor-cabecalho">
+            <button id="voltarPagina" type="button" class="icon-button" aria-label="Voltar">
+                <i data-lucide="arrow-left"></i>
+            </button>
+            <h1>Painel do professor</h1>
+            <button id="botaoMenu" type="button" class="icon-button" aria-label="Abrir menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </header>
+
+        <main class="painel-professor-conteudo">
+            <section class="painel-professor-apresentacao">
+                <div class="painel-professor-etiqueta">
+                    <i data-lucide="graduation-cap"></i>
+                    Área do professor
+                </div>
+                <h2>Seu espaço para ensinar e crescer.</h2>
+                <p>Acompanhe sua atuação na Matemática Avante. Aqui ficarão reunidas as informações do seu perfil profissional, seus alunos, suas avaliações e seus ganhos.</p>
+                <div class="painel-professor-identificacao">
+                    <strong id="nomeProfessorPainel">Professor</strong>
+                    <span id="usernameProfessorPainel">@usuario</span>
+                </div>
+            </section>
+
+            <section class="painel-professor-secao" aria-labelledby="tituloResumoProfessor">
+                <div class="painel-professor-titulo-secao">
+                    <h2 id="tituloResumoProfessor">Visão geral</h2>
+                    <p>Os indicadores serão preenchidos conforme os recursos forem conectados.</p>
+                </div>
+
+                <div class="painel-professor-indicadores">
+                    <article class="painel-professor-indicador">
+                        <div class="painel-professor-indicador-topo">
+                            Alunos ativos
+                            <span class="painel-professor-indicador-icone"><i data-lucide="users"></i></span>
+                        </div>
+                        <strong>—</strong>
+                        <small>Contratações confirmadas</small>
+                    </article>
+
+                    <article class="painel-professor-indicador">
+                        <div class="painel-professor-indicador-topo">
+                            Avaliação média
+                            <span class="painel-professor-indicador-icone"><i data-lucide="star"></i></span>
+                        </div>
+                        <strong>— / 5</strong>
+                        <small>Notas enviadas pelos alunos</small>
+                    </article>
+
+                    <article class="painel-professor-indicador">
+                        <div class="painel-professor-indicador-topo">
+                            Contratos ativos
+                            <span class="painel-professor-indicador-icone"><i data-lucide="file-check"></i></span>
+                        </div>
+                        <strong>—</strong>
+                        <small>Vínculos após pagamento confirmado</small>
+                    </article>
+
+                    <article class="painel-professor-indicador">
+                        <div class="painel-professor-indicador-topo">
+                            Ganhos líquidos
+                            <span class="painel-professor-indicador-icone"><i data-lucide="wallet"></i></span>
+                        </div>
+                        <strong>—</strong>
+                        <small>Após comissão e taxas aplicáveis</small>
+                    </article>
+                </div>
+            </section>
+
+            <section class="painel-professor-secao" aria-labelledby="tituloGestaoProfessor">
+                <div class="painel-professor-titulo-secao">
+                    <h2 id="tituloGestaoProfessor">Gestão profissional</h2>
+                    <p>As áreas principais do seu trabalho na plataforma.</p>
+                </div>
+
+                <div class="painel-professor-grade">
+                    <article class="painel-professor-card">
+                        <div class="painel-professor-card-cabecalho">
+                            <span class="painel-professor-card-icone"><i data-lucide="user-round"></i></span>
+                            <h3>Meu perfil profissional</h3>
+                        </div>
+                        <p>Apresentação, formação, especialidades e informações que os alunos poderão consultar antes de contratar.</p>
+                        <span class="painel-professor-status">Em preparação</span>
+                    </article>
+
+                    <article class="painel-professor-card">
+                        <div class="painel-professor-card-cabecalho">
+                            <span class="painel-professor-card-icone"><i data-lucide="tags"></i></span>
+                            <h3>Planos e preços</h3>
+                        </div>
+                        <p>Definição dos serviços oferecidos, valores, duração, condições e detalhes de cada plano.</p>
+                        <span class="painel-professor-status">Em preparação</span>
+                    </article>
+
+                    <article class="painel-professor-card">
+                        <div class="painel-professor-card-cabecalho">
+                            <span class="painel-professor-card-icone"><i data-lucide="book-user"></i></span>
+                            <h3>Meus alunos e contratos</h3>
+                        </div>
+                        <p>Lista de alunos vinculados e acompanhamento dos contratos ativados após a confirmação do pagamento.</p>
+                        <span class="painel-professor-status">Em preparação</span>
+                    </article>
+
+                    <article class="painel-professor-card">
+                        <div class="painel-professor-card-cabecalho">
+                            <span class="painel-professor-card-icone"><i data-lucide="star"></i></span>
+                            <h3>Minhas avaliações</h3>
+                        </div>
+                        <p>Média de estrelas, quantidade de avaliações e comentários publicados pelos alunos contratantes.</p>
+                        <span class="painel-professor-status">Em preparação</span>
+                    </article>
+
+                    <article class="painel-professor-card">
+                        <div class="painel-professor-card-cabecalho">
+                            <span class="painel-professor-card-icone"><i data-lucide="calendar-days"></i></span>
+                            <h3>Agenda e aulas</h3>
+                        </div>
+                        <p>Disponibilidade, horários combinados e organização das aulas com seus alunos.</p>
+                        <span class="painel-professor-status">Etapa futura</span>
+                    </article>
+
+                    <article class="painel-professor-card">
+                        <div class="painel-professor-card-cabecalho">
+                            <span class="painel-professor-card-icone"><i data-lucide="wallet"></i></span>
+                            <h3>Financeiro e repasses</h3>
+                        </div>
+                        <p>Valores recebidos, comissão da plataforma, saldo disponível e histórico de repasses.</p>
+                        <span class="painel-professor-status">Etapa futura</span>
+                    </article>
+                </div>
+            </section>
+
+            <section class="painel-professor-secao" aria-labelledby="tituloComissaoProfessor">
+                <div class="painel-professor-titulo-secao">
+                    <h2 id="tituloComissaoProfessor">Comissão da plataforma</h2>
+                    <p>Regra comercial definida para as contratações realizadas pela Matemática Avante.</p>
+                </div>
+                <div class="painel-professor-comissao">
+                    <span>Comissão da Matemática Avante por pagamento confirmado</span>
+                    <strong>18%</strong>
+                </div>
+                <div class="painel-professor-aviso">
+                    Os valores financeiros exibidos neste painel ainda não estão conectados a pagamentos reais. A comissão, os repasses e os contratos serão implementados em etapas próprias, com regras de cancelamento e reembolso.
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="fundoMenu"></div>
+    <nav id="menuLateral" aria-label="Menu principal">
+        <h2>Menu</h2>
+    </nav>
+
+    <script src="js/script.js?v=20261125-painel-dev2"></script>
+    <script src="js/notificacoes-push.js"></script>
+    <script>
+        (async function validarAcessoPainelProfessor() {
+            try {
+                if (typeof supabaseClient === "undefined" || !supabaseClient) {
+                    window.location.replace("index.html");
+                    return;
+                }
+
+                const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+                if (erroUsuario || !user) {
+                    window.location.replace("index.html");
+                    return;
+                }
+
+                const { data: perfil, error: erroPerfil } = await supabaseClient
+                    .from("profiles")
+                    .select("display_name, username, tipo_usuario")
+                    .eq("id", user.id)
+                    .maybeSingle();
+
+                if (erroPerfil || !perfil || !["professor", "dev"].includes(perfil.tipo_usuario)) {
+                    window.location.replace("inicio.html");
+                    return;
+                }
+
+                document.getElementById("nomeProfessorPainel").textContent =
+                    perfil.display_name || "Professor";
+                document.getElementById("usernameProfessorPainel").textContent =
+                    perfil.username ? "@" + perfil.username : "";
+
+                document.documentElement.classList.remove("verificando-sessao");
+
+                if (window.atualizarIcones) atualizarIcones();
+            } catch (erro) {
+                console.error("Não foi possível validar o acesso ao painel do professor:", erro);
+                window.location.replace("index.html");
+            }
+        })();
+    </script>
+</body>
+</html>
