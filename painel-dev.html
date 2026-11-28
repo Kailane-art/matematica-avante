@@ -1551,6 +1551,7 @@
                         data === "rejeitada" ? "Solicitação rejeitada. A conta continua como aluno." :
                         "Solicitação marcada como em análise.";
                     estado.textContent = resultado;
+                    carregando = false;
                     await carregarDados();
                 } catch (erro) {
                     console.error("Erro ao decidir solicitação de professor:", erro);
