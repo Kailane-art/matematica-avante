@@ -420,6 +420,19 @@
                         documento.head.appendChild(estilo);
                     }
                     estilo.textContent = "html, body { background: transparent !important; } header, main.perfil-container > .card-perfil { display: none !important; } .painel-admin-perfil { background: transparent !important; }";
+
+                    const painelInterno = documento.getElementById("painelAdministrativoPerfil");
+                    const fecharInterno = documento.getElementById("fecharPainelAdminPerfil");
+                    if (fecharInterno && !fecharInterno.dataset.painelDevHandler) {
+                        fecharInterno.dataset.painelDevHandler = "1";
+                        fecharInterno.addEventListener("click", fecharPainelAdminNoPainel);
+                    }
+                    if (painelInterno && !painelInterno.dataset.painelDevHandler) {
+                        painelInterno.dataset.painelDevHandler = "1";
+                        painelInterno.addEventListener("click", (evento) => {
+                            if (evento.target === painelInterno) fecharPainelAdminNoPainel();
+                        });
+                    }
                 } catch (erro) {
                     console.error("Não foi possível ajustar o painel administrativo incorporado:", erro);
                 }
