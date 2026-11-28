@@ -1702,6 +1702,11 @@
                 the_fallen: ["The Fallen", "Mítico"]
             };
 
+            const opcaoTodosTitulos = document.createElement("option");
+            opcaoTodosTitulos.value = "__todos__";
+            opcaoTodosTitulos.textContent = "Todos os títulos";
+            seletorTitulo.appendChild(opcaoTodosTitulos);
+
             Object.entries(titulos).forEach(([key, info]) => {
                 const option = document.createElement("option");
                 option.value = key;
@@ -1941,15 +1946,59 @@
                 executarAcao("progress_adjust_xp", { mode: "remove", amount }, "Remover " + amount + " XP de @" + usuarioSelecionado.username + "? O total nunca ficará negativo.");
             });
 
+            async function concederTodosTitulos() {
+                if (!usuarioSelecionado || carregando) return;
+                const chaves = Object.keys(titulos);
+                const confirmacao = `Conceder todos os ${chaves.length} títulos disponíveis para @${usuarioSelecionado.username}? Os títulos já desbloqueados serão mantidos, sem duplicação.`;
+                if (!window.confirm(confirmacao)) return;
+
+                carregando = true;
+                mensagem.textContent = "Concedendo todos os títulos...";
+                let concedidos = 0;
+                let jaPossuia = 0;
+                try {
+                    for (const achievement_key of chaves) {
+                        const data = await chamarAdmin("progress_grant_title", {
+                            target_user_id: usuarioSelecionado.id,
+                            achievement_key
+                        });
+                        if (data.changed === false) jaPossuia++;
+                        else concedidos++;
+                    }
+                    mensagem.textContent = concedidos
+                        ? `Operação concluída: ${concedidos} título(s) desbloqueado(s). ${jaPossuia} já estavam desbloqueados.`
+                        : `A conta já possuía todos os ${jaPossuia} títulos disponíveis.`;
+                    await carregarDetalhes();
+                } catch (erro) {
+                    console.error("Erro ao conceder todos os títulos:", erro);
+                    mensagem.textContent = `A operação foi interrompida após ${concedidos + jaPossuia} de ${chaves.length} títulos processados. ${concedidos} concedido(s), ${jaPossuia} já existentes. Erro: ` + (erro.message || "falha desconhecida");
+                    try {
+                        await carregarDetalhes();
+                    } catch (erroAtualizacao) {
+                        console.error("Erro ao atualizar progresso após concessão parcial:", erroAtualizacao);
+                    }
+                } finally {
+                    carregando = false;
+                }
+            }
+
             document.getElementById("concederTituloProgressao").addEventListener("click", () => {
                 const key = seletorTitulo.value;
                 if (!key) { mensagem.textContent = "Selecione um título."; return; }
+                if (key === "__todos__") {
+                    concederTodosTitulos();
+                    return;
+                }
                 executarAcao("progress_grant_title", { achievement_key: key }, `Conceder o título "${titulos[key][0]}" para @${usuarioSelecionado.username}?`);
             });
 
             document.getElementById("retirarTituloProgressao").addEventListener("click", () => {
                 const key = seletorTitulo.value;
                 if (!key) { mensagem.textContent = "Selecione um título."; return; }
+                if (key === "__todos__") {
+                    mensagem.textContent = "A opção Todos os títulos só pode ser usada para conceder títulos.";
+                    return;
+                }
                 executarAcao("progress_revoke_title", { achievement_key: key }, `Retirar o título "${titulos[key][0]}" de @${usuarioSelecionado.username}?`);
             });
 
