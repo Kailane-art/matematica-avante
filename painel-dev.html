@@ -378,7 +378,6 @@
                         <article class="painel-dev-seguranca-indicador"><span>Rejeitadas</span><strong id="totalSolicitacoesRejeitadas">—</strong></article>
                     </div>
                     <div class="painel-dev-professores-filtros">
-                        <input id="buscaGerenciamentoProfessores" type="search" maxlength="80" placeholder="Pesquisar por nome ou @username" aria-label="Pesquisar professores e solicitações">
                         <select id="filtroSolicitacoesProfessores" aria-label="Filtrar solicitações">
                             <option value="todas">Todas as solicitações</option>
                             <option value="pendente">Pendentes</option>
@@ -1336,7 +1335,6 @@
             const modulo = document.getElementById("moduloProfessores");
             const estado = document.getElementById("estadoGerenciamentoProfessores");
             const atualizar = document.getElementById("atualizarGerenciamentoProfessores");
-            const busca = document.getElementById("buscaGerenciamentoProfessores");
             const filtro = document.getElementById("filtroSolicitacoesProfessores");
             const listaProfessores = document.getElementById("listaProfessoresGerenciados");
             const listaSolicitacoes = document.getElementById("listaSolicitacoesProfessores");
@@ -1416,20 +1414,12 @@
 
             function renderizarProfessores() {
                 listaProfessores.replaceChildren();
-                const termo = busca.value.trim().toLocaleLowerCase("pt-BR");
-                const encontrados = professores.filter(professor =>
-                    !termo ||
-                    String(professor.display_name || "").toLocaleLowerCase("pt-BR").includes(termo) ||
-                    String(professor.username || "").toLocaleLowerCase("pt-BR").includes(termo)
-                );
-                if (!encontrados.length) {
-                    adicionarParagrafo(listaProfessores, professores.length
-                        ? "Nenhum professor corresponde à pesquisa."
-                        : "Ainda não há professores cadastrados.");
+                if (!professores.length) {
+                    adicionarParagrafo(listaProfessores, "Ainda não há professores cadastrados.");
                     return;
                 }
 
-                encontrados.forEach(professor => {
+                professores.forEach(professor => {
                     const item = document.createElement("article");
                     item.className = "painel-dev-professor-item";
                     const cabecalho = document.createElement("div");
@@ -1484,20 +1474,14 @@
 
             function renderizarSolicitacoes() {
                 listaSolicitacoes.replaceChildren();
-                const termo = busca.value.trim().toLocaleLowerCase("pt-BR");
                 const statusFiltro = filtro.value;
-                const encontrados = solicitacoes.filter(solicitacao => {
-                    const correspondeTexto =
-                        !termo ||
-                        String(solicitacao.full_name || "").toLocaleLowerCase("pt-BR").includes(termo) ||
-                        String(solicitacao.username || "").toLocaleLowerCase("pt-BR").includes(termo);
-                    const correspondeStatus = statusFiltro === "todas" || solicitacao.status === statusFiltro;
-                    return correspondeTexto && correspondeStatus;
-                });
+                const encontrados = solicitacoes.filter(solicitacao =>
+                    statusFiltro === "todas" || solicitacao.status === statusFiltro
+                );
 
                 if (!encontrados.length) {
                     adicionarParagrafo(listaSolicitacoes, solicitacoes.length
-                        ? "Nenhuma solicitação corresponde aos filtros."
+                        ? "Nenhuma solicitação corresponde ao filtro selecionado."
                         : "Nenhuma solicitação de cadastro foi recebida.");
                     return;
                 }
@@ -1677,7 +1661,6 @@
 
             botao.addEventListener("click", alternarModulo);
             atualizar.addEventListener("click", carregarDados);
-            busca.addEventListener("input", renderizarTudo);
             filtro.addEventListener("change", renderizarSolicitacoes);
         })();
 
