@@ -195,6 +195,7 @@
             updated_at: new Date().toISOString()
         };
 
+        const estavaEditando = Boolean(campoId.value);
         salvando = true;
         botaoSalvar.disabled = true;
         botaoSalvar.textContent = "Salvando...";
@@ -213,7 +214,7 @@
 
             if (resultado.error) throw resultado.error;
             limparFormulario();
-            mostrarMensagem(campoId.value ? "Plano atualizado." : "Plano cadastrado.");
+            mostrarMensagem(estavaEditando ? "Plano atualizado." : "Plano cadastrado.");
             await carregarPlanos();
         } catch (erro) {
             console.error("Erro ao salvar plano do professor:", erro);
