@@ -370,6 +370,42 @@ async function adicionarAcessoPainelDev() {
 adicionarAcessoPainelDev();
 
 
+ // Exibe o acesso ao Painel do professor somente para contas com esse tipo confirmado no banco.
+async function adicionarAcessoPainelProfessor() {
+    if (!menuLateral || paginaLogin || paginaAtual === "painel-professor.html" || !supabaseClient) return;
+
+    try {
+        const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
+        if (erroUsuario || !user) return;
+
+        const { data: perfil, error: erroPerfil } = await supabaseClient
+            .from("profiles")
+            .select("tipo_usuario")
+            .eq("id", user.id)
+            .single();
+
+        if (erroPerfil || !perfil || perfil.tipo_usuario !== "professor") return;
+
+        if (menuLateral.querySelector('a.menu-item[href="painel-professor.html"]')) return;
+
+        const linkPainel = document.createElement("a");
+        linkPainel.className = "menu-item";
+        linkPainel.href = "painel-professor.html";
+        linkPainel.setAttribute("aria-label", "Painel do professor");
+        linkPainel.innerHTML = '<i data-lucide="graduation-cap"></i><span>Painel do professor</span>';
+        menuLateral.appendChild(linkPainel);
+
+        if (window.lucide && typeof window.lucide.createIcons === "function") {
+            window.lucide.createIcons();
+        }
+    } catch (erro) {
+        console.error("Não foi possível verificar o acesso ao Painel do professor:", erro);
+    }
+}
+
+adicionarAcessoPainelProfessor();
+
+
 // Compartilha apenas verificações de sessão simultâneas.
 // A promessa é descartada ao terminar, evitando manter dados de usuário em cache.
 let verificacaoUsuarioEmAndamento = null;
