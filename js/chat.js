@@ -148,6 +148,7 @@
 
         const nome = document.createElement("strong");
         nome.textContent = perfil.display_name || "Usuário";
+        adicionarVerificadoDev(nome, perfil);
 
         const username = document.createElement("span");
         username.textContent = "@" + perfil.username;
@@ -341,6 +342,26 @@
         }
     }
 
+    const DEV_PRINCIPAL_ID = "356e82f3-2ad0-4932-bc2c-e328bc7066d2";
+
+    function adicionarVerificadoDev(nome, perfil) {
+        if (perfil?.tipo_usuario !== "dev") return;
+
+        const verificado = document.createElement("i");
+        verificado.setAttribute("data-lucide", "badge-check");
+        verificado.className = perfil.id === DEV_PRINCIPAL_ID
+            ? "chat-dev-verificado chat-dev-verificado-principal"
+            : "chat-dev-verificado chat-dev-verificado-equipe";
+        verificado.setAttribute("role", "img");
+        verificado.setAttribute("aria-label", perfil.id === DEV_PRINCIPAL_ID
+            ? "Conta DEV principal verificada"
+            : "Conta DEV verificada");
+        verificado.title = perfil.id === DEV_PRINCIPAL_ID
+            ? "DEV principal"
+            : "DEV";
+        nome.appendChild(verificado);
+    }
+
     function adicionarEstrelaFavorito(nome, perfilId) {
         if (!perfisFavoritos.has(perfilId)) return;
 
@@ -394,6 +415,7 @@
         dados.className = "chat-conversa-dados";
         const nome = document.createElement("strong");
         nome.textContent = contato.display_name || "Usuário";
+        adicionarVerificadoDev(nome, { id: contato.contact_id, tipo_usuario: contato.tipo_usuario });
         adicionarEstrelaFavorito(nome, contato.contact_id);
         const username = document.createElement("small");
         username.textContent = "@" + contato.username;
@@ -705,6 +727,7 @@
         dados.className = "chat-contato-dados";
         const nome = document.createElement("strong");
         nome.textContent = contato.display_name || "Usuário";
+        adicionarVerificadoDev(nome, { id: contato.contact_id, tipo_usuario: contato.tipo_usuario });
         if (tipo === "friend") adicionarEstrelaFavorito(nome, contato.contact_id);
         const username = document.createElement("span");
         username.textContent = "@" + contato.username;
