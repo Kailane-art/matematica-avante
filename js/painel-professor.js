@@ -7,6 +7,7 @@
     const campoId = document.getElementById("planoProfessorId");
     const campoNome = document.getElementById("nomePlanoProfessor");
     const campoDescricao = document.getElementById("descricaoPlanoProfessor");
+    const campoCondicoesAdicionais = document.getElementById("condicoesAdicionaisPlanoProfessor");
     const campoPreco = document.getElementById("precoPlanoProfessor");
     const campoCobranca = document.getElementById("tipoCobrancaPlanoProfessor");
     const campoModalidade = document.getElementById("modalidadePlanoProfessor");
@@ -97,6 +98,7 @@
         campoId.value = plano.id;
         campoNome.value = plano.name;
         campoDescricao.value = plano.description || "";
+        campoCondicoesAdicionais.value = plano.additional_conditions || "";
         campoPreco.value = Number(plano.price).toFixed(2);
         campoCobranca.value = plano.billing_type;
         campoModalidade.value = plano.modality;
@@ -130,6 +132,9 @@
             card.appendChild(topo);
 
             if (plano.description) card.appendChild(criarElemento("p", "", plano.description));
+            if (plano.additional_conditions) {
+                card.appendChild(criarElemento("p", "plano-professor-condicoes", "Condições adicionais: " + plano.additional_conditions));
+            }
             card.appendChild(criarElemento("div", "plano-professor-preco", formatarPreco(plano.price)));
 
             const detalhes = criarElemento("div", "plano-professor-detalhes");
@@ -156,7 +161,7 @@
         lista.replaceChildren(criarElemento("p", "plano-professor-estado", "Carregando planos..."));
         const { data, error } = await supabaseClient
             .from("teacher_plans")
-            .select("id, teacher_id, name, description, price, billing_type, modality, lessons_count, lesson_duration_minutes, is_active, created_at, updated_at")
+            .select("id, teacher_id, name, description, additional_conditions, price, billing_type, modality, lessons_count, lesson_duration_minutes, is_active, created_at, updated_at")
             .eq("teacher_id", usuarioAtual.id)
             .order("created_at", { ascending: false });
 
@@ -227,6 +232,7 @@
             teacher_id: usuarioAtual.id,
             name: nome,
             description: campoDescricao.value.trim(),
+            additional_conditions: campoCondicoesAdicionais.value.trim(),
             price: preco,
             billing_type: tipo,
             modality: campoModalidade.value,
