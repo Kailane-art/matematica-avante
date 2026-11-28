@@ -853,7 +853,6 @@
         try {
             await executarAcaoAdministrativaPerfil("demote");
             perfilPublicoAtual.tipo_usuario = "aluno";
-            document.getElementById("tipoPerfilPublico").textContent = "Aluno";
             botaoRebaixar.hidden = true;
             mensagem.textContent = "A conta agora é do tipo aluno.";
         } catch (erro) {
