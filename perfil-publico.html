@@ -16,7 +16,7 @@
         }
     </style>
     <title>Perfil público - Matemática Avante</title>
-    <link rel="stylesheet" href="css/style.css?v=20261124-trofeus2">
+    <link rel="stylesheet" href="css/style.css?v=20261128-planos-publicos1">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="manifest" href="manifest.webmanifest">
@@ -71,6 +71,15 @@
                 Acessar link
             </a>
         </p>
+
+        <section id="planosProfessorPublicos" class="planos-professor-publicos" aria-labelledby="tituloPlanosProfessorPublicos" hidden>
+            <div class="planos-professor-publicos-cabecalho">
+                <h2 id="tituloPlanosProfessorPublicos">Planos e preços</h2>
+                <p>Conheça os serviços oferecidos por este professor.</p>
+            </div>
+            <p id="estadoPlanosProfessorPublicos" class="estado-planos-professor-publicos" role="status" aria-live="polite">Carregando planos...</p>
+            <div id="listaPlanosProfessorPublicos" class="lista-planos-professor-publicos"></div>
+        </section>
 
         <div id="acoesPerfilPublico" class="acoes-perfil-publico" hidden>
             <button id="botaoContratarProfessor" type="button" hidden>
@@ -331,6 +340,7 @@ async function carregarEstadoAmizadeAtual() {
     const perfil = Array.isArray(data) ? data[0] : data;
     if (perfil) {
         perfilPublicoAtual = perfil;
+        carregarPlanosPublicosProfessor(perfil);
         await configurarBotaoAmizade(perfil.id);
     }
 }
@@ -849,6 +859,107 @@ async function atualizarTrofeusPerfilPublico(nomeUsuario) {
         elementoTrofeus.hidden = totalTrofeus <= 0;
     } catch (erro) {
         console.warn("Não foi possível carregar os troféus do perfil:", erro);
+    }
+}
+
+async function carregarPlanosPublicosProfessor(perfil) {
+    const secao = document.getElementById("planosProfessorPublicos");
+    const estado = document.getElementById("estadoPlanosProfessorPublicos");
+    const lista = document.getElementById("listaPlanosProfessorPublicos");
+
+    if (!secao || !estado || !lista) return;
+
+    if (perfil?.tipo_usuario !== "professor") {
+        secao.hidden = true;
+        return;
+    }
+
+    secao.hidden = false;
+    estado.hidden = false;
+    estado.textContent = "Carregando planos...";
+    lista.replaceChildren();
+
+    try {
+        const { data, error } = await supabaseClient
+            .from("teacher_plans")
+            .select("id, name, description, price, billing_type, modality, lessons_count, lesson_duration_minutes")
+            .eq("teacher_id", perfil.id)
+            .eq("is_active", true)
+            .order("created_at", { ascending: false });
+
+        if (error) throw error;
+
+        if (!Array.isArray(data) || data.length === 0) {
+            estado.textContent = "Este professor ainda não publicou planos disponíveis.";
+            return;
+        }
+
+        const cobrancas = {
+            avulso: "Aula avulsa",
+            mensal: "Mensal",
+            pacote: "Pacote de aulas"
+        };
+        const modalidades = {
+            online: "Online",
+            presencial: "Presencial",
+            hibrido: "Híbrido"
+        };
+        const formatadorPreco = new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
+
+        data.forEach(plano => {
+            const card = document.createElement("article");
+            card.className = "plano-professor-publico";
+
+            const titulo = document.createElement("h3");
+            titulo.textContent = plano.name || "Plano";
+
+            const descricaoTexto = typeof plano.description === "string"
+                ? plano.description.trim()
+                : "";
+            const descricao = document.createElement("p");
+            descricao.className = "plano-professor-publico-descricao";
+            descricao.textContent = descricaoTexto;
+            descricao.hidden = !descricaoTexto;
+
+            const preco = document.createElement("strong");
+            preco.className = "plano-professor-publico-preco";
+            const valor = Number(plano.price);
+            preco.textContent = Number.isFinite(valor)
+                ? formatadorPreco.format(valor)
+                : "Preço indisponível";
+
+            const detalhes = document.createElement("div");
+            detalhes.className = "plano-professor-publico-detalhes";
+
+            const adicionarDetalhe = texto => {
+                if (!texto) return;
+                const item = document.createElement("span");
+                item.textContent = texto;
+                detalhes.appendChild(item);
+            };
+
+            adicionarDetalhe(cobrancas[plano.billing_type] || "Cobrança");
+            adicionarDetalhe(modalidades[plano.modality] || "Modalidade");
+
+            if (plano.lessons_count !== null && plano.lessons_count !== undefined) {
+                adicionarDetalhe(Number(plano.lessons_count) + " aulas");
+            }
+
+            if (plano.lesson_duration_minutes !== null && plano.lesson_duration_minutes !== undefined) {
+                adicionarDetalhe(Number(plano.lesson_duration_minutes) + " min por aula");
+            }
+
+            card.append(titulo, descricao, preco, detalhes);
+            lista.appendChild(card);
+        });
+
+        estado.hidden = true;
+    } catch (erro) {
+        console.error("Erro ao carregar planos públicos do professor:", erro);
+        estado.textContent = "Não foi possível carregar os planos deste professor no momento.";
     }
 }
 
