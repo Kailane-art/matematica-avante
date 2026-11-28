@@ -24,6 +24,7 @@
     };
 
     let usuarioAtual = null;
+    const perfisParticipantes = new Map();
     let desafioAtualId = null;
     let estadoAtual = null;
     let intervaloAtualizacao = null;
@@ -63,9 +64,15 @@
 
         const amigos = (data || []).filter(item =>
             item.friendship_status === "accepted" &&
-            ["aluno", "professor"].includes(item.tipo_usuario) &&
+            ["aluno", "professor", "dev"].includes(item.tipo_usuario) &&
             item.contact_id !== usuarioAtual.id
         );
+
+        amigos.forEach(amigo => {
+            perfisParticipantes.set(amigo.contact_id, {
+                tipo_usuario: amigo.tipo_usuario
+            });
+        });
 
         selectAmigo.replaceChildren();
         const inicial = elemento("option", "", amigos.length ? "Selecione um amigo" : "Você ainda não tem amigos disponíveis");
@@ -81,6 +88,21 @@
         $("botaoEnviarConvite").disabled = amigos.length === 0;
     }
 
+    function adicionarSeloDev(alvo, usuarioId) {
+        const perfil = perfisParticipantes.get(usuarioId);
+        if (!perfil || perfil.tipo_usuario !== "dev") return;
+
+        const selo = elemento("span", "desafio-dev-verificado", "✓");
+        selo.setAttribute("aria-label", "Conta DEV verificada");
+        selo.setAttribute("title", "Conta DEV verificada");
+        selo.classList.add(
+            usuarioId === "356e82f3-2ad0-4932-bc2c-e328bc7066d2"
+                ? "desafio-dev-verificado-principal"
+                : "desafio-dev-verificado-equipe"
+        );
+        alvo.appendChild(selo);
+    }
+
     function criarAcao(rotulo, classe, callback) {
         const botao = elemento("button", "desafio-acao " + (classe || ""), rotulo);
         botao.type = "button";
@@ -92,12 +114,21 @@
         const card = elemento("article", "desafio-convite");
         const info = elemento("div", "desafio-convite-info");
         const nome = tipo === "recebido" ? item.challenger_name : item.opponent_name;
+        const participanteId = tipo === "recebido"
+            ? item.challenger_id
+            : tipo === "enviado"
+                ? item.opponent_id
+                : item.challenger_id === usuarioAtual.id ? item.opponent_id : item.challenger_id;
+        const nomeLinha = elemento("span", "desafio-convite-nome");
+        if (tipo === "enviado") nomeLinha.appendChild(document.createTextNode("Convite enviado para "));
+        if (tipo === "ativa") nomeLinha.appendChild(document.createTextNode("Partida contra "));
+        nomeLinha.appendChild(document.createTextNode(nome || "Um amigo"));
+        adicionarSeloDev(nomeLinha, participanteId);
+        if (tipo === "recebido") nomeLinha.appendChild(document.createTextNode(" desafiou você"));
+
         const detalhe = NOMES_CONTEUDO[item.topic] || item.topic;
         info.append(
-            elemento("span", "desafio-convite-nome",
-                tipo === "recebido" ? (nome || "Um amigo") + " desafiou você" :
-                    tipo === "enviado" ? "Convite enviado para " + (nome || "amigo") :
-                    "Partida contra " + (nome || "amigo")),
+            nomeLinha,
             elemento("span", "desafio-convite-detalhe",
                 detalhe + " · " + (tipo === "ativa" ? "Partida em andamento" : "Convite válido por 10 minutos"))
         );
@@ -389,11 +420,12 @@
 
         const { data: perfil, error: erroPerfil } = await supabaseClient
             .from("profiles").select("tipo_usuario").eq("id", user.id).single();
-        if (erroPerfil || !perfil || !["aluno", "professor"].includes(perfil.tipo_usuario)) {
-            mostrarMensagem(estadoCriacao, "Os desafios entre amigos estão disponíveis apenas para contas de alunos e professores.", true);
+        if (erroPerfil || !perfil || !["aluno", "professor", "dev"].includes(perfil.tipo_usuario)) {
+            mostrarMensagem(estadoCriacao, "Os desafios entre amigos estão disponíveis para contas de alunos, professores e DEV.", true);
             form.hidden = true;
             return;
         }
+        perfisParticipantes.set(user.id, { tipo_usuario: perfil.tipo_usuario });
 
         await carregarAmigos();
         await atualizarPainel();
