@@ -149,14 +149,14 @@
         .painel-dev-estado { color: #526176; margin: 12px 0; }
         .painel-dev-usuarios { display: grid; gap: 10px; }
         .painel-dev-usuario { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; border: 1px solid rgba(255,255,255,.18); border-radius: 20px; background: #4169e1; color: #fff; }
+        .painel-dev-usuario-informacoes { flex: 1 1 auto; min-width: 0; }
         .painel-dev-usuario strong { display: block; color: #fff; }
         .painel-dev-usuario small { display: block; margin-top: 4px; color: rgba(255,255,255,.88); }
-        .painel-dev-usuario-acoes { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
-        .painel-dev-usuario a { color: #fff; font-weight: 700; text-decoration: underline; white-space: nowrap; }
-        .painel-dev-usuario-info { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.65); border-radius: 50%; background: #294ec5; color: #fff; cursor: pointer; }
-        .painel-dev-usuario-info svg { width: 19px; height: 19px; }
-        .painel-dev-usuario-info:hover { background: #1e3a8a; }
-        .modo-escuro .painel-dev-usuario-info { border-color: #6b91ed; background: #294ec5; color: #fff; }
+        .painel-dev-usuario a { display: inline-block; margin-top: 12px; color: #fff; font-weight: 700; text-decoration: underline; white-space: nowrap; }
+        .painel-dev-usuario-info { display: inline-grid; place-items: center; flex: 0 0 40px; width: 40px; height: 40px; padding: 0; border: 1px solid rgba(255,255,255,.7); border-radius: 50%; background: transparent; color: #fff; cursor: pointer; }
+        .painel-dev-usuario-info svg { width: 21px; height: 21px; }
+        .painel-dev-usuario-info:hover { background: rgba(255,255,255,.10); }
+        .modo-escuro .painel-dev-usuario-info { border-color: rgba(255,255,255,.7); background: transparent; color: #fff; }
         .painel-dev-admin-overlay[hidden] { display: none !important; }
         .painel-dev-admin-overlay { position: fixed; inset: 0; z-index: 11000; display: flex; align-items: center; justify-content: center; padding: 0; background: rgba(15, 23, 42, .72); }
         .painel-dev-admin-frame { display: block; width: 100%; height: 100%; border: 0; background: transparent; }
@@ -165,7 +165,8 @@
         .modo-escuro .painel-dev-usuario small, .modo-escuro .painel-dev-estado { color: #a9bad0; }
         @media (max-width: 680px) {
             .painel-dev-filtros { grid-template-columns: 1fr; }
-            .painel-dev-usuario { align-items: flex-start; flex-direction: column; }
+            .painel-dev-usuario { align-items: center; flex-direction: row; }
+            .painel-dev-usuario-info { flex-basis: 40px; }
         }
         @media (max-width: 680px) {
             .painel-dev-header { padding: 15px 16px; }
@@ -363,21 +364,19 @@
                     item.className = "painel-dev-usuario";
 
                     const informacoes = document.createElement("div");
+                    informacoes.className = "painel-dev-usuario-informacoes";
                     const nome = document.createElement("strong");
                     nome.textContent = usuario.display_name || usuario.username || "Usuário sem nome";
                     const detalhes = document.createElement("small");
                     const tipo = usuario.tipo_usuario === "dev" ? "DEV" :
                         usuario.tipo_usuario === "professor" ? "Professor" : "Aluno";
                     detalhes.textContent = "@" + (usuario.username || "sem-username") + " · " + tipo;
-                    informacoes.append(nome, detalhes);
-
-                    const acoes = document.createElement("div");
-                    acoes.className = "painel-dev-usuario-acoes";
 
                     const link = document.createElement("a");
                     const urlPerfil = "perfil-publico.html?usuario=" + encodeURIComponent(usuario.username || "");
                     link.href = urlPerfil;
                     link.textContent = "Ver perfil";
+                    informacoes.append(nome, detalhes, link);
 
                     const botaoInfo = document.createElement("button");
                     botaoInfo.type = "button";
@@ -387,8 +386,7 @@
                     botaoInfo.title = "Informações administrativas";
                     botaoInfo.addEventListener("click", () => abrirPainelAdminNoPainel(usuario.username));
 
-                    acoes.append(link, botaoInfo);
-                    item.append(informacoes, acoes);
+                    item.append(informacoes, botaoInfo);
                     lista.appendChild(item);
                 });
 
