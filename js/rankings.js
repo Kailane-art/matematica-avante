@@ -182,12 +182,24 @@
         }
     }
 
+    function adicionarSeloDevRanking(alvo, item) {
+        if (!item || item.tipo_usuario !== "dev") return;
+        const selo = criarElemento("span", "ranking-dev-verificado", "✓");
+        const principal = item.user_id === "356e82f3-2ad0-4932-bc2c-e328bc7066d2";
+        selo.classList.add(principal ? "ranking-dev-verificado-principal" : "ranking-dev-verificado-equipe");
+        selo.setAttribute("aria-label", "Conta DEV verificada");
+        selo.setAttribute("title", "Conta DEV verificada");
+        alvo.appendChild(selo);
+    }
+
     function criarLinhaRankingDesafios(item) {
         const linha = criarElemento("li", "ranking-item");
         const posicao = criarElemento("span", "ranking-posicao", String(item.position) + "º");
         const identidade = criarElemento("div", "ranking-identidade");
+        const nome = criarElemento("span", "ranking-nome", item.display_name || "Estudante");
+        adicionarSeloDevRanking(nome, item);
         identidade.append(
-            criarElemento("span", "ranking-nome", item.display_name || "Estudante"),
+            nome,
             criarElemento("span", "ranking-username", "@" + (item.username || ""))
         );
         const vitorias = criarElemento("span", "ranking-pontuacao",
@@ -254,8 +266,10 @@
                 itens.forEach(item => {
                     const linha = criarElemento("div", "ranking-resultado-item");
                     const identidade = criarElemento("div", "ranking-identidade");
+                    const nome = criarElemento("span", "ranking-nome", item.display_name || "Estudante");
+                    adicionarSeloDevRanking(nome, item);
                     identidade.append(
-                        criarElemento("span", "ranking-nome", item.display_name || "Estudante"),
+                        nome,
                         criarElemento("span", "ranking-username", "@" + (item.username || ""))
                     );
                     const posicao = item.position
