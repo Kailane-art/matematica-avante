@@ -12,8 +12,8 @@
     <style>
         .pagina-painel-dev {
             min-height: 100vh;
-            background: #f3f7fc;
-            color: #183153;
+            background: #f4f8ff;
+            color: #222;
         }
         .painel-dev-header {
             display: flex;
@@ -46,41 +46,14 @@
         .painel-dev-apresentacao {
             position: relative;
             overflow: hidden;
-            padding: clamp(22px, 4vw, 34px);
-            border-radius: 22px;
-            background: linear-gradient(125deg, #12366f, #1e56a0 65%, #3479bd);
-            color: #fff;
-            box-shadow: 0 12px 28px rgba(18, 54, 111, .16);
+            padding: clamp(22px, 4vw, 30px);
+            border: 1px solid #dce8f8;
+            border-radius: 18px;
+            background: #fff;
+            color: #1E3A8A;
+            box-shadow: 0 7px 20px rgba(15, 43, 82, .07);
         }
-        .painel-dev-apresentacao::after {
-            content: "";
-            position: absolute;
-            width: 210px;
-            height: 210px;
-            right: -65px;
-            top: -105px;
-            border: 1px solid rgba(255,255,255,.17);
-            border-radius: 50%;
-            box-shadow: 0 0 0 25px rgba(255,255,255,.045), 0 0 0 52px rgba(255,255,255,.035);
-            pointer-events: none;
-        }
-        .painel-dev-etiqueta {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            margin-bottom: 13px;
-            padding: 6px 10px;
-            border: 1px solid rgba(255,255,255,.24);
-            border-radius: 999px;
-            background: rgba(255,255,255,.10);
-            color: #e7f1ff;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: .04em;
-            text-transform: uppercase;
-        }
-        .painel-dev-apresentacao h2 { margin: 0 0 9px; font-size: clamp(23px, 4vw, 32px); }
-        .painel-dev-apresentacao p { max-width: 690px; margin: 0; color: #e1edff; font-size: 15px; line-height: 1.65; }
+        .painel-dev-apresentacao h2 { margin: 0; color: #1E3A8A; font-size: clamp(23px, 4vw, 30px); }
         .painel-dev-secao { margin-top: 30px; }
         .painel-dev-secao-cabecalho { margin-bottom: 15px; }
         .painel-dev-secao-cabecalho h2 { margin: 0; color: #183b68; font-size: 20px; }
@@ -121,17 +94,17 @@
             justify-content: center;
             min-height: 35px;
             padding: 8px 12px;
-            border: 1px solid #d8e2ef;
+            border: 1px solid #1E3A8A;
             border-radius: 9px;
-            background: #f1f5f9;
-            color: #64748b;
+            background: #4169e1;
+            color: #fff;
             font: inherit;
             font-size: 12px;
             font-weight: 800;
             cursor: not-allowed;
             opacity: 1;
         }
-        .painel-dev-botao:disabled { color: #64748b; background: #f1f5f9; }
+        .painel-dev-botao:disabled { color: #fff; background: #4169e1; opacity: .58; }
         .painel-dev-modulo-status {
             display: block;
             margin-top: 8px;
@@ -155,7 +128,9 @@
         .modo-escuro .painel-dev-modulo p { color: #b5c5d9; }
         .modo-escuro .painel-dev-modulo-icone { background: #203d62; color: #a9ceff; }
         .modo-escuro .painel-dev-botao,
-        .modo-escuro .painel-dev-botao:disabled { border-color: #38516e; background: #203650; color: #c0ccda; }
+        .modo-escuro .painel-dev-botao:disabled { border-color: #4169e1; background: #294ec5; color: #fff; }
+        .modo-escuro .painel-dev-apresentacao { border-color: #29466e; background: #132b4c; color: #bfdbfe; }
+        .modo-escuro .painel-dev-apresentacao h2 { color: #bfdbfe; }
         .modo-escuro .painel-dev-modulo-especial { border-color: #38516e; background: linear-gradient(145deg, #142a45, #183251); }
         .painel-dev-listagem[hidden] { display: none !important; }
         .painel-dev-filtros { display: grid; grid-template-columns: minmax(0, 1fr) 190px auto; gap: 10px; margin: 18px 0; }
@@ -195,9 +170,7 @@
 
     <main class="painel-dev-conteudo">
         <section class="painel-dev-apresentacao">
-            <span class="painel-dev-etiqueta"><i data-lucide="shield-check"></i> Área de desenvolvimento</span>
             <h2>Central de controle</h2>
-            <p>Reúna em um só lugar as ferramentas de administração, acompanhamento e manutenção da plataforma. Os módulos serão liberados gradualmente.</p>
         </section>
 
         <section class="painel-dev-secao">
