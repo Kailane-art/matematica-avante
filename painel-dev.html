@@ -1083,7 +1083,7 @@
 
             async function carregarSeguranca() {
                 if (carregando) return;
-                if (!window.supabaseClient) {
+                if (typeof supabaseClient === "undefined" || !supabaseClient) {
                     estado.textContent = "Não foi possível conectar ao serviço de segurança.";
                     return;
                 }
