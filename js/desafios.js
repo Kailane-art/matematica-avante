@@ -113,7 +113,9 @@
     function criarConviteCard(item, tipo) {
         const card = elemento("article", "desafio-convite");
         const info = elemento("div", "desafio-convite-info");
-        const nome = tipo === "recebido" ? item.challenger_name : item.opponent_name;
+        const nome = tipo === "recebido" ? item.challenger_name :
+            tipo === "ativa" ? (item.challenger_id === usuarioAtual.id ? item.opponent_name : item.challenger_name) :
+                item.opponent_name;
         const participanteId = tipo === "recebido"
             ? item.challenger_id
             : tipo === "enviado"
