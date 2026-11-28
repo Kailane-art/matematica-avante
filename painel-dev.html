@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#12366f">
+    <meta name="theme-color" content="#1E3A8A">
     <title>Painel DEV - Matemática Avante</title>
     <link rel="stylesheet" href="css/style.css?v=20261122-streak1">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -12,43 +12,52 @@
     <style>
         .pagina-painel-dev {
             min-height: 100vh;
-            background: #1E3A8A;
-            color: #fff;
+            background: #f4f8ff;
+            color: #222;
         }
         .painel-dev-header {
             display: flex;
             align-items: center;
             gap: 14px;
-            width: min(1160px, calc(100% - 32px));
-            margin: 0 auto;
-            padding: 22px 0;
+            width: 100%;
+            margin: 0;
+            padding: 18px max(16px, calc((100% - 900px) / 2));
+            background: #1E3A8A;
+            color: #fff;
+            box-sizing: border-box;
         }
         .painel-dev-header .icon-button {
             display: grid;
             place-items: center;
-            width: 42px;
-            height: 42px;
-            flex: 0 0 42px;
-            border: 1px solid #d6e2f1;
-            border-radius: 12px;
-            background: #fff;
-            color: #17447e;
+            width: 45px;
+            height: 45px;
+            flex: 0 0 45px;
+            border: 0;
+            border-radius: 50%;
+            background: #0b1d3a;
+            color: #fff;
             cursor: pointer;
+            transition: transform .2s ease, background .2s ease;
         }
-        .painel-dev-header-text { flex: 1; min-width: 0; }
+        .painel-dev-header .icon-button:hover {
+            transform: scale(1.08);
+            background: #294ec5;
+        }
+        .painel-dev-header-text { flex: 1; min-width: 0; text-align: center; }
+        .painel-dev-header-text::after { content: ""; display: block; width: 45px; height: 1px; margin-left: auto; }
         .painel-dev-header h1 { margin: 0; color: #fff; font-size: clamp(20px, 4vw, 27px); }
         .painel-dev-header p { margin: 4px 0 0; color: #dbeafe; font-size: 13px; }
         .painel-dev-conteudo {
-            width: min(1160px, calc(100% - 32px));
+            width: min(900px, calc(100% - 32px));
             margin: 0 auto;
-            padding: 12px 0 56px;
+            padding: 25px 0 56px;
         }
         .painel-dev-apresentacao {
             position: relative;
             overflow: hidden;
             padding: clamp(22px, 4vw, 30px);
             border: 1px solid rgba(255,255,255,.2);
-            border-radius: 18px;
+            border-radius: 20px;
             background: #4169e1;
             color: #fff;
             box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
@@ -56,8 +65,8 @@
         .painel-dev-apresentacao h2 { margin: 0; color: #fff; font-size: clamp(23px, 4vw, 30px); }
         .painel-dev-secao { margin-top: 30px; }
         .painel-dev-secao-cabecalho { margin-bottom: 15px; }
-        .painel-dev-secao-cabecalho h2 { margin: 0; color: #fff; font-size: 20px; }
-        .painel-dev-secao-cabecalho p { margin: 5px 0 0; color: #dbeafe; font-size: 13px; line-height: 1.5; }
+         .painel-dev-secao-cabecalho h2 { margin: 0; color: #1E3A8A; font-size: 20px; }
+        .painel-dev-secao-cabecalho p { margin: 5px 0 0; color: #526176; font-size: 13px; line-height: 1.5; }
         .painel-dev-grade {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -70,7 +79,7 @@
             min-width: 0;
             padding: 19px;
             border: 1px solid rgba(255,255,255,.18);
-            border-radius: 17px;
+            border-radius: 20px;
             background: #4169e1;
             color: #fff;
             box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
@@ -96,8 +105,8 @@
             min-height: 35px;
             padding: 8px 12px;
             border: 1px solid rgba(255,255,255,.55);
-            border-radius: 9px;
-            background: #4169e1;
+            border-radius: 15px;
+            background: #294ec5;
             color: #fff;
             font: inherit;
             font-size: 12px;
@@ -105,15 +114,15 @@
             cursor: not-allowed;
             opacity: 1;
         }
-        .painel-dev-botao:disabled { color: #fff; background: #4169e1; opacity: 1; }
+        .painel-dev-botao:disabled { color: #fff; background: #294ec5; opacity: 1; }
         .painel-dev-modulo-status {
             display: block;
             margin-top: 8px;
-            color: #8a6415;
+            color: #fff;
             font-size: 11px;
             font-weight: 800;
         }
-        .painel-dev-modulo-status::before { content: "•"; margin-right: 6px; color: #d49a27; }
+        .painel-dev-modulo-status::before { content: "•"; margin-right: 6px; color: #ffd54f; }
         .painel-dev-modulo-especial {
             border-color: rgba(255,255,255,.18);
             background: #4169e1;
@@ -135,10 +144,10 @@
         .modo-escuro .painel-dev-modulo-especial { border-color: #38516e; background: linear-gradient(145deg, #142a45, #183251); }
         .painel-dev-listagem[hidden] { display: none !important; }
         .painel-dev-filtros { display: grid; grid-template-columns: minmax(0, 1fr) 190px auto; gap: 10px; margin: 18px 0; }
-        .painel-dev-filtros input, .painel-dev-filtros select { min-width: 0; width: 100%; padding: 12px 14px; border: 1px solid #cbd8e8; border-radius: 10px; background: #fff; color: #24364b; font: inherit; }
-        .painel-dev-estado { color: #dbeafe; margin: 12px 0; }
+        .painel-dev-filtros input, .painel-dev-filtros select { min-width: 0; width: 100%; padding: 12px 14px; border: 1px solid #cbd8e8; border-radius: 15px; background: #fff; color: #24364b; font: inherit; }
+        .painel-dev-estado { color: #526176; margin: 12px 0; }
         .painel-dev-usuarios { display: grid; gap: 10px; }
-        .painel-dev-usuario { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; border: 1px solid rgba(255,255,255,.18); border-radius: 12px; background: #4169e1; color: #fff; }
+        .painel-dev-usuario { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; border: 1px solid rgba(255,255,255,.18); border-radius: 20px; background: #4169e1; color: #fff; }
         .painel-dev-usuario strong { display: block; color: #fff; }
         .painel-dev-usuario small { display: block; margin-top: 4px; color: rgba(255,255,255,.88); }
         .painel-dev-usuario a { color: #fff; font-weight: 700; text-decoration: underline; white-space: nowrap; }
@@ -150,8 +159,8 @@
             .painel-dev-usuario { align-items: flex-start; flex-direction: column; }
         }
         @media (max-width: 680px) {
-            .painel-dev-header { padding: 16px 0; }
-            .painel-dev-conteudo { padding-top: 6px; }
+            .painel-dev-header { padding: 15px 16px; }
+            .painel-dev-conteudo { padding-top: 20px; }
             .painel-dev-grade { grid-template-columns: 1fr; gap: 11px; }
             .painel-dev-modulo { padding: 16px; }
             .painel-dev-modulo p { min-height: 0; }
