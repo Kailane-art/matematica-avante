@@ -396,6 +396,7 @@
                             <article class="painel-dev-seguranca-indicador"><span>Tentativas registradas</span><strong id="totalQuestoesProgressao">—</strong></article>
                             <article class="painel-dev-seguranca-indicador"><span>Dias de estudo verificados</span><strong id="diasProgressao">—</strong></article>
                             <article class="painel-dev-seguranca-indicador"><span>Títulos conquistados</span><strong id="totalTitulosProgressao">—</strong></article>
+                            <article class="painel-dev-seguranca-indicador"><span>Troféus</span><strong id="totalTrofeusProgressao">—</strong><small id="detalhesTrofeusProgressao">Vitórias e ajustes</small></article>
                         </div>
                         <div class="painel-dev-progressao-acoes">
                             <section class="painel-dev-seguranca-bloco">
@@ -420,7 +421,21 @@
                                     <button type="button" id="retirarTituloProgressao">Retirar título</button>
                                 </div>
                             </section>
+                            <section class="painel-dev-seguranca-bloco">
+                                <h3>Administrar troféus</h3>
+                                <label for="quantidadeTrofeusProgressao">Quantidade de troféus</label>
+                                <input id="quantidadeTrofeusProgressao" type="number" min="1" max="1000" step="1" inputmode="numeric">
+                                <div class="painel-dev-progressao-botoes">
+                                    <button type="button" id="adicionarTrofeusProgressao">Adicionar troféus</button>
+                                    <button type="button" id="removerTrofeusProgressao">Remover troféus</button>
+                                </div>
+                                <small>Os ajustes não alteram partidas, vitórias ou rankings.</small>
+                            </section>
                         </div>
+                        <section class="painel-dev-seguranca-bloco painel-dev-progressao-historico">
+                            <h3>Histórico de troféus</h3>
+                            <div id="historicoTrofeusProgressao" class="painel-dev-progressao-lista"><p>Nenhum ajuste administrativo registrado.</p></div>
+                        </section>
                         <p id="mensagemAcaoProgressao" class="painel-dev-estado" role="status" aria-live="polite"></p>
                         <section class="painel-dev-seguranca-bloco painel-dev-progressao-titulos">
                             <h3>Títulos atuais</h3>
@@ -1387,6 +1402,11 @@
             async function carregarDetalhes() {
                 if (!usuarioSelecionado) return;
                 const data = await chamarAdmin("progress_overview", { target_user_id: usuarioSelecionado.id });
+                const { data: trofeus, error: erroTrofeus } = await supabaseClient.rpc(
+                    "ma_admin_get_user_trophy_overview_public",
+                    { p_target_user_id: usuarioSelecionado.id }
+                );
+                if (erroTrofeus) throw erroTrofeus;
                 document.getElementById("xpTotalProgressao").textContent = Number(data.total_xp || 0).toLocaleString("pt-BR") + " XP";
                 document.getElementById("nivelProgressao").textContent = "Nível " + data.level;
                 document.getElementById("fasesProgressao").textContent = String(data.completed_phases || 0);
@@ -1394,6 +1414,28 @@
                 document.getElementById("totalQuestoesProgressao").textContent = String(data.total_attempts || 0);
                 document.getElementById("diasProgressao").textContent = String(data.verified_study_days || 0);
                 document.getElementById("totalTitulosProgressao").textContent = String(data.achievements?.length || 0);
+                document.getElementById("totalTrofeusProgressao").textContent =
+                    String(trofeus?.total_trophies || 0);
+                const ajusteTrofeus = Number(trofeus?.admin_adjustment || 0);
+                document.getElementById("detalhesTrofeusProgressao").textContent =
+                    "Vitórias: " + Number(trofeus?.challenge_wins || 0) +
+                    " · Ajustes: " + (ajusteTrofeus > 0 ? "+" : "") + ajusteTrofeus;
+
+                const historicoTrofeus = document.getElementById("historicoTrofeusProgressao");
+                historicoTrofeus.replaceChildren();
+                if (!trofeus?.recent_adjustments?.length) {
+                    historicoTrofeus.textContent = "Nenhum ajuste administrativo registrado.";
+                } else {
+                    trofeus.recent_adjustments.forEach(item => {
+                        const delta = Number(item.delta || 0);
+                        const descricao = (delta > 0 ? "+" : "") + delta + " troféu(s)";
+                        historicoTrofeus.appendChild(criarItem(
+                            descricao,
+                            "Por @" + (item.actor_username || "DEV") + " · " +
+                            new Date(item.created_at).toLocaleString("pt-BR")
+                        ));
+                    });
+                }
 
                 const listaTitulos = document.getElementById("listaTitulosProgressao");
                 listaTitulos.replaceChildren();
@@ -1420,9 +1462,15 @@
                         if (item.action === "xp_removed") descricao = "XP removido";
                         if (item.action === "achievement_granted") descricao = "Título concedido";
                         if (item.action === "achievement_revoked") descricao = "Título removido";
-                        const extra = item.xp_delta !== null
+                        if (item.action === "trophy_added") descricao = "Troféus adicionados";
+                        if (item.action === "trophy_removed") descricao = "Troféus removidos";
+                        let extra = item.xp_delta !== null
                             ? (Number(item.xp_delta) > 0 ? "+" : "") + item.xp_delta + " XP"
                             : (titulos[item.achievement_key]?.[0] || item.achievement_key || "");
+                        if (item.action === "trophy_added" || item.action === "trophy_removed") {
+                            const delta = Number(item.new_value?.delta || 0);
+                            extra = (delta > 0 ? "+" : "") + Math.abs(delta) + " troféu(s)";
+                        }
                         historico.appendChild(criarItem(descricao, extra + " · " + new Date(item.created_at).toLocaleString("pt-BR")));
                     });
                 }
@@ -1446,6 +1494,48 @@
                     carregando = false;
                 }
             }
+
+            async function executarAcaoTrofeus(mode) {
+                if (!usuarioSelecionado || carregando) return;
+                const amount = Number(document.getElementById("quantidadeTrofeusProgressao").value);
+                if (!Number.isSafeInteger(amount) || amount < 1 || amount > 1000) {
+                    mensagem.textContent = "Informe uma quantidade inteira entre 1 e 1.000 troféus.";
+                    return;
+                }
+                const delta = mode === "add" ? amount : -amount;
+                const acao = mode === "add" ? "Adicionar" : "Remover";
+                const confirmacao = mode === "add"
+                    ? acao + " " + amount + " troféu(s) para @" + usuarioSelecionado.username + "?"
+                    : acao + " " + amount + " troféu(s) de @" + usuarioSelecionado.username + "? O total não ficará negativo.";
+                if (!window.confirm(confirmacao)) return;
+
+                carregando = true;
+                mensagem.textContent = "Registrando ajuste de troféus...";
+                try {
+                    const { data, error } = await supabaseClient.rpc(
+                        "ma_admin_adjust_user_trophies_public",
+                        {
+                            p_target_user_id: usuarioSelecionado.id,
+                            p_delta: delta
+                        }
+                    );
+                    if (error) throw error;
+                    mensagem.textContent = "Troféus atualizados e ajuste registrado no histórico.";
+                    await carregarDetalhes();
+                } catch (erro) {
+                    console.error("Erro ao administrar troféus:", erro);
+                    mensagem.textContent = erro.message || "Não foi possível atualizar os troféus.";
+                } finally {
+                    carregando = false;
+                }
+            }
+
+            document.getElementById("adicionarTrofeusProgressao").addEventListener("click", () => {
+                executarAcaoTrofeus("add");
+            });
+            document.getElementById("removerTrofeusProgressao").addEventListener("click", () => {
+                executarAcaoTrofeus("remove");
+            });
 
             document.getElementById("adicionarXPProgressao").addEventListener("click", () => {
                 const amount = Number(document.getElementById("quantidadeXPProgressao").value);
