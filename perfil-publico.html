@@ -4,6 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        if (new URLSearchParams(window.location.search).get("modoPainelDev") === "1") {
+            document.documentElement.classList.add("modo-painel-dev-embed");
+        }
+    </script>
+    <style>
+        html.modo-painel-dev-embed.verificando-sessao::before {
+            display: none !important;
+            content: none !important;
+        }
+    </style>
     <title>Perfil público - Matemática Avante</title>
     <link rel="stylesheet" href="css/style.css?v=20261124-trofeus2">
     <script src="https://unpkg.com/lucide@latest"></script>
