@@ -670,7 +670,9 @@ async function iniciarPresencaOnlineGlobal() {
     }
 }
 
-if (paginaAtual !== "painel-dev.html") iniciarPresencaOnlineGlobal();
+if (paginaAtual !== "painel-dev.html" && paginaAtual !== "painel-professor.html") {
+    iniciarPresencaOnlineGlobal();
+}
 
 function aplicarTamanhoTextoGlobal(tamanho) {
     const escalas = { 1: "0.88", 2: "0.94", 3: "1", 4: "1.08", 5: "1.16" };
@@ -751,7 +753,9 @@ async function carregarPreferenciasGlobais() {
     }
 }
 
-carregarPreferenciasGlobais();
+if (paginaAtual !== "painel-professor.html") {
+    carregarPreferenciasGlobais();
+}
 
 // ================================
 // PROTEÇÃO DE PÁGINAS COM LOGIN
