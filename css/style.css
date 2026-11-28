@@ -8417,7 +8417,7 @@ body.pagina-perfil-publico #nivelPerfilPublico[hidden] {
     display: none !important;
 }
 
-.modo-escuro body.pagina-perfil-publico .nivel-trofeus-perfil-publico #trofeusPerfilPublico:not([hidden]) {
+body.modo-escuro.pagina-perfil-publico .nivel-trofeus-perfil-publico #trofeusPerfilPublico:not([hidden]) {
     color: #facc15;
 }
 
@@ -8513,36 +8513,36 @@ body.pagina-perfil-publico .plano-professor-publico-detalhes span {
     font-weight: 700;
 }
 
-.modo-escuro body.pagina-perfil-publico .planos-professor-publicos {
+body.modo-escuro.pagina-perfil-publico .planos-professor-publicos {
     border-color: #477fe0;
     background: #1e40af;
     color: #fff;
 }
 
-.modo-escuro body.pagina-perfil-publico .planos-professor-publicos-cabecalho h2 {
+body.modo-escuro.pagina-perfil-publico .planos-professor-publicos-cabecalho h2 {
     color: #fff;
 }
 
-.modo-escuro body.pagina-perfil-publico .planos-professor-publicos-cabecalho p,
-.modo-escuro body.pagina-perfil-publico .estado-planos-professor-publicos {
+body.modo-escuro.pagina-perfil-publico .planos-professor-publicos-cabecalho p,
+body.modo-escuro.pagina-perfil-publico .estado-planos-professor-publicos {
     color: #dbeafe;
 }
 
-.modo-escuro body.pagina-perfil-publico .plano-professor-publico {
+body.modo-escuro.pagina-perfil-publico .plano-professor-publico {
     border-color: rgba(255,255,255,.14);
     background: #12366f;
 }
 
-.modo-escuro body.pagina-perfil-publico .plano-professor-publico h3,
-.modo-escuro body.pagina-perfil-publico .plano-professor-publico-preco {
+body.modo-escuro.pagina-perfil-publico .plano-professor-publico h3,
+body.modo-escuro.pagina-perfil-publico .plano-professor-publico-preco {
     color: #fff;
 }
 
-.modo-escuro body.pagina-perfil-publico .plano-professor-publico-descricao {
+body.modo-escuro.pagina-perfil-publico .plano-professor-publico-descricao {
     color: #dbeafe;
 }
 
-.modo-escuro body.pagina-perfil-publico .plano-professor-publico-detalhes span {
+body.modo-escuro.pagina-perfil-publico .plano-professor-publico-detalhes span {
     background: #244b8a;
     color: #dbeafe;
 }
