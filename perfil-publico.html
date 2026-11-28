@@ -1006,6 +1006,7 @@ async function carregarPerfilPublico() {
         const { data: sessaoAtual } = await supabaseClient.auth.getUser();
         const ehProprioPerfil = sessaoAtual?.user?.id === perfil.id;
         perfilPublicoAtual = perfil;
+        carregarPlanosPublicosProfessor(perfil);
         usuarioAtualEhDev = false;
         tipoUsuarioAtual = null;
 
