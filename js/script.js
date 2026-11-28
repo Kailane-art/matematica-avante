@@ -3629,6 +3629,7 @@ if (formEditarPerfil) {
                 if (seloNome) {
                     seloNome.classList.remove(
                         "selo-dev-nome",
+                        "selo-dev-secundario",
                         "titulo-nivel5",
                         "titulo-estudante-dedicado",
                         "titulo-estrategista-matematico",
