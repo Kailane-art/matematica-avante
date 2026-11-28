@@ -16,7 +16,7 @@
         }
     </style>
     <title>Perfil público - Matemática Avante</title>
-    <link rel="stylesheet" href="css/style.css?v=20261128-titulo-menor1">
+    <link rel="stylesheet" href="css/style.css?v=20261128-contratacao1">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="manifest" href="manifest.webmanifest">
@@ -102,6 +102,33 @@
         <p id="statusPerfilPublico" role="status" aria-live="polite"></p>
 
     </section>
+
+    <div id="modalContratacaoProfessor" class="modal-contratacao-professor" hidden>
+        <section class="conteudo-modal-contratacao-professor" role="dialog" aria-modal="true" aria-labelledby="tituloModalContratacaoProfessor">
+            <div class="cabecalho-modal-contratacao-professor">
+                <h2 id="tituloModalContratacaoProfessor">Revisar contratação</h2>
+                <button id="fecharModalContratacaoProfessor" type="button" aria-label="Fechar">×</button>
+            </div>
+            <div id="resumoPlanoContratacao" class="resumo-plano-contratacao"></div>
+            <section class="termos-contratacao-bloco">
+                <h3>Condições gerais da Matemática Avante</h3>
+                <p>Ao confirmar, você registra sua intenção de contratar o plano apresentado. O valor, a descrição e as características do plano serão preservados neste registro. Este aceite não realiza cobrança nem ativa aulas ou vínculo financeiro. A contratação permanecerá aguardando pagamento e somente poderá ser ativada após confirmação válida do pagamento pela plataforma. A data, os horários e os detalhes práticos das aulas deverão ser combinados com o professor. Condições adicionais informadas pelo professor também serão registradas no momento do aceite.</p>
+            </section>
+            <section id="blocoCondicoesProfessorContratacao" class="termos-contratacao-bloco" hidden>
+                <h3>Condições adicionais do professor</h3>
+                <p id="textoCondicoesProfessorContratacao"></p>
+            </section>
+            <label class="aceite-condicoes-contratacao">
+                <input id="aceiteCondicoesContratacao" type="checkbox">
+                <span>Li e aceito as condições gerais da plataforma e as condições adicionais apresentadas pelo professor.</span>
+            </label>
+            <p id="mensagemContratacaoProfessor" class="mensagem-contratacao-professor" role="status" aria-live="polite"></p>
+            <div class="acoes-modal-contratacao-professor">
+                <button id="confirmarContratacaoProfessor" type="button">Aceitar e continuar</button>
+                <button id="cancelarContratacaoProfessor" type="button">Voltar</button>
+            </div>
+        </section>
+    </div>
 
     <div id="painelAdministrativoPerfil" class="painel-admin-perfil" hidden>
         <section class="conteudo-painel-admin-perfil" role="dialog" aria-modal="true" aria-labelledby="tituloPainelAdminPerfil">
