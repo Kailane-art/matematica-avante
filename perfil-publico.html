@@ -979,7 +979,9 @@ async function carregarPerfilPublico() {
 
         await configurarFavoritoPerfil(perfil.id, sessaoAtual?.user?.id, ehProprioPerfil);
         await configurarPainelAdministrativoPerfil(ehProprioPerfil, sessaoAtual?.user?.id);
-        bio.textContent = perfil.bio || "Este usuário ainda não adicionou uma bio.";
+        const textoBio = typeof perfil.bio === "string" ? perfil.bio.trim() : "";
+        bio.textContent = textoBio;
+        bio.hidden = !textoBio;
 
         if (perfil.avatar_path) {
 
