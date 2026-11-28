@@ -230,19 +230,41 @@
     botaoAtualizar.addEventListener("click", carregarPlanos);
 
     async function iniciar() {
-        if (typeof supabaseClient === "undefined" || !supabaseClient) return;
+        if (typeof supabaseClient === "undefined" || !supabaseClient) {
+            window.location.replace("index.html");
+            return;
+        }
 
-        const { data: { user }, error } = await supabaseClient.auth.getUser();
-        if (error || !user) return;
+        const resultadoUsuario = typeof obterUsuarioAutenticado === "function"
+            ? await obterUsuarioAutenticado()
+            : await supabaseClient.auth.getUser();
+        const user = resultadoUsuario.data?.user;
+
+        if (resultadoUsuario.error || !user) {
+            window.location.replace("index.html");
+            return;
+        }
 
         const { data: perfil, error: erroPerfil } = await supabaseClient
             .from("profiles")
-            .select("tipo_usuario")
+            .select("display_name, username, tipo_usuario")
             .eq("id", user.id)
             .maybeSingle();
 
-        if (erroPerfil || !perfil || perfil.tipo_usuario !== "professor") return;
+        if (erroPerfil || !perfil || perfil.tipo_usuario !== "professor") {
+            window.location.replace("inicio.html");
+            return;
+        }
+
         usuarioAtual = user;
+        document.getElementById("nomeProfessorPainel").textContent =
+            perfil.display_name || "Professor";
+        document.getElementById("usernameProfessorPainel").textContent =
+            perfil.username ? "@" + perfil.username : "";
+
+        document.documentElement.classList.remove("verificando-sessao");
+        if (window.atualizarIcones) window.atualizarIcones();
+
         await carregarPlanos();
     }
 
