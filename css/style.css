@@ -3776,7 +3776,7 @@ html.verificando-sessao:has(body.modo-escuro)::before {
 }
 
 .acoes-perfil-publico .botao-conversar-perfil {
-    background: #0f766e;
+    background: #4169E1;
 }
 
 .acoes-perfil-publico button[hidden] {
