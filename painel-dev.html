@@ -151,7 +151,11 @@
         .painel-dev-usuario { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; border: 1px solid rgba(255,255,255,.18); border-radius: 20px; background: #4169e1; color: #fff; }
         .painel-dev-usuario strong { display: block; color: #fff; }
         .painel-dev-usuario small { display: block; margin-top: 4px; color: rgba(255,255,255,.88); }
+        .painel-dev-usuario-acoes { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
         .painel-dev-usuario a { color: #fff; font-weight: 700; text-decoration: underline; white-space: nowrap; }
+        .painel-dev-usuario-info { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.65); border-radius: 50%; background: #294ec5; color: #fff !important; font-size: 19px; line-height: 1; text-decoration: none !important; }
+        .painel-dev-usuario-info:hover { background: #1e3a8a; }
+        .modo-escuro .painel-dev-usuario-info { border-color: #6b91ed; background: #294ec5; color: #fff !important; }
         .modo-escuro .painel-dev-filtros input, .modo-escuro .painel-dev-filtros select, .modo-escuro .painel-dev-usuario { background: #172b43; border-color: #38516e; color: #e3edf8; }
         .modo-escuro .painel-dev-usuario strong { color: #e3edf8; }
         .modo-escuro .painel-dev-usuario small, .modo-escuro .painel-dev-estado { color: #a9bad0; }
@@ -359,11 +363,23 @@
                     detalhes.textContent = "@" + (usuario.username || "sem-username") + " · " + tipo;
                     informacoes.append(nome, detalhes);
 
+                    const acoes = document.createElement("div");
+                    acoes.className = "painel-dev-usuario-acoes";
+
                     const link = document.createElement("a");
-                    link.href = "perfil-publico.html?usuario=" + encodeURIComponent(usuario.username || "");
+                    const urlPerfil = "perfil-publico.html?usuario=" + encodeURIComponent(usuario.username || "");
+                    link.href = urlPerfil;
                     link.textContent = "Ver perfil";
 
-                    item.append(informacoes, link);
+                    const botaoInfo = document.createElement("a");
+                    botaoInfo.className = "painel-dev-usuario-info";
+                    botaoInfo.href = urlPerfil + "&abrirAdmin=1";
+                    botaoInfo.textContent = "ℹ️";
+                    botaoInfo.setAttribute("aria-label", "Abrir informações administrativas de @" + (usuario.username || "usuário"));
+                    botaoInfo.title = "Informações administrativas";
+
+                    acoes.append(link, botaoInfo);
+                    item.append(informacoes, acoes);
                     lista.appendChild(item);
                 });
             }
