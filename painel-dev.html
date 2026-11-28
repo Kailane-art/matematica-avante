@@ -1281,13 +1281,24 @@
                 return item;
             }
 
+            let pesquisaAtual = 0;
+
             async function pesquisarUsuarios(evento) {
                 if (evento) evento.preventDefault();
-                estado.textContent = "Pesquisando usuários...";
+                const termo = busca.value.trim();
+                const identificadorPesquisa = ++pesquisaAtual;
                 resultados.replaceChildren();
                 detalhes.hidden = true;
+
+                if (!termo) {
+                    estado.textContent = "Digite ao menos uma letra para pesquisar uma conta.";
+                    return;
+                }
+
+                estado.textContent = "Pesquisando usuários...";
                 try {
-                    const data = await chamarAdmin("progress_search", { search: busca.value.trim() });
+                    const data = await chamarAdmin("progress_search", { search: termo });
+                    if (identificadorPesquisa !== pesquisaAtual) return;
                     if (!data.users?.length) {
                         estado.textContent = "Nenhum usuário encontrado.";
                         return;
@@ -1315,6 +1326,7 @@
                         resultados.appendChild(item);
                     });
                 } catch (erro) {
+                    if (identificadorPesquisa !== pesquisaAtual) return;
                     console.error("Erro ao pesquisar progressão:", erro);
                     estado.textContent = erro.message || "Não foi possível pesquisar usuários.";
                 }
@@ -1432,12 +1444,21 @@
             });
 
             formulario.addEventListener("submit", pesquisarUsuarios);
+            busca.addEventListener("input", pesquisarUsuarios);
             botao.addEventListener("click", () => {
                 modulo.hidden = !modulo.hidden;
                 botao.textContent = modulo.hidden ? "Abrir módulo" : "Fechar módulo";
                 if (!modulo.hidden) {
+                    pesquisaAtual++;
+                    resultados.replaceChildren();
+                    detalhes.hidden = true;
+                    estado.textContent = "Digite ao menos uma letra para pesquisar uma conta.";
                     busca.focus();
-                    pesquisarUsuarios();
+                } else {
+                    pesquisaAtual++;
+                    resultados.replaceChildren();
+                    detalhes.hidden = true;
+                    estado.textContent = "Digite ao menos uma letra para pesquisar uma conta.";
                 }
             });
         })();
