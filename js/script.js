@@ -758,6 +758,7 @@ const paginasProtegidas = new Set([
     "nivel3.html",
     "nivel4.html",
     "nivel5.html",
+    "painel-dev.html",
     
     
     
@@ -781,11 +782,26 @@ if (paginasProtegidas.has(paginaAtual)) {
             const { data: { user }, error } =
                 await obterUsuarioAutenticado();
 
-      if (error || !user) {
-    window.location.replace("index.html");
-} else {
-    document.documentElement.classList.remove("verificando-sessao");
-}
+            if (error || !user) {
+                window.location.replace("index.html");
+                return;
+            }
+
+            // O painel exige uma conta DEV, inclusive quando acessado por URL direta.
+            if (paginaAtual === "painel-dev.html") {
+                const { data: perfil, error: perfilError } = await supabaseClient
+                    .from("profiles")
+                    .select("tipo_usuario")
+                    .eq("id", user.id)
+                    .maybeSingle();
+
+                if (perfilError || perfil?.tipo_usuario !== "dev") {
+                    window.location.replace("inicio.html");
+                    return;
+                }
+            }
+
+            document.documentElement.classList.remove("verificando-sessao");
         } catch (erro) {
 
             console.error("Erro ao verificar sessão:", erro);
