@@ -3567,6 +3567,16 @@ html.verificando-sessao:has(body.modo-escuro)::before {
     color: #FFD54F;
 }
 
+.identidade .selo-dev-secundario {
+    color: #1596a8;
+    font-weight: 700;
+}
+
+.modo-escuro .identidade .selo-dev-secundario {
+    color: #DDFBFF;
+    text-shadow: 0 0 8px rgba(141, 235, 250, 0.22);
+}
+
 .identidade .titulo-nivel5,
 .selo-perfil-publico.titulo-nivel5 {
     color: #15803d !important;
@@ -3938,6 +3948,10 @@ body.pagina-perfil-publico .card-perfil.identidade {
     color: #d4a900 !important;
 }
 
+.selo-perfil-publico.selo-dev-secundario {
+    color: #1596a8 !important;
+}
+
 .modo-escuro .botao-favorito-perfil {
     background: #1d3b6d;
     border-color: #365781;
@@ -3961,6 +3975,11 @@ body.pagina-perfil-publico .card-perfil.identidade {
 
 .modo-escuro .selo-perfil-publico.selo-dev-nome {
     color: #FFD54F !important;
+}
+
+.modo-escuro .selo-perfil-publico.selo-dev-secundario {
+    color: #DDFBFF !important;
+    text-shadow: 0 0 8px rgba(141, 235, 250, 0.22);
 }
 
 
