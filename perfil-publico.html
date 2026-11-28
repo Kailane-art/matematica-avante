@@ -981,7 +981,11 @@ function configurarModalContratacaoProfessor() {
         try {
             const { data, error } = await supabaseClient.rpc(
                 "create_teacher_contract",
-                { p_plan_id: planoSelecionadoParaContratacao.id }
+                {
+                    p_plan_id: planoSelecionadoParaContratacao.id,
+                    p_accept_platform_terms: true,
+                    p_accept_teacher_conditions: true
+                }
             );
 
             if (error) throw error;
