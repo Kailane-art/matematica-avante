@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1E3A8A">
     <title>Painel DEV - Matemática Avante</title>
-    <link rel="stylesheet" href="css/style.css?v=20261127-painel-admin-modal2">
+    <link rel="stylesheet" href="css/style.css?v=20261127-seguranca1">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -144,6 +144,24 @@
         .modo-escuro .painel-dev-modulo-especial { border-color: #38516e; background: linear-gradient(145deg, #142a45, #183251); }
         .painel-dev-listagem[hidden] { display: none !important; }
         .painel-dev-listagem:not([hidden]) { grid-column: 1 / -1; }
+        .painel-dev-seguranca-acoes { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin:12px 0 16px; }
+        .painel-dev-seguranca-acoes .painel-dev-estado { margin:0; }
+        .painel-dev-seguranca-resumo { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+        .painel-dev-seguranca-indicador, .painel-dev-seguranca-bloco { min-width:0; padding:16px; border:1px solid #d5e0ef; border-radius:17px; background:#fff; color:#24364b; }
+        .painel-dev-seguranca-indicador span, .painel-dev-seguranca-indicador small { display:block; color:#526176; font-size:12px; line-height:1.5; }
+        .painel-dev-seguranca-indicador strong { display:block; margin:7px 0; color:#1e3a8a; font-size:27px; }
+        .painel-dev-seguranca-listas { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
+        .painel-dev-seguranca-bloco h3 { margin:0 0 12px; color:#1e3a8a; font-size:15px; }
+        .painel-dev-seguranca-itens { display:grid; gap:9px; }
+        .painel-dev-seguranca-item { padding:11px 12px; border:1px solid #e0e8f2; border-radius:12px; background:#f7faff; color:#24364b; font-size:12px; line-height:1.55; overflow-wrap:anywhere; }
+        .painel-dev-seguranca-item strong { display:block; margin-bottom:3px; color:#1e3a8a; font-size:13px; }
+        .painel-dev-seguranca-atualizado { margin:12px 0 0; color:#718096; font-size:11px; }
+        .modo-escuro .painel-dev-seguranca-indicador, .modo-escuro .painel-dev-seguranca-bloco { border-color:#294361; background:#142a45; color:#e5edf8; }
+        .modo-escuro .painel-dev-seguranca-indicador span, .modo-escuro .painel-dev-seguranca-indicador small, .modo-escuro .painel-dev-seguranca-atualizado { color:#a9bbd2; }
+        .modo-escuro .painel-dev-seguranca-indicador strong, .modo-escuro .painel-dev-seguranca-bloco h3 { color:#bfdbfe; }
+        .modo-escuro .painel-dev-seguranca-item { border-color:#294361; background:#172b43; color:#dbeafe; }
+        .modo-escuro .painel-dev-seguranca-item strong { color:#bfdbfe; }
+        @media(max-width:680px) { .painel-dev-seguranca-resumo, .painel-dev-seguranca-listas { grid-template-columns:1fr; } }
         .painel-dev-filtros { display: grid; grid-template-columns: minmax(0, 1fr) 190px auto; gap: 10px; margin: 18px 0; }
         .painel-dev-filtros input, .painel-dev-filtros select { min-width: 0; width: 100%; padding: 12px 14px; border: 1px solid #cbd8e8; border-radius: 15px; background: #fff; color: #24364b; font: inherit; }
         .painel-dev-estado { color: #526176; margin: 12px 0; }
@@ -253,9 +271,36 @@
                     <div class="painel-dev-modulo-conteudo">
                         <h3>Segurança e controle de acesso</h3>
                         <p>Controles de segurança, restrições e proteção das contas.</p>
-                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                        <button id="abrirModuloSeguranca" class="painel-dev-botao" type="button">Abrir módulo</button>
                     </div>
                 </article>
+                <section id="moduloSeguranca" class="painel-dev-secao painel-dev-listagem painel-dev-seguranca" hidden>
+                    <div class="painel-dev-secao-cabecalho">
+                        <h2>Segurança e controle de acesso</h2>
+                        <p>Monitoramento somente para leitura das sessões registradas, restrições administrativas e eventos de autenticação.</p>
+                    </div>
+                    <div class="painel-dev-seguranca-acoes">
+                        <p id="estadoSeguranca" class="painel-dev-estado" role="status">Aguardando consulta...</p>
+                        <button id="atualizarSeguranca" class="painel-dev-botao" type="button">Atualizar dados</button>
+                    </div>
+                    <div class="painel-dev-seguranca-resumo">
+                        <article class="painel-dev-seguranca-indicador"><span>Sessões válidas registradas</span><strong id="totalSessoesSeguranca">—</strong><small>Não representa usuários online neste instante.</small></article>
+                        <article class="painel-dev-seguranca-indicador"><span>Banimentos em prazo de recuperação</span><strong id="totalBanimentosSeguranca">—</strong><small>Contas aguardando exclusão definitiva.</small></article>
+                        <article class="painel-dev-seguranca-indicador"><span>Suspensões ativas</span><strong id="totalSuspensoesSeguranca">—</strong><small>Restrições temporárias ainda válidas.</small></article>
+                        <article class="painel-dev-seguranca-indicador"><span>Eventos de autenticação (7 dias)</span><strong id="totalEventosSeguranca">—</strong><small>Registros disponíveis no banco.</small></article>
+                    </div>
+                    <div class="painel-dev-seguranca-listas">
+                        <section class="painel-dev-seguranca-bloco">
+                            <h3>Restrições ativas</h3>
+                            <div id="listaRestricoesSeguranca" class="painel-dev-seguranca-itens"><p>Nenhuma consulta realizada.</p></div>
+                        </section>
+                        <section class="painel-dev-seguranca-bloco">
+                            <h3>Eventos recentes de autenticação</h3>
+                            <div id="listaEventosSeguranca" class="painel-dev-seguranca-itens"><p>Nenhuma consulta realizada.</p></div>
+                        </section>
+                    </div>
+                    <p id="atualizadoSeguranca" class="painel-dev-seguranca-atualizado"></p>
+                </section>
                 <article class="painel-dev-modulo">
                     <span class="painel-dev-modulo-icone"><i data-lucide="trophy"></i></span>
                     <div class="painel-dev-modulo-conteudo">
@@ -412,7 +457,7 @@
     </div>
     <button id="botaoInformacaoAdminPerfil" type="button" hidden aria-hidden="true" tabindex="-1"></button>
 
-    <script src="js/script.js?v=20261127-painel-admin-modal2"></script>
+    <script src="js/script.js?v=20261127-seguranca1"></script>
     <script>
         if (window.lucide) lucide.createIcons();
 
@@ -969,6 +1014,114 @@
                 evento.preventDefault();
                 carregarUsuarios();
             });
+        })();
+
+        (() => {
+            const botao = document.getElementById("abrirModuloSeguranca");
+            const modulo = document.getElementById("moduloSeguranca");
+            const atualizar = document.getElementById("atualizarSeguranca");
+            const estado = document.getElementById("estadoSeguranca");
+            const listaRestricoes = document.getElementById("listaRestricoesSeguranca");
+            const listaEventos = document.getElementById("listaEventosSeguranca");
+            let carregando = false;
+
+            const formatarData = (valor) => {
+                if (!valor) return "Data não informada";
+                const data = new Date(valor);
+                return Number.isNaN(data.getTime()) ? "Data indisponível" :
+                    new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(data);
+            };
+
+            const adicionarTexto = (pai, texto) => {
+                const p = document.createElement("p");
+                p.textContent = texto;
+                pai.appendChild(p);
+            };
+
+            function renderizarRestricoes(restricoes) {
+                listaRestricoes.replaceChildren();
+                if (!restricoes.length) {
+                    adicionarTexto(listaRestricoes, "Nenhuma conta possui restrição administrativa ativa.");
+                    return;
+                }
+                restricoes.forEach((restricao) => {
+                    const item = document.createElement("article");
+                    item.className = "painel-dev-seguranca-item";
+                    const titulo = document.createElement("strong");
+                    titulo.textContent = "@" + (restricao.username || "usuário");
+                    const tipo = restricao.restriction_type === "pending_deletion" ?
+                        "Banimento · aguardando exclusão" : "Suspensão temporária";
+                    const prazo = restricao.restriction_type === "pending_deletion" ?
+                        "Prazo de exclusão: " : "Suspensão até: ";
+                    const detalhes = [
+                        tipo,
+                        prazo + formatarData(restricao.expires_at),
+                        "Aplicada em: " + formatarData(restricao.created_at)
+                    ];
+                    if (restricao.created_by_username) detalhes.push("Aplicada por: @" + restricao.created_by_username);
+                    if (restricao.reason) detalhes.push("Motivo: " + restricao.reason);
+                    item.append(titulo, document.createTextNode(detalhes.join(" · ")));
+                    listaRestricoes.appendChild(item);
+                });
+            }
+
+            function renderizarEventos(eventos) {
+                listaEventos.replaceChildren();
+                if (!eventos.length) {
+                    adicionarTexto(listaEventos, "Nenhum evento de autenticação foi registrado no banco nos últimos 7 dias.");
+                    return;
+                }
+                eventos.forEach((evento) => {
+                    const item = document.createElement("article");
+                    item.className = "painel-dev-seguranca-item";
+                    const titulo = document.createElement("strong");
+                    titulo.textContent = String(evento.event || "Evento de autenticação");
+                    item.append(titulo, document.createTextNode(formatarData(evento.created_at)));
+                    listaEventos.appendChild(item);
+                });
+            }
+
+            async function carregarSeguranca() {
+                if (carregando) return;
+                if (!window.supabaseClient) {
+                    estado.textContent = "Não foi possível conectar ao serviço de segurança.";
+                    return;
+                }
+                carregando = true;
+                atualizar.disabled = true;
+                estado.textContent = "Consultando dados de segurança...";
+                try {
+                    const { data, error } = await supabaseClient.functions.invoke("account-admin", {
+                        body: { action: "security_overview" }
+                    });
+                    if (error) throw error;
+                    if (data?.error) throw new Error(data.error);
+                    document.getElementById("totalSessoesSeguranca").textContent = String(data.active_sessions ?? 0);
+                    document.getElementById("totalBanimentosSeguranca").textContent = String(data.pending_deletions ?? 0);
+                    document.getElementById("totalSuspensoesSeguranca").textContent = String(data.temporary_suspensions ?? 0);
+                    const eventos = Array.isArray(data.recent_auth_events) ? data.recent_auth_events : [];
+                    document.getElementById("totalEventosSeguranca").textContent = String(eventos.length);
+                    renderizarRestricoes(Array.isArray(data.restrictions) ? data.restrictions : []);
+                    renderizarEventos(eventos);
+                    estado.textContent = "Dados de segurança carregados.";
+                    document.getElementById("atualizadoSeguranca").textContent =
+                        "Última atualização: " + formatarData(data.generated_at);
+                } catch (erro) {
+                    console.error("Erro ao carregar dados de segurança:", erro);
+                    estado.textContent = erro.message || "Não foi possível consultar os dados de segurança.";
+                } finally {
+                    carregando = false;
+                    atualizar.disabled = false;
+                }
+            }
+
+            botao.addEventListener("click", () => {
+                const vaiAbrir = modulo.hidden;
+                modulo.hidden = !vaiAbrir;
+                botao.textContent = vaiAbrir ? "Fechar módulo" : "Abrir módulo";
+                if (vaiAbrir) carregarSeguranca();
+            });
+            atualizar.addEventListener("click", carregarSeguranca);
         })();
     </script>
 </body>
