@@ -1226,8 +1226,13 @@ async function carregarPerfilPublico() {
         selo.removeAttribute("title");
 
         if (perfil.tipo_usuario === "dev") {
-            selo.textContent = "⚡ Selo: Coração da Matrix";
-            selo.classList.add("selo-dev-nome");
+            const ehDevPrincipal = perfil.id === "356e82f3-2ad0-4932-bc2c-e328bc7066d2";
+            selo.textContent = ehDevPrincipal
+                ? "⚡ Selo: Coração da Matrix"
+                : "🛡️ Selo: Guardião da Matrix";
+            selo.classList.add(
+                ehDevPrincipal ? "selo-dev-nome" : "selo-dev-secundario"
+            );
             selo.hidden = false;
         } else {
             selo.textContent = "";
