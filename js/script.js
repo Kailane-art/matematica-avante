@@ -3645,11 +3645,16 @@ if (formEditarPerfil) {
                     if (seloIcone) seloIcone.textContent = titulo.icone;
                     if (seloRotulo) seloRotulo.textContent = "Título:";
                 } else if (localStorage.getItem("tipoUsuario") === "dev") {
+                    const ehDevPrincipal = user.id === "356e82f3-2ad0-4932-bc2c-e328bc7066d2";
                     if (seloNome) {
-                        seloNome.textContent = "Coração da Matrix";
-                        seloNome.classList.add("selo-dev-nome");
+                        seloNome.textContent = ehDevPrincipal
+                            ? "Coração da Matrix"
+                            : "Guardião da Matrix";
+                        seloNome.classList.add(
+                            ehDevPrincipal ? "selo-dev-nome" : "selo-dev-secundario"
+                        );
                     }
-                    if (seloIcone) seloIcone.textContent = "⚡";
+                    if (seloIcone) seloIcone.textContent = ehDevPrincipal ? "⚡" : "🛡️";
                     if (seloRotulo) seloRotulo.textContent = "Selo:";
                 } else {
                     if (seloNome) seloNome.textContent = "Não possui";
