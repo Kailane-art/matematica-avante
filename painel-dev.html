@@ -374,7 +374,7 @@
                     const botaoInfo = document.createElement("a");
                     botaoInfo.className = "painel-dev-usuario-info";
                     botaoInfo.href = urlPerfil + "&abrirAdmin=1";
-                    botaoInfo.textContent = "ℹ️";
+                    botaoInfo.innerHTML = '<i data-lucide="info"></i>';
                     botaoInfo.setAttribute("aria-label", "Abrir informações administrativas de @" + (usuario.username || "usuário"));
                     botaoInfo.title = "Informações administrativas";
 
@@ -382,6 +382,8 @@
                     item.append(informacoes, acoes);
                     lista.appendChild(item);
                 });
+
+                if (window.lucide) lucide.createIcons();
             }
 
             async function carregarUsuarios() {
