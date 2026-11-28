@@ -516,7 +516,7 @@
                     .eq("id", user.id)
                     .maybeSingle();
 
-                if (erroPerfil || !perfil || !["professor", "dev"].includes(perfil.tipo_usuario)) {
+                if (erroPerfil || !perfil || perfil.tipo_usuario !== "professor") {
                     window.location.replace("inicio.html");
                     return;
                 }
