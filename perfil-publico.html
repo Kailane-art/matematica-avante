@@ -979,6 +979,14 @@ async function carregarPerfilPublico() {
 
         await configurarFavoritoPerfil(perfil.id, sessaoAtual?.user?.id, ehProprioPerfil);
         await configurarPainelAdministrativoPerfil(ehProprioPerfil, sessaoAtual?.user?.id);
+
+        if (parametros.get("abrirAdmin") === "1") {
+            const botaoAdmin = document.getElementById("botaoInformacaoAdminPerfil");
+            if (botaoAdmin && !botaoAdmin.hidden && typeof botaoAdmin.onclick === "function") {
+                botaoAdmin.click();
+            }
+        }
+
         const textoBio = typeof perfil.bio === "string" ? perfil.bio.trim() : "";
         bio.textContent = textoBio;
         bio.hidden = !textoBio;
