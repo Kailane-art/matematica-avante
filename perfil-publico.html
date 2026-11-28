@@ -73,10 +73,6 @@
         </p>
 
         <div id="acoesPerfilPublico" class="acoes-perfil-publico" hidden>
-            <button id="botaoContratarProfessor" type="button" hidden>
-                <i data-lucide="briefcase-business"></i>
-                Contratar professor
-            </button>
             <button id="botaoAdicionarAmizade" type="button">
                 <i data-lucide="user-round-plus"></i>
                 Adicionar amizade
@@ -186,6 +182,7 @@
 let perfilPublicoAtual = null;
 let usuarioAtualEhDev = false;
 let tipoUsuarioAtual = null;
+let podeAssinarPlanosPublicos = false;
 
 async function configurarBotaoAmizade(idPerfil) {
     const botaoAdicionar = document.getElementById("botaoAdicionarAmizade");
@@ -953,6 +950,15 @@ async function carregarPlanosPublicosProfessor(perfil) {
             }
 
             card.append(titulo, descricao, preco, detalhes);
+
+            if (podeAssinarPlanosPublicos) {
+                const botaoAssinar = document.createElement("button");
+                botaoAssinar.type = "button";
+                botaoAssinar.className = "botao-assinar-plano-professor";
+                botaoAssinar.innerHTML = '<i data-lucide="credit-card"></i> Assinar';
+                card.appendChild(botaoAssinar);
+            }
+
             lista.appendChild(card);
         });
 
@@ -1006,7 +1012,6 @@ async function carregarPerfilPublico() {
         const { data: sessaoAtual } = await supabaseClient.auth.getUser();
         const ehProprioPerfil = sessaoAtual?.user?.id === perfil.id;
         perfilPublicoAtual = perfil;
-        carregarPlanosPublicosProfessor(perfil);
         usuarioAtualEhDev = false;
         tipoUsuarioAtual = null;
 
@@ -1021,14 +1026,13 @@ async function carregarPerfilPublico() {
             usuarioAtualEhDev = tipoUsuarioAtual === "dev";
         }
 
-        const botaoContratar = document.getElementById("botaoContratarProfessor");
-        if (botaoContratar) {
-            botaoContratar.hidden = !(
-                perfil.tipo_usuario === "professor" &&
-                tipoUsuarioAtual !== null &&
-                tipoUsuarioAtual !== "professor"
-            );
-        }
+        podeAssinarPlanosPublicos = Boolean(
+            sessaoAtual?.user &&
+            !ehProprioPerfil &&
+            tipoUsuarioAtual !== null &&
+            tipoUsuarioAtual !== "professor"
+        );
+        await carregarPlanosPublicosProfessor(perfil);
 
         const acoesPerfil = document.getElementById("acoesPerfilPublico");
 
