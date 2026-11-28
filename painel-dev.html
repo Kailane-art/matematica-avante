@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1E3A8A">
     <title>Painel DEV - Matemática Avante</title>
-    <link rel="stylesheet" href="css/style.css?v=20261127-painel-visual2">
+    <link rel="stylesheet" href="css/style.css?v=20261127-painel-admin-modal1">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -157,9 +157,23 @@
         .painel-dev-usuario-info svg { width: 21px; height: 21px; }
         .painel-dev-usuario-info:hover { background: rgba(255,255,255,.10); }
         .modo-escuro .painel-dev-usuario-info { border-color: rgba(255,255,255,.7); background: transparent; color: #fff; }
-        .painel-dev-admin-overlay[hidden] { display: none !important; }
-        .painel-dev-admin-overlay { position: fixed; inset: 0; z-index: 11000; display: flex; align-items: center; justify-content: center; padding: 0; background: rgba(15, 23, 42, .72); }
-        .painel-dev-admin-frame { display: block; width: 100%; height: 100%; border: 0; background: transparent; }
+        .painel-dev-modal-admin[hidden] { display: none !important; }
+        .painel-dev-modal-admin { position: fixed; inset: 0; z-index: 11000; display: flex; align-items: center; justify-content: center; padding: 18px; overflow-y: auto; background: rgba(8, 20, 45, .78); }
+        .painel-dev-modal-admin .conteudo-painel-admin-perfil { width: min(560px, 100%); max-height: min(88vh, 850px); overflow-y: auto; padding: 22px; border: 1px solid rgba(255,255,255,.22); border-radius: 22px; background: #1E3A8A; color: #fff; box-shadow: 0 18px 55px rgba(0,0,0,.35); }
+        .painel-dev-modal-admin .cabecalho-painel-admin-perfil { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
+        .painel-dev-modal-admin .cabecalho-painel-admin-perfil h2 { margin:0; color:#fff; font-size:20px; }
+        .painel-dev-modal-admin button { font:inherit; cursor:pointer; }
+        .painel-dev-modal-admin .cabecalho-painel-admin-perfil button { width:36px; height:36px; border:1px solid rgba(255,255,255,.5); border-radius:50%; background:#294ec5; color:#fff; font-size:24px; line-height:1; }
+        .painel-dev-modal-admin .estado-admin-perfil, .painel-dev-modal-admin #mensagemAdminPerfil { color:#dbeafe; font-size:13px; line-height:1.5; }
+        .painel-dev-modal-admin .acoes-admin-perfil { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:16px 0; }
+        .painel-dev-modal-admin .acoes-admin-perfil button, .painel-dev-modal-admin .form-suspensao-admin button { min-height:42px; padding:10px 13px; border:1px solid rgba(255,255,255,.45); border-radius:13px; background:#4169e1; color:#fff; font-weight:700; }
+        .painel-dev-modal-admin .acoes-admin-perfil button:hover, .painel-dev-modal-admin .form-suspensao-admin button:hover { background:#294ec5; }
+        .painel-dev-modal-admin .form-suspensao-admin { margin-top:14px; padding:15px; border:1px solid rgba(255,255,255,.25); border-radius:15px; background:rgba(8,20,45,.24); }
+        .painel-dev-modal-admin .form-suspensao-admin p, .painel-dev-modal-admin .form-suspensao-admin label { display:block; margin:0 0 10px; color:#fff; font-size:13px; line-height:1.5; }
+        .painel-dev-modal-admin .form-suspensao-admin input { width:100%; box-sizing:border-box; margin:5px 0 12px; padding:11px 12px; border:1px solid #bfdbfe; border-radius:10px; background:#fff; color:#172554; font:inherit; }
+        .painel-dev-modal-admin .botoes-suspensao-admin { display:flex; flex-wrap:wrap; gap:9px; }
+        .painel-dev-modal-admin .form-suspensao-admin button[type="submit"] { background:#1d4ed8; }
+        @media (max-width:520px) { .painel-dev-modal-admin { padding:10px; } .painel-dev-modal-admin .conteudo-painel-admin-perfil { padding:17px; } .painel-dev-modal-admin .acoes-admin-perfil { grid-template-columns:1fr; } }
         .modo-escuro .painel-dev-filtros input, .modo-escuro .painel-dev-filtros select, .modo-escuro .painel-dev-usuario { background: #172b43; border-color: #38516e; color: #e3edf8; }
         .modo-escuro .painel-dev-usuario strong { color: #e3edf8; }
         .modo-escuro .painel-dev-usuario small, .modo-escuro .painel-dev-estado { color: #a9bad0; }
@@ -326,11 +340,78 @@
         </section>
     </main>
 
-    <div id="painelDevAdminOverlay" class="painel-dev-admin-overlay" hidden>
-        <iframe id="painelDevAdminFrame" class="painel-dev-admin-frame" title="Informações administrativas do usuário"></iframe>
+<div id="painelAdministrativoPerfil" class="painel-admin-perfil painel-dev-modal-admin" hidden>
+        <section class="conteudo-painel-admin-perfil" role="dialog" aria-modal="true" aria-labelledby="tituloPainelAdminPerfil">
+            <div class="cabecalho-painel-admin-perfil">
+                <h2 id="tituloPainelAdminPerfil">Informações administrativas</h2>
+                <button id="fecharPainelAdminPerfil" type="button" aria-label="Fechar">×</button>
+            </div>
+            <p id="estadoAdminPerfil" class="estado-admin-perfil" role="status"></p>
+            <div id="acoesAdminPerfil" class="acoes-admin-perfil">
+                <button id="botaoTornarDev" type="button" hidden>Tornar DEV</button>
+                <button id="botaoTornarAluno" type="button" hidden>Tornar aluno</button>
+                <button id="botaoSuspenderConta" type="button">Suspender conta</button>
+                <button id="botaoBanirConta" type="button">Banir conta</button>
+                <button id="botaoRebaixarProfessor" type="button" hidden>Mudar professor para aluno</button>
+                <button id="botaoReativarConta" type="button" hidden>Reativar conta</button>
+                <button id="botaoRetirarSuspensao" type="button" hidden>Retirar suspensão</button>
+                <button id="botaoExcluirConta" type="button">Excluir conta definitivamente</button>
+            </div>
+            <div id="confirmacaoPromocaoDev" class="form-suspensao-admin" hidden>
+                <p><strong>Atenção:</strong> tornar esta conta DEV concederá privilégios administrativos na plataforma.</p>
+                <p>Deseja realmente promover <strong id="nomeAlvoPromocaoDev"></strong>?</p>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarEtapaPromocaoDev" type="button">Confirmar</button>
+                    <button id="cancelarEtapaPromocaoDev" type="button">Cancelar</button>
+                </div>
+            </div>
+            <div id="confirmacaoRebaixamentoDev" class="form-suspensao-admin" hidden>
+                <p><strong>Atenção:</strong> esta ação removerá os privilégios DEV desta conta e a transformará em aluno.</p>
+                <p>Deseja realmente alterar <strong id="nomeAlvoRebaixamentoDev"></strong> para aluno?</p>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarEtapaRebaixamentoDev" type="button">Confirmar</button>
+                    <button id="cancelarEtapaRebaixamentoDev" type="button">Cancelar</button>
+                </div>
+            </div>
+            <form id="formRebaixamentoDev" class="form-suspensao-admin" hidden>
+                <label for="comandoRebaixamentoDev">Digite exatamente <strong id="comandoEsperadoRebaixamentoDev"></strong> para finalizar</label>
+                <input id="comandoRebaixamentoDev" name="comando_rebaixamento" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="/TIA_ALUNO @username" required>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarRebaixamentoDev" type="submit">Tornar aluno</button>
+                    <button id="cancelarRebaixamentoDev" type="button">Cancelar</button>
+                </div>
+            </form>
+            <form id="formPromocaoDev" class="form-suspensao-admin" hidden>
+                <label for="comandoPromocaoDev">Digite exatamente <strong id="comandoEsperadoPromocaoDev"></strong> para finalizar</label>
+                <input id="comandoPromocaoDev" name="comando_promocao" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="/TIA_DEV @username" required>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarPromocaoDev" type="submit">Tornar DEV</button>
+                    <button id="cancelarPromocaoDev" type="button">Cancelar</button>
+                </div>
+            </form>
+            <form id="formExclusaoDefinitivaAdmin" class="form-suspensao-admin form-exclusao-definitiva-admin" hidden>
+                <p>Esta ação excluirá permanentemente a conta e os dados associados. Não será possível recuperar o usuário.</p>
+                <label for="confirmarUsernameExclusaoAdmin">Digite @<span id="usernameConfirmacaoExclusaoAdmin"></span> para confirmar</label>
+                <input id="confirmarUsernameExclusaoAdmin" name="confirmar_username" type="text" autocomplete="off" spellcheck="false" placeholder="@nome de usuário" required>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarExclusaoAdmin" type="submit">Excluir definitivamente</button>
+                    <button id="cancelarExclusaoAdmin" type="button">Cancelar</button>
+                </div>
+            </form>
+            <form id="formSuspensaoAdmin" class="form-suspensao-admin" hidden>
+                <label for="diasSuspensaoAdmin">Quantidade de dias da suspensão</label>
+                <input id="diasSuspensaoAdmin" name="dias" type="number" min="1" max="3650" step="1" inputmode="numeric" placeholder="Ex.: 7" required>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarSuspensaoAdmin" type="submit">Confirmar</button>
+                    <button id="cancelarSuspensaoAdmin" type="button">Cancelar</button>
+                </div>
+            </form>
+            <p id="mensagemAdminPerfil" role="status" aria-live="polite"></p>
+        </section>
     </div>
+    <button id="botaoInformacaoAdminPerfil" type="button" hidden aria-hidden="true" tabindex="-1"></button>
 
-    <script src="js/script.js?v=20261127-painel-speed1"></script>
+    <script src="js/script.js?v=20261127-painel-admin-modal1"></script>
     <script>
         if (window.lucide) lucide.createIcons();
 
@@ -384,7 +465,8 @@
                     botaoInfo.innerHTML = '<i data-lucide="info"></i>';
                     botaoInfo.setAttribute("aria-label", "Abrir informações administrativas de @" + (usuario.username || "usuário"));
                     botaoInfo.title = "Informações administrativas";
-                    botaoInfo.addEventListener("click", () => abrirPainelAdminNoPainel(usuario.username));
+                    botaoInfo.disabled = !usuario.id || usuario.id === idUsuarioAtual;
+                    botaoInfo.addEventListener("click", () => abrirPainelAdminNoPainel(usuario));
 
                     item.append(informacoes, botaoInfo);
                     lista.appendChild(item);
@@ -393,55 +475,446 @@
                 if (window.lucide) lucide.createIcons();
             }
 
-            const overlayAdmin = document.getElementById("painelDevAdminOverlay");
-            const frameAdmin = document.getElementById("painelDevAdminFrame");
+            let perfilPublicoAtual = null;
+            let usuarioAtualEhDev = true;
+            let idUsuarioAtual = null;
+            const painelAdmin = document.getElementById("painelAdministrativoPerfil");
+            const botaoAdminOculto = document.getElementById("botaoInformacaoAdminPerfil");
+
+            async function executarAcaoAdministrativaPerfil(action, extras = {}) {
+                const { data, error } = await supabaseClient.functions.invoke("account-admin", {
+                    body: { action, target_user_id: perfilPublicoAtual?.id, ...extras }
+                });
+                if (error) throw error;
+                if (data?.error) throw new Error(data.error);
+                return data;
+            }
+
+            async function configurarPainelAdministrativoPerfil(ehProprioPerfil, idUsuarioAtual) {
+    const botao = document.getElementById("botaoInformacaoAdminPerfil");
+    const painel = document.getElementById("painelAdministrativoPerfil");
+    const estado = document.getElementById("estadoAdminPerfil");
+    const mensagem = document.getElementById("mensagemAdminPerfil");
+    const formSuspensao = document.getElementById("formSuspensaoAdmin");
+    const campoDias = document.getElementById("diasSuspensaoAdmin");
+    const botaoRebaixar = document.getElementById("botaoRebaixarProfessor");
+    const botaoReativar = document.getElementById("botaoReativarConta");
+    const botaoRetirarSuspensao = document.getElementById("botaoRetirarSuspensao");
+    const botaoSuspender = document.getElementById("botaoSuspenderConta");
+    const botaoBanir = document.getElementById("botaoBanirConta");
+    const botaoExcluir = document.getElementById("botaoExcluirConta");
+    const formExclusao = document.getElementById("formExclusaoDefinitivaAdmin");
+    const campoConfirmacaoExclusao = document.getElementById("confirmarUsernameExclusaoAdmin");
+    const botaoConfirmarExclusao = document.getElementById("confirmarExclusaoAdmin");
+    const botaoCancelarExclusao = document.getElementById("cancelarExclusaoAdmin");
+    const botaoTornarDev = document.getElementById("botaoTornarDev");
+    const botaoTornarAluno = document.getElementById("botaoTornarAluno");
+    const confirmacaoRebaixamentoDev = document.getElementById("confirmacaoRebaixamentoDev");
+    const botaoConfirmarEtapaRebaixamentoDev = document.getElementById("confirmarEtapaRebaixamentoDev");
+    const botaoCancelarEtapaRebaixamentoDev = document.getElementById("cancelarEtapaRebaixamentoDev");
+    const formRebaixamentoDev = document.getElementById("formRebaixamentoDev");
+    const campoComandoRebaixamentoDev = document.getElementById("comandoRebaixamentoDev");
+    const botaoConfirmarRebaixamentoDev = document.getElementById("confirmarRebaixamentoDev");
+    const confirmacaoPromocaoDev = document.getElementById("confirmacaoPromocaoDev");
+    const botaoConfirmarEtapaPromocaoDev = document.getElementById("confirmarEtapaPromocaoDev");
+    const botaoCancelarEtapaPromocaoDev = document.getElementById("cancelarEtapaPromocaoDev");
+    const formPromocaoDev = document.getElementById("formPromocaoDev");
+    const campoComandoPromocaoDev = document.getElementById("comandoPromocaoDev");
+    const botaoConfirmarPromocaoDev = document.getElementById("confirmarPromocaoDev");
+
+    if (!botao || !painel || !usuarioAtualEhDev || ehProprioPerfil || !perfilPublicoAtual?.id) {
+        if (botao) botao.hidden = true;
+        return;
+    }
+
+    botao.hidden = false;
+    const alvoEhDev = perfilPublicoAtual.tipo_usuario === "dev";
+    const usuarioAtualEhDevPrincipal = idUsuarioAtual === "356e82f3-2ad0-4932-bc2c-e328bc7066d2";
+    botaoTornarDev.hidden = !usuarioAtualEhDevPrincipal || alvoEhDev;
+    botaoTornarAluno.hidden = !usuarioAtualEhDevPrincipal || !alvoEhDev;
+    document.getElementById("nomeAlvoRebaixamentoDev").textContent = "@" + perfilPublicoAtual.username;
+    document.getElementById("comandoEsperadoRebaixamentoDev").textContent = "/TIA_ALUNO @" + perfilPublicoAtual.username;
+    document.getElementById("nomeAlvoPromocaoDev").textContent = "@" + perfilPublicoAtual.username;
+    document.getElementById("comandoEsperadoPromocaoDev").textContent = "/TIA_DEV @" + perfilPublicoAtual.username;
+    const podeGerenciarRestricaoDoAlvo = !alvoEhDev || usuarioAtualEhDevPrincipal;
+    botaoSuspender.hidden = !podeGerenciarRestricaoDoAlvo;
+    botaoBanir.hidden = !podeGerenciarRestricaoDoAlvo;
+    botaoReativar.hidden = !podeGerenciarRestricaoDoAlvo;
+    botaoRetirarSuspensao.hidden = !podeGerenciarRestricaoDoAlvo;
+    botaoRebaixar.hidden = perfilPublicoAtual.tipo_usuario !== "professor";
+    mensagem.textContent = "";
+    estado.textContent = "Verificando situação da conta...";
+
+    try {
+        const resultado = await executarAcaoAdministrativaPerfil("status");
+        const restricao = resultado.restriction;
+        if (restricao?.restriction_type === "pending_deletion") {
+            estado.textContent = "Conta banida. Prazo para reativação até " +
+                new Date(restricao.expires_at).toLocaleString("pt-BR");
+            botaoSuspender.hidden = true;
+            botaoBanir.hidden = true;
+            botaoRebaixar.hidden = true;
+            botaoReativar.hidden = false;
+            botaoRetirarSuspensao.hidden = true;
+        } else if (restricao?.restriction_type === "temporary_suspension") {
+            estado.textContent = "Conta suspensa por " + restricao.duration_days + " dia(s), até " +
+                new Date(restricao.expires_at).toLocaleString("pt-BR");
+            botaoSuspender.hidden = true;
+            botaoBanir.hidden = false;
+            botaoReativar.hidden = true;
+            botaoRetirarSuspensao.hidden = false;
+        } else {
+            estado.textContent = "Nenhuma restrição administrativa ativa.";
+            botaoSuspender.hidden = false;
+            botaoBanir.hidden = false;
+            botaoReativar.hidden = true;
+            botaoRetirarSuspensao.hidden = true;
+        }
+    } catch (erro) {
+        console.error("Erro ao consultar situação administrativa:", erro);
+        estado.textContent = "Não foi possível consultar a situação da conta. As ações administrativas continuam disponíveis.";
+        botaoSuspender.hidden = false;
+        botaoBanir.hidden = false;
+        botaoReativar.hidden = true;
+        botaoRetirarSuspensao.hidden = true;
+        botaoRebaixar.hidden = perfilPublicoAtual.tipo_usuario !== "professor";
+    }
+
+    if (!podeGerenciarRestricaoDoAlvo) {
+        botaoSuspender.hidden = true;
+        botaoBanir.hidden = true;
+        botaoReativar.hidden = true;
+        botaoRetirarSuspensao.hidden = true;
+        formSuspensao.hidden = true;
+    }
+
+    botao.onclick = function() {
+        painel.hidden = false;
+        formSuspensao.hidden = true;
+        formExclusao.hidden = true;
+        confirmacaoPromocaoDev.hidden = true;
+        formPromocaoDev.hidden = true;
+        confirmacaoRebaixamentoDev.hidden = true;
+        formRebaixamentoDev.hidden = true;
+        campoComandoRebaixamentoDev.value = "";
+        campoComandoPromocaoDev.value = "";
+        campoConfirmacaoExclusao.value = "";
+        mensagem.textContent = "";
+    };
+
+    botaoTornarAluno.onclick = function() {
+        if (!usuarioAtualEhDevPrincipal || perfilPublicoAtual?.tipo_usuario !== "dev") return;
+        confirmacaoRebaixamentoDev.hidden = false;
+        formRebaixamentoDev.hidden = true;
+        mensagem.textContent = "";
+    };
+
+    botaoCancelarEtapaRebaixamentoDev.onclick = function() {
+        confirmacaoRebaixamentoDev.hidden = true;
+        formRebaixamentoDev.hidden = true;
+        campoComandoRebaixamentoDev.value = "";
+        mensagem.textContent = "";
+    };
+
+    botaoConfirmarEtapaRebaixamentoDev.onclick = function() {
+        confirmacaoRebaixamentoDev.hidden = true;
+        formRebaixamentoDev.hidden = false;
+        campoComandoRebaixamentoDev.value = "";
+        campoComandoRebaixamentoDev.focus();
+    };
+
+    document.getElementById("cancelarRebaixamentoDev").onclick = function() {
+        formRebaixamentoDev.hidden = true;
+        confirmacaoRebaixamentoDev.hidden = true;
+        campoComandoRebaixamentoDev.value = "";
+        mensagem.textContent = "";
+    };
+
+    formRebaixamentoDev.onsubmit = async function(evento) {
+        evento.preventDefault();
+        const comandoEsperado = "/TIA_ALUNO @" + String(perfilPublicoAtual?.username || "");
+        if (!usuarioAtualEhDevPrincipal || perfilPublicoAtual?.tipo_usuario !== "dev") return;
+        if (campoComandoRebaixamentoDev.value !== comandoEsperado) {
+            mensagem.textContent = "O comando digitado não corresponde exatamente ao perfil selecionado.";
+            campoComandoRebaixamentoDev.focus();
+            return;
+        }
+
+        botaoConfirmarRebaixamentoDev.disabled = true;
+        botaoTornarAluno.disabled = true;
+        mensagem.textContent = "Removendo privilégios DEV...";
+        try {
+            await executarAcaoAdministrativaPerfil("demote_dev", {
+                confirmation_command: campoComandoRebaixamentoDev.value
+            });
+            mensagem.textContent = "A conta agora é do tipo aluno.";
+            window.alert("@" + perfilPublicoAtual.username + " agora é uma conta de aluno. As sessões anteriores foram revogadas.");
+            window.location.reload();
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível alterar esta conta para aluno.";
+            botaoConfirmarRebaixamentoDev.disabled = false;
+            botaoTornarAluno.disabled = false;
+        }
+    };
+
+    botaoTornarDev.onclick = function() {
+        if (!usuarioAtualEhDevPrincipal || perfilPublicoAtual?.tipo_usuario === "dev") return;
+        confirmacaoPromocaoDev.hidden = false;
+        formPromocaoDev.hidden = true;
+        mensagem.textContent = "";
+    };
+
+    botaoCancelarEtapaPromocaoDev.onclick = function() {
+        confirmacaoPromocaoDev.hidden = true;
+        formPromocaoDev.hidden = true;
+        campoComandoPromocaoDev.value = "";
+        mensagem.textContent = "";
+    };
+
+    botaoConfirmarEtapaPromocaoDev.onclick = function() {
+        confirmacaoPromocaoDev.hidden = true;
+        formPromocaoDev.hidden = false;
+        campoComandoPromocaoDev.value = "";
+        campoComandoPromocaoDev.focus();
+    };
+
+    document.getElementById("cancelarPromocaoDev").onclick = function() {
+        formPromocaoDev.hidden = true;
+        confirmacaoPromocaoDev.hidden = true;
+        campoComandoPromocaoDev.value = "";
+        mensagem.textContent = "";
+    };
+
+    formPromocaoDev.onsubmit = async function(evento) {
+        evento.preventDefault();
+        const comandoEsperado = "/TIA_DEV @" + String(perfilPublicoAtual?.username || "");
+        if (!usuarioAtualEhDevPrincipal || perfilPublicoAtual?.tipo_usuario === "dev") return;
+        if (campoComandoPromocaoDev.value !== comandoEsperado) {
+            mensagem.textContent = "O comando digitado não corresponde exatamente ao perfil selecionado.";
+            campoComandoPromocaoDev.focus();
+            return;
+        }
+
+        botaoConfirmarPromocaoDev.disabled = true;
+        botaoTornarDev.disabled = true;
+        mensagem.textContent = "Promovendo conta para DEV...";
+        try {
+            await executarAcaoAdministrativaPerfil("promote_to_dev", {
+                confirmation_command: campoComandoPromocaoDev.value
+            });
+            mensagem.textContent = "Conta promovida para DEV com sucesso.";
+            window.alert("@" + perfilPublicoAtual.username + " agora é uma conta DEV.");
+            window.location.reload();
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível promover esta conta.";
+            botaoConfirmarPromocaoDev.disabled = false;
+            botaoTornarDev.disabled = false;
+        }
+    };
+
+    document.getElementById("fecharPainelAdminPerfil").onclick = function() {
+        painel.hidden = true;
+    };
+
+    document.getElementById("cancelarSuspensaoAdmin").onclick = function() {
+        formSuspensao.hidden = true;
+        campoDias.value = "";
+        mensagem.textContent = "";
+    };
+
+    botaoSuspender.onclick = function() {
+        formSuspensao.hidden = false;
+        campoDias.value = "";
+        campoDias.focus();
+        mensagem.textContent = "";
+    };
+
+    document.getElementById("usernameConfirmacaoExclusaoAdmin").textContent = perfilPublicoAtual.username;
+
+    botaoExcluir.onclick = function() {
+        formSuspensao.hidden = true;
+        formExclusao.hidden = false;
+        campoConfirmacaoExclusao.value = "";
+        mensagem.textContent = "A exclusão será permanente. Confira o nome de usuário antes de confirmar.";
+        campoConfirmacaoExclusao.focus();
+    };
+
+    botaoCancelarExclusao.onclick = function() {
+        formExclusao.hidden = true;
+        campoConfirmacaoExclusao.value = "";
+        mensagem.textContent = "";
+    };
+
+    formExclusao.onsubmit = async function(evento) {
+        evento.preventDefault();
+        const nomeDigitado = campoConfirmacaoExclusao.value.trim().replace(/^@/, "");
+        if (nomeDigitado.toLowerCase() !== String(perfilPublicoAtual.username || "").toLowerCase()) {
+            mensagem.textContent = "O nome de usuário digitado não corresponde ao perfil selecionado.";
+            campoConfirmacaoExclusao.focus();
+            return;
+        }
+
+        const confirmar = window.confirm(
+            "ATENÇÃO: a conta @" + perfilPublicoAtual.username +
+            " e seus dados associados serão excluídos definitivamente. Esta ação não pode ser desfeita. Continuar?"
+        );
+        if (!confirmar) return;
+
+        botaoConfirmarExclusao.disabled = true;
+        botaoExcluir.disabled = true;
+        mensagem.textContent = "Excluindo conta e removendo os arquivos associados...";
+
+        try {
+            await executarAcaoAdministrativaPerfil("delete", {
+                confirm_username: campoConfirmacaoExclusao.value.trim()
+            });
+            painel.hidden = true;
+            window.alert("A conta @" + perfilPublicoAtual.username + " foi excluída definitivamente.");
+            await carregarUsuarios();
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível excluir a conta.";
+            botaoConfirmarExclusao.disabled = false;
+            botaoExcluir.disabled = false;
+        }
+    };
+
+    formSuspensao.onsubmit = async function(evento) {
+        evento.preventDefault();
+        const dias = Number(campoDias.value);
+        if (!Number.isSafeInteger(dias) || dias < 1 || dias > 3650) {
+            mensagem.textContent = "Informe um número inteiro entre 1 e 3650 dias.";
+            return;
+        }
+        const confirmar = window.confirm("Confirmar suspensão desta conta por " + dias + " dia(s)?");
+        if (!confirmar) return;
+        const confirmarBotao = document.getElementById("confirmarSuspensaoAdmin");
+        confirmarBotao.disabled = true;
+        mensagem.textContent = "Aplicando suspensão...";
+        try {
+            const resultado = await executarAcaoAdministrativaPerfil("suspend", { days: dias });
+            estado.textContent = "Conta suspensa até " + new Date(resultado.expires_at).toLocaleString("pt-BR");
+            mensagem.textContent = "Suspensão aplicada.";
+            formSuspensao.hidden = true;
+            botaoSuspender.hidden = true;
+            botaoBanir.hidden = false;
+            botaoReativar.hidden = true;
+            botaoRetirarSuspensao.hidden = false;
+            campoDias.value = "";
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível suspender a conta.";
+        } finally {
+            confirmarBotao.disabled = false;
+        }
+    };
+
+    botaoBanir.onclick = async function() {
+        if (!window.confirm("Banir esta conta? Ela ficará bloqueada e poderá ser reativada por uma conta DEV durante 30 dias. Depois disso, será excluída definitivamente e o e-mail ficará bloqueado permanentemente.")) return;
+        botaoBanir.disabled = true;
+        mensagem.textContent = "Banindo conta...";
+        try {
+            const resultado = await executarAcaoAdministrativaPerfil("ban");
+            estado.textContent = "Conta banida. Prazo para reativação até " +
+                new Date(resultado.expires_at).toLocaleString("pt-BR");
+            mensagem.textContent = "Conta banida e prazo de recuperação iniciado.";
+            botaoSuspender.hidden = true;
+            botaoBanir.hidden = true;
+            botaoRebaixar.hidden = true;
+            botaoReativar.hidden = false;
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível banir a conta.";
+        } finally {
+            botaoBanir.disabled = false;
+        }
+    };
+
+    botaoRetirarSuspensao.onclick = async function() {
+        if (!window.confirm("Retirar a suspensão desta conta e liberar o login imediatamente?")) return;
+        botaoRetirarSuspensao.disabled = true;
+        mensagem.textContent = "Retirando suspensão...";
+        try {
+            await executarAcaoAdministrativaPerfil("unsuspend");
+            estado.textContent = "Nenhuma restrição administrativa ativa.";
+            mensagem.textContent = "Suspensão retirada. O usuário já pode fazer login.";
+            botaoSuspender.hidden = false;
+            botaoBanir.hidden = false;
+            botaoRetirarSuspensao.hidden = true;
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível retirar a suspensão.";
+        } finally {
+            botaoRetirarSuspensao.disabled = false;
+        }
+    };
+
+    botaoRebaixar.onclick = async function() {
+        if (perfilPublicoAtual?.tipo_usuario !== "professor") return;
+        if (!window.confirm("Mudar esta conta de professor para aluno?")) return;
+        botaoRebaixar.disabled = true;
+        mensagem.textContent = "Atualizando tipo de conta...";
+        try {
+            await executarAcaoAdministrativaPerfil("demote");
+            perfilPublicoAtual.tipo_usuario = "aluno";
+            document.getElementById("tipoPerfilPublico").textContent = "Aluno";
+            botaoRebaixar.hidden = true;
+            mensagem.textContent = "A conta agora é do tipo aluno.";
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível alterar o tipo da conta.";
+        } finally {
+            botaoRebaixar.disabled = false;
+        }
+    };
+
+    botaoReativar.onclick = async function() {
+        if (!window.confirm("Reativar esta conta?")) return;
+        botaoReativar.disabled = true;
+        mensagem.textContent = "Reativando conta...";
+        try {
+            await executarAcaoAdministrativaPerfil("restore");
+            estado.textContent = "Conta reativada. Nenhuma restrição administrativa ativa.";
+            mensagem.textContent = "Conta reativada com sucesso.";
+            botaoSuspender.hidden = false;
+            botaoBanir.hidden = false;
+            botaoReativar.hidden = true;
+            botaoRetirarSuspensao.hidden = true;
+            botaoRebaixar.hidden = perfilPublicoAtual.tipo_usuario !== "professor";
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível reativar a conta.";
+        } finally {
+            botaoReativar.disabled = false;
+        }
+    };
+
+    if (!painel.dataset.fechamentoConfigurado) {
+        painel.dataset.fechamentoConfigurado = "1";
+        painel.addEventListener("click", function(evento) {
+            if (evento.target === painel) painel.hidden = true;
+        });
+    }
+}
+
 
             function fecharPainelAdminNoPainel() {
-                overlayAdmin.hidden = true;
-                frameAdmin.src = "about:blank";
+                painelAdmin.hidden = true;
+                perfilPublicoAtual = null;
             }
 
-            function abrirPainelAdminNoPainel(username) {
-                if (!username) return;
-                overlayAdmin.hidden = false;
-                frameAdmin.src = "perfil-publico.html?usuario=" + encodeURIComponent(username) + "&abrirAdmin=1&modoPainelDev=1";
+            async function abrirPainelAdminNoPainel(usuario) {
+                if (!usuario?.id || !usuario?.username || usuario.id === idUsuarioAtual) return;
+                perfilPublicoAtual = {
+                    id: usuario.id,
+                    username: usuario.username,
+                    tipo_usuario: usuario.tipo_usuario
+                };
+                painelAdmin.hidden = false;
+                document.getElementById("estadoAdminPerfil").textContent = "Carregando informações administrativas...";
+                document.getElementById("mensagemAdminPerfil").textContent = "";
+                await configurarPainelAdministrativoPerfil(false, idUsuarioAtual);
+                botaoAdminOculto.click();
+                if (window.lucide) lucide.createIcons();
             }
 
-            frameAdmin.addEventListener("load", () => {
-                try {
-                    const documento = frameAdmin.contentDocument;
-                    if (!documento) return;
-                    let estilo = documento.getElementById("estiloPainelDevEmbed");
-                    if (!estilo) {
-                        estilo = documento.createElement("style");
-                        estilo.id = "estiloPainelDevEmbed";
-                        documento.head.appendChild(estilo);
-                    }
-                    estilo.textContent = "html, body { background: transparent !important; } header, main.perfil-container > .card-perfil { display: none !important; } .painel-admin-perfil { background: transparent !important; }";
-
-                    const painelInterno = documento.getElementById("painelAdministrativoPerfil");
-                    const fecharInterno = documento.getElementById("fecharPainelAdminPerfil");
-                    if (fecharInterno && !fecharInterno.dataset.painelDevHandler) {
-                        fecharInterno.dataset.painelDevHandler = "1";
-                        fecharInterno.addEventListener("click", fecharPainelAdminNoPainel);
-                    }
-                    if (painelInterno && !painelInterno.dataset.painelDevHandler) {
-                        painelInterno.dataset.painelDevHandler = "1";
-                        painelInterno.addEventListener("click", (evento) => {
-                            if (evento.target === painelInterno) fecharPainelAdminNoPainel();
-                        });
-                    }
-                } catch (erro) {
-                    console.error("Não foi possível ajustar o painel administrativo incorporado:", erro);
-                }
-            });
-
-            overlayAdmin.addEventListener("click", (evento) => {
-                if (evento.target === overlayAdmin) fecharPainelAdminNoPainel();
-            });
-
+            document.getElementById("fecharPainelAdminPerfil").addEventListener("click", fecharPainelAdminNoPainel);
             document.addEventListener("keydown", (evento) => {
-                if (evento.key === "Escape" && !overlayAdmin.hidden) fecharPainelAdminNoPainel();
+                if (evento.key === "Escape" && !painelAdmin.hidden) fecharPainelAdminNoPainel();
             });
 
             async function carregarUsuarios() {
@@ -456,10 +929,11 @@
                 mostrarEstado("Carregando usuários...");
 
                 try {
-                    const { data: sessaoData, error: sessaoErro } = await supabaseClient.auth.getSession();
-                    if (sessaoErro || !sessaoData.session) {
+                    const { data: sessaoData, error: sessaoErro } = await supabaseClient.auth.getUser();
+                    if (sessaoErro || !sessaoData.user) {
                         throw new Error("Sua sessão não está disponível. Entre novamente.");
                     }
+                    idUsuarioAtual = sessaoData.user.id;
 
                     const { data, error } = await supabaseClient.functions.invoke("account-admin", {
                         body: {
