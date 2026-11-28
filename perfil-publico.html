@@ -16,7 +16,7 @@
         }
     </style>
     <title>Perfil público - Matemática Avante</title>
-    <link rel="stylesheet" href="css/style.css?v=20261128-planos-publicos1">
+    <link rel="stylesheet" href="css/style.css?v=20261128-planos-publicos2">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="manifest" href="manifest.webmanifest">
@@ -72,15 +72,6 @@
             </a>
         </p>
 
-        <section id="planosProfessorPublicos" class="planos-professor-publicos" aria-labelledby="tituloPlanosProfessorPublicos" hidden>
-            <div class="planos-professor-publicos-cabecalho">
-                <h2 id="tituloPlanosProfessorPublicos">Planos e preços</h2>
-                <p>Conheça os serviços oferecidos por este professor.</p>
-            </div>
-            <p id="estadoPlanosProfessorPublicos" class="estado-planos-professor-publicos" role="status" aria-live="polite">Carregando planos...</p>
-            <div id="listaPlanosProfessorPublicos" class="lista-planos-professor-publicos"></div>
-        </section>
-
         <div id="acoesPerfilPublico" class="acoes-perfil-publico" hidden>
             <button id="botaoContratarProfessor" type="button" hidden>
                 <i data-lucide="briefcase-business"></i>
@@ -100,6 +91,15 @@
             </button>
             <p id="mensagemAmizadePerfil" role="status" aria-live="polite"></p>
         </div>
+
+        <section id="planosProfessorPublicos" class="planos-professor-publicos" aria-labelledby="tituloPlanosProfessorPublicos" hidden>
+            <div class="planos-professor-publicos-cabecalho">
+                <h2 id="tituloPlanosProfessorPublicos">Planos e preços</h2>
+                <p>Conheça os serviços oferecidos por este professor.</p>
+            </div>
+            <p id="estadoPlanosProfessorPublicos" class="estado-planos-professor-publicos" role="status" aria-live="polite">Carregando planos...</p>
+            <div id="listaPlanosProfessorPublicos" class="lista-planos-professor-publicos"></div>
+        </section>
 
         <p id="statusPerfilPublico" role="status" aria-live="polite"></p>
 
@@ -340,7 +340,7 @@ async function carregarEstadoAmizadeAtual() {
     const perfil = Array.isArray(data) ? data[0] : data;
     if (perfil) {
         perfilPublicoAtual = perfil;
-        carregarPlanosPublicosProfessor(perfil);
+        await carregarPlanosPublicosProfessor(perfil);
         await configurarBotaoAmizade(perfil.id);
     }
 }
