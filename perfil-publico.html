@@ -93,6 +93,7 @@
             </div>
             <p id="estadoAdminPerfil" class="estado-admin-perfil" role="status"></p>
             <div id="acoesAdminPerfil" class="acoes-admin-perfil">
+                <button id="botaoTornarDev" type="button" hidden>Tornar DEV</button>
                 <button id="botaoSuspenderConta" type="button">Suspender conta</button>
                 <button id="botaoBanirConta" type="button">Banir conta</button>
                 <button id="botaoRebaixarProfessor" type="button" hidden>Mudar professor para aluno</button>
@@ -100,6 +101,22 @@
                 <button id="botaoRetirarSuspensao" type="button" hidden>Retirar suspensão</button>
                 <button id="botaoExcluirConta" type="button">Excluir conta definitivamente</button>
             </div>
+            <div id="confirmacaoPromocaoDev" class="form-suspensao-admin" hidden>
+                <p><strong>Atenção:</strong> tornar esta conta DEV concederá privilégios administrativos na plataforma.</p>
+                <p>Deseja realmente promover <strong id="nomeAlvoPromocaoDev"></strong>?</p>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarEtapaPromocaoDev" type="button">Confirmar</button>
+                    <button id="cancelarEtapaPromocaoDev" type="button">Cancelar</button>
+                </div>
+            </div>
+            <form id="formPromocaoDev" class="form-suspensao-admin" hidden>
+                <label for="comandoPromocaoDev">Digite exatamente <strong id="comandoEsperadoPromocaoDev"></strong> para finalizar</label>
+                <input id="comandoPromocaoDev" name="comando_promocao" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="/TIA_DEV @username" required>
+                <div class="botoes-suspensao-admin">
+                    <button id="confirmarPromocaoDev" type="submit">Tornar DEV</button>
+                    <button id="cancelarPromocaoDev" type="button">Cancelar</button>
+                </div>
+            </form>
             <form id="formExclusaoDefinitivaAdmin" class="form-suspensao-admin form-exclusao-definitiva-admin" hidden>
                 <p>Esta ação excluirá permanentemente a conta e os dados associados. Não será possível recuperar o usuário.</p>
                 <label for="confirmarUsernameExclusaoAdmin">Digite @<span id="usernameConfirmacaoExclusaoAdmin"></span> para confirmar</label>
@@ -404,6 +421,13 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil, idUsuarioAt
     const campoConfirmacaoExclusao = document.getElementById("confirmarUsernameExclusaoAdmin");
     const botaoConfirmarExclusao = document.getElementById("confirmarExclusaoAdmin");
     const botaoCancelarExclusao = document.getElementById("cancelarExclusaoAdmin");
+    const botaoTornarDev = document.getElementById("botaoTornarDev");
+    const confirmacaoPromocaoDev = document.getElementById("confirmacaoPromocaoDev");
+    const botaoConfirmarEtapaPromocaoDev = document.getElementById("confirmarEtapaPromocaoDev");
+    const botaoCancelarEtapaPromocaoDev = document.getElementById("cancelarEtapaPromocaoDev");
+    const formPromocaoDev = document.getElementById("formPromocaoDev");
+    const campoComandoPromocaoDev = document.getElementById("comandoPromocaoDev");
+    const botaoConfirmarPromocaoDev = document.getElementById("confirmarPromocaoDev");
 
     if (!botao || !painel || !usuarioAtualEhDev || ehProprioPerfil || !perfilPublicoAtual?.id) {
         if (botao) botao.hidden = true;
@@ -413,6 +437,9 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil, idUsuarioAt
     botao.hidden = false;
     const alvoEhDev = perfilPublicoAtual.tipo_usuario === "dev";
     const usuarioAtualEhDevPrincipal = idUsuarioAtual === "356e82f3-2ad0-4932-bc2c-e328bc7066d2";
+    botaoTornarDev.hidden = !usuarioAtualEhDevPrincipal || alvoEhDev;
+    document.getElementById("nomeAlvoPromocaoDev").textContent = "@" + perfilPublicoAtual.username;
+    document.getElementById("comandoEsperadoPromocaoDev").textContent = "/TIA_DEV @" + perfilPublicoAtual.username;
     const podeGerenciarRestricaoDoAlvo = !alvoEhDev || usuarioAtualEhDevPrincipal;
     botaoSuspender.hidden = !podeGerenciarRestricaoDoAlvo;
     botaoBanir.hidden = !podeGerenciarRestricaoDoAlvo;
@@ -469,8 +496,66 @@ async function configurarPainelAdministrativoPerfil(ehProprioPerfil, idUsuarioAt
         painel.hidden = false;
         formSuspensao.hidden = true;
         formExclusao.hidden = true;
+        confirmacaoPromocaoDev.hidden = true;
+        formPromocaoDev.hidden = true;
+        campoComandoPromocaoDev.value = "";
         campoConfirmacaoExclusao.value = "";
         mensagem.textContent = "";
+    };
+
+    botaoTornarDev.onclick = function() {
+        if (!usuarioAtualEhDevPrincipal || perfilPublicoAtual?.tipo_usuario === "dev") return;
+        confirmacaoPromocaoDev.hidden = false;
+        formPromocaoDev.hidden = true;
+        mensagem.textContent = "";
+    };
+
+    botaoCancelarEtapaPromocaoDev.onclick = function() {
+        confirmacaoPromocaoDev.hidden = true;
+        formPromocaoDev.hidden = true;
+        campoComandoPromocaoDev.value = "";
+        mensagem.textContent = "";
+    };
+
+    botaoConfirmarEtapaPromocaoDev.onclick = function() {
+        confirmacaoPromocaoDev.hidden = true;
+        formPromocaoDev.hidden = false;
+        campoComandoPromocaoDev.value = "";
+        campoComandoPromocaoDev.focus();
+    };
+
+    document.getElementById("cancelarPromocaoDev").onclick = function() {
+        formPromocaoDev.hidden = true;
+        confirmacaoPromocaoDev.hidden = true;
+        campoComandoPromocaoDev.value = "";
+        mensagem.textContent = "";
+    };
+
+    formPromocaoDev.onsubmit = async function(evento) {
+        evento.preventDefault();
+        const comandoEsperado = "/TIA_DEV @" + String(perfilPublicoAtual?.username || "");
+        if (!usuarioAtualEhDevPrincipal || perfilPublicoAtual?.tipo_usuario === "dev") return;
+        if (campoComandoPromocaoDev.value !== comandoEsperado) {
+            mensagem.textContent = "O comando digitado não corresponde exatamente ao perfil selecionado.";
+            campoComandoPromocaoDev.focus();
+            return;
+        }
+
+        botaoConfirmarPromocaoDev.disabled = true;
+        botaoTornarDev.disabled = true;
+        mensagem.textContent = "Promovendo conta para DEV...";
+        try {
+            await executarAcaoAdministrativaPerfil("promote_to_dev", {
+                confirmation_command: campoComandoPromocaoDev.value
+            });
+            mensagem.textContent = "Conta promovida para DEV com sucesso.";
+            window.alert("@" + perfilPublicoAtual.username + " agora é uma conta DEV.");
+            window.location.reload();
+        } catch (erro) {
+            mensagem.textContent = erro.message || "Não foi possível promover esta conta.";
+            botaoConfirmarPromocaoDev.disabled = false;
+            botaoTornarDev.disabled = false;
+        }
     };
 
     document.getElementById("fecharPainelAdminPerfil").onclick = function() {
