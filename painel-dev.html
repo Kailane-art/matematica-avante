@@ -1422,13 +1422,13 @@
             document.getElementById("concederTituloProgressao").addEventListener("click", () => {
                 const key = seletorTitulo.value;
                 if (!key) { mensagem.textContent = "Selecione um título."; return; }
-                executarAcao("progress_grant_title", { achievement_key: key }, "Conceder o título "" + titulos[key][0] + "" para @" + usuarioSelecionado.username + "?");
+                executarAcao("progress_grant_title", { achievement_key: key }, `Conceder o título "${titulos[key][0]}" para @${usuarioSelecionado.username}?`);
             });
 
             document.getElementById("retirarTituloProgressao").addEventListener("click", () => {
                 const key = seletorTitulo.value;
                 if (!key) { mensagem.textContent = "Selecione um título."; return; }
-                executarAcao("progress_revoke_title", { achievement_key: key }, "Retirar o título "" + titulos[key][0] + "" de @" + usuarioSelecionado.username + "?");
+                executarAcao("progress_revoke_title", { achievement_key: key }, `Retirar o título "${titulos[key][0]}" de @${usuarioSelecionado.username}?`);
             });
 
             formulario.addEventListener("submit", pesquisarUsuarios);
