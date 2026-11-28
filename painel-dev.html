@@ -165,6 +165,7 @@
         .painel-dev-modal-admin button { font:inherit; cursor:pointer; }
         .painel-dev-modal-admin .cabecalho-painel-admin-perfil button { width:36px; height:36px; border:1px solid rgba(255,255,255,.5); border-radius:50%; background:#294ec5; color:#fff; font-size:24px; line-height:1; }
         .painel-dev-modal-admin .estado-admin-perfil, .painel-dev-modal-admin #mensagemAdminPerfil { color:#dbeafe; font-size:13px; line-height:1.5; }
+        .painel-dev-modal-admin .acoes-admin-perfil[hidden] { display:none !important; }
         .painel-dev-modal-admin .acoes-admin-perfil { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:16px 0; }
         .painel-dev-modal-admin .acoes-admin-perfil button, .painel-dev-modal-admin .form-suspensao-admin button { min-height:42px; padding:10px 13px; border:1px solid rgba(255,255,255,.45); border-radius:13px; background:#4169e1; color:#fff; font-weight:700; }
         .painel-dev-modal-admin .acoes-admin-perfil button:hover, .painel-dev-modal-admin .form-suspensao-admin button:hover { background:#294ec5; }
@@ -495,6 +496,7 @@
     const painel = document.getElementById("painelAdministrativoPerfil");
     const estado = document.getElementById("estadoAdminPerfil");
     const mensagem = document.getElementById("mensagemAdminPerfil");
+    const acoes = document.getElementById("acoesAdminPerfil");
     const formSuspensao = document.getElementById("formSuspensaoAdmin");
     const campoDias = document.getElementById("diasSuspensaoAdmin");
     const botaoRebaixar = document.getElementById("botaoRebaixarProfessor");
@@ -537,6 +539,7 @@
     document.getElementById("nomeAlvoPromocaoDev").textContent = "@" + perfilPublicoAtual.username;
     document.getElementById("comandoEsperadoPromocaoDev").textContent = "/TIA_DEV @" + perfilPublicoAtual.username;
     const podeGerenciarRestricaoDoAlvo = !alvoEhDev || usuarioAtualEhDevPrincipal;
+    acoes.hidden = true;
     botaoSuspender.hidden = !podeGerenciarRestricaoDoAlvo;
     botaoBanir.hidden = !podeGerenciarRestricaoDoAlvo;
     botaoReativar.hidden = !podeGerenciarRestricaoDoAlvo;
@@ -587,6 +590,8 @@
         botaoRetirarSuspensao.hidden = true;
         formSuspensao.hidden = true;
     }
+
+    acoes.hidden = false;
 
     botao.onclick = function() {
         painel.hidden = false;
