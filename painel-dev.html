@@ -1352,6 +1352,8 @@
             let professores = [];
             let solicitacoes = [];
             let mensagensSolicitacoes = new Map();
+            const situacoesContasProfessores = new Map();
+            const consultasSituacoesProfessores = new Map();
 
             function formatarData(valor) {
                 if (!valor) return "Não informada";
@@ -1377,24 +1379,39 @@
             }
 
             async function consultarSituacaoContaProfessor(professorId, elemento) {
-                try {
-                    const { data, error } = await supabaseClient.functions.invoke("account-admin", {
-                        body: { action: "status", target_user_id: professorId }
-                    });
-                    if (error) throw error;
-                    if (data?.error) throw new Error(data.error);
-                    const restricao = data?.restriction;
-                    if (restricao?.restriction_type === "pending_deletion") {
-                        elemento.textContent = "Situação da conta: Banida, aguardando exclusão até " + formatarData(restricao.expires_at);
-                    } else if (restricao?.restriction_type === "temporary_suspension") {
-                        elemento.textContent = "Situação da conta: Suspensa até " + formatarData(restricao.expires_at);
-                    } else {
-                        elemento.textContent = "Situação da conta: Sem restrição administrativa ativa.";
-                    }
-                } catch (erro) {
-                    console.error("Erro ao consultar situação do professor:", erro);
-                    elemento.textContent = "Situação da conta: Não foi possível consultar.";
+                if (situacoesContasProfessores.has(professorId)) {
+                    elemento.textContent = situacoesContasProfessores.get(professorId);
+                    return;
                 }
+
+                if (!consultasSituacoesProfessores.has(professorId)) {
+                    const consulta = (async () => {
+                        try {
+                            const { data, error } = await supabaseClient.functions.invoke("account-admin", {
+                                body: { action: "status", target_user_id: professorId }
+                            });
+                            if (error) throw error;
+                            if (data?.error) throw new Error(data.error);
+                            const restricao = data?.restriction;
+                            if (restricao?.restriction_type === "pending_deletion") {
+                                return "Situação da conta: Banida, aguardando exclusão até " + formatarData(restricao.expires_at);
+                            }
+                            if (restricao?.restriction_type === "temporary_suspension") {
+                                return "Situação da conta: Suspensa até " + formatarData(restricao.expires_at);
+                            }
+                            return "Situação da conta: Sem restrição administrativa ativa.";
+                        } catch (erro) {
+                            console.error("Erro ao consultar situação do professor:", erro);
+                            return "Situação da conta: Não foi possível consultar.";
+                        }
+                    })();
+                    consultasSituacoesProfessores.set(professorId, consulta);
+                }
+
+                const situacao = await consultasSituacoesProfessores.get(professorId);
+                situacoesContasProfessores.set(professorId, situacao);
+                consultasSituacoesProfessores.delete(professorId);
+                elemento.textContent = situacao;
             }
 
             function renderizarProfessores() {
