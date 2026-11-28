@@ -8601,6 +8601,171 @@ body.modo-escuro.pagina-perfil-publico .botao-assinar-plano-professor:hover {
     background: #dbeafe;
 }
 
+
+/* PERFIL PÚBLICO — REVISÃO E ACEITE DE CONTRATAÇÃO */
+body.pagina-perfil-publico .modal-contratacao-professor[hidden] {
+    display: none !important;
+}
+body.pagina-perfil-publico .modal-contratacao-professor {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(15, 23, 42, .68);
+    overflow-y: auto;
+}
+body.pagina-perfil-publico .conteudo-modal-contratacao-professor {
+    width: min(100%, 560px);
+    max-height: min(90vh, 820px);
+    overflow-y: auto;
+    padding: 22px;
+    border: 1px solid #dbe5f5;
+    border-radius: 16px;
+    background: #fff;
+    color: #1e293b;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, .28);
+    text-align: left;
+}
+body.pagina-perfil-publico .cabecalho-modal-contratacao-professor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+body.pagina-perfil-publico .cabecalho-modal-contratacao-professor h2 {
+    margin: 0;
+    color: #1e3a8a;
+    font-size: 20px;
+}
+body.pagina-perfil-publico .cabecalho-modal-contratacao-professor button {
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 9px;
+    background: #eff4ff;
+    color: #1e3a8a;
+    font-size: 24px;
+    cursor: pointer;
+}
+body.pagina-perfil-publico .resumo-plano-contratacao {
+    padding: 14px;
+    border-radius: 12px;
+    background: #eff6ff;
+}
+body.pagina-perfil-publico .resumo-plano-contratacao strong {
+    display: block;
+    color: #1e3a8a;
+    font-size: 17px;
+}
+body.pagina-perfil-publico .resumo-plano-contratacao p {
+    margin: 7px 0 0;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+body.pagina-perfil-publico .termos-contratacao-bloco {
+    margin-top: 15px;
+}
+body.pagina-perfil-publico .termos-contratacao-bloco h3 {
+    margin: 0 0 6px;
+    color: #1e3a8a;
+    font-size: 14px;
+}
+body.pagina-perfil-publico .termos-contratacao-bloco p {
+    margin: 0;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+body.pagina-perfil-publico .aceite-condicoes-contratacao {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 18px;
+    color: #1e293b;
+    font-size: 13px;
+    line-height: 1.5;
+    cursor: pointer;
+}
+body.pagina-perfil-publico .aceite-condicoes-contratacao input {
+    flex: 0 0 auto;
+    width: 17px;
+    height: 17px;
+    margin-top: 1px;
+}
+body.pagina-perfil-publico .mensagem-contratacao-professor {
+    min-height: 20px;
+    margin: 12px 0 0;
+    color: #166534;
+    font-size: 13px;
+    line-height: 1.5;
+}
+body.pagina-perfil-publico .mensagem-contratacao-professor.erro {
+    color: #b91c1c;
+}
+body.pagina-perfil-publico .acoes-modal-contratacao-professor {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+body.pagina-perfil-publico .acoes-modal-contratacao-professor button {
+    flex: 1;
+    min-height: 42px;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 10px;
+    background: #1d4ed8;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+body.pagina-perfil-publico .acoes-modal-contratacao-professor button:last-child {
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #334155;
+}
+body.pagina-perfil-publico .acoes-modal-contratacao-professor button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+body.modo-escuro.pagina-perfil-publico .conteudo-modal-contratacao-professor {
+    border-color: #477fe0;
+    background: #102b54;
+    color: #fff;
+}
+body.modo-escuro.pagina-perfil-publico .cabecalho-modal-contratacao-professor h2,
+body.modo-escuro.pagina-perfil-publico .termos-contratacao-bloco h3,
+body.modo-escuro.pagina-perfil-publico .resumo-plano-contratacao strong {
+    color: #fff;
+}
+body.modo-escuro.pagina-perfil-publico .resumo-plano-contratacao {
+    background: #173d73;
+}
+body.modo-escuro.pagina-perfil-publico .resumo-plano-contratacao p,
+body.modo-escuro.pagina-perfil-publico .termos-contratacao-bloco p,
+body.modo-escuro.pagina-perfil-publico .aceite-condicoes-contratacao {
+    color: #dbeafe;
+}
+body.modo-escuro.pagina-perfil-publico .acoes-modal-contratacao-professor button:last-child {
+    border-color: #477fe0;
+    background: #173d73;
+    color: #fff;
+}
+@media (max-width: 520px) {
+    body.pagina-perfil-publico .conteudo-modal-contratacao-professor {
+        padding: 17px;
+    }
+    body.pagina-perfil-publico .acoes-modal-contratacao-professor {
+        flex-direction: column;
+    }
+}
+
 /* PERFIL PÚBLICO — BOTÕES DE AMIZADE COMPACTOS E LADO A LADO */
 body.pagina-perfil-publico #acoesPerfilPublico {
     display: flex;
