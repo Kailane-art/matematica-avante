@@ -15,6 +15,9 @@
     const botaoSalvar = document.getElementById("salvarPlanoProfessor");
     const botaoCancelar = document.getElementById("cancelarEdicaoPlanoProfessor");
     const botaoAtualizar = document.getElementById("atualizarPlanosProfessor");
+    const botaoAbrirFormulario = document.getElementById("abrirFormularioPlanosProfessor");
+    const containerFormulario = document.getElementById("formularioPlanoProfessorContainer");
+    const estadoBotaoPlanos = document.getElementById("estadoBotaoPlanosProfessor");
     const lista = document.getElementById("listaPlanosProfessor");
     const mensagem = document.getElementById("mensagemPlanosProfessor");
 
@@ -63,6 +66,14 @@
         mostrarMensagem("");
     }
 
+    function definirFormularioAberto(aberto) {
+        containerFormulario.hidden = !aberto;
+        botaoAbrirFormulario.setAttribute("aria-expanded", aberto ? "true" : "false");
+        estadoBotaoPlanos.textContent = aberto
+            ? "Formulário aberto. Clique aqui para recolher."
+            : "Clique para cadastrar ou editar seus planos.";
+    }
+
     function preencherFormulario(plano) {
         campoId.value = plano.id;
         campoNome.value = plano.name;
@@ -76,7 +87,8 @@
         botaoSalvar.textContent = "Salvar alterações";
         botaoCancelar.hidden = false;
         mostrarMensagem("Editando: " + plano.name);
-        document.getElementById("secaoPlanosProfessor").scrollIntoView({ behavior: "smooth", block: "start" });
+        definirFormularioAberto(true);
+        containerFormulario.scrollIntoView({ behavior: "smooth", block: "center" });
         campoNome.focus({ preventScroll: true });
     }
 
@@ -226,7 +238,13 @@
         }
     });
 
-    botaoCancelar.addEventListener("click", limparFormulario);
+    botaoAbrirFormulario.addEventListener("click", function () {
+        definirFormularioAberto(containerFormulario.hidden);
+    });
+    botaoCancelar.addEventListener("click", function () {
+        limparFormulario();
+        definirFormularioAberto(false);
+    });
     botaoAtualizar.addEventListener("click", carregarPlanos);
 
     async function iniciar() {
