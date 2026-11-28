@@ -9,6 +9,7 @@
     const formulario = document.getElementById("formMensagem");
     const campo = document.getElementById("campoMensagem");
     const botaoEnviar = document.getElementById("enviarMensagem");
+    const DEV_PRINCIPAL_ID = "356e82f3-2ad0-4932-bc2c-e328bc7066d2";
     let usuarioAtual = null;
     let usuarioAtualEhDev = false;
     let conversaId = null;
@@ -572,8 +573,24 @@
             campo.setAttribute("aria-label", "Conversa em modo de leitura durante o prazo de recuperação");
         }
         nomeContato.textContent = perfil.display_name || "Usuário";
+        if (perfil.tipo_usuario === "dev") {
+            const verificado = document.createElement("i");
+            verificado.setAttribute("data-lucide", "badge-check");
+            verificado.className = perfil.id === DEV_PRINCIPAL_ID
+                ? "chat-dev-verificado chat-dev-verificado-principal"
+                : "chat-dev-verificado chat-dev-verificado-equipe";
+            verificado.setAttribute("role", "img");
+            verificado.setAttribute("aria-label", perfil.id === DEV_PRINCIPAL_ID
+                ? "Conta DEV principal verificada"
+                : "Conta DEV verificada");
+            verificado.title = perfil.id === DEV_PRINCIPAL_ID ? "DEV principal" : "DEV";
+            nomeContato.appendChild(verificado);
+        }
         nomeContato.href = "perfil-publico.html?usuario=" + encodeURIComponent(perfil.username);
         usernameContato.textContent = "@" + perfil.username;
+        if (window.lucide && typeof window.lucide.createIcons === "function") {
+            window.lucide.createIcons();
+        }
 
         if (perfil.avatar_path) {
             const fotoUrl = supabaseClient.storage.from("avatars").getPublicUrl(perfil.avatar_path).data.publicUrl;
