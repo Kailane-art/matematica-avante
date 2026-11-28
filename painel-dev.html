@@ -143,6 +143,7 @@
         .modo-escuro .painel-dev-apresentacao h2 { color: #bfdbfe; }
         .modo-escuro .painel-dev-modulo-especial { border-color: #38516e; background: linear-gradient(145deg, #142a45, #183251); }
         .painel-dev-listagem[hidden] { display: none !important; }
+        .painel-dev-listagem:not([hidden]) { grid-column: 1 / -1; }
         .painel-dev-filtros { display: grid; grid-template-columns: minmax(0, 1fr) 190px auto; gap: 10px; margin: 18px 0; }
         .painel-dev-filtros input, .painel-dev-filtros select { min-width: 0; width: 100%; padding: 12px 14px; border: 1px solid #cbd8e8; border-radius: 15px; background: #fff; color: #24364b; font: inherit; }
         .painel-dev-estado { color: #526176; margin: 12px 0; }
@@ -197,6 +198,24 @@
                         <button id="abrirGerenciamentoUsuarios" class="painel-dev-botao" type="button">Abrir módulo</button>
                     </div>
                 </article>
+        <section id="moduloUsuarios" class="painel-dev-secao painel-dev-listagem" hidden>
+            <div class="painel-dev-secao-cabecalho">
+                <h2>Gerenciamento de usuários</h2>
+                <p>Consulta de contas cadastradas. Esta área não permite alterar, suspender ou excluir usuários.</p>
+            </div>
+            <form id="formBuscaUsuarios" class="painel-dev-filtros">
+                <input id="buscaUsuarios" type="search" maxlength="80" placeholder="Pesquisar por nome ou @username" aria-label="Pesquisar usuários">
+                <select id="filtroTipoUsuario" aria-label="Filtrar por tipo de conta">
+                    <option value="all">Todos os tipos</option>
+                    <option value="aluno">Alunos</option>
+                    <option value="professor">Professores</option>
+                    <option value="dev">DEV</option>
+                </select>
+                <button class="painel-dev-botao" type="submit">Pesquisar</button>
+            </form>
+            <p id="estadoListaUsuarios" class="painel-dev-estado" role="status">Carregando usuários...</p>
+            <div id="listaUsuarios" class="painel-dev-usuarios"></div>
+        </section>
                 <article class="painel-dev-modulo">
                     <span class="painel-dev-modulo-icone"><i data-lucide="graduation-cap"></i></span>
                     <div class="painel-dev-modulo-conteudo">
@@ -270,25 +289,6 @@
                     </div>
                 </article>
             </div>
-        </section>
-
-        <section id="moduloUsuarios" class="painel-dev-secao painel-dev-listagem" hidden>
-            <div class="painel-dev-secao-cabecalho">
-                <h2>Gerenciamento de usuários</h2>
-                <p>Consulta de contas cadastradas. Esta área não permite alterar, suspender ou excluir usuários.</p>
-            </div>
-            <form id="formBuscaUsuarios" class="painel-dev-filtros">
-                <input id="buscaUsuarios" type="search" maxlength="80" placeholder="Pesquisar por nome ou @username" aria-label="Pesquisar usuários">
-                <select id="filtroTipoUsuario" aria-label="Filtrar por tipo de conta">
-                    <option value="all">Todos os tipos</option>
-                    <option value="aluno">Alunos</option>
-                    <option value="professor">Professores</option>
-                    <option value="dev">DEV</option>
-                </select>
-                <button class="painel-dev-botao" type="submit">Pesquisar</button>
-            </form>
-            <p id="estadoListaUsuarios" class="painel-dev-estado" role="status">Carregando usuários...</p>
-            <div id="listaUsuarios" class="painel-dev-usuarios"></div>
         </section>
 
         <section class="painel-dev-secao">
