@@ -12,8 +12,8 @@
     <style>
         .pagina-painel-dev {
             min-height: 100vh;
-            background: #f4f8ff;
-            color: #222;
+            background: #1E3A8A;
+            color: #fff;
         }
         .painel-dev-header {
             display: flex;
@@ -47,13 +47,13 @@
             position: relative;
             overflow: hidden;
             padding: clamp(22px, 4vw, 30px);
-            border: 1px solid #dce8f8;
+            border: 1px solid rgba(255,255,255,.2);
             border-radius: 18px;
-            background: #fff;
-            color: #1E3A8A;
-            box-shadow: 0 7px 20px rgba(15, 43, 82, .07);
+            background: #4169e1;
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
         }
-        .painel-dev-apresentacao h2 { margin: 0; color: #1E3A8A; font-size: clamp(23px, 4vw, 30px); }
+        .painel-dev-apresentacao h2 { margin: 0; color: #fff; font-size: clamp(23px, 4vw, 30px); }
         .painel-dev-secao { margin-top: 30px; }
         .painel-dev-secao-cabecalho { margin-bottom: 15px; }
         .painel-dev-secao-cabecalho h2 { margin: 0; color: #183b68; font-size: 20px; }
@@ -69,10 +69,11 @@
             gap: 14px;
             min-width: 0;
             padding: 19px;
-            border: 1px solid #dce6f2;
+            border: 1px solid rgba(255,255,255,.18);
             border-radius: 17px;
-            background: #fff;
-            box-shadow: 0 4px 13px rgba(23, 55, 91, .045);
+            background: #4169e1;
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
         }
         .painel-dev-modulo-icone {
             display: grid;
@@ -81,22 +82,22 @@
             height: 44px;
             flex: 0 0 44px;
             border-radius: 13px;
-            background: #eaf2ff;
-            color: #20569a;
+            background: rgba(255,255,255,.16);
+            color: #fff;
         }
         .painel-dev-modulo-icone svg { width: 21px; height: 21px; }
         .painel-dev-modulo-conteudo { flex: 1; min-width: 0; }
-        .painel-dev-modulo h3 { margin: 1px 0 6px; color: #1b3d68; font-size: 15px; }
-        .painel-dev-modulo p { min-height: 38px; margin: 0 0 13px; color: #64748b; font-size: 13px; line-height: 1.5; }
+        .painel-dev-modulo h3 { margin: 1px 0 6px; color: #fff; font-size: 15px; }
+        .painel-dev-modulo p { min-height: 38px; margin: 0 0 13px; color: rgba(255,255,255,.9); font-size: 13px; line-height: 1.5; }
         .painel-dev-botao {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             min-height: 35px;
             padding: 8px 12px;
-            border: 1px solid #1E3A8A;
+            border: 1px solid rgba(255,255,255,.55);
             border-radius: 9px;
-            background: #4169e1;
+            background: #1E3A8A;
             color: #fff;
             font: inherit;
             font-size: 12px;
@@ -104,7 +105,7 @@
             cursor: not-allowed;
             opacity: 1;
         }
-        .painel-dev-botao:disabled { color: #fff; background: #4169e1; opacity: .58; }
+        .painel-dev-botao:disabled { color: #fff; background: #1E3A8A; opacity: .9; }
         .painel-dev-modulo-status {
             display: block;
             margin-top: 8px;
@@ -114,8 +115,8 @@
         }
         .painel-dev-modulo-status::before { content: "•"; margin-right: 6px; color: #d49a27; }
         .painel-dev-modulo-especial {
-            border-color: #c9d9ed;
-            background: linear-gradient(145deg, #fff, #f5f9ff);
+            border-color: rgba(255,255,255,.18);
+            background: #4169e1;
         }
         .modo-escuro.pagina-painel-dev { background: #0d1b2e; color: #e5edf8; }
         .modo-escuro .painel-dev-header h1,
