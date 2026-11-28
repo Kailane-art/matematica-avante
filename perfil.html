@@ -987,11 +987,16 @@ async function carregarAvatarDaConta() {
                 elementoSeloNome.classList.add(tituloSelecionado.classe);
             }
         } else if (perfil.tipo_usuario === "dev") {
-            if (elementoSeloIcone) elementoSeloIcone.textContent = "⚡";
+            const ehDevPrincipal = perfil.id === "356e82f3-2ad0-4932-bc2c-e328bc7066d2";
+            if (elementoSeloIcone) elementoSeloIcone.textContent = ehDevPrincipal ? "⚡" : "🛡️";
             if (elementoSeloRotulo) elementoSeloRotulo.textContent = "Selo:";
             if (elementoSeloNome) {
-                elementoSeloNome.textContent = "Coração da Matrix";
-                elementoSeloNome.classList.add("selo-dev-nome");
+                elementoSeloNome.textContent = ehDevPrincipal
+                    ? "Coração da Matrix"
+                    : "Guardião da Matrix";
+                elementoSeloNome.classList.add(
+                    ehDevPrincipal ? "selo-dev-nome" : "selo-dev-secundario"
+                );
             }
         } else {
             if (elementoSeloIcone) elementoSeloIcone.textContent = "💎";
