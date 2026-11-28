@@ -616,44 +616,6 @@
     <script src="js/script.js?v=20261125-painel-dev2"></script>
     <script src="js/notificacoes-push.js"></script>
     <script src="js/painel-professor.js?v=20261128-planos1"></script>
-    <script>
-        (async function validarAcessoPainelProfessor() {
-            try {
-                if (typeof supabaseClient === "undefined" || !supabaseClient) {
-                    window.location.replace("index.html");
-                    return;
-                }
 
-                const { data: { user }, error: erroUsuario } = await supabaseClient.auth.getUser();
-                if (erroUsuario || !user) {
-                    window.location.replace("index.html");
-                    return;
-                }
-
-                const { data: perfil, error: erroPerfil } = await supabaseClient
-                    .from("profiles")
-                    .select("display_name, username, tipo_usuario")
-                    .eq("id", user.id)
-                    .maybeSingle();
-
-                if (erroPerfil || !perfil || perfil.tipo_usuario !== "professor") {
-                    window.location.replace("inicio.html");
-                    return;
-                }
-
-                document.getElementById("nomeProfessorPainel").textContent =
-                    perfil.display_name || "Professor";
-                document.getElementById("usernameProfessorPainel").textContent =
-                    perfil.username ? "@" + perfil.username : "";
-
-                document.documentElement.classList.remove("verificando-sessao");
-
-                if (window.atualizarIcones) atualizarIcones();
-            } catch (erro) {
-                console.error("Não foi possível validar o acesso ao painel do professor:", erro);
-                window.location.replace("index.html");
-            }
-        })();
-    </script>
 </body>
 </html>
