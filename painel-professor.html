@@ -301,6 +301,65 @@
             line-height: 1.6;
         }
 
+
+        .painel-professor-form-card h3,
+        .plano-professor-lista-cabecalho h3 { margin: 0 0 16px; color: #1e3a8a; font-size: 17px; }
+        .plano-professor-campos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .plano-professor-campo { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+        .plano-professor-campo-largo { grid-column: 1 / -1; }
+        .plano-professor-campo label { color: #334155; font-size: 13px; font-weight: 700; }
+        .plano-professor-campo input,
+        .plano-professor-campo select,
+        .plano-professor-campo textarea {
+            width: 100%; min-height: 44px; padding: 11px 12px; border: 1px solid #cbd5e1;
+            border-radius: 10px; background: #fff; color: #1f2937; font: inherit; font-size: 14px;
+        }
+        .plano-professor-campo textarea { resize: vertical; }
+        .plano-professor-acoes-formulario { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 17px; }
+        .botao-salvar-plano-professor,
+        .botao-cancelar-plano-professor,
+        .botao-atualizar-planos,
+        .plano-professor-botao-acao {
+            min-height: 40px; padding: 9px 14px; border: 0; border-radius: 10px; cursor: pointer;
+            font-size: 13px; font-weight: 700;
+        }
+        .botao-salvar-plano-professor { background: #1e3a8a; color: #fff; }
+        .botao-cancelar-plano-professor,
+        .botao-atualizar-planos { background: #e8efff; color: #1e3a8a; }
+        .plano-professor-mensagem { min-height: 20px; margin: 12px 0 0; color: #3159bd; font-size: 13px; }
+        .plano-professor-lista-cabecalho { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 22px 0 12px; }
+        .plano-professor-lista-cabecalho h3 { margin: 0; }
+        .plano-professor-lista { display: grid; gap: 12px; }
+        .plano-professor-estado { margin: 0; padding: 18px; border: 1px dashed #cbd5e1; border-radius: 14px; color: #64748b; font-size: 13px; }
+        .plano-professor-item { padding: 18px; border: 1px solid #e1e9f7; border-radius: 15px; background: #fff; }
+        .plano-professor-item-topo { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+        .plano-professor-item h4 { margin: 0; color: #1e3a8a; font-size: 16px; overflow-wrap: anywhere; }
+        .plano-professor-item p { margin: 8px 0 0; color: #64748b; font-size: 13px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+        .plano-professor-preco { margin-top: 12px; color: #1e3a8a; font-size: 22px; font-weight: 800; }
+        .plano-professor-detalhes { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+        .plano-professor-detalhes span,
+        .plano-professor-badge { padding: 5px 9px; border-radius: 20px; background: #edf3ff; color: #3159bd; font-size: 11px; font-weight: 700; }
+        .plano-professor-badge.inativo { background: #f1f5f9; color: #64748b; }
+        .plano-professor-item-acoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .plano-professor-botao-acao.editar { background: #1e3a8a; color: #fff; }
+        .plano-professor-botao-acao.status { background: #e8efff; color: #1e3a8a; }
+        .modo-escuro .painel-professor-form-card h3,
+        .modo-escuro .plano-professor-lista-cabecalho h3,
+        .modo-escuro .plano-professor-item h4,
+        .modo-escuro .plano-professor-preco { color: #fff; }
+        .modo-escuro .plano-professor-campo label,
+        .modo-escuro .plano-professor-item p { color: #dbeafe; }
+        .modo-escuro .plano-professor-campo input,
+        .modo-escuro .plano-professor-campo select,
+        .modo-escuro .plano-professor-campo textarea { border-color: rgba(255,255,255,.2); background: #12366f; color: #fff; }
+        .modo-escuro .plano-professor-item { border-color: rgba(255,255,255,.12); background: #173d78; }
+        .modo-escuro .plano-professor-estado { border-color: rgba(255,255,255,.2); color: #dbeafe; }
+        .modo-escuro .plano-professor-detalhes span { background: #244b8a; color: #dbeafe; }
+        .modo-escuro .plano-professor-badge.inativo { background: #244b8a; color: #dbeafe; }
+        .modo-escuro .botao-cancelar-plano-professor,
+        .modo-escuro .botao-atualizar-planos,
+        .modo-escuro .plano-professor-botao-acao.status { background: #244b8a; color: #fff; }
+
         .modo-escuro .pagina-painel-professor {
             background: #12366f;
             color: #fff;
@@ -473,6 +532,72 @@
                 </div>
             </section>
 
+
+            <section class="painel-professor-secao" id="secaoPlanosProfessor" aria-labelledby="tituloPlanosProfessor">
+                <div class="painel-professor-titulo-secao">
+                    <h2 id="tituloPlanosProfessor">Meus planos e preços</h2>
+                    <p>Cadastre e gerencie os serviços que você oferece. Os planos ainda não serão exibidos para contratação nesta etapa.</p>
+                </div>
+
+                <div class="painel-professor-card painel-professor-form-card">
+                    <h3 id="tituloFormularioPlano">Cadastrar novo plano</h3>
+                    <form id="formPlanoProfessor">
+                        <input type="hidden" id="planoProfessorId">
+                        <div class="plano-professor-campos">
+                            <div class="plano-professor-campo plano-professor-campo-largo">
+                                <label for="nomePlanoProfessor">Nome do plano *</label>
+                                <input id="nomePlanoProfessor" name="name" type="text" maxlength="80" minlength="3" required placeholder="Ex.: Acompanhamento de Matemática">
+                            </div>
+                            <div class="plano-professor-campo plano-professor-campo-largo">
+                                <label for="descricaoPlanoProfessor">Descrição</label>
+                                <textarea id="descricaoPlanoProfessor" name="description" rows="3" maxlength="1000" placeholder="Explique o que está incluído neste plano."></textarea>
+                            </div>
+                            <div class="plano-professor-campo">
+                                <label for="precoPlanoProfessor">Preço (R$) *</label>
+                                <input id="precoPlanoProfessor" name="price" type="number" min="0.01" max="1000000" step="0.01" required placeholder="0,00">
+                            </div>
+                            <div class="plano-professor-campo">
+                                <label for="tipoCobrancaPlanoProfessor">Tipo de cobrança *</label>
+                                <select id="tipoCobrancaPlanoProfessor" name="billing_type" required>
+                                    <option value="avulso">Aula avulsa</option>
+                                    <option value="mensal">Mensal</option>
+                                    <option value="pacote">Pacote de aulas</option>
+                                </select>
+                            </div>
+                            <div class="plano-professor-campo">
+                                <label for="modalidadePlanoProfessor">Modalidade *</label>
+                                <select id="modalidadePlanoProfessor" name="modality" required>
+                                    <option value="online">Online</option>
+                                    <option value="presencial">Presencial</option>
+                                    <option value="hibrido">Híbrido</option>
+                                </select>
+                            </div>
+                            <div class="plano-professor-campo">
+                                <label for="quantidadeAulasPlanoProfessor">Quantidade de aulas</label>
+                                <input id="quantidadeAulasPlanoProfessor" name="lessons_count" type="number" min="1" max="500" step="1" placeholder="Obrigatório para pacote">
+                            </div>
+                            <div class="plano-professor-campo">
+                                <label for="duracaoAulaPlanoProfessor">Duração de cada aula (minutos)</label>
+                                <input id="duracaoAulaPlanoProfessor" name="lesson_duration_minutes" type="number" min="15" max="300" step="1" placeholder="Ex.: 50">
+                            </div>
+                        </div>
+                        <div class="plano-professor-acoes-formulario">
+                            <button type="submit" id="salvarPlanoProfessor" class="botao-salvar-plano-professor">Salvar plano</button>
+                            <button type="button" id="cancelarEdicaoPlanoProfessor" class="botao-cancelar-plano-professor" hidden>Cancelar edição</button>
+                        </div>
+                        <p id="mensagemPlanosProfessor" class="plano-professor-mensagem" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+
+                <div class="plano-professor-lista-cabecalho">
+                    <h3>Planos cadastrados</h3>
+                    <button type="button" id="atualizarPlanosProfessor" class="botao-atualizar-planos">Atualizar lista</button>
+                </div>
+                <div id="listaPlanosProfessor" class="plano-professor-lista" aria-live="polite">
+                    <p class="plano-professor-estado">Carregando planos...</p>
+                </div>
+            </section>
+
             <section class="painel-professor-secao" aria-labelledby="tituloComissaoProfessor">
                 <div class="painel-professor-titulo-secao">
                     <h2 id="tituloComissaoProfessor">Comissão da plataforma</h2>
@@ -496,6 +621,7 @@
 
     <script src="js/script.js?v=20261125-painel-dev2"></script>
     <script src="js/notificacoes-push.js"></script>
+    <script src="js/painel-professor.js?v=20261128-planos1"></script>
     <script>
         (async function validarAcessoPainelProfessor() {
             try {
