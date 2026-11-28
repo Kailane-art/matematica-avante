@@ -8556,3 +8556,39 @@ body.modo-escuro.pagina-perfil-publico .plano-professor-publico-detalhes span {
         grid-template-columns: 1fr;
     }
 }
+
+
+body.pagina-perfil-publico .botao-assinar-plano-professor {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 16px;
+    padding: 11px 16px;
+    border: 0;
+    border-radius: 10px;
+    background: #1d4ed8;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+body.pagina-perfil-publico .botao-assinar-plano-professor:hover {
+    background: #1e40af;
+}
+
+body.pagina-perfil-publico .botao-assinar-plano-professor:focus-visible {
+    outline: 3px solid #93c5fd;
+    outline-offset: 2px;
+}
+
+body.modo-escuro.pagina-perfil-publico .botao-assinar-plano-professor {
+    background: #fff;
+    color: #1e40af;
+}
+
+body.modo-escuro.pagina-perfil-publico .botao-assinar-plano-professor:hover {
+    background: #dbeafe;
+}
