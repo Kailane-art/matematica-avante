@@ -1006,3 +1006,24 @@
 .modo-escuro .chat-resultado-mais {
     color: #a9c1ff;
 }
+
+
+/* Selo de verificação das contas DEV nos chats. */
+.chat-dev-verificado {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    vertical-align: -2px;
+    stroke-width: 2.6;
+    flex: 0 0 15px;
+}
+.chat-dev-verificado-principal {
+    color: #eab308;
+}
+.chat-dev-verificado-equipe {
+    color: #b8f5ff;
+}
+.modo-escuro .chat-dev-verificado-equipe {
+    color: #ddfbff;
+}
