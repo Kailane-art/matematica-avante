@@ -3734,8 +3734,10 @@ html.verificando-sessao:has(body.modo-escuro)::before {
 /* PERFIL PÚBLICO — AÇÕES DE AMIZADE */
 .acoes-perfil-publico {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     gap: 9px;
     margin: 22px auto 8px;
 }
@@ -3748,15 +3750,15 @@ html.verificando-sessao:has(body.modo-escuro)::before {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 9px;
-    min-height: 46px;
-    padding: 12px 22px;
+    gap: 7px;
+    min-height: 40px;
+    padding: 9px 15px;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     background: #4169E1;
     color: #fff;
     font-family: inherit;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     opacity: 1;
@@ -3786,8 +3788,12 @@ html.verificando-sessao:has(body.modo-escuro)::before {
 }
 
 .acoes-perfil-publico button svg {
-    width: 19px;
-    height: 19px;
+    width: 17px;
+    height: 17px;
+}
+
+.acoes-perfil-publico > p {
+    flex-basis: 100%;
 }
 
 .acoes-perfil-publico p {
