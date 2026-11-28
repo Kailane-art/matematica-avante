@@ -450,9 +450,6 @@ if (mensagemInicio && descricaoInicio) {
 
 
 const avatarInicio = document.getElementById("avatarInicio");
-const avatarLinkInicio = avatarInicio
-    ? avatarInicio.closest(".avatar-link")
-    : null;
 
 // A foto agora é carregada do Storage, vinculada à conta do usuário.
 async function carregarAvatarInicio() {
@@ -491,17 +488,8 @@ async function carregarAvatarInicio() {
             .from("avatars")
             .getPublicUrl(perfil.avatar_path);
 
-        avatarInicio.onload = function() {
-            if (avatarLinkInicio) {
-                avatarLinkInicio.classList.add("com-foto");
-            }
-        };
-
         avatarInicio.onerror = function() {
             avatarInicio.src = "";
-            if (avatarLinkInicio) {
-                avatarLinkInicio.classList.remove("com-foto");
-            }
         };
 
         avatarInicio.src = data.publicUrl + "?v=" + Date.now();
