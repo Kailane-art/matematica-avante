@@ -212,6 +212,7 @@ let perfilPublicoAtual = null;
 let usuarioAtualEhDev = false;
 let tipoUsuarioAtual = null;
 let podeAssinarPlanosPublicos = false;
+let planoSelecionadoParaContratacao = null;
 
 async function configurarBotaoAmizade(idPerfil) {
     const botaoAdicionar = document.getElementById("botaoAdicionarAmizade");
@@ -888,6 +889,129 @@ async function atualizarTrofeusPerfilPublico(nomeUsuario) {
     }
 }
 
+const TERMOS_GERAIS_CONTRATACAO = "Ao confirmar, você registra sua intenção de contratar o plano apresentado. O valor, a descrição e as características do plano serão preservados neste registro. Este aceite não realiza cobrança nem ativa aulas ou vínculo financeiro. A contratação permanecerá aguardando pagamento e somente poderá ser ativada após confirmação válida do pagamento pela plataforma. A data, os horários e os detalhes práticos das aulas deverão ser combinados com o professor. Condições adicionais informadas pelo professor também serão registradas no momento do aceite.";
+
+function fecharModalContratacaoProfessor() {
+    const modal = document.getElementById("modalContratacaoProfessor");
+    if (modal) modal.hidden = true;
+    planoSelecionadoParaContratacao = null;
+}
+
+function abrirModalContratacaoProfessor(plano) {
+    const modal = document.getElementById("modalContratacaoProfessor");
+    const resumo = document.getElementById("resumoPlanoContratacao");
+    const aceite = document.getElementById("aceiteCondicoesContratacao");
+    const mensagem = document.getElementById("mensagemContratacaoProfessor");
+    const botaoConfirmar = document.getElementById("confirmarContratacaoProfessor");
+    const blocoCondicoes = document.getElementById("blocoCondicoesProfessorContratacao");
+    const textoCondicoes = document.getElementById("textoCondicoesProfessorContratacao");
+
+    if (!modal || !plano || !podeAssinarPlanosPublicos) return;
+
+    planoSelecionadoParaContratacao = plano;
+    resumo.replaceChildren();
+
+    const formatador = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+    const nome = document.createElement("strong");
+    nome.textContent = plano.name || "Plano";
+    const preco = document.createElement("p");
+    preco.textContent = Number.isFinite(Number(plano.price))
+        ? formatador.format(Number(plano.price))
+        : "Preço indisponível";
+    const descricao = document.createElement("p");
+    descricao.textContent = plano.description || "Sem descrição adicional.";
+    resumo.append(nome, preco, descricao);
+
+    const condicoes = typeof plano.additional_conditions === "string"
+        ? plano.additional_conditions.trim()
+        : "";
+    textoCondicoes.textContent = condicoes;
+    blocoCondicoes.hidden = !condicoes;
+
+    aceite.checked = false;
+    aceite.disabled = false;
+    mensagem.textContent = "";
+    mensagem.classList.remove("erro");
+    botaoConfirmar.disabled = false;
+    botaoConfirmar.textContent = "Aceitar e continuar";
+    botaoConfirmar.dataset.contratoCriado = "false";
+    modal.hidden = false;
+}
+
+function configurarModalContratacaoProfessor() {
+    const modal = document.getElementById("modalContratacaoProfessor");
+    const botaoFechar = document.getElementById("fecharModalContratacaoProfessor");
+    const botaoCancelar = document.getElementById("cancelarContratacaoProfessor");
+    const botaoConfirmar = document.getElementById("confirmarContratacaoProfessor");
+    const aceite = document.getElementById("aceiteCondicoesContratacao");
+    const mensagem = document.getElementById("mensagemContratacaoProfessor");
+
+    if (!modal || modal.dataset.configurado === "true") return;
+    modal.dataset.configurado = "true";
+
+    [botaoFechar, botaoCancelar].forEach(botao => {
+        botao.addEventListener("click", fecharModalContratacaoProfessor);
+    });
+
+    modal.addEventListener("click", evento => {
+        if (evento.target === modal) fecharModalContratacaoProfessor();
+    });
+
+    botaoConfirmar.addEventListener("click", async () => {
+        if (botaoConfirmar.dataset.contratoCriado === "true") {
+            fecharModalContratacaoProfessor();
+            return;
+        }
+
+        if (!planoSelecionadoParaContratacao) return;
+        if (!aceite.checked) {
+            mensagem.textContent = "Marque a opção de aceite para continuar.";
+            mensagem.classList.add("erro");
+            return;
+        }
+
+        botaoConfirmar.disabled = true;
+        botaoConfirmar.textContent = "Registrando...";
+        mensagem.textContent = "";
+        mensagem.classList.remove("erro");
+
+        try {
+            const { data, error } = await supabaseClient.rpc(
+                "create_teacher_contract",
+                { p_plan_id: planoSelecionadoParaContratacao.id }
+            );
+
+            if (error) throw error;
+            if (!data) throw new Error("O banco não retornou a identificação da contratação.");
+
+            mensagem.textContent = "Aceite registrado. Sua contratação está aguardando pagamento. Nenhuma cobrança foi realizada.";
+            botaoConfirmar.textContent = "Concluir";
+            botaoConfirmar.dataset.contratoCriado = "true";
+            aceite.disabled = true;
+        } catch (erro) {
+            console.error("Erro ao registrar contratação:", erro);
+            const detalhe = String(erro?.message || "").toLowerCase();
+
+            if (detalhe.includes("já possui uma solicitação")) {
+                mensagem.textContent = "Você já possui uma solicitação aguardando pagamento para este plano.";
+            } else if (detalhe.includes("não está mais disponível")) {
+                mensagem.textContent = "Este plano não está mais disponível. Atualize o perfil do professor.";
+            } else if (detalhe.includes("somente contas de alunos")) {
+                mensagem.textContent = "Somente contas de alunos podem solicitar uma contratação.";
+            } else {
+                mensagem.textContent = "Não foi possível registrar a contratação. Tente novamente.";
+            }
+
+            mensagem.classList.add("erro");
+            botaoConfirmar.disabled = false;
+            botaoConfirmar.textContent = "Aceitar e continuar";
+        }
+    });
+}
+
 async function carregarPlanosPublicosProfessor(perfil) {
     const secao = document.getElementById("planosProfessorPublicos");
     const estado = document.getElementById("estadoPlanosProfessorPublicos");
@@ -908,7 +1032,7 @@ async function carregarPlanosPublicosProfessor(perfil) {
     try {
         const { data, error } = await supabaseClient
             .from("teacher_plans")
-            .select("id, name, description, price, billing_type, modality, lessons_count, lesson_duration_minutes")
+            .select("id, name, description, additional_conditions, price, billing_type, modality, lessons_count, lesson_duration_minutes")
             .eq("teacher_id", perfil.id)
             .eq("is_active", true)
             .order("created_at", { ascending: false });
@@ -985,6 +1109,7 @@ async function carregarPlanosPublicosProfessor(perfil) {
                 botaoAssinar.type = "button";
                 botaoAssinar.className = "botao-assinar-plano-professor";
                 botaoAssinar.textContent = "Assinar";
+                botaoAssinar.addEventListener("click", () => abrirModalContratacaoProfessor(plano));
                 card.appendChild(botaoAssinar);
             }
 
@@ -1058,9 +1183,9 @@ async function carregarPerfilPublico() {
         podeAssinarPlanosPublicos = Boolean(
             sessaoAtual?.user &&
             !ehProprioPerfil &&
-            tipoUsuarioAtual !== null &&
-            tipoUsuarioAtual !== "professor"
+            tipoUsuarioAtual === "aluno"
         );
+        configurarModalContratacaoProfessor();
         await carregarPlanosPublicosProfessor(perfil);
 
         const acoesPerfil = document.getElementById("acoesPerfilPublico");
