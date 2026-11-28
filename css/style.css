@@ -1209,8 +1209,9 @@ header svg {
     color: #777;
 }
 
-/* Oculta o SVG gerado pelo Lucide quando a foto do perfil estiver carregada. */
-.avatar-link.com-foto > svg {
+/* A foto vem antes do SVG do Lucide: esconde o ícone enquanto houver uma URL de foto.
+   Se a imagem falhar, o onerror limpa o src e o ícone padrão volta a aparecer. */
+#avatarInicio[src]:not([src=""]) + svg {
     display: none !important;
 }
 
