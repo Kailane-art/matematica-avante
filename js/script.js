@@ -634,7 +634,7 @@ async function iniciarPresencaOnlineGlobal() {
     }
 }
 
-iniciarPresencaOnlineGlobal();
+if (paginaAtual !== "painel-dev.html") iniciarPresencaOnlineGlobal();
 
 function aplicarTamanhoTextoGlobal(tamanho) {
     const escalas = { 1: "0.88", 2: "0.94", 3: "1", 4: "1.08", 5: "1.16" };
@@ -779,8 +779,22 @@ if (paginasProtegidas.has(paginaAtual)) {
                 return;
             }
 
-            const { data: { user }, error } =
-                await obterUsuarioAutenticado();
+            let user = null;
+            let error = null;
+
+            if (paginaAtual === "painel-dev.html") {
+                // getSession lê a sessão local; a consulta ao perfil valida o token
+                // no servidor e confirma a permissão DEV em uma única requisição.
+                const { data: sessaoData, error: sessaoError } =
+                    await supabaseClient.auth.getSession();
+
+                user = sessaoData?.session?.user || null;
+                error = sessaoError;
+            } else {
+                const resultadoUsuario = await obterUsuarioAutenticado();
+                user = resultadoUsuario.data?.user || null;
+                error = resultadoUsuario.error;
+            }
 
             if (error || !user) {
                 window.location.replace("index.html");
@@ -3125,8 +3139,10 @@ async function maVerificarNovosTitulos() {
     }
 }
 
-maVerificarNovosTitulos();
-setInterval(maVerificarNovosTitulos, 12000);
+if (paginaAtual !== "painel-dev.html") {
+    maVerificarNovosTitulos();
+    setInterval(maVerificarNovosTitulos, 12000);
+}
 
 
 const botaoSalvarPerfil =
