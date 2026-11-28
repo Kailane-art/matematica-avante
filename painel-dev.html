@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1E3A8A">
     <title>Painel DEV - Matemática Avante</title>
-    <link rel="stylesheet" href="css/style.css?v=20261127-seguranca2">
+    <link rel="stylesheet" href="css/style.css?v=20261128-xp-admin1">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -162,6 +162,32 @@
         .modo-escuro .painel-dev-seguranca-item { border-color:#294361; background:#172b43; color:#dbeafe; }
         .modo-escuro .painel-dev-seguranca-item strong { color:#bfdbfe; }
         @media(max-width:680px) { .painel-dev-seguranca-resumo, .painel-dev-seguranca-listas { grid-template-columns:1fr; } }
+
+        .painel-dev-progressao-detalhes[hidden] { display:none !important; }
+        .painel-dev-progressao-detalhes { display:grid; gap:14px; margin-top:18px; }
+        .painel-dev-progressao-busca { grid-template-columns:minmax(0,1fr) auto; }
+        .painel-dev-progressao-usuario { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px; border-radius:15px; background:#eaf1ff; color:#24364b; }
+        .painel-dev-progressao-usuario h3 { margin:0; color:#1e3a8a; font-size:17px; }
+        .painel-dev-progressao-usuario p { margin:4px 0 0; color:#526176; font-size:12px; }
+        .painel-dev-progressao-usuario a { color:#1d4ed8; font-size:12px; font-weight:700; }
+        .painel-dev-progressao-acoes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+        .painel-dev-progressao-acoes label { display:block; margin:0 0 7px; color:#526176; font-size:12px; }
+        .painel-dev-progressao-acoes input,.painel-dev-progressao-acoes select { width:100%; box-sizing:border-box; padding:11px 12px; border:1px solid #cbd8e8; border-radius:10px; background:#fff; color:#24364b; font:inherit; }
+        .painel-dev-progressao-botoes { display:flex; flex-wrap:wrap; gap:8px; margin-top:11px; }
+        .painel-dev-progressao-botoes button { flex:1 1 120px; min-height:39px; padding:9px 11px; border:1px solid #4169e1; border-radius:11px; background:#294ec5; color:#fff; font:inherit; font-size:12px; font-weight:750; cursor:pointer; }
+        .painel-dev-progressao-lista { display:grid; gap:8px; }
+        .painel-dev-progressao-item { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 12px; border:1px solid #e0e8f2; border-radius:11px; background:#f7faff; color:#24364b; font-size:12px; overflow-wrap:anywhere; }
+        .painel-dev-progressao-item small { color:#718096; text-align:right; }
+        .painel-dev-progressao-item strong { color:#1e3a8a; }
+        .modo-escuro .painel-dev-progressao-usuario { background:#203d62; color:#e5edf8; }
+        .modo-escuro .painel-dev-progressao-usuario h3,.modo-escuro .painel-dev-progressao-usuario a { color:#bfdbfe; }
+        .modo-escuro .painel-dev-progressao-usuario p { color:#a9bbd2; }
+        .modo-escuro .painel-dev-progressao-acoes input,.modo-escuro .painel-dev-progressao-acoes select { border-color:#38516e; background:#172b43; color:#e5edf8; }
+        .modo-escuro .painel-dev-progressao-acoes label { color:#a9bbd2; }
+        .modo-escuro .painel-dev-progressao-item { border-color:#294361; background:#172b43; color:#e5edf8; }
+        .modo-escuro .painel-dev-progressao-item strong { color:#bfdbfe; }
+        @media(max-width:680px) { .painel-dev-progressao-acoes { grid-template-columns:1fr; } .painel-dev-progressao-usuario { align-items:flex-start; flex-direction:column; } }
+
         .painel-dev-filtros { display: grid; grid-template-columns: minmax(0, 1fr) 190px auto; gap: 10px; margin: 18px 0; }
         .painel-dev-filtros input, .painel-dev-filtros select { min-width: 0; width: 100%; padding: 12px 14px; border: 1px solid #cbd8e8; border-radius: 15px; background: #fff; color: #24364b; font: inherit; }
         .painel-dev-estado { color: #526176; margin: 12px 0; }
@@ -305,10 +331,73 @@
                     <span class="painel-dev-modulo-icone"><i data-lucide="trophy"></i></span>
                     <div class="painel-dev-modulo-conteudo">
                         <h3>XP, níveis e títulos</h3>
-                        <p>Ferramentas para acompanhar e administrar o progresso dos usuários.</p>
-                        <button class="painel-dev-botao" type="button" disabled>Em desenvolvimento</button>
+                        <p>Consulte a evolução dos usuários e administre XP e títulos conquistados.</p>
+                        <button id="abrirModuloProgressao" class="painel-dev-botao" type="button">Abrir módulo</button>
                     </div>
                 </article>
+                <section id="moduloProgressao" class="painel-dev-secao painel-dev-listagem" hidden>
+                    <div class="painel-dev-secao-cabecalho">
+                        <h2>XP, níveis e títulos</h2>
+                        <p>Pesquise uma conta para consultar a progressão, adicionar ou remover XP e conceder ou retirar títulos. Todas as alterações ficam registradas.</p>
+                    </div>
+                    <form id="formBuscaProgressao" class="painel-dev-filtros painel-dev-progressao-busca">
+                        <input id="buscaProgressao" type="search" maxlength="80" placeholder="Pesquisar por nome ou @username" aria-label="Pesquisar usuário para administrar progressão">
+                        <span></span>
+                        <button class="painel-dev-botao" type="submit">Pesquisar</button>
+                    </form>
+                    <p id="estadoProgressao" class="painel-dev-estado" role="status">Pesquise um usuário para começar.</p>
+                    <div id="resultadosProgressao" class="painel-dev-usuarios"></div>
+                    <section id="detalhesProgressao" class="painel-dev-progressao-detalhes" hidden>
+                        <div class="painel-dev-progressao-usuario">
+                            <div>
+                                <h3 id="nomeUsuarioProgressao">Usuário</h3>
+                                <p id="usernameUsuarioProgressao"></p>
+                            </div>
+                            <a id="perfilUsuarioProgressao" href="#" target="_blank" rel="noopener">Ver perfil</a>
+                        </div>
+                        <div class="painel-dev-seguranca-resumo">
+                            <article class="painel-dev-seguranca-indicador"><span>XP total</span><strong id="xpTotalProgressao">—</strong></article>
+                            <article class="painel-dev-seguranca-indicador"><span>Nível atual</span><strong id="nivelProgressao">—</strong></article>
+                            <article class="painel-dev-seguranca-indicador"><span>Fases concluídas</span><strong id="fasesProgressao">—</strong></article>
+                            <article class="painel-dev-seguranca-indicador"><span>Questões corretas</span><strong id="acertosProgressao">—</strong><small id="totalQuestoesProgressao">— tentativas registradas</small></article>
+                            <article class="painel-dev-seguranca-indicador"><span>Dias de estudo verificados</span><strong id="diasProgressao">—</strong></article>
+                            <article class="painel-dev-seguranca-indicador"><span>Títulos conquistados</span><strong id="totalTitulosProgressao">—</strong></article>
+                        </div>
+                        <div class="painel-dev-progressao-acoes">
+                            <section class="painel-dev-seguranca-bloco">
+                                <h3>Administrar XP</h3>
+                                <form id="formAdministrarXP">
+                                    <label for="quantidadeXPProgressao">Quantidade de XP</label>
+                                    <input id="quantidadeXPProgressao" type="number" min="1" max="1000000" step="1" required>
+                                    <div class="painel-dev-progressao-botoes">
+                                        <button type="button" id="adicionarXPProgressao">Adicionar XP</button>
+                                        <button type="button" id="removerXPProgressao">Remover XP</button>
+                                    </div>
+                                </form>
+                            </section>
+                            <section class="painel-dev-seguranca-bloco">
+                                <h3>Administrar títulos</h3>
+                                <label for="tituloProgressao">Título</label>
+                                <select id="tituloProgressao">
+                                    <option value="">Selecione um título</option>
+                                </select>
+                                <div class="painel-dev-progressao-botoes">
+                                    <button type="button" id="concederTituloProgressao">Conceder título</button>
+                                    <button type="button" id="retirarTituloProgressao">Retirar título</button>
+                                </div>
+                            </section>
+                        </div>
+                        <p id="mensagemAcaoProgressao" class="painel-dev-estado" role="status" aria-live="polite"></p>
+                        <section class="painel-dev-seguranca-bloco painel-dev-progressao-titulos">
+                            <h3>Títulos atuais</h3>
+                            <div id="listaTitulosProgressao" class="painel-dev-progressao-lista"><p>Carregando...</p></div>
+                        </section>
+                        <section class="painel-dev-seguranca-bloco painel-dev-progressao-historico">
+                            <h3>Histórico de alterações administrativas</h3>
+                            <div id="historicoProgressao" class="painel-dev-progressao-lista"><p>Nenhuma alteração registrada.</p></div>
+                        </section>
+                    </section>
+                </section>
                 <article class="painel-dev-modulo">
                     <span class="painel-dev-modulo-icone"><i data-lucide="messages-square"></i></span>
                     <div class="painel-dev-modulo-conteudo">
@@ -1122,6 +1211,235 @@
                 if (vaiAbrir) carregarSeguranca();
             });
             atualizar.addEventListener("click", carregarSeguranca);
+        })();
+
+        (() => {
+            const botao = document.getElementById("abrirModuloProgressao");
+            const modulo = document.getElementById("moduloProgressao");
+            const formulario = document.getElementById("formBuscaProgressao");
+            const busca = document.getElementById("buscaProgressao");
+            const estado = document.getElementById("estadoProgressao");
+            const resultados = document.getElementById("resultadosProgressao");
+            const detalhes = document.getElementById("detalhesProgressao");
+            const mensagem = document.getElementById("mensagemAcaoProgressao");
+            const seletorTitulo = document.getElementById("tituloProgressao");
+            let usuarioSelecionado = null;
+            let carregando = false;
+
+            const titulos = {
+                genio_calculos: ["Gênio dos Cálculos", "Mítico"],
+                lenda_constancia: ["Lenda da Constância", "Mítico"],
+                elite_matematica: ["Elite Matemática", "Lendário"],
+                perfeccionista: ["Perfeccionista", "Épico"],
+                mestre_basico: ["Mestre da Matemática Básica", "Comum"],
+                mestre_geometria: ["Mestre da Geometria", "Raro"],
+                mestre_algebra: ["Mestre da Álgebra", "Épico"],
+                mestre_funcoes: ["Mestre das Funções", "Épico"],
+                mestre_fracoes: ["Mestre das Frações", "Raro"],
+                mestre_potenciacao: ["Mestre da Potenciação", "Raro"],
+                mestre_porcentagem: ["Mestre da Porcentagem", "Raro"],
+                mestre_estatistica: ["Mestre da Estatística", "Raro"],
+                mestre_probabilidade: ["Mestre da Probabilidade", "Raro"],
+                mestre_trigonometria: ["Mestre da Trigonometria", "Épico"],
+                estudante_dedicado: ["Estudante Dedicado", "Comum"],
+                estrategista_matematico: ["Estrategista Matemático", "Raro"],
+                guardiao_constancia: ["Guardião da Constância", "Épico"],
+                mestre_matematica: ["Mestre da Matemática", "Lendário"],
+                the_chosen_one: ["The Chosen One", "Mítico"],
+                invicto: ["Invicto", "Lendário"],
+                unbroken: ["Unbroken", "Mítico"],
+                the_fallen: ["The Fallen", "Mítico"]
+            };
+
+            Object.entries(titulos).forEach(([key, info]) => {
+                const option = document.createElement("option");
+                option.value = key;
+                option.textContent = info[0] + " · " + info[1];
+                seletorTitulo.appendChild(option);
+            });
+
+            async function chamarAdmin(action, extras = {}) {
+                const { data, error } = await supabaseClient.functions.invoke("account-admin", {
+                    body: { action, ...extras }
+                });
+                if (error) throw error;
+                if (data?.error) throw new Error(data.error);
+                return data || {};
+            }
+
+            function criarItem(texto, detalhe = "") {
+                const item = document.createElement("div");
+                item.className = "painel-dev-progressao-item";
+                const nome = document.createElement("strong");
+                nome.textContent = texto;
+                item.appendChild(nome);
+                if (detalhe) {
+                    const complemento = document.createElement("small");
+                    complemento.textContent = detalhe;
+                    item.appendChild(complemento);
+                }
+                return item;
+            }
+
+            async function pesquisarUsuarios(evento) {
+                if (evento) evento.preventDefault();
+                estado.textContent = "Pesquisando usuários...";
+                resultados.replaceChildren();
+                detalhes.hidden = true;
+                try {
+                    const data = await chamarAdmin("progress_search", { search: busca.value.trim() });
+                    if (!data.users?.length) {
+                        estado.textContent = "Nenhum usuário encontrado.";
+                        return;
+                    }
+                    estado.textContent = data.users.length === 30
+                        ? "Exibindo até 30 resultados. Refine a pesquisa se necessário."
+                        : data.users.length + " usuário(s) encontrado(s).";
+                    data.users.forEach(usuario => {
+                        const item = document.createElement("article");
+                        item.className = "painel-dev-usuario";
+                        const info = document.createElement("div");
+                        info.className = "painel-dev-usuario-informacoes";
+                        const nome = document.createElement("strong");
+                        nome.textContent = usuario.display_name || usuario.username || "Usuário sem nome";
+                        const subtitulo = document.createElement("small");
+                        const tipo = usuario.tipo_usuario === "dev" ? "DEV" : usuario.tipo_usuario === "professor" ? "Professor" : "Aluno";
+                        subtitulo.textContent = "@" + usuario.username + " · " + tipo;
+                        info.append(nome, subtitulo);
+                        const abrir = document.createElement("button");
+                        abrir.type = "button";
+                        abrir.className = "painel-dev-botao";
+                        abrir.textContent = "Administrar";
+                        abrir.addEventListener("click", () => selecionarUsuario(usuario));
+                        item.append(info, abrir);
+                        resultados.appendChild(item);
+                    });
+                } catch (erro) {
+                    console.error("Erro ao pesquisar progressão:", erro);
+                    estado.textContent = erro.message || "Não foi possível pesquisar usuários.";
+                }
+            }
+
+            async function selecionarUsuario(usuario) {
+                usuarioSelecionado = usuario;
+                detalhes.hidden = false;
+                resultados.replaceChildren();
+                estado.textContent = "Carregando progresso de @" + usuario.username + "...";
+                mensagem.textContent = "";
+                document.getElementById("nomeUsuarioProgressao").textContent = usuario.display_name || usuario.username;
+                document.getElementById("usernameUsuarioProgressao").textContent = "@" + usuario.username;
+                document.getElementById("perfilUsuarioProgressao").href = "perfil-publico.html?usuario=" + encodeURIComponent(usuario.username);
+                try {
+                    await carregarDetalhes();
+                    estado.textContent = "Progresso carregado.";
+                } catch (erro) {
+                    console.error("Erro ao carregar progresso:", erro);
+                    estado.textContent = erro.message || "Não foi possível carregar o progresso.";
+                }
+            }
+
+            async function carregarDetalhes() {
+                if (!usuarioSelecionado) return;
+                const data = await chamarAdmin("progress_overview", { target_user_id: usuarioSelecionado.id });
+                document.getElementById("xpTotalProgressao").textContent = Number(data.total_xp || 0).toLocaleString("pt-BR") + " XP";
+                document.getElementById("nivelProgressao").textContent = "Nível " + data.level;
+                document.getElementById("fasesProgressao").textContent = String(data.completed_phases || 0);
+                document.getElementById("acertosProgressao").textContent = String(data.correct_attempts || 0);
+                document.getElementById("totalQuestoesProgressao").textContent = (data.total_attempts || 0) + " tentativas registradas";
+                document.getElementById("diasProgressao").textContent = String(data.verified_study_days || 0);
+                document.getElementById("totalTitulosProgressao").textContent = String(data.achievements?.length || 0);
+
+                const listaTitulos = document.getElementById("listaTitulosProgressao");
+                listaTitulos.replaceChildren();
+                if (!data.achievements?.length) {
+                    listaTitulos.textContent = "Este usuário ainda não possui títulos.";
+                } else {
+                    data.achievements.forEach(item => {
+                        const info = titulos[item.achievement_key];
+                        listaTitulos.appendChild(criarItem(
+                            info ? info[0] + " · " + info[1] : item.achievement_key,
+                            "Conquistado em " + new Date(item.unlocked_at).toLocaleString("pt-BR")
+                        ));
+                    });
+                }
+
+                const historico = document.getElementById("historicoProgressao");
+                historico.replaceChildren();
+                if (!data.recent_admin_changes?.length) {
+                    historico.textContent = "Nenhuma alteração administrativa registrada.";
+                } else {
+                    data.recent_admin_changes.forEach(item => {
+                        let descricao = item.action;
+                        if (item.action === "xp_added") descricao = "XP adicionado";
+                        if (item.action === "xp_removed") descricao = "XP removido";
+                        if (item.action === "achievement_granted") descricao = "Título concedido";
+                        if (item.action === "achievement_revoked") descricao = "Título removido";
+                        const extra = item.xp_delta !== null
+                            ? (Number(item.xp_delta) > 0 ? "+" : "") + item.xp_delta + " XP"
+                            : (titulos[item.achievement_key]?.[0] || item.achievement_key || "");
+                        historico.appendChild(criarItem(descricao, extra + " · " + new Date(item.created_at).toLocaleString("pt-BR")));
+                    });
+                }
+            }
+
+            async function executarAcao(action, extras, confirmacao) {
+                if (!usuarioSelecionado || carregando) return;
+                if (!window.confirm(confirmacao)) return;
+                carregando = true;
+                mensagem.textContent = "Processando alteração...";
+                try {
+                    const data = await chamarAdmin(action, { target_user_id: usuarioSelecionado.id, ...extras });
+                    mensagem.textContent = data.changed === false
+                        ? "Nenhuma alteração foi necessária. O estado já estava assim."
+                        : "Alteração realizada e registrada no histórico.";
+                    await carregarDetalhes();
+                } catch (erro) {
+                    console.error("Erro na administração da progressão:", erro);
+                    mensagem.textContent = erro.message || "Não foi possível realizar a alteração.";
+                } finally {
+                    carregando = false;
+                }
+            }
+
+            document.getElementById("adicionarXPProgressao").addEventListener("click", () => {
+                const amount = Number(document.getElementById("quantidadeXPProgressao").value);
+                if (!Number.isSafeInteger(amount) || amount < 1 || amount > 1000000) {
+                    mensagem.textContent = "Informe uma quantidade inteira entre 1 e 1.000.000 XP.";
+                    return;
+                }
+                executarAcao("progress_adjust_xp", { mode: "add", amount }, "Adicionar " + amount + " XP para @" + usuarioSelecionado.username + "?");
+            });
+
+            document.getElementById("removerXPProgressao").addEventListener("click", () => {
+                const amount = Number(document.getElementById("quantidadeXPProgressao").value);
+                if (!Number.isSafeInteger(amount) || amount < 1 || amount > 1000000) {
+                    mensagem.textContent = "Informe uma quantidade inteira entre 1 e 1.000.000 XP.";
+                    return;
+                }
+                executarAcao("progress_adjust_xp", { mode: "remove", amount }, "Remover " + amount + " XP de @" + usuarioSelecionado.username + "? O total nunca ficará negativo.");
+            });
+
+            document.getElementById("concederTituloProgressao").addEventListener("click", () => {
+                const key = seletorTitulo.value;
+                if (!key) { mensagem.textContent = "Selecione um título."; return; }
+                executarAcao("progress_grant_title", { achievement_key: key }, "Conceder o título "" + titulos[key][0] + "" para @" + usuarioSelecionado.username + "?");
+            });
+
+            document.getElementById("retirarTituloProgressao").addEventListener("click", () => {
+                const key = seletorTitulo.value;
+                if (!key) { mensagem.textContent = "Selecione um título."; return; }
+                executarAcao("progress_revoke_title", { achievement_key: key }, "Retirar o título "" + titulos[key][0] + "" de @" + usuarioSelecionado.username + "?");
+            });
+
+            formulario.addEventListener("submit", pesquisarUsuarios);
+            botao.addEventListener("click", () => {
+                modulo.hidden = !modulo.hidden;
+                botao.textContent = modulo.hidden ? "Abrir módulo" : "Fechar módulo";
+                if (!modulo.hidden) {
+                    busca.focus();
+                    pesquisarUsuarios();
+                }
+            });
         })();
     </script>
 </body>
