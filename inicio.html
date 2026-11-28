@@ -11,7 +11,7 @@
 <title>Início - Matemática Avante</title>
 
 
-<link rel="stylesheet" href="css/style.css?v=20261122-streak1">
+<link rel="stylesheet" href="css/style.css?v=20261127-avatar-fix1">
 
 
 <script src="https://unpkg.com/lucide@latest"></script> 
@@ -450,7 +450,9 @@ if (mensagemInicio && descricaoInicio) {
 
 
 const avatarInicio = document.getElementById("avatarInicio");
-const avatarPadrao = document.getElementById("avatarPadrao");
+const avatarLinkInicio = avatarInicio
+    ? avatarInicio.closest(".avatar-link")
+    : null;
 
 // A foto agora é carregada do Storage, vinculada à conta do usuário.
 async function carregarAvatarInicio() {
@@ -490,15 +492,15 @@ async function carregarAvatarInicio() {
             .getPublicUrl(perfil.avatar_path);
 
         avatarInicio.onload = function() {
-            if (avatarPadrao) {
-                avatarPadrao.style.display = "none";
+            if (avatarLinkInicio) {
+                avatarLinkInicio.classList.add("com-foto");
             }
         };
 
         avatarInicio.onerror = function() {
             avatarInicio.src = "";
-            if (avatarPadrao) {
-                avatarPadrao.style.display = "";
+            if (avatarLinkInicio) {
+                avatarLinkInicio.classList.remove("com-foto");
             }
         };
 
